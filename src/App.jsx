@@ -445,24 +445,6 @@ export default function App() {
     }
   }, [config?.googleSearchConsoleTag, config?.bingVerificationTag, config?.seoTitle, config?.seoDescription, config?.seoKeywords]);
 
-  // Real-Time Telegram Alert for High-Intent Checkout Visits (Lead Alerts)
-  useEffect(() => {
-    if (isCheckoutOpen && checkoutItems && checkoutItems.length > 0) {
-      const totalAmount = checkoutItems.reduce((acc, curr) => acc + (curr.price || 0), 0);
-      try {
-        sendTelegramCheckoutIntentAlert({
-          items: checkoutItems,
-          totalAmount,
-          visitorIp: currentVisitorIp,
-          isMobile: isMobileDevice,
-          config
-        });
-      } catch (e) {
-        console.warn('Telegram checkout intent alert warning:', e);
-      }
-    }
-  }, [isCheckoutOpen, checkoutItems, currentVisitorIp, isMobileDevice, config]);
-
   // Filter & Search states
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -484,6 +466,25 @@ export default function App() {
   const [isAdminDecoyOpen, setIsAdminDecoyOpen] = useState(false);
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
   const [activePolicy, setActivePolicy] = useState(null);
+
+  // Real-Time Telegram Alert for High-Intent Checkout Visits (Lead Alerts)
+  useEffect(() => {
+    if (isCheckoutOpen && checkoutItems && checkoutItems.length > 0) {
+      const totalAmount = checkoutItems.reduce((acc, curr) => acc + (curr.price || 0), 0);
+      const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+      try {
+        sendTelegramCheckoutIntentAlert({
+          items: checkoutItems,
+          totalAmount,
+          visitorIp: currentVisitorIp,
+          isMobile,
+          config
+        });
+      } catch (e) {
+        console.warn('Telegram checkout intent alert warning:', e);
+      }
+    }
+  }, [isCheckoutOpen, checkoutItems, currentVisitorIp, config]);
 
   // Cryptographic Zero-Knowledge Route Vault:
   // 1. Real Admin Console opens ONLY when the URL path matches the secret SHA-256 hash
