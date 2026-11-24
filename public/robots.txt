@@ -1,0 +1,118 @@
+# ==============================================================================
+# CHEAPREELS.IN — UNIVERSAL SEARCH ENGINE & AI ASSISTANT ROBOTS DIRECTIVES
+# Target Domain: https://www.cheapreels.in | Mirror: https://cheapreels.vercel.app
+# Last Updated: 2026-11-24 | Optimized for Traditional & Generative Search Engines
+# ==============================================================================
+
+# 1. TRADITIONAL SEARCH ENGINES (Full Indexing & Rich Snippets Allowed)
+User-agent: Googlebot
+User-agent: Googlebot-Image
+User-agent: Googlebot-Video
+User-agent: Bingbot
+User-agent: YandexBot
+User-agent: DuckDuckBot
+User-agent: BraveBot
+User-agent: Slurp
+User-agent: Baiduspider
+User-agent: Qwantify
+Allow: /
+Allow: /bundle/
+Allow: /category/
+Allow: /guide/
+Allow: /privacy.html
+Allow: /data/store_config.json
+Disallow: /admin
+Disallow: /*buderiya*
+Disallow: /api/sync
+Disallow: /api/indexnow
+Disallow: /*?*checkout=*
+Disallow: /*?*admin=*
+
+# 2. OPENAI SEARCH & RETRIEVAL (ChatGPT Search & Citations Allowed)
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: GPTBot
+Allow: /
+Allow: /bundle/
+Allow: /category/
+Allow: /guide/
+Allow: /privacy.html
+Allow: /data/store_config.json
+Disallow: /admin
+Disallow: /*buderiya*
+Disallow: /api/
+
+# 3. ANTHROPIC CLAUDE SEARCH & RETRIEVAL (Claude Citations & Answers Allowed)
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: ClaudeBot
+Allow: /
+Allow: /bundle/
+Allow: /category/
+Allow: /guide/
+Allow: /privacy.html
+Disallow: /admin
+Disallow: /*buderiya*
+Disallow: /api/
+
+# 4. PERPLEXITY AI RETRIEVAL ENGINE (Perplexity Live Answers & Citations Allowed)
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+Allow: /
+Allow: /bundle/
+Allow: /category/
+Allow: /guide/
+Allow: /privacy.html
+Disallow: /admin
+Disallow: /*buderiya*
+Disallow: /api/
+
+# 5. GOOGLE GEMINI & AI OVERVIEWS
+User-agent: Google-Extended
+Allow: /
+Allow: /bundle/
+Allow: /category/
+Allow: /guide/
+Disallow: /admin
+Disallow: /*buderiya*
+Disallow: /api/
+
+# 6. META AI & APPLE INTELLIGENCE
+User-agent: Meta-ExternalAgent
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: Amazonbot
+Allow: /
+Allow: /bundle/
+Allow: /category/
+Allow: /guide/
+Disallow: /admin
+Disallow: /*buderiya*
+Disallow: /api/
+
+# 7. BLOCK AGGRESSIVE SCRAPERS & MALICIOUS RECONNAISSANCE BOTS
+User-agent: MJ12bot
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: DotBot
+User-agent: PetalBot
+Disallow: /
+
+# 8. DEFAULT RULES FOR ALL OTHER VERIFIED CRAWLERS
+User-agent: *
+Allow: /
+Allow: /bundle/
+Allow: /category/
+Allow: /guide/
+Allow: /privacy.html
+Allow: /data/store_config.json
+Disallow: /admin
+Disallow: /*buderiya*
+Disallow: /api/
+Disallow: /*?*admin=*
+
+# 9. SITEMAP INDEX & SUB-SITEMAPS
+Sitemap: https://www.cheapreels.in/sitemap.xml
+Sitemap: https://www.cheapreels.in/sitemap-categories.xml
+Sitemap: https://www.cheapreels.in/sitemap-products.xml
+Sitemap: https://www.cheapreels.in/sitemap-content.xml

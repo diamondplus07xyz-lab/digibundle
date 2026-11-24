@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 280" width="100%" height="100%">
+  <defs>
+    <!-- Master Bag Gradient: Vibrant Coral/Pink to Deep Electric Indigo/Violet -->
+    <linearGradient id="cr-bag-grad" x1="15%" y1="5%" x2="85%" y2="95%">
+      <stop offset="0%" stop-color="#FF3A70" />
+      <stop offset="28%" stop-color="#E11D74" />
+      <stop offset="65%" stop-color="#7C22CE" />
+      <stop offset="100%" stop-color="#43147D" />
+    </linearGradient>
+
+    <!-- Bag Left Shoulder Highlight -->
+    <linearGradient id="cr-bag-highlight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFA07A" stop-opacity="0.85" />
+      <stop offset="40%" stop-color="#FF3A70" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#7C22CE" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Orbit Ring Gradient -->
+    <linearGradient id="cr-orbit-front" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7C3AED" />
+      <stop offset="30%" stop-color="#9333EA" />
+      <stop offset="70%" stop-color="#EC4899" />
+      <stop offset="100%" stop-color="#FF2E93" />
+    </linearGradient>
+
+    <!-- Text Gradient for "Reels" -->
+    <linearGradient id="cr-reels-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7C3AED" />
+      <stop offset="45%" stop-color="#A855F7" />
+      <stop offset="85%" stop-color="#EC4899" />
+      <stop offset="100%" stop-color="#FF007A" />
+    </linearGradient>
+
+    <!-- Swoosh Underline Gradient -->
+    <linearGradient id="cr-swoosh-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7C3AED" />
+      <stop offset="50%" stop-color="#D946EF" />
+      <stop offset="100%" stop-color="#FF007A" />
+    </linearGradient>
+
+    <!-- Pill Gradient -->
+    <linearGradient id="cr-pill-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#21094E" />
+      <stop offset="100%" stop-color="#3B0764" />
+    </linearGradient>
+
+    <!-- Filter for crisp drop shadows -->
+    <filter id="cr-soft-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#4C1D95" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sora:ital,wght@0,800;0,900;1,800;1,900&amp;display=swap');
+    .cr-text-cheap {
+      font-family: 'Sora', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-weight: 900;
+      font-size: 112px;
+      fill: #0F172A;
+      letter-spacing: -3px;
+    }
+    .cr-text-reels {
+      font-family: 'Sora', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 122px;
+      fill: url(#cr-reels-grad);
+      letter-spacing: -2px;
+    }
+    .cr-pill-text {
+      font-family: 'Sora', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-weight: 700;
+      font-size: 21px;
+      letter-spacing: 0.5px;
+    }
+  </style>
+
+  <!-- ==================== LEFT: BRAND ICON ==================== -->
+  <g transform="translate(10, -20) scale(0.68)">
+    <!-- Back Orbit Ring -->
+    <path d="M 92 342 C 58 318 48 274 72 232 C 86 208 114 186 156 168" 
+          fill="none" stroke="#6D28D9" stroke-width="18" stroke-linecap="round" />
+
+    <!-- Bag Handles -->
+    <g stroke="#0F172A" stroke-width="15" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M 230 156 C 224 88 288 74 316 116 C 330 138 338 168 340 184" opacity="0.5" />
+      <path d="M 204 168 C 196 78 280 62 312 118 C 326 142 334 176 336 196" />
+    </g>
+    <path d="M 220 120 C 242 80 286 78 306 108" fill="none" stroke="#475569" stroke-width="4" stroke-linecap="round" opacity="0.8" />
+
+    <!-- Main Bag Body -->
+    <g filter="url(#cr-soft-shadow)">
+      <path d="M 188 172 C 192 160 202 152 216 152 L 344 164 C 356 165 366 174 368 186 L 396 352 C 399 374 382 396 360 398 L 172 408 C 148 409 130 390 133 366 Z" 
+            fill="url(#cr-bag-grad)" />
+      <path d="M 188 172 C 192 160 202 152 216 152 L 260 156 L 190 407 L 172 408 C 148 409 130 390 133 366 Z" 
+            fill="url(#cr-bag-highlight)" />
+      <circle cx="216" cy="180" r="7" fill="#0B0F19" />
+      <circle cx="340" cy="190" r="7" fill="#0B0F19" />
+    </g>
+
+    <!-- Clapperboard on Bag -->
+    <g transform="translate(258, 282) rotate(-8)">
+      <rect x="-84" y="-62" width="168" height="136" rx="28" fill="#FFFFFF" />
+      <g clip-path="url(#cr-mini-clapper)">
+        <clipPath id="cr-mini-clapper">
+          <rect x="-84" y="-62" width="168" height="42" rx="20" />
+        </clipPath>
+        <rect x="-84" y="-62" width="168" height="42" fill="#2E0854" />
+        <path d="M -70 -20 L -48 -66 L -32 -66 L -54 -20 Z" fill="#FFFFFF" />
+        <path d="M -24 -20 L -2 -66 L 14 -66 L -8 -20 Z" fill="#FFFFFF" />
+        <path d="M 22 -20 L 44 -66 L 60 -66 L 38 -20 Z" fill="#FFFFFF" />
+      </g>
+      <rect x="-70" y="-12" width="140" height="74" rx="14" fill="#4C0F8A" />
+      <path d="M -12 8 L 18 25 L -12 42 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" />
+    </g>
+
+    <!-- Foreground Orbit Ring -->
+    <path d="M 72 346 C 60 380 92 414 150 426 C 232 444 336 414 416 348 C 436 332 444 316 438 306 C 432 296 414 300 392 312 C 324 350 234 382 158 370 C 120 364 96 348 88 334 Z" 
+          fill="url(#cr-orbit-front)" />
+    <path d="M 96 354 C 132 384 212 400 292 384 C 348 372 396 344 424 322" 
+          fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.4" />
+  </g>
+
+  <!-- ==================== RIGHT: WORDMARK & BRANDING ==================== -->
+  <g transform="translate(290, 30)">
+    <!-- Main Text: "Cheap" & "Reels" -->
+    <text x="0" y="128">
+      <tspan class="cr-text-cheap">Cheap</tspan>
+      <tspan class="cr-text-reels" dx="4">Reels</tspan>
+    </text>
+
+    <!-- Energy Sparks above "ls" -->
+    <g transform="translate(605, 34)">
+      <!-- Left shorter spark -->
+      <path d="M -4 28 L 8 4 L 14 6 L 2 30 Z" fill="#FF007A" />
+      <!-- Right energetic spark -->
+      <path d="M 16 30 L 38 12 L 42 16 L 20 34 Z" fill="#FF2E93" />
+    </g>
+
+    <!-- Dynamic Curved Underline Swoosh -->
+    <path d="M 40 156 Q 300 148 550 178 Q 300 160 40 156 Z" fill="url(#cr-swoosh-grad)" />
+
+    <!-- Sub-badge Pill: "↓ Premium Reels Bundles at Lowest Price" -->
+    <g transform="translate(0, 182)">
+      <!-- Pill Shape -->
+      <rect x="0" y="0" width="570" height="42" rx="21" fill="url(#cr-pill-grad)" />
+      
+      <!-- Download Arrow Icon -->
+      <g transform="translate(26, 12)">
+        <path d="M 8 2 L 8 13 M 4 9 L 8 13 L 12 9 M 2 17 L 14 17" 
+              fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+      </g>
+
+      <!-- Pill Text -->
+      <text x="54" y="28" class="cr-pill-text">
+        <tspan fill="#FFFFFF">Premium Reels Bundles at </tspan>
+        <tspan fill="#FDE047" font-style="italic" font-weight="900">Lowest Price</tspan>
+      </text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --border-color: rgba(245, 158, 11, 0.25);
+  }
+
+  body {
+    background-color: #fefce8;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(254, 240, 138, 0.6) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(253, 224, 71, 0.35) 0px, transparent 50%),
+      radial-gradient(at 50% 40%, rgba(254, 249, 195, 0.7) 0px, transparent 65%),
+      radial-gradient(at 0% 100%, rgba(254, 243, 199, 0.6) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(253, 230, 138, 0.5) 0px, transparent 50%),
+      linear-gradient(135deg, #fefce8 0%, #fffbeb 40%, #fef9c3 100%);
+    background-attachment: fixed;
+    color: #0f172a;
+    font-family: 'Sora', sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Soft Scrollbar (Warm Honey / Amber) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #fef9c3;
+}
+::-webkit-scrollbar-thumb {
+  background: #fcd34d;
+  border-radius: 4px;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f59e0b;
+}
+
+/* 3D Elevated Glass Cards (Warm White / Cream Glass with Amber Border) */
+.card-3d, .glass-card {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  box-shadow: 
+    0 10px 25px -4px rgba(180, 83, 9, 0.08),
+    0 4px 12px -2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-radius: 1.25rem;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #0f172a;
+}
+
+.card-3d:hover, .glass-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(245, 158, 11, 0.6);
+  box-shadow: 
+    0 20px 35px -6px rgba(180, 83, 9, 0.16),
+    0 0 25px -3px rgba(251, 191, 36, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+/* Primary Glowing CTA Button (Vibrant Amber / Orange Gradient) */
+.glow-primary-btn, .glow-amber-btn {
+  background: linear-gradient(135deg, #f59e0b 0%, #ea580c 50%, #d97706 100%);
+  color: #ffffff;
+  font-weight: 900;
+  box-shadow: 0 4px 20px -2px rgba(245, 158, 11, 0.45);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glow-primary-btn:hover, .glow-amber-btn:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 26px -1px rgba(234, 88, 12, 0.55);
+  filter: brightness(1.06);
+}
+.glow-primary-btn:active, .glow-amber-btn:active {
+  transform: scale(0.98);
+}
+
+/* Play Demo Rotating Light Beam Animation (Amber to Orange Gold) */
+@keyframes border-beam {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.play-demo-glow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 0 12px -1px rgba(245, 158, 11, 0.45);
+}
+
+.play-demo-glow::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 80deg,
+    #f59e0b 130deg,
+    #fbbf24 170deg,
+    #ea580c 230deg,
+    #f59e0b 300deg,
+    transparent 360deg
+  );
+  animation: border-beam 2.2s linear infinite;
+  z-index: 0;
+}
+
+.play-demo-glow-inner {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.65rem;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  color: #b45309;
+  font-weight: 900;
+  font-size: 11px;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  transition: all 0.2s ease;
+}
+
+.play-demo-glow-inner:hover {
+  background: #fef08a;
+  color: #78350f;
+}
+
+/* Infinite Seamless Marquee Loop for Purchase Chain */
+@keyframes marquee-infinite {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-loop {
+  display: flex;
+  width: max-content;
+  animation: marquee-infinite 35s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-loop:hover {
+  animation-play-state: paused;
+}

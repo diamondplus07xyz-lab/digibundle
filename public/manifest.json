@@ -1,0 +1,33 @@
+{
+  "name": "DigiBundle - 2,50,000+ Viral HD Reels",
+  "short_name": "DigiBundle",
+  "description": "Download 2,50,000+ viral 1080p Full HD ready-to-post reels starting @ ₹29 with instant Google Drive access.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#0f172a",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["shopping", "entertainment", "business"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/brand-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
