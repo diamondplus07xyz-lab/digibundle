@@ -61,6 +61,9 @@ export default function App() {
         return {
           ...initialConfig,
           ...parsed,
+          themeBackground: (parsed.themeBackground && parsed.themeBackground !== 'light-green')
+            ? parsed.themeBackground
+            : initialConfig.themeBackground,
           gatewayMode: parsed.gatewayMode || initialConfig.gatewayMode,
           activeGateway: parsed.activeGateway || initialConfig.activeGateway,
           enabledGateways: parsed.enabledGateways || initialConfig.enabledGateways,
@@ -1064,12 +1067,25 @@ export default function App() {
     );
   }
 
-  const isLightRed = config?.themeBackground === 'light-red';
+  const currentBgTheme = config?.themeBackground || "linear-gradient(120deg, #E62718 0%, #EE5114 25%, #FCB02D 50%, #EEE0B7 75%, #70AEAB 100%)";
+  const isLightRed = currentBgTheme === 'light-red';
+  const isLightGreen = currentBgTheme === 'light-green';
+
+  const backgroundStyle = isLightRed
+    ? { backgroundColor: '#fff5f5' }
+    : isLightGreen
+    ? { backgroundColor: '#f0fbf5' }
+    : {
+        background: currentBgTheme,
+        backgroundAttachment: 'fixed',
+        backgroundSize: 'cover'
+      };
 
   return (
-    <div className={`min-h-screen text-slate-900 flex flex-col relative overflow-hidden pb-16 sm:pb-0 transition-colors duration-500 ${
-      isLightRed ? 'bg-[#fff5f5]' : 'bg-[#f0fbf5]'
-    }`}>
+    <div 
+      className="min-h-screen text-slate-900 flex flex-col relative overflow-hidden pb-16 sm:pb-0 transition-colors duration-500"
+      style={backgroundStyle}
+    >
       {/* Dynamic SEO, Open Graph & Structured Data (JSON-LD) */}
       <SEOHead 
         config={config} 
@@ -1077,18 +1093,18 @@ export default function App() {
         categories={categories} 
         searchQuery={searchQuery} 
       />
-      {/* Pure Single-Tone Ambient Lighting (Zero Color Mixture: strictly only matching tone) */}
+      {/* Ambient Lighting only when single-tone mode is explicitly active */}
       {isLightRed ? (
         <>
           <div className="fixed top-10 left-10 w-[500px] h-[500px] bg-rose-200/35 rounded-full blur-[160px] pointer-events-none -z-10" />
           <div className="fixed bottom-20 right-10 w-[600px] h-[600px] bg-rose-100/45 rounded-full blur-[180px] pointer-events-none -z-10" />
         </>
-      ) : (
+      ) : isLightGreen ? (
         <>
           <div className="fixed top-10 left-10 w-[500px] h-[500px] bg-emerald-200/35 rounded-full blur-[160px] pointer-events-none -z-10" />
           <div className="fixed bottom-20 right-10 w-[600px] h-[600px] bg-green-100/45 rounded-full blur-[180px] pointer-events-none -z-10" />
         </>
-      )}
+      ) : null}
 
       {/* 1. Top Countdown Sale Announcement Banner */}
       <AnnouncementBar 

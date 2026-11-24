@@ -8,14 +8,10 @@
   }
 
   body {
-    background: 
-      radial-gradient(at 5% 5%, rgba(254, 240, 138, 0.45) 0px, transparent 45%),
-      radial-gradient(at 95% 5%, rgba(254, 205, 211, 0.55) 0px, transparent 45%),
-      radial-gradient(at 50% 50%, #ffffff 0px, transparent 65%),
-      radial-gradient(at 5% 95%, rgba(187, 247, 208, 0.5) 0px, transparent 50%),
-      radial-gradient(at 95% 95%, rgba(254, 249, 195, 0.55) 0px, transparent 45%),
-      linear-gradient(135deg, #ffffff 0%, #fff7ed 40%, #f0fdf4 100%);
+    background: linear-gradient(120deg, #E62718 0%, #EE5114 25%, #FCB02D 50%, #EEE0B7 75%, #70AEAB 100%);
     background-attachment: fixed;
+    background-size: cover;
+    min-height: 100vh;
     color: #0f172a;
     font-family: 'Sora', sans-serif;
     overflow-x: hidden;

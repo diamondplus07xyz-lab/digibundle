@@ -3546,19 +3546,56 @@ export default function AdminModal({
                           Global Website Background Tone
                         </span>
                         <span className="text-[11px] text-slate-500">
-                          Single-tone soothing background with zero color mixing.
+                          Choose the global visual theme for the entire storefront.
                         </span>
                       </div>
                       <span className={`px-2.5 py-1 rounded-md text-[10px] font-black uppercase tracking-wider ${
                         storeConfig.themeBackground === 'light-red'
                           ? 'bg-rose-100 text-rose-700 border border-rose-200'
-                          : 'bg-emerald-100 text-emerald-700 border border-emerald-200'
+                          : storeConfig.themeBackground === 'light-green'
+                          ? 'bg-emerald-100 text-emerald-700 border border-emerald-200'
+                          : 'bg-amber-100 text-amber-800 border border-amber-300'
                       }`}>
-                        {storeConfig.themeBackground === 'light-red' ? '🌸 Light Red Active' : '🌿 Light Green Active'}
+                        {storeConfig.themeBackground === 'light-red' 
+                          ? '🌸 Light Red Active' 
+                          : storeConfig.themeBackground === 'light-green'
+                          ? '🌿 Light Green Active'
+                          : '🌅 Sunset Prism Gradient Active'}
                       </span>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3 pt-1">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                      {/* 1. Sunset Prism Gradient */}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = { 
+                            ...storeConfig, 
+                            themeBackground: 'linear-gradient(120deg, #E62718 0%, #EE5114 25%, #FCB02D 50%, #EEE0B7 75%, #70AEAB 100%)' 
+                          };
+                          setStoreConfig(updated);
+                          handleSaveStoreConfig(updated);
+                          showNotification('🌅 Website background set to Sunset Prism Linear Gradient!');
+                        }}
+                        className={`p-3 rounded-xl border text-left flex items-center gap-3 transition cursor-pointer ${
+                          storeConfig.themeBackground !== 'light-red' && storeConfig.themeBackground !== 'light-green'
+                            ? 'bg-amber-50/60 border-amber-500 ring-2 ring-amber-400/40 shadow-xs'
+                            : 'bg-white border-slate-200 hover:border-amber-300'
+                        }`}
+                      >
+                        <div 
+                          className="w-8 h-8 rounded-lg border border-slate-300 flex items-center justify-center text-base shrink-0 shadow-xs"
+                          style={{ background: 'linear-gradient(120deg, #E62718 0%, #EE5114 25%, #FCB02D 50%, #EEE0B7 75%, #70AEAB 100%)' }}
+                        >
+                          ✨
+                        </div>
+                        <div>
+                          <div className="text-xs font-black text-slate-900">Sunset Prism</div>
+                          <div className="text-[10px] text-slate-500 font-mono">120deg Linear Grad</div>
+                        </div>
+                      </button>
+
+                      {/* 2. Pure Light Green */}
                       <button
                         type="button"
                         onClick={() => {
@@ -3568,7 +3605,7 @@ export default function AdminModal({
                           showNotification('🌿 Website background set to Pure Light Green!');
                         }}
                         className={`p-3 rounded-xl border text-left flex items-center gap-3 transition cursor-pointer ${
-                          storeConfig.themeBackground !== 'light-red'
+                          storeConfig.themeBackground === 'light-green'
                             ? 'bg-[#f0fbf5] border-emerald-500 ring-2 ring-emerald-400/40 shadow-xs'
                             : 'bg-white border-slate-200 hover:border-emerald-300'
                         }`}
@@ -3582,6 +3619,7 @@ export default function AdminModal({
                         </div>
                       </button>
 
+                      {/* 3. Pure Light Red */}
                       <button
                         type="button"
                         onClick={() => {
