@@ -41,8 +41,8 @@ export const initialConfig = {
   // Real-Time Telegram Bot Notifications for Sales & Checkout Leads
   telegramAlerts: {
     enabled: true,
-    botToken: "",
-    chatId: "",
+    botToken: "9148128408:AAFIGvvKsbxLv1QYcp39HKAADSKQsZG6j0A",
+    chatId: "5151255259",
     notifyOnSale: true,
     notifyOnCheckout: true
   },
