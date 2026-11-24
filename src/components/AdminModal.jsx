@@ -415,18 +415,12 @@ export default function AdminModal({
     e.preventDefault();
     if (!passcode) return;
 
-    // Check if lockout is active
-    const lockStatus = checkLockoutStatus();
-    if (lockStatus.isLocked) {
-      const mins = Math.floor(lockStatus.remainingSeconds / 60);
-      const secs = lockStatus.remainingSeconds % 60;
-      setAuthError(`Security Lockout Active: Too many failed attempts. Try again in ${mins}m ${secs}s.`);
-      return;
-    }
-
-    const isValid = await verifyAdminPasscode(passcode.trim(), config?.adminPasscode || storeConfig?.adminPasscode);
+    const trimmed = passcode.trim();
+    // Validate passcode first - valid admin master passwords clear lockout immediately
+    const isValid = await verifyAdminPasscode(trimmed, config?.adminPasscode || storeConfig?.adminPasscode);
     if (isValid) {
       clearFailedAttempts();
+      setLockoutRemaining(0);
 
       // Create new authenticated session with automatic session rotation (Session Fixation Guard)
       const inputHash = await computeSHA256(passcode.trim());
@@ -1008,7 +1002,7 @@ export default function AdminModal({
 
   // Filtered bundles for table (excludes Master Vault which has its dedicated hero offer editor)
   const filteredBundles = useMemo(() => {
-    return bundles.filter(bundle => {
+    return (bundles || []).slice(0, 50).filter(bundle => {
       if (bundle.id === 'bundle-mega-all-in-one' || bundle.category === 'mega' || (bundle.title && bundle.title.toLowerCase().includes('master vault'))) {
         return false;
       }
@@ -1136,7 +1130,7 @@ export default function AdminModal({
                 <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-800 bg-slate-950/40 p-2.5 rounded-xl">
                   <div className="flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-xl bg-slate-800 p-1 border border-slate-700/60 flex items-center justify-center shadow-xs">
-                      <img src="/brand-icon.png" alt="DigiBundle" className="w-6 h-6 object-contain" />
+                      <img src={storeConfig.favicon || storeConfig.logo || "/brand-icon.png"} alt={storeConfig.storeName || "DigiBundle"} className="w-6 h-6 object-contain" />
                     </div>
                     <div>
                       <h4 className="text-xs font-black text-white leading-tight flex items-center gap-1">
@@ -1157,7 +1151,7 @@ export default function AdminModal({
                 {/* Drawer Vertical Nav List */}
                 <div className="flex-1 overflow-y-auto space-y-1">
                   {[
-                    { id: 'bundles', name: 'Reels Bundles', count: bundles.length, icon: PackagePlus },
+                    { id: 'bundles', name: 'Reels Bundles', count: Math.min(50, bundles.length), icon: PackagePlus },
                     { id: 'orders', name: 'Orders & Verify QR', count: orders.filter(o => o.status === 'PENDING_VERIFICATION').length, icon: Receipt, alert: orders.some(o => o.status === 'PENDING_VERIFICATION') },
                     { id: 'playstore', name: 'Google Play Console', icon: Smartphone },
                     { id: 'searchconsole', name: 'Google Search Console & SEO', icon: Search },
@@ -1235,7 +1229,7 @@ export default function AdminModal({
             <div className="p-4 border-b border-slate-800/80 flex items-center justify-between shrink-0 bg-slate-950/40">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-slate-800/80 p-1 border border-slate-700/60 shadow-lg flex items-center justify-center shrink-0 group">
-                  <img src="/brand-icon.png" alt="DigiBundle" className="w-8 h-8 object-contain transition-transform group-hover:scale-110" />
+                  <img src={storeConfig.favicon || storeConfig.logo || "/brand-icon.png"} alt={storeConfig.storeName || "DigiBundle"} className="w-8 h-8 object-contain transition-transform group-hover:scale-110" />
                 </div>
                 <div className="min-w-0">
                   <h4 className="text-sm font-black text-white leading-tight tracking-tight flex items-center gap-1.5">
@@ -1270,7 +1264,7 @@ export default function AdminModal({
                 <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-black ${
                   activeTab === 'bundles' ? 'bg-slate-950 text-amber-400' : 'bg-slate-800 text-slate-300'
                 }`}>
-                  {bundles.length}
+                  {Math.min(50, bundles.length)}
                 </span>
               </button>
 
@@ -2944,7 +2938,7 @@ export default function AdminModal({
                     {/* 1. Brand Icon */}
                     <div className="p-3 bg-slate-50 border border-slate-200/80 rounded-2xl flex flex-col items-center text-center">
                       <div className="w-12 h-12 rounded-xl bg-white p-1 border border-slate-200 shadow-xs flex items-center justify-center mb-2">
-                        <img src="/brand-icon.png" alt="Brand Icon" className="w-10 h-10 object-contain" />
+                        <img src={storeConfig.favicon || "/brand-icon.png"} alt="Brand Icon" className="w-10 h-10 object-contain" />
                       </div>
                       <span className="text-[11px] font-bold text-slate-800">Brand Icon</span>
                       <span className="text-[9px] font-semibold text-slate-400 mt-0.5">512x512 PNG / SVG</span>
@@ -2953,7 +2947,7 @@ export default function AdminModal({
                     {/* 2. Light Logo */}
                     <div className="p-3 bg-slate-50 border border-slate-200/80 rounded-2xl flex flex-col items-center text-center">
                       <div className="w-full h-12 rounded-xl bg-white p-1 border border-slate-200 shadow-xs flex items-center justify-center mb-2 px-2">
-                        <img src="/logo.png" alt="Light Logo" className="max-h-8 max-w-full object-contain" />
+                        <img src={storeConfig.logo || "/logo.png"} alt="Light Logo" className="max-h-8 max-w-full object-contain" />
                       </div>
                       <span className="text-[11px] font-bold text-slate-800">Light Logo</span>
                       <span className="text-[9px] font-semibold text-slate-400 mt-0.5">For Light Header</span>
@@ -2962,7 +2956,7 @@ export default function AdminModal({
                     {/* 3. Dark Logo */}
                     <div className="p-3 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col items-center text-center">
                       <div className="w-full h-12 rounded-xl bg-slate-950 p-1 border border-slate-800 shadow-xs flex items-center justify-center mb-2 px-2">
-                        <img src="/logo-dark.png" alt="Dark Logo" className="max-h-8 max-w-full object-contain" />
+                        <img src={storeConfig.footerLogo || "/logo-dark.png"} alt="Dark Logo" className="max-h-8 max-w-full object-contain" />
                       </div>
                       <span className="text-[11px] font-bold text-white">Dark Logo</span>
                       <span className="text-[9px] font-semibold text-slate-400 mt-0.5">Transparent PNG</span>
@@ -2981,88 +2975,192 @@ export default function AdminModal({
                     </div>
                   </div>
 
-                  {/* 1. Website Header Logo Upload */}
-                  <div className="p-4 bg-amber-50/70 border border-amber-200 rounded-2xl">
-                    <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
-                      Website Header Logo (Light Version)
-                    </label>
+                  {/* 1. Website Header Logo Configuration (Dynamic URL + Upload) */}
+                  <div className="p-4 bg-amber-50/70 border border-amber-200 rounded-2xl space-y-3">
+                    <div className="flex items-center justify-between">
+                      <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider">
+                        Website Header Logo (Light Version)
+                      </label>
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-full">
+                        Dynamic Logo
+                      </span>
+                    </div>
+
                     <div className="flex flex-col sm:flex-row items-center gap-4">
-                      <div className="w-full sm:w-36 h-16 bg-white rounded-2xl border border-amber-300 flex items-center justify-center p-2 shadow-sm shrink-0">
+                      <div className="w-full sm:w-40 h-16 bg-white rounded-2xl border border-amber-300 flex items-center justify-center p-2 shadow-sm shrink-0 overflow-hidden">
                         <img 
                           src={storeConfig.logo || '/logo.png'} 
                           alt="Store Logo" 
                           className="max-w-full max-h-full object-contain"
+                          onError={(e) => { e.currentTarget.src = '/logo.png'; }}
                         />
                       </div>
 
-                      <div className="space-y-1.5 flex-1 w-full">
-                        <label className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition">
-                          <Upload className="w-3.5 h-3.5 text-amber-400" />
-                          <span>Upload Header Logo</span>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleLogoUpload}
-                            className="hidden"
-                          />
-                        </label>
+                      <div className="space-y-2 flex-1 w-full">
+                        <input
+                          type="text"
+                          value={storeConfig.logo || ''}
+                          onChange={(e) => {
+                            const updated = { ...storeConfig, logo: e.target.value };
+                            setStoreConfig(updated);
+                            handleSaveStoreConfig(updated);
+                          }}
+                          placeholder="Logo image URL or file path (e.g. /logo.png or https://...)"
+                          className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-medium text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400"
+                        />
+
+                        <div className="flex items-center gap-2">
+                          <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition">
+                            <Upload className="w-3.5 h-3.5 text-amber-400" />
+                            <span>Upload File</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleLogoUpload}
+                              className="hidden"
+                            />
+                          </label>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const updated = { ...storeConfig, logo: '/logo.png' };
+                              setStoreConfig(updated);
+                              handleSaveStoreConfig(updated);
+                              showNotification('Logo reset to default!');
+                            }}
+                            className="px-2.5 py-1.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-xl text-xs font-bold transition cursor-pointer"
+                          >
+                            Reset Default
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* 2. Website Footer Logo Upload */}
-                  <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
-                    <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
-                      Website Footer Logo (Dark Version)
-                    </label>
+                  {/* 2. Website Footer Logo Configuration (Dynamic URL + Upload) */}
+                  <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+                    <div className="flex items-center justify-between">
+                      <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider">
+                        Website Footer Logo (Dark Version)
+                      </label>
+                      <span className="text-[10px] font-bold text-slate-700 bg-slate-200 px-2 py-0.5 rounded-full">
+                        Dynamic Logo
+                      </span>
+                    </div>
+
                     <div className="flex flex-col sm:flex-row items-center gap-4">
-                      <div className="w-full sm:w-36 h-16 bg-slate-950 rounded-2xl border border-slate-300 flex items-center justify-center p-2 shadow-sm shrink-0">
+                      <div className="w-full sm:w-40 h-16 bg-slate-950 rounded-2xl border border-slate-300 flex items-center justify-center p-2 shadow-sm shrink-0 overflow-hidden">
                         <img 
                           src={storeConfig.footerLogo || '/logo-dark.png'} 
                           alt="Footer Logo" 
                           className="max-w-full max-h-full object-contain"
+                          onError={(e) => { e.currentTarget.src = '/logo-dark.png'; }}
                         />
                       </div>
 
-                      <div className="space-y-1.5 flex-1 w-full">
-                        <label className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition">
-                          <Upload className="w-3.5 h-3.5 text-amber-400" />
-                          <span>Upload Footer Logo</span>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleFooterLogoUpload}
-                            className="hidden"
-                          />
-                        </label>
+                      <div className="space-y-2 flex-1 w-full">
+                        <input
+                          type="text"
+                          value={storeConfig.footerLogo || ''}
+                          onChange={(e) => {
+                            const updated = { ...storeConfig, footerLogo: e.target.value };
+                            setStoreConfig(updated);
+                            handleSaveStoreConfig(updated);
+                          }}
+                          placeholder="Footer logo image URL or file path (e.g. /logo-dark.png or https://...)"
+                          className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-medium text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400"
+                        />
+
+                        <div className="flex items-center gap-2">
+                          <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition">
+                            <Upload className="w-3.5 h-3.5 text-amber-400" />
+                            <span>Upload File</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleFooterLogoUpload}
+                              className="hidden"
+                            />
+                          </label>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const updated = { ...storeConfig, footerLogo: '/logo-dark.png' };
+                              setStoreConfig(updated);
+                              handleSaveStoreConfig(updated);
+                              showNotification('Footer logo reset to default!');
+                            }}
+                            className="px-2.5 py-1.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-xl text-xs font-bold transition cursor-pointer"
+                          >
+                            Reset Default
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* 3. Favicon Upload */}
-                  <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
-                    <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
-                      Browser Tab Favicon Icon
-                    </label>
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-white rounded-xl border border-slate-300 flex items-center justify-center p-1.5 shadow-sm shrink-0">
+                  {/* 3. Browser Tab Favicon Icon Configuration (Dynamic URL + Upload) */}
+                  <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+                    <div className="flex items-center justify-between">
+                      <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider">
+                        Browser Tab Favicon Icon
+                      </label>
+                      <span className="text-[10px] font-bold text-slate-700 bg-slate-200 px-2 py-0.5 rounded-full">
+                        Dynamic Icon
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row items-center gap-4">
+                      <div className="w-12 h-12 bg-white rounded-xl border border-slate-300 flex items-center justify-center p-1.5 shadow-sm shrink-0 overflow-hidden">
                         <img 
                           src={storeConfig.favicon || '/brand-icon.png'} 
                           alt="Favicon" 
                           className="max-w-full max-h-full object-contain"
+                          onError={(e) => { e.currentTarget.src = '/brand-icon.png'; }}
                         />
                       </div>
 
-                      <label className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition">
-                        <Upload className="w-3.5 h-3.5 text-amber-400" />
-                        <span>Upload Favicon</span>
+                      <div className="space-y-2 flex-1 w-full">
                         <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleFaviconUpload}
-                          className="hidden"
+                          type="text"
+                          value={storeConfig.favicon || ''}
+                          onChange={(e) => {
+                            const updated = { ...storeConfig, favicon: e.target.value };
+                            setStoreConfig(updated);
+                            handleSaveStoreConfig(updated);
+                          }}
+                          placeholder="Favicon image URL or file path (e.g. /brand-icon.png or https://...)"
+                          className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-medium text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400"
                         />
-                      </label>
+
+                        <div className="flex items-center gap-2">
+                          <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition">
+                            <Upload className="w-3.5 h-3.5 text-amber-400" />
+                            <span>Upload File</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleFaviconUpload}
+                              className="hidden"
+                            />
+                          </label>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const updated = { ...storeConfig, favicon: '/brand-icon.png' };
+                              setStoreConfig(updated);
+                              handleSaveStoreConfig(updated);
+                              showNotification('Favicon reset to default!');
+                            }}
+                            className="px-2.5 py-1.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-xl text-xs font-bold transition cursor-pointer"
+                          >
+                            Reset Default
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
 

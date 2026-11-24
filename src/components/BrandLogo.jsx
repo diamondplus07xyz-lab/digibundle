@@ -36,28 +36,23 @@ export default function BrandLogo({
         className={`inline-flex items-center justify-center shrink-0 select-none ${onClick ? 'cursor-pointer' : ''} ${className}`}
       >
         <img
-          src="/brand-icon.png"
+          src={customSrc || "/brand-icon.png"}
           alt={alt}
           width={40}
           height={40}
           className={`${sizeClasses} w-auto aspect-square object-contain drop-shadow-sm transition-transform duration-200 hover:scale-105`}
           onError={(e) => {
-            e.currentTarget.src = '/brand-icon.svg';
+            if (e.currentTarget.src !== '/brand-icon.png') {
+              e.currentTarget.src = '/brand-icon.png';
+            }
           }}
         />
       </div>
     );
   }
 
-  // Determine logo source
-  let logoSrc = customSrc;
-  if (!logoSrc || imgError) {
-    if (imgError) {
-      logoSrc = variant === 'dark' ? '/logo-dark.png' : '/logo.png';
-    } else {
-      logoSrc = variant === 'dark' ? '/logo-dark.webp' : '/logo.webp';
-    }
-  }
+  // Determine logo source dynamically from props/config with graceful fallback
+  let logoSrc = (!imgError && customSrc) ? customSrc : (variant === 'dark' ? '/logo-dark.png' : '/logo.png');
 
   return (
     <div
@@ -67,12 +62,9 @@ export default function BrandLogo({
       <img
         src={logoSrc}
         alt={alt}
-        width={200}
-        height={40}
-        style={{ aspectRatio: '5 / 1' }}
         className={`${sizeClasses} w-auto max-w-[210px] sm:max-w-[280px] object-contain drop-shadow-sm transition-transform duration-200 hover:scale-[1.02]`}
         onError={() => {
-          if (!imgError) {
+          if (!imgError && customSrc) {
             setImgError(true);
           }
         }}

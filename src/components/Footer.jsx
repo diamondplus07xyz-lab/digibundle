@@ -17,7 +17,7 @@ export default function Footer({ config, onOpenPolicy }) {
               <div className="bg-white px-3 py-1.5 rounded-2xl shadow-sm border border-white/40 inline-flex items-center">
                 <BrandLogo 
                   variant="light" 
-                  customSrc="/logo.png" 
+                  customSrc={footerLogo} 
                   alt={config.storeName || 'DigiBundle'} 
                   size="md" 
                 />
