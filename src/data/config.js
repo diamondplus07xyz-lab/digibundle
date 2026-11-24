@@ -1,13 +1,13 @@
 export const initialConfig = {
-  storeName: "DigiBundle",
+  storeName: "Cheap Reels",
   tagline: "India's Most Affordable Ready-to-Post HD Reels Store",
   logo: "/logo.png",
   footerLogo: "/logo-dark.png",
   favicon: "/brand-icon.png",
-  upiId: "digibundle@upi",
-  upiName: "DigiBundle",
+  upiId: "cheapreels@upi",
+  upiName: "Cheap Reels",
   whatsappNumber: "917017324978",
-  supportEmail: "support@digibundle.in",
+  supportEmail: "reelscheap@gmail.com",
   bannerText: "LIMITED TIME OFFER: 2,50,000+ Ready Reels Pack at Flat 95% OFF! Instant Google Drive Access in 5 Seconds",
   showTopBanner: true,
   showPurchasePopup: true,
@@ -15,10 +15,11 @@ export const initialConfig = {
   
   // Google Search Console & SEO Configuration
   googleSearchConsoleTag: '<meta name="google-site-verification" content="52iB3jq7O_eOpTnutctWvgYo0yqXIIKMWIpZDpVwyZw" />',
-  seoTitle: 'DigiBundle | 2,50,000+ Ready-to-Post HD Reels Bundles',
+  bingVerificationTag: "",
+  seoTitle: 'Cheap Reels | 2,50,000+ Ready-to-Post HD Reels Bundles',
   seoDescription: 'Get 2,50,000+ ready-to-post 1080p Full HD watermark-free reels bundles with instant Google Drive cloud links at just ₹29. Instagram, Shorts & Facebook.',
-  seoKeywords: 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, digibundle download, watermark free reels 1080p',
-  canonicalUrl: 'https://www.digibundle.in',
+  seoKeywords: 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, cheap reels download, watermark free reels 1080p',
+  canonicalUrl: 'https://www.cheapreels.in',
   allowRobotsIndex: true,
 
   // Maintenance Mode Controls (Premium SaaS Experience)
@@ -37,6 +38,15 @@ export const initialConfig = {
   // Google Analytics 4 Integration (No code pasting needed)
   googleAnalyticsId: "",
 
+  // Real-Time Telegram Bot Notifications for Sales & Checkout Leads
+  telegramAlerts: {
+    enabled: true,
+    botToken: "",
+    chatId: "",
+    notifyOnSale: true,
+    notifyOnCheckout: true
+  },
+
   // Payment Gateway Integrations & Mode Selection
   gatewayMode: "single", // "single" (ek time pe ek) | "multiple" (ek time pe multiple)
   activeGateway: "upi_qr", // for single mode: "upi_qr" | "razorpay" | "cashfree" | "paypal"
@@ -45,8 +55,8 @@ export const initialConfig = {
   // Direct UPI QR
   upiGateway: {
     enabled: true,
-    upiId: "digibundle@upi",
-    payeeName: "DigiBundle"
+    upiId: "cheapreels@upi",
+    payeeName: "Cheap Reels"
   },
 
   // Razorpay Integration

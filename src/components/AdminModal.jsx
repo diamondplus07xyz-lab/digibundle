@@ -7,8 +7,9 @@ import {
   Clock, Hash, FileCheck, HelpCircle, MessageCircle, BarChart3, Users,
   TrendingUp, Tag, Layers, Share2, Copy, Flame, Mail, ShoppingBag, Wrench, BellRing,
   Play, Pause, Zap, CheckCircle as CheckCircleIcon, XCircle, Power, LogOut, Bot, Brain,
-  Server, Database, ShieldCheck, ChevronDown, UserCheck
+  Server, Database, ShieldCheck, ChevronDown, UserCheck, Send
 } from 'lucide-react';
+import { sendTelegramTestAlert } from '../utils/telegramAlerts';
 import { parseVideoUrl } from '../utils/videoHelper';
 import { pushCloudStoreData } from '../utils/cloudSync';
 import { 
@@ -104,14 +105,14 @@ export default function AdminModal({
   // Config editing state
   const [storeConfig, setStoreConfig] = useState(() => ({
     ...config,
-    storeName: config?.storeName || 'DigiBundle',
+    storeName: config?.storeName || 'Cheap Reels',
     logo: config?.logo || '/logo.png',
     footerLogo: config?.footerLogo || config?.logo || '/logo-dark.png',
     favicon: config?.favicon || '/brand-icon.png',
     masterVaultThumbnail: config?.masterVaultThumbnail || "https://i.ibb.co/Lzvn9hTm/sheru-bhai-mega-reels-bundle-ad.png",
     adminPasscode: config?.adminPasscode || DEFAULT_ADMIN_HASH,
     whatsappNumber: config?.whatsappNumber || '917017324978',
-    supportEmail: config?.supportEmail || 'support@digibundle.in',
+    supportEmail: config?.supportEmail || 'reelscheap@gmail.com',
     bannerText: config?.bannerText || 'LIMITED TIME OFFER: 2,50,000+ Ready Reels Pack at Flat 95% OFF! Instant Google Drive Access in 5 Seconds',
     showTopBanner: config?.showTopBanner !== false,
     showPurchasePopup: config?.showPurchasePopup !== false,
@@ -132,8 +133,8 @@ export default function AdminModal({
     enabledGateways: config?.enabledGateways || ['upi_qr', 'razorpay'],
     upiGateway: config?.upiGateway || {
       enabled: true,
-      upiId: config?.upiId || 'digibundle@upi',
-      payeeName: config?.upiName || 'DigiBundle'
+      upiId: config?.upiId || 'cheapreels@upi',
+      payeeName: config?.upiName || 'Cheap Reels'
     },
     paypal: config?.paypal || {
       enabled: false,
@@ -170,10 +171,10 @@ export default function AdminModal({
       keySecret: ''
     },
     googleSearchConsoleTag: config?.googleSearchConsoleTag || '',
-    seoTitle: config?.seoTitle || 'DigiBundle | 2,50,000+ Ready-to-Post HD Reels Bundles',
+    seoTitle: config?.seoTitle || 'Cheap Reels | 2,50,000+ Ready-to-Post HD Reels Bundles',
     seoDescription: config?.seoDescription || 'Get 2,50,000+ ready-to-post 1080p Full HD watermark-free reels bundles with instant Google Drive cloud links at just ₹29. Instagram, Shorts & Facebook.',
-    seoKeywords: config?.seoKeywords || 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, digibundle download, watermark free reels 1080p',
-    canonicalUrl: config?.canonicalUrl || 'https://digibundle.vercel.app',
+    seoKeywords: config?.seoKeywords || 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, cheap reels download, watermark free reels 1080p',
+    canonicalUrl: config?.canonicalUrl || 'https://cheapreels.vercel.app',
     allowRobotsIndex: config?.allowRobotsIndex !== false
   }));
 
@@ -201,7 +202,7 @@ export default function AdminModal({
         seoTitle: config.seoTitle || prev.seoTitle || '',
         seoDescription: config.seoDescription || prev.seoDescription || '',
         seoKeywords: config.seoKeywords || prev.seoKeywords || '',
-        canonicalUrl: config.canonicalUrl || prev.canonicalUrl || 'https://digibundle.vercel.app',
+        canonicalUrl: config.canonicalUrl || prev.canonicalUrl || 'https://cheapreels.vercel.app',
         allowRobotsIndex: config.allowRobotsIndex !== undefined ? config.allowRobotsIndex : (prev.allowRobotsIndex !== false),
         gatewayMode: config.gatewayMode || prev.gatewayMode || 'single',
         activeGateway: config.activeGateway || prev.activeGateway || 'upi_qr',
@@ -209,7 +210,7 @@ export default function AdminModal({
         razorpay: { enabled: false, keyId: '', keySecret: '', mode: 'live', ...(config.razorpay || {}) },
         cashfree: { enabled: false, appId: '', secretKey: '', environment: 'production', ...(config.cashfree || {}) },
         paypal: { enabled: false, clientId: '', clientSecret: '', mode: 'live', currency: 'USD', exchangeRate: 85, ...(config.paypal || {}) },
-        upiGateway: { enabled: true, upiId: config.upiId || 'digibundle@upi', payeeName: config.upiName || 'DigiBundle', ...(config.upiGateway || {}) },
+        upiGateway: { enabled: true, upiId: config.upiId || 'cheapreels@upi', payeeName: config.upiName || 'Cheap Reels', ...(config.upiGateway || {}) },
         playStore: config.playStore || prev.playStore
       }));
     }
@@ -230,7 +231,7 @@ export default function AdminModal({
         time: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
         type: 'SYSTEM',
         title: 'Admin Console Initialized',
-        detail: 'Logged in to DigiBundle Administration Center.'
+        detail: 'Logged in to Cheap Reels Administration Center.'
       }
     ];
   });
@@ -415,12 +416,18 @@ export default function AdminModal({
     e.preventDefault();
     if (!passcode) return;
 
-    const trimmed = passcode.trim();
-    // Validate passcode first - valid admin master passwords clear lockout immediately
-    const isValid = await verifyAdminPasscode(trimmed, config?.adminPasscode || storeConfig?.adminPasscode);
+    // Check if lockout is active
+    const lockStatus = checkLockoutStatus();
+    if (lockStatus.isLocked) {
+      const mins = Math.floor(lockStatus.remainingSeconds / 60);
+      const secs = lockStatus.remainingSeconds % 60;
+      setAuthError(`Security Lockout Active: Too many failed attempts. Try again in ${mins}m ${secs}s.`);
+      return;
+    }
+
+    const isValid = await verifyAdminPasscode(passcode.trim(), config?.adminPasscode || storeConfig?.adminPasscode);
     if (isValid) {
       clearFailedAttempts();
-      setLockoutRemaining(0);
 
       // Create new authenticated session with automatic session rotation (Session Fixation Guard)
       const inputHash = await computeSHA256(passcode.trim());
@@ -600,6 +607,46 @@ export default function AdminModal({
       showNotification('Test event sent to Google Analytics dataLayer!');
     } else {
       showNotification('Google Analytics not loaded yet. Make sure GA4 ID is saved.');
+    }
+  };
+
+  // Real-Time Telegram Bot Notification Handlers
+  const [isSendingTelegramTest, setIsSendingTelegramTest] = useState(false);
+  const [showTelegramBotToken, setShowTelegramBotToken] = useState(false);
+
+  const handleSaveTelegramAlerts = (e) => {
+    if (e) e.preventDefault();
+    const currentTg = storeConfig.telegramAlerts || {};
+    const updated = {
+      ...storeConfig,
+      telegramAlerts: {
+        enabled: currentTg.enabled !== undefined ? currentTg.enabled : true,
+        botToken: (currentTg.botToken || '').trim(),
+        chatId: (currentTg.chatId || '').trim(),
+        notifyOnSale: currentTg.notifyOnSale !== undefined ? currentTg.notifyOnSale : true,
+        notifyOnCheckout: currentTg.notifyOnCheckout !== undefined ? currentTg.notifyOnCheckout : true
+      }
+    };
+    setStoreConfig(updated);
+    handleSaveStoreConfig(updated);
+    addLog('INTEGRATION', 'Telegram Bot Settings Updated', currentTg.botToken ? 'Telegram bot notifications saved' : 'Telegram bot disconnected');
+    showNotification(currentTg.botToken ? 'Telegram Bot alerts configured & live!' : 'Telegram Bot disconnected.');
+  };
+
+  const handleSendTestTelegramAlert = async () => {
+    const currentTg = storeConfig.telegramAlerts || {};
+    if (!currentTg.botToken || !currentTg.chatId) {
+      showNotification('Please enter both Bot Token and Chat ID before sending test.');
+      return;
+    }
+    setIsSendingTelegramTest(true);
+    const res = await sendTelegramTestAlert(currentTg.botToken, currentTg.chatId, storeConfig.storeName || 'Cheap Reels');
+    setIsSendingTelegramTest(false);
+    if (res.success) {
+      showNotification('🎉 Test alert sent! Check your Telegram app.');
+      addLog('INTEGRATION', 'Telegram Test Message Sent', 'Success: Notification delivered to Telegram');
+    } else {
+      showNotification(`❌ Telegram Error: ${res.error || 'Failed to send alert'}`);
     }
   };
 
@@ -1002,7 +1049,7 @@ export default function AdminModal({
 
   // Filtered bundles for table (excludes Master Vault which has its dedicated hero offer editor)
   const filteredBundles = useMemo(() => {
-    return (bundles || []).slice(0, 50).filter(bundle => {
+    return bundles.filter(bundle => {
       if (bundle.id === 'bundle-mega-all-in-one' || bundle.category === 'mega' || (bundle.title && bundle.title.toLowerCase().includes('master vault'))) {
         return false;
       }
@@ -1055,7 +1102,7 @@ export default function AdminModal({
           </div>
 
           <h3 className="text-xl font-black text-slate-900 tracking-tight">
-            DigiBundle Admin Console
+            Cheap Reels Admin Console
           </h3>
           <p className="text-xs text-slate-600 mt-1 mb-6 font-medium">
             Enter your secure administrator passcode to manage catalog, orders, alerts & settings.
@@ -1130,12 +1177,12 @@ export default function AdminModal({
                 <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-800 bg-slate-950/40 p-2.5 rounded-xl">
                   <div className="flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-xl bg-slate-800 p-1 border border-slate-700/60 flex items-center justify-center shadow-xs">
-                      <img src={storeConfig.favicon || storeConfig.logo || "/brand-icon.png"} alt={storeConfig.storeName || "DigiBundle"} className="w-6 h-6 object-contain" />
+                      <img src="/brand-icon.png" alt="Cheap Reels" className="w-6 h-6 object-contain" />
                     </div>
                     <div>
                       <h4 className="text-xs font-black text-white leading-tight flex items-center gap-1">
-                        <span>Digi</span>
-                        <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent italic">Bundle</span>
+                        <span>Cheap</span>
+                        <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent italic">Reels</span>
                       </h4>
                       <span className="text-[9px] font-bold text-amber-400 uppercase tracking-wider block">Admin Console</span>
                     </div>
@@ -1151,11 +1198,12 @@ export default function AdminModal({
                 {/* Drawer Vertical Nav List */}
                 <div className="flex-1 overflow-y-auto space-y-1">
                   {[
-                    { id: 'bundles', name: 'Reels Bundles', count: Math.min(50, bundles.length), icon: PackagePlus },
+                    { id: 'bundles', name: 'Reels Bundles', count: bundles.length, icon: PackagePlus },
                     { id: 'orders', name: 'Orders & Verify QR', count: orders.filter(o => o.status === 'PENDING_VERIFICATION').length, icon: Receipt, alert: orders.some(o => o.status === 'PENDING_VERIFICATION') },
                     { id: 'playstore', name: 'Google Play Console', icon: Smartphone },
                     { id: 'searchconsole', name: 'Google Search Console & SEO', icon: Search },
                     { id: 'announcement', name: 'Announcement & Popups', icon: BellRing },
+                    { id: 'offer', name: 'Header Special Offer', icon: Flame },
                     { id: 'maintenance', name: 'Maintenance Mode', icon: Wrench, alert: storeConfig.maintenanceMode },
                     { id: 'analytics', name: 'Google Analytics 4', icon: BarChart3 },
                     { id: 'visitors', name: 'Real Visitors Traffic', icon: Users },
@@ -1229,12 +1277,12 @@ export default function AdminModal({
             <div className="p-4 border-b border-slate-800/80 flex items-center justify-between shrink-0 bg-slate-950/40">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-slate-800/80 p-1 border border-slate-700/60 shadow-lg flex items-center justify-center shrink-0 group">
-                  <img src={storeConfig.favicon || storeConfig.logo || "/brand-icon.png"} alt={storeConfig.storeName || "DigiBundle"} className="w-8 h-8 object-contain transition-transform group-hover:scale-110" />
+                  <img src="/brand-icon.png" alt="Cheap Reels" className="w-8 h-8 object-contain transition-transform group-hover:scale-110" />
                 </div>
                 <div className="min-w-0">
                   <h4 className="text-sm font-black text-white leading-tight tracking-tight flex items-center gap-1.5">
-                    <span>Digi</span>
-                    <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent italic">Bundle</span>
+                    <span>Cheap</span>
+                    <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent italic">Reels</span>
                   </h4>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -1264,7 +1312,7 @@ export default function AdminModal({
                 <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-black ${
                   activeTab === 'bundles' ? 'bg-slate-950 text-amber-400' : 'bg-slate-800 text-slate-300'
                 }`}>
-                  {Math.min(50, bundles.length)}
+                  {bundles.length}
                 </span>
               </button>
 
@@ -1314,6 +1362,26 @@ export default function AdminModal({
                 </span>
               </button>
 
+              {/* 4. Special Offer Banner */}
+              <button
+                onClick={() => setActiveTab('offer')}
+                className={`whitespace-nowrap flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeTab === 'offer'
+                    ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 shadow-md'
+                    : 'text-slate-300 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <Tag className="w-4 h-4 shrink-0" />
+                  <span>Header Offer</span>
+                </div>
+                <span className={`px-1.5 py-0.5 rounded text-[9px] font-black ${
+                  storeConfig.specialOffer?.enabled !== false ? 'bg-emerald-500 text-white' : 'bg-slate-700 text-slate-300'
+                }`}>
+                  {storeConfig.specialOffer?.enabled !== false ? 'ACTIVE' : 'OFF'}
+                </span>
+              </button>
+
               {/* 5. Website Maintenance Mode (CLEAR TURN ON / TURN OFF CONTROLS) */}
               <button
                 onClick={() => setActiveTab('maintenance')}
@@ -1351,6 +1419,26 @@ export default function AdminModal({
                   storeConfig.googleAnalyticsId ? 'bg-emerald-500 text-white' : 'bg-slate-700 text-slate-300'
                 }`}>
                   {storeConfig.googleAnalyticsId ? 'CONNECTED' : 'OFF'}
+                </span>
+              </button>
+
+              {/* 6B. Telegram Bot Real-Time Alerts */}
+              <button
+                onClick={() => setActiveTab('telegram')}
+                className={`whitespace-nowrap flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  activeTab === 'telegram'
+                    ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 shadow-md'
+                    : 'text-slate-300 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <Send className="w-4 h-4 shrink-0 text-sky-400" />
+                  <span>Telegram Alerts</span>
+                </div>
+                <span className={`px-1.5 py-0.5 rounded text-[9px] font-black ${
+                  storeConfig.telegramAlerts?.botToken ? 'bg-sky-500 text-white animate-pulse' : 'bg-slate-700 text-slate-300'
+                }`}>
+                  {storeConfig.telegramAlerts?.botToken ? 'ACTIVE' : 'OFF'}
                 </span>
               </button>
 
@@ -1523,8 +1611,10 @@ export default function AdminModal({
                      activeTab === 'orders' ? '📑 Orders' :
                      activeTab === 'playstore' ? '📱 Play Store' :
                      activeTab === 'searchconsole' ? '🔍 Google SEO' :
+                     activeTab === 'telegram' ? '🔔 Telegram Alerts' :
                      activeTab === 'gateways' ? '💳 Gateways' :
                      activeTab === 'visitors' ? '👥 Visitors' :
+                     activeTab === 'offer' ? '🔥 Offer' :
                      activeTab === 'announcement' ? '🔔 Alerts' :
                      activeTab === 'maintenance' ? '🛠️ Mode' :
                      activeTab === 'branding' ? '🎨 Branding' : 
@@ -1563,8 +1653,10 @@ export default function AdminModal({
                   {activeTab === 'playstore' && 'Google Play Console Publishing & Android TWA Hub'}
                   {activeTab === 'searchconsole' && 'Google Search Console & SEO Indexing Hub'}
                   {activeTab === 'announcement' && 'Announcement Bar & Live Purchase Popups'}
+                  {activeTab === 'offer' && 'Header Special Offer Banner (Multiple Drive Links)'}
                   {activeTab === 'maintenance' && 'Website Maintenance Mode Controls'}
                   {activeTab === 'analytics' && 'Google Analytics 4 Direct Integration (No Code Needed)'}
+                  {activeTab === 'telegram' && 'Real-Time Telegram Bot Sales & Lead Notifications'}
                   {activeTab === 'visitors' && 'Real-Time Visitors & Store Traffic'}
                   {activeTab === 'branding' && 'Website Logos, Master Vault, Email & Passcode'}
                   {activeTab === 'gateways' && 'Payment Gateway Settings'}
@@ -1988,7 +2080,7 @@ export default function AdminModal({
                         const sendLinkWaUrl = `https://wa.me/${customerPhone}?text=${encodeURIComponent(
                           `🎉 *ORDER VERIFIED & APPROVED!* 🎉\n\n` +
                           `Hello *${ord.name || 'Customer'}*,\n` +
-                          `Your payment of *₹${ord.total || ord.amount}* (UTR: ${ord.utr}) for *${bundleTitle}* has been verified by the DigiBundle admin.\n\n` +
+                          `Your payment of *₹${ord.total || ord.amount}* (UTR: ${ord.utr}) for *${bundleTitle}* has been verified by the Cheap Reels admin.\n\n` +
                           `📁 *YOUR OFFICIAL GOOGLE DRIVE FOLDER ACCESS:*\n${driveUrl}\n\n` +
                           `Enjoy your 1080p Full HD watermark-free reels!`
                         )}`;
@@ -2102,7 +2194,7 @@ export default function AdminModal({
                               const sendLinkWaUrl = `https://wa.me/${customerPhone}?text=${encodeURIComponent(
                                 `🎉 *ORDER VERIFIED & APPROVED!* 🎉\n\n` +
                                 `Hello *${ord.name || 'Customer'}*,\n` +
-                                `Your payment of *₹${ord.total || ord.amount}* (UTR: ${ord.utr}) for *${bundleTitle}* has been verified by the DigiBundle admin.\n\n` +
+                                `Your payment of *₹${ord.total || ord.amount}* (UTR: ${ord.utr}) for *${bundleTitle}* has been verified by the Cheap Reels admin.\n\n` +
                                 `📁 *YOUR OFFICIAL GOOGLE DRIVE FOLDER ACCESS:*\n` +
                                 `${driveUrl}\n\n` +
                                 `Enjoy your 1080p Full HD watermark-free reels! Need more packs? Visit: http://localhost:5173/`
@@ -2395,6 +2487,228 @@ export default function AdminModal({
                     </div>
                   </div>
 
+                </div>
+              )}
+
+              {/* ==================================================== */}
+              {/* TAB 4: HEADER SPECIAL OFFER BANNER                   */}
+              {/* ==================================================== */}
+              {activeTab === 'offer' && (
+                <div className="max-w-3xl bg-white p-5 sm:p-6 rounded-3xl border border-slate-200 shadow-xs space-y-6">
+                  
+                  {/* Status Banner with End Offer Now Button */}
+                  <div className={`p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+                    storeConfig.specialOffer?.enabled !== false
+                      ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
+                      : 'bg-rose-50 border-rose-200 text-rose-900'
+                  }`}>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className={`w-2.5 h-2.5 rounded-full ${
+                          storeConfig.specialOffer?.enabled !== false ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'
+                        }`} />
+                        <h5 className="font-black text-xs uppercase tracking-wider">
+                          {storeConfig.specialOffer?.enabled !== false 
+                            ? 'Special Offer Status: LIVE ON WEBSITE' 
+                            : 'Special Offer Status: ENDED & HIDDEN FROM WEBSITE'}
+                        </h5>
+                      </div>
+                      <p className="text-xs mt-0.5 opacity-90">
+                        {storeConfig.specialOffer?.enabled !== false 
+                          ? 'This offer appears directly below the header on homepage.' 
+                          : 'Offer is currently hidden from all website visitors.'}
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={handleToggleOffer}
+                      className={`px-4 py-2 rounded-xl font-black text-xs shadow-xs transition cursor-pointer flex items-center justify-center gap-1.5 ${
+                        storeConfig.specialOffer?.enabled !== false
+                          ? 'bg-rose-600 hover:bg-rose-700 text-white'
+                          : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                      }`}
+                    >
+                      {storeConfig.specialOffer?.enabled !== false ? (
+                        <>
+                          <X className="w-3.5 h-3.5" />
+                          <span>End Offer Now</span>
+                        </>
+                      ) : (
+                        <>
+                          <Check className="w-3.5 h-3.5" />
+                          <span>Re-Activate Offer</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Title & Badge */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-800 mb-1">Offer Title</label>
+                      <input
+                        type="text"
+                        value={storeConfig.specialOffer?.title || ''}
+                        onChange={(e) => setStoreConfig({
+                          ...storeConfig,
+                          specialOffer: { ...storeConfig.specialOffer, title: e.target.value }
+                        })}
+                        className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-800 mb-1">Badge</label>
+                      <input
+                        type="text"
+                        value={storeConfig.specialOffer?.badge || ''}
+                        onChange={(e) => setStoreConfig({
+                          ...storeConfig,
+                          specialOffer: { ...storeConfig.specialOffer, badge: e.target.value }
+                        })}
+                        className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Subtitle */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-800 mb-1">Subtitle / Pitch</label>
+                    <input
+                      type="text"
+                      value={storeConfig.specialOffer?.subtitle || ''}
+                      onChange={(e) => setStoreConfig({
+                        ...storeConfig,
+                        specialOffer: { ...storeConfig.specialOffer, subtitle: e.target.value }
+                      })}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-700 font-medium"
+                    />
+                  </div>
+
+                  {/* Pricing */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-800 mb-1">Offer Price (₹)</label>
+                      <input
+                        type="number"
+                        value={storeConfig.specialOffer?.price || 199}
+                        onChange={(e) => setStoreConfig({
+                          ...storeConfig,
+                          specialOffer: { ...storeConfig.specialOffer, price: Number(e.target.value) }
+                        })}
+                        className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-black text-slate-900"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-800 mb-1">Original Price (₹)</label>
+                      <input
+                        type="number"
+                        value={storeConfig.specialOffer?.originalPrice || 2999}
+                        onChange={(e) => setStoreConfig({
+                          ...storeConfig,
+                          specialOffer: { ...storeConfig.specialOffer, originalPrice: Number(e.target.value) }
+                        })}
+                        className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-600"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Offer Thumbnail Upload (Bigger & Prominent) */}
+                  <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                    <label className="block text-xs font-black text-slate-900">
+                      Offer Photo (Auto-fits Banner cleanly)
+                    </label>
+                    <div className="flex flex-col sm:flex-row items-center gap-4">
+                      <div className="w-full sm:w-32 h-24 bg-slate-900 rounded-xl overflow-hidden flex items-center justify-center border border-slate-300 shrink-0">
+                        <img 
+                          src={storeConfig.specialOffer?.thumbnail || '/logo.png'} 
+                          alt="" 
+                          className="max-w-full max-h-full object-contain"
+                        />
+                      </div>
+                      <div className="space-y-1.5 flex-1 w-full">
+                        <label className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition">
+                          <Upload className="w-3.5 h-3.5 text-amber-400" />
+                          <span>Upload Banner Image</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleImageFileUpload(e, 'offer')}
+                            className="hidden"
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Or paste image URL..."
+                          value={storeConfig.specialOffer?.thumbnail || ''}
+                          onChange={(e) => setStoreConfig({
+                            ...storeConfig,
+                            specialOffer: { ...storeConfig.specialOffer, thumbnail: e.target.value }
+                          })}
+                          className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* MULTIPLE GOOGLE DRIVE LINKS MANAGER */}
+                  <div className="p-4 bg-amber-50/60 border border-amber-300 rounded-2xl space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div>
+                        <h5 className="text-xs font-black text-slate-900 flex items-center gap-1.5">
+                          <FolderOpen className="w-4 h-4 text-amber-600" />
+                          <span>Multiple Google Drive Download Links</span>
+                        </h5>
+                        <p className="text-[11px] text-slate-600 mt-0.5">
+                          Add multiple drive folder links so buyers receive all parts automatically.
+                        </p>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={handleAddOfferDriveLink}
+                        className="px-3 py-1.5 bg-slate-900 hover:bg-black text-white rounded-xl text-xs font-bold flex items-center gap-1 shadow-xs cursor-pointer self-start sm:self-auto"
+                      >
+                        <Plus className="w-3.5 h-3.5 text-amber-400" />
+                        <span>Add Drive Link</span>
+                      </button>
+                    </div>
+
+                    <div className="space-y-2.5">
+                      {(storeConfig.specialOffer?.driveLinks || []).map((linkItem, idx) => (
+                        <div key={linkItem.id} className="p-3 bg-white rounded-xl border border-amber-200 shadow-xs flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                          <div className="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
+                            {idx + 1}
+                          </div>
+                          
+                          <input
+                            type="text"
+                            placeholder="Link Title"
+                            value={linkItem.label}
+                            onChange={(e) => handleUpdateOfferDriveLink(linkItem.id, 'label', e.target.value)}
+                            className="w-full sm:w-1/3 px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-900"
+                          />
+
+                          <input
+                            type="text"
+                            placeholder="Drive link..."
+                            value={linkItem.url}
+                            onChange={(e) => handleUpdateOfferDriveLink(linkItem.id, 'url', e.target.value)}
+                            className="w-full sm:flex-1 px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-mono text-amber-800"
+                          />
+
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveOfferDriveLink(linkItem.id)}
+                            className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 cursor-pointer shrink-0 self-end sm:self-auto"
+                            title="Remove Link"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -2766,7 +3080,7 @@ export default function AdminModal({
                             value={storeConfig.supportEmail || ''}
                             onChange={(e) => setStoreConfig({ ...storeConfig, supportEmail: e.target.value })}
                             className="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900"
-                            placeholder="support@digibundle.in"
+                            placeholder="reelscheap@gmail.com"
                           />
                         </div>
                       </div>
@@ -2809,7 +3123,7 @@ export default function AdminModal({
                       </h4>
                     </div>
                     <p className="text-xs text-slate-500">
-                      Connect your Google Analytics Measurement ID here. DigiBundle automatically loads the official tracking code across the whole website—<strong>zero code copy-pasting required</strong>!
+                      Connect your Google Analytics Measurement ID here. Cheap Reels automatically loads the official tracking code across the whole website—<strong>zero code copy-pasting required</strong>!
                     </p>
                   </div>
 
@@ -2890,6 +3204,255 @@ export default function AdminModal({
               )}
 
               {/* ==================================================== */}
+              {/* TAB 6B: REAL-TIME TELEGRAM BOT NOTIFICATIONS         */}
+              {/* ==================================================== */}
+              {activeTab === 'telegram' && (
+                <div className="max-w-2xl bg-white p-5 sm:p-6 rounded-3xl border border-slate-200 shadow-xs space-y-6">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <Send className="w-5 h-5 text-sky-500" />
+                      <h4 className="text-base font-black text-slate-900">
+                        Telegram Real-Time Bot Alerts
+                      </h4>
+                    </div>
+                    <p className="text-xs text-slate-500">
+                      Receive instant notifications directly on your Telegram phone app whenever a customer places an order, completes payment (UPI/Cashfree), or enters the checkout page!
+                    </p>
+                  </div>
+
+                  {/* Status Card */}
+                  <div className={`p-4 rounded-2xl border flex items-center justify-between gap-3 ${
+                    storeConfig.telegramAlerts?.botToken && storeConfig.telegramAlerts?.chatId
+                      ? 'bg-sky-50 border-sky-300 text-sky-950'
+                      : 'bg-slate-50 border-slate-200 text-slate-700'
+                  }`}>
+                    <div className="flex items-center gap-2.5">
+                      <span className={`w-3 h-3 rounded-full ${
+                        storeConfig.telegramAlerts?.botToken && storeConfig.telegramAlerts?.chatId
+                          ? 'bg-sky-500 animate-pulse'
+                          : 'bg-slate-400'
+                      }`} />
+                      <div>
+                        <span className="text-xs font-black uppercase tracking-wider block">
+                          {storeConfig.telegramAlerts?.botToken && storeConfig.telegramAlerts?.chatId
+                            ? 'Telegram Bot Connected & Alerting'
+                            : 'Bot Not Connected'}
+                        </span>
+                        <span className="text-[11px] font-mono text-slate-500">
+                          {storeConfig.telegramAlerts?.chatId
+                            ? `Chat ID: ${storeConfig.telegramAlerts.chatId}`
+                            : 'Enter Bot Token and Chat ID below'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {storeConfig.telegramAlerts?.botToken && storeConfig.telegramAlerts?.chatId && (
+                      <button
+                        type="button"
+                        onClick={handleSendTestTelegramAlert}
+                        disabled={isSendingTelegramTest}
+                        className="px-3 py-1.5 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-bold shadow-xs cursor-pointer flex items-center gap-1.5 disabled:opacity-50"
+                      >
+                        {isSendingTelegramTest ? (
+                          <>
+                            <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                            <span>Sending...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Send className="w-3.5 h-3.5" />
+                            <span>Send Test Alert</span>
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Settings Form */}
+                  <form onSubmit={handleSaveTelegramAlerts} className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
+                    {/* Bot Token Field */}
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-xs font-black text-slate-900 uppercase tracking-wider">
+                          Telegram Bot API Token
+                        </label>
+                        <a
+                          href="https://t.me/BotFather"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[11px] font-bold text-sky-600 hover:underline flex items-center gap-1"
+                        >
+                          <span>Get from @BotFather</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
+                      <div className="relative">
+                        <input
+                          type={showTelegramBotToken ? 'text' : 'password'}
+                          placeholder="e.g. 7123456789:AAH_your_bot_token_here"
+                          value={storeConfig.telegramAlerts?.botToken || ''}
+                          onChange={(e) => setStoreConfig({
+                            ...storeConfig,
+                            telegramAlerts: {
+                              ...(storeConfig.telegramAlerts || {}),
+                              botToken: e.target.value.trim()
+                            }
+                          })}
+                          className="w-full px-4 py-2.5 pr-10 bg-white border border-slate-300 rounded-xl text-xs font-mono font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowTelegramBotToken(!showTelegramBotToken)}
+                          className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600"
+                        >
+                          {showTelegramBotToken ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Chat ID Field */}
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-xs font-black text-slate-900 uppercase tracking-wider">
+                          Your Personal Telegram Chat ID
+                        </label>
+                        <a
+                          href="https://t.me/userinfobot"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[11px] font-bold text-sky-600 hover:underline flex items-center gap-1"
+                        >
+                          <span>Find via @userinfobot</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="e.g. 1234567890"
+                        value={storeConfig.telegramAlerts?.chatId || ''}
+                        onChange={(e) => setStoreConfig({
+                          ...storeConfig,
+                          telegramAlerts: {
+                            ...(storeConfig.telegramAlerts || {}),
+                            chatId: e.target.value.trim()
+                          }
+                        })}
+                        className="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-xl text-xs font-mono font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      />
+                      <p className="text-[11px] text-slate-500 mt-1">
+                        Send any message to <strong>@userinfobot</strong> on Telegram to instantly get your personal numerical Id.
+                      </p>
+                    </div>
+
+                    {/* Alert Preference Checkboxes */}
+                    <div className="pt-2 border-t border-slate-200 space-y-2">
+                      <span className="text-[11px] font-black text-slate-700 uppercase tracking-wider block">
+                        Alert Types & Preferences
+                      </span>
+
+                      <label className="flex items-start gap-2.5 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={storeConfig.telegramAlerts?.notifyOnSale !== false}
+                          onChange={(e) => setStoreConfig({
+                            ...storeConfig,
+                            telegramAlerts: {
+                              ...(storeConfig.telegramAlerts || {}),
+                              notifyOnSale: e.target.checked
+                            }
+                          })}
+                          className="mt-0.5 rounded text-sky-600 focus:ring-sky-500"
+                        />
+                        <div>
+                          <span className="text-xs font-bold text-slate-900 block">
+                            💰 Instant Sale & Customer Delivery Alerts
+                          </span>
+                          <span className="text-[11px] text-slate-500 block">
+                            Sends complete customer name, phone number, bundle title, amount, payment mode (UPI/Cashfree) and UTR number.
+                          </span>
+                        </div>
+                      </label>
+
+                      <label className="flex items-start gap-2.5 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={storeConfig.telegramAlerts?.notifyOnCheckout !== false}
+                          onChange={(e) => setStoreConfig({
+                            ...storeConfig,
+                            telegramAlerts: {
+                              ...(storeConfig.telegramAlerts || {}),
+                              notifyOnCheckout: e.target.checked
+                            }
+                          })}
+                          className="mt-0.5 rounded text-sky-600 focus:ring-sky-500"
+                        />
+                        <div>
+                          <span className="text-xs font-bold text-slate-900 block">
+                            👀 Live Checkout Intent Alerts (Leads)
+                          </span>
+                          <span className="text-[11px] text-slate-500 block">
+                            Sends notification when a buyer clicks Buy Now and views checkout options on Mobile or PC.
+                          </span>
+                        </div>
+                      </label>
+                    </div>
+
+                    {/* Submit & Disconnect */}
+                    <div className="flex items-center justify-between pt-2">
+                      {storeConfig.telegramAlerts?.botToken ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const updated = {
+                              ...storeConfig,
+                              telegramAlerts: {
+                                enabled: false,
+                                botToken: '',
+                                chatId: '',
+                                notifyOnSale: true,
+                                notifyOnCheckout: true
+                              }
+                            };
+                            setStoreConfig(updated);
+                            handleSaveStoreConfig(updated);
+                            showNotification('Telegram Bot disconnected.');
+                          }}
+                          className="text-xs font-bold text-rose-600 hover:underline cursor-pointer"
+                        >
+                          Disconnect Bot
+                        </button>
+                      ) : <div />}
+
+                      <button
+                        type="submit"
+                        className="px-5 py-2.5 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-xs rounded-xl shadow-xs hover:brightness-105 transition cursor-pointer flex items-center gap-1.5"
+                      >
+                        <Send className="w-3.5 h-3.5" />
+                        <span>Save & Activate Bot</span>
+                      </button>
+                    </div>
+                  </form>
+
+                  {/* 1-Minute Quick Guide */}
+                  <div className="p-4 bg-slate-900 text-white rounded-2xl border border-slate-800 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <HelpCircle className="w-4 h-4 text-sky-400" />
+                      <span className="text-xs font-black text-sky-400 uppercase tracking-wider">
+                        1-Minute Bot Setup Guide
+                      </span>
+                    </div>
+                    <ol className="text-xs text-slate-300 space-y-1.5 list-decimal pl-4">
+                      <li>Open Telegram and search for <strong>@BotFather</strong>.</li>
+                      <li>Send <code>/newbot</code>, choose a bot name & username ending in <code>_bot</code>.</li>
+                      <li>Copy the <strong>HTTP API Token</strong> and paste into the <em>Bot API Token</em> field above.</li>
+                      <li>Search for <strong>@userinfobot</strong> on Telegram, click Start, and copy your personal numerical <strong>Id</strong> into <em>Chat ID</em> above.</li>
+                      <li>Click <strong>Save & Activate Bot</strong>, then click <strong>Send Test Alert</strong> to verify!</li>
+                    </ol>
+                  </div>
+                </div>
+              )}
+
+              {/* ==================================================== */}
               {/* TAB 7: REAL WEBSITE TRAFFIC & VISITORS               */}
               {/* ==================================================== */}
               {activeTab === 'visitors' && (
@@ -2938,7 +3501,7 @@ export default function AdminModal({
                     {/* 1. Brand Icon */}
                     <div className="p-3 bg-slate-50 border border-slate-200/80 rounded-2xl flex flex-col items-center text-center">
                       <div className="w-12 h-12 rounded-xl bg-white p-1 border border-slate-200 shadow-xs flex items-center justify-center mb-2">
-                        <img src={storeConfig.favicon || "/brand-icon.png"} alt="Brand Icon" className="w-10 h-10 object-contain" />
+                        <img src="/brand-icon.png" alt="Brand Icon" className="w-10 h-10 object-contain" />
                       </div>
                       <span className="text-[11px] font-bold text-slate-800">Brand Icon</span>
                       <span className="text-[9px] font-semibold text-slate-400 mt-0.5">512x512 PNG / SVG</span>
@@ -2947,7 +3510,7 @@ export default function AdminModal({
                     {/* 2. Light Logo */}
                     <div className="p-3 bg-slate-50 border border-slate-200/80 rounded-2xl flex flex-col items-center text-center">
                       <div className="w-full h-12 rounded-xl bg-white p-1 border border-slate-200 shadow-xs flex items-center justify-center mb-2 px-2">
-                        <img src={storeConfig.logo || "/logo.png"} alt="Light Logo" className="max-h-8 max-w-full object-contain" />
+                        <img src="/logo.png" alt="Light Logo" className="max-h-8 max-w-full object-contain" />
                       </div>
                       <span className="text-[11px] font-bold text-slate-800">Light Logo</span>
                       <span className="text-[9px] font-semibold text-slate-400 mt-0.5">For Light Header</span>
@@ -2956,7 +3519,7 @@ export default function AdminModal({
                     {/* 3. Dark Logo */}
                     <div className="p-3 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col items-center text-center">
                       <div className="w-full h-12 rounded-xl bg-slate-950 p-1 border border-slate-800 shadow-xs flex items-center justify-center mb-2 px-2">
-                        <img src={storeConfig.footerLogo || "/logo-dark.png"} alt="Dark Logo" className="max-h-8 max-w-full object-contain" />
+                        <img src="/logo-dark.png" alt="Dark Logo" className="max-h-8 max-w-full object-contain" />
                       </div>
                       <span className="text-[11px] font-bold text-white">Dark Logo</span>
                       <span className="text-[9px] font-semibold text-slate-400 mt-0.5">Transparent PNG</span>
@@ -2975,192 +3538,88 @@ export default function AdminModal({
                     </div>
                   </div>
 
-                  {/* 1. Website Header Logo Configuration (Dynamic URL + Upload) */}
-                  <div className="p-4 bg-amber-50/70 border border-amber-200 rounded-2xl space-y-3">
-                    <div className="flex items-center justify-between">
-                      <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider">
-                        Website Header Logo (Light Version)
-                      </label>
-                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-full">
-                        Dynamic Logo
-                      </span>
-                    </div>
-
+                  {/* 1. Website Header Logo Upload */}
+                  <div className="p-4 bg-amber-50/70 border border-amber-200 rounded-2xl">
+                    <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
+                      Website Header Logo (Light Version)
+                    </label>
                     <div className="flex flex-col sm:flex-row items-center gap-4">
-                      <div className="w-full sm:w-40 h-16 bg-white rounded-2xl border border-amber-300 flex items-center justify-center p-2 shadow-sm shrink-0 overflow-hidden">
+                      <div className="w-full sm:w-36 h-16 bg-white rounded-2xl border border-amber-300 flex items-center justify-center p-2 shadow-sm shrink-0">
                         <img 
                           src={storeConfig.logo || '/logo.png'} 
                           alt="Store Logo" 
                           className="max-w-full max-h-full object-contain"
-                          onError={(e) => { e.currentTarget.src = '/logo.png'; }}
                         />
                       </div>
 
-                      <div className="space-y-2 flex-1 w-full">
-                        <input
-                          type="text"
-                          value={storeConfig.logo || ''}
-                          onChange={(e) => {
-                            const updated = { ...storeConfig, logo: e.target.value };
-                            setStoreConfig(updated);
-                            handleSaveStoreConfig(updated);
-                          }}
-                          placeholder="Logo image URL or file path (e.g. /logo.png or https://...)"
-                          className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-medium text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400"
-                        />
-
-                        <div className="flex items-center gap-2">
-                          <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition">
-                            <Upload className="w-3.5 h-3.5 text-amber-400" />
-                            <span>Upload File</span>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={handleLogoUpload}
-                              className="hidden"
-                            />
-                          </label>
-
-                          <button
-                            type="button"
-                            onClick={() => {
-                              const updated = { ...storeConfig, logo: '/logo.png' };
-                              setStoreConfig(updated);
-                              handleSaveStoreConfig(updated);
-                              showNotification('Logo reset to default!');
-                            }}
-                            className="px-2.5 py-1.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-xl text-xs font-bold transition cursor-pointer"
-                          >
-                            Reset Default
-                          </button>
-                        </div>
+                      <div className="space-y-1.5 flex-1 w-full">
+                        <label className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition">
+                          <Upload className="w-3.5 h-3.5 text-amber-400" />
+                          <span>Upload Header Logo</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleLogoUpload}
+                            className="hidden"
+                          />
+                        </label>
                       </div>
                     </div>
                   </div>
 
-                  {/* 2. Website Footer Logo Configuration (Dynamic URL + Upload) */}
-                  <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-                    <div className="flex items-center justify-between">
-                      <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider">
-                        Website Footer Logo (Dark Version)
-                      </label>
-                      <span className="text-[10px] font-bold text-slate-700 bg-slate-200 px-2 py-0.5 rounded-full">
-                        Dynamic Logo
-                      </span>
-                    </div>
-
+                  {/* 2. Website Footer Logo Upload */}
+                  <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+                    <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
+                      Website Footer Logo (Dark Version)
+                    </label>
                     <div className="flex flex-col sm:flex-row items-center gap-4">
-                      <div className="w-full sm:w-40 h-16 bg-slate-950 rounded-2xl border border-slate-300 flex items-center justify-center p-2 shadow-sm shrink-0 overflow-hidden">
+                      <div className="w-full sm:w-36 h-16 bg-slate-950 rounded-2xl border border-slate-300 flex items-center justify-center p-2 shadow-sm shrink-0">
                         <img 
                           src={storeConfig.footerLogo || '/logo-dark.png'} 
                           alt="Footer Logo" 
                           className="max-w-full max-h-full object-contain"
-                          onError={(e) => { e.currentTarget.src = '/logo-dark.png'; }}
                         />
                       </div>
 
-                      <div className="space-y-2 flex-1 w-full">
-                        <input
-                          type="text"
-                          value={storeConfig.footerLogo || ''}
-                          onChange={(e) => {
-                            const updated = { ...storeConfig, footerLogo: e.target.value };
-                            setStoreConfig(updated);
-                            handleSaveStoreConfig(updated);
-                          }}
-                          placeholder="Footer logo image URL or file path (e.g. /logo-dark.png or https://...)"
-                          className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-medium text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400"
-                        />
-
-                        <div className="flex items-center gap-2">
-                          <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition">
-                            <Upload className="w-3.5 h-3.5 text-amber-400" />
-                            <span>Upload File</span>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={handleFooterLogoUpload}
-                              className="hidden"
-                            />
-                          </label>
-
-                          <button
-                            type="button"
-                            onClick={() => {
-                              const updated = { ...storeConfig, footerLogo: '/logo-dark.png' };
-                              setStoreConfig(updated);
-                              handleSaveStoreConfig(updated);
-                              showNotification('Footer logo reset to default!');
-                            }}
-                            className="px-2.5 py-1.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-xl text-xs font-bold transition cursor-pointer"
-                          >
-                            Reset Default
-                          </button>
-                        </div>
+                      <div className="space-y-1.5 flex-1 w-full">
+                        <label className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition">
+                          <Upload className="w-3.5 h-3.5 text-amber-400" />
+                          <span>Upload Footer Logo</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFooterLogoUpload}
+                            className="hidden"
+                          />
+                        </label>
                       </div>
                     </div>
                   </div>
 
-                  {/* 3. Browser Tab Favicon Icon Configuration (Dynamic URL + Upload) */}
-                  <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-                    <div className="flex items-center justify-between">
-                      <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider">
-                        Browser Tab Favicon Icon
-                      </label>
-                      <span className="text-[10px] font-bold text-slate-700 bg-slate-200 px-2 py-0.5 rounded-full">
-                        Dynamic Icon
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row items-center gap-4">
-                      <div className="w-12 h-12 bg-white rounded-xl border border-slate-300 flex items-center justify-center p-1.5 shadow-sm shrink-0 overflow-hidden">
+                  {/* 3. Favicon Upload */}
+                  <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+                    <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
+                      Browser Tab Favicon Icon
+                    </label>
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-white rounded-xl border border-slate-300 flex items-center justify-center p-1.5 shadow-sm shrink-0">
                         <img 
                           src={storeConfig.favicon || '/brand-icon.png'} 
                           alt="Favicon" 
                           className="max-w-full max-h-full object-contain"
-                          onError={(e) => { e.currentTarget.src = '/brand-icon.png'; }}
                         />
                       </div>
 
-                      <div className="space-y-2 flex-1 w-full">
+                      <label className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition">
+                        <Upload className="w-3.5 h-3.5 text-amber-400" />
+                        <span>Upload Favicon</span>
                         <input
-                          type="text"
-                          value={storeConfig.favicon || ''}
-                          onChange={(e) => {
-                            const updated = { ...storeConfig, favicon: e.target.value };
-                            setStoreConfig(updated);
-                            handleSaveStoreConfig(updated);
-                          }}
-                          placeholder="Favicon image URL or file path (e.g. /brand-icon.png or https://...)"
-                          className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-medium text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400"
+                          type="file"
+                          accept="image/*"
+                          onChange={handleFaviconUpload}
+                          className="hidden"
                         />
-
-                        <div className="flex items-center gap-2">
-                          <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition">
-                            <Upload className="w-3.5 h-3.5 text-amber-400" />
-                            <span>Upload File</span>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={handleFaviconUpload}
-                              className="hidden"
-                            />
-                          </label>
-
-                          <button
-                            type="button"
-                            onClick={() => {
-                              const updated = { ...storeConfig, favicon: '/brand-icon.png' };
-                              setStoreConfig(updated);
-                              handleSaveStoreConfig(updated);
-                              showNotification('Favicon reset to default!');
-                            }}
-                            className="px-2.5 py-1.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-xl text-xs font-bold transition cursor-pointer"
-                          >
-                            Reset Default
-                          </button>
-                        </div>
-                      </div>
+                      </label>
                     </div>
                   </div>
 
@@ -3196,16 +3655,16 @@ export default function AdminModal({
                     </div>
                   </div>
 
-                  {/* 5. Support Email (support@digibundle.in) */}
+                  {/* 5. Support Email (reelscheap@gmail.com) */}
                   <div>
                     <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
                       Store Support Email
                     </label>
                     <input
                       type="email"
-                      value={storeConfig.supportEmail || 'support@digibundle.in'}
+                      value={storeConfig.supportEmail || 'reelscheap@gmail.com'}
                       onChange={(e) => setStoreConfig({ ...storeConfig, supportEmail: e.target.value })}
-                      placeholder="support@digibundle.in"
+                      placeholder="reelscheap@gmail.com"
                       className="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                     />
                   </div>
@@ -3776,7 +4235,7 @@ export default function AdminModal({
                           </label>
                           <input
                             type="text"
-                            value={storeConfig.upiId || 'digibundle@upi'}
+                            value={storeConfig.upiId || 'cheapreels@upi'}
                             onChange={(e) => setStoreConfig({ 
                               ...storeConfig, 
                               upiId: e.target.value.trim(),
@@ -3792,7 +4251,7 @@ export default function AdminModal({
                           </label>
                           <input
                             type="text"
-                            value={storeConfig.upiName || 'DigiBundle'}
+                            value={storeConfig.upiName || 'Cheap Reels'}
                             onChange={(e) => setStoreConfig({ 
                               ...storeConfig, 
                               upiName: e.target.value,

@@ -35,6 +35,7 @@ import { realtimeSync } from './utils/realtimeSync';
 import { isSecretAdminRoute } from './utils/security';
 import { trackPageView, trackHeartbeat, isBot } from './utils/trafficTracker';
 import { createAuditLogEntry } from './utils/auditLogger';
+import { sendTelegramOrderAlert, sendTelegramCheckoutIntentAlert } from './utils/telegramAlerts';
 
 // Helper to identify and discard demo/test orders from legacy local storage or test runs
 const isDemoOrder = (o) => {
@@ -54,8 +55,8 @@ export default function App() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (parsed.storeName === "DigiBundle Store" || !parsed.storeName) {
-          parsed.storeName = "DigiBundle";
+        if (parsed.storeName === "Cheap Reels Store" || !parsed.storeName) {
+          parsed.storeName = "Cheap Reels";
         }
         return {
           ...initialConfig,
@@ -68,9 +69,7 @@ export default function App() {
           paypal: { ...initialConfig.paypal, ...(parsed.paypal || {}) },
           upiGateway: { ...initialConfig.upiGateway, ...(parsed.upiGateway || {}) },
           specialOffer: parsed.specialOffer || initialConfig.specialOffer,
-          logo: parsed.logo || initialConfig.logo,
-          footerLogo: parsed.footerLogo || initialConfig.footerLogo,
-          favicon: parsed.favicon || initialConfig.favicon
+          logo: parsed.logo || initialConfig.logo
         };
       } catch (e) {}
     }
@@ -82,18 +81,12 @@ export default function App() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          const valid = parsed.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega').slice(0, 50);
-          if (valid.length > 0) {
-            localStorage.setItem('cheap_reels_bundles_v5', JSON.stringify(valid));
-            return valid;
-          }
+        if (parsed && parsed.length > 50) {
+          return parsed.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega');
         }
       } catch (e) {}
     }
-    const fallback = initialBundles.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega').slice(0, 50);
-    try { localStorage.setItem('cheap_reels_bundles_v5', JSON.stringify(fallback)); } catch (e) {}
-    return fallback;
+    return initialBundles.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega');
   });
 
   const [orders, setOrders] = useState(() => {
@@ -152,7 +145,7 @@ export default function App() {
         time: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
         type: 'SYSTEM',
         title: 'Storefront Active',
-        detail: 'DigiBundle Storefront & Admin Panel online with live sync.'
+        detail: 'Cheap Reels Storefront & Admin Panel online with live sync.'
       }
     ];
   });
@@ -171,7 +164,7 @@ export default function App() {
     }
 
     // 1. Initial Page View Tracking via first-party analytics engine
-    trackPageView(window.location.pathname || '/', document.title || 'DigiBundle Store');
+    trackPageView(window.location.pathname || '/', document.title || 'Cheap Reels Store');
 
     // 2. Active Visitor Heartbeat Timer (runs every 10 seconds while tab is active)
     const heartbeatTimer = setInterval(() => {
@@ -191,7 +184,7 @@ export default function App() {
     // 4. SPA Route changes listener
     const handlePopState = () => {
       if (!isSecretAdminRoute(window.location.pathname) && !window.location.pathname.includes('admin')) {
-        trackPageView(window.location.pathname || '/', document.title || 'DigiBundle Store');
+        trackPageView(window.location.pathname || '/', document.title || 'Cheap Reels Store');
       }
     };
     window.addEventListener('popstate', handlePopState);
@@ -354,7 +347,7 @@ export default function App() {
   }, [config.favicon]);
 
   useEffect(() => {
-    document.title = `${config.storeName || 'DigiBundle'} | Premium 1080p Ready-to-Post HD Reels Bundles`;
+    document.title = `${config.storeName || 'Cheap Reels'} | Premium 1080p Ready-to-Post HD Reels Bundles`;
   }, [config.storeName]);
 
   // Dynamic Google Analytics 4 Loader (No code copy-pasting required)
@@ -402,6 +395,28 @@ export default function App() {
       }
     }
 
+    // Dynamic Bing Webmaster Tools Verification Meta Tag
+    const rawBingTag = (config?.bingVerificationTag || '').trim();
+    if (rawBingTag) {
+      let bingCode = rawBingTag;
+      const bingMatch = rawBingTag.match(/content=["']([^"']+)["']/i);
+      if (bingMatch && bingMatch[1]) {
+        bingCode = bingMatch[1];
+      } else {
+        bingCode = rawBingTag.replace(/^msvalidate\.01=/, '').replace(/^<meta.*?>/, '').trim();
+      }
+
+      if (bingCode) {
+        let bingMeta = document.querySelector('meta[name="msvalidate.01"]');
+        if (!bingMeta) {
+          bingMeta = document.createElement('meta');
+          bingMeta.setAttribute('name', 'msvalidate.01');
+          document.head.appendChild(bingMeta);
+        }
+        bingMeta.setAttribute('content', bingCode);
+      }
+    }
+
     // Dynamic SEO Title
     if (config?.seoTitle) {
       document.title = config.seoTitle;
@@ -428,7 +443,25 @@ export default function App() {
       }
       kwMeta.setAttribute('content', config.seoKeywords);
     }
-  }, [config?.googleSearchConsoleTag, config?.seoTitle, config?.seoDescription, config?.seoKeywords]);
+  }, [config?.googleSearchConsoleTag, config?.bingVerificationTag, config?.seoTitle, config?.seoDescription, config?.seoKeywords]);
+
+  // Real-Time Telegram Alert for High-Intent Checkout Visits (Lead Alerts)
+  useEffect(() => {
+    if (isCheckoutOpen && checkoutItems && checkoutItems.length > 0) {
+      const totalAmount = checkoutItems.reduce((acc, curr) => acc + (curr.price || 0), 0);
+      try {
+        sendTelegramCheckoutIntentAlert({
+          items: checkoutItems,
+          totalAmount,
+          visitorIp: currentVisitorIp,
+          isMobile: isMobileDevice,
+          config
+        });
+      } catch (e) {
+        console.warn('Telegram checkout intent alert warning:', e);
+      }
+    }
+  }, [isCheckoutOpen, checkoutItems, currentVisitorIp, isMobileDevice, config]);
 
   // Filter & Search states
   const [activeCategory, setActiveCategory] = useState('all');
@@ -474,16 +507,23 @@ export default function App() {
 
       const isSecretMatch = candidates.some(cand => isSecretAdminRoute(cand)) || 
                             window.location.pathname.toLowerCase().includes('buderiya') ||
-                            window.location.hash.toLowerCase().includes('buderiya') ||
-                            candidates.some(c => c === 'admin' || c.startsWith('admin/')) ||
-                            window.location.pathname.toLowerCase().includes('/admin') ||
-                            window.location.hash.toLowerCase().includes('admin');
+                            window.location.hash.toLowerCase().includes('buderiya');
 
       if (!isMounted) return;
 
       if (isSecretMatch) {
         setIsAdminOpen(true);
         setIsAdminDecoyOpen(false);
+      } else if (candidates.some(c => c === 'admin' || c.startsWith('admin/'))) {
+        setIsAdminOpen(false);
+        setIsAdminDecoyOpen(true);
+        logUserActivity('SECURITY_DECOY_TRIGGERED', 'Honeypot Decoy Triggered', 'Unauthorized access probe to /admin detected. Presented high-tech hacker decoy console.', {
+          category: 'SECURITY',
+          actorType: 'Guest',
+          status: 'Warning',
+          targetEntity: 'SecurityVault',
+          targetId: '/admin'
+        });
       } else {
         setIsAdminOpen(false);
         setIsAdminDecoyOpen(false);
@@ -567,16 +607,17 @@ export default function App() {
           showTopBanner: cloudData.config.showTopBanner !== undefined ? cloudData.config.showTopBanner : prev.showTopBanner,
           showPurchasePopup: cloudData.config.showPurchasePopup !== undefined ? cloudData.config.showPurchasePopup : prev.showPurchasePopup,
           upiId: cloudData.config.upiId || prev.upiId,
-          upiName: cloudData.config.upiName || prev.upiName
+          upiName: cloudData.config.upiName || prev.upiName,
+          telegramAlerts: cloudData.config.telegramAlerts ? { ...(prev.telegramAlerts || {}), ...cloudData.config.telegramAlerts } : prev.telegramAlerts
         };
         try { localStorage.setItem('cheap_reels_config_v2', JSON.stringify(merged)); } catch (e) {}
         return merged;
       });
     }
 
-    // 2. Bundles Catalog Sync (strictly capped to 50 curated bundles)
+    // 2. Bundles Catalog Sync
     if (cloudData.bundles && Array.isArray(cloudData.bundles) && cloudData.bundles.length > 0) {
-      const cleanedBundles = cloudData.bundles.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega').slice(0, 50);
+      const cleanedBundles = cloudData.bundles.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega');
       try { localStorage.setItem('cheap_reels_bundles_v5', JSON.stringify(cleanedBundles)); } catch (e) {}
       setBundles(cleanedBundles);
     }
@@ -721,11 +762,10 @@ export default function App() {
   };
 
   const handleUpdateBundles = async (newBundles) => {
-    const capped = (newBundles || []).slice(0, 50);
-    setBundles(capped);
-    try { localStorage.setItem('cheap_reels_bundles_v5', JSON.stringify(capped)); } catch (e) {}
+    setBundles(newBundles);
+    try { localStorage.setItem('cheap_reels_bundles_v5', JSON.stringify(newBundles)); } catch (e) {}
     try {
-      await realtimeSync.pushUpdate({ config, bundles: capped, orders, visitorStats, activityLogs, updateType: 'BUNDLES_UPDATED' });
+      await realtimeSync.pushUpdate({ config, bundles: newBundles, orders, visitorStats, activityLogs, updateType: 'BUNDLES_UPDATED' });
     } catch (e) {
       console.warn('Realtime sync bundles push warning:', e);
     }
@@ -845,6 +885,13 @@ export default function App() {
       realtimeSync.pushUpdate({ orders: updatedOrders, config, bundles, visitorStats, activityLogs, updateType: 'ORDERS_UPDATED' });
     } catch (e) {
       console.warn('Auto order realtime sync warning:', e);
+    }
+
+    // Instantly send Real-Time Telegram Order Alert with Full Customer & Payment Details
+    try {
+      sendTelegramOrderAlert(securedOrder, config);
+    } catch (e) {
+      console.warn('Telegram order alert dispatch warning:', e);
     }
   };
 
@@ -994,7 +1041,7 @@ export default function App() {
   // If Website Maintenance Mode is active and admin has not unlocked in current session and not navigating to secret admin route
   if (config.maintenanceMode && !isAdminUnlocked && !isAdminOpen) {
     return (
-      <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center text-white font-bold">Loading DigiBundle...</div>}>
+      <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center text-white font-bold">Loading Cheap Reels...</div>}>
         <MaintenanceScreen
           config={config}
           onUnlockAdmin={() => {
