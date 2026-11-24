@@ -52,10 +52,10 @@ export default function BrandLogo({
   // Determine logo source
   let logoSrc = customSrc;
   if (!logoSrc || imgError) {
-    if (variant === 'dark') {
-      logoSrc = '/logo-dark.png';
+    if (imgError) {
+      logoSrc = variant === 'dark' ? '/logo-dark.png' : '/logo.png';
     } else {
-      logoSrc = '/logo.png';
+      logoSrc = variant === 'dark' ? '/logo-dark.webp' : '/logo.webp';
     }
   }
 
@@ -69,6 +69,7 @@ export default function BrandLogo({
         alt={alt}
         width={200}
         height={40}
+        style={{ aspectRatio: '5 / 1' }}
         className={`${sizeClasses} w-auto max-w-[210px] sm:max-w-[280px] object-contain drop-shadow-sm transition-transform duration-200 hover:scale-[1.02]`}
         onError={() => {
           if (!imgError) {

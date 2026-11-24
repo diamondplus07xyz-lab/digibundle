@@ -1,6 +1,6 @@
 /**
  * Complete Real-Time Admin Panel & Storefront Synchronization Engine
- * digibundle-store
+ * cheap-reels-store
  * 
  * Provides:
  * 1. Zero-latency BroadcastChannel for instantaneous cross-tab/cross-window sync on same device
@@ -14,9 +14,9 @@
 import { fetchCloudStoreData, pushCloudStoreData as originalPushCloud } from './cloudSync';
 import { getDeviceType, getBrowser, getOS } from './trafficTracker';
 
-const SYNC_CHANNEL_NAME = 'digibundle_realtime_sync_v2';
-const SYNC_STORAGE_PULSE_KEY = 'digibundle_sync_pulse_v2';
-const DEVICE_ID_KEY = 'digibundle_sync_device_id_v2';
+const SYNC_CHANNEL_NAME = 'cheap_reels_realtime_sync_v2';
+const SYNC_STORAGE_PULSE_KEY = 'cheap_reels_sync_pulse_v2';
+const DEVICE_ID_KEY = 'cheap_reels_sync_device_id_v2';
 const FAST_POLL_INTERVAL_MS = 2500; // 2.5s heartbeat for near-instant physical device sync
 
 // Generate or retrieve persistent device ID

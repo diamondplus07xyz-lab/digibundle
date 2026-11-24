@@ -1,4 +1,4 @@
-// Enterprise-grade Security Utilities for DigiBundle Admin Panel
+// Enterprise-grade Security Utilities for Cheap Reels Admin Panel
 // Features: SHA-256 Cryptographic Hashing, Brute-Force Rate Limiting, Session Auto-Timeout, and Input Sanitization
 
 export const DEFAULT_ADMIN_HASH = '9f5bd4769ef79855c629f60e26112604bf2010bc1ff1a9c89fcc48751887e220'; // SHA-256 of 1Vivek@singh
@@ -97,7 +97,7 @@ export function isSafeUrl(url) {
  */
 export function checkLockoutStatus() {
   try {
-    const lockoutUntil = parseInt(localStorage.getItem('digibundle_lockout_until') || '0', 10);
+    const lockoutUntil = parseInt(localStorage.getItem('cheap_reels_lockout_until') || '0', 10);
     const now = Date.now();
     if (lockoutUntil && lockoutUntil > now) {
       const remainingSeconds = Math.ceil((lockoutUntil - now) / 1000);
@@ -114,12 +114,12 @@ export function checkLockoutStatus() {
  */
 export function recordFailedAttempt() {
   try {
-    const attempts = parseInt(localStorage.getItem('digibundle_failed_attempts') || '0', 10) + 1;
-    localStorage.setItem('digibundle_failed_attempts', attempts.toString());
+    const attempts = parseInt(localStorage.getItem('cheap_reels_failed_attempts') || '0', 10) + 1;
+    localStorage.setItem('cheap_reels_failed_attempts', attempts.toString());
     
     if (attempts >= MAX_LOGIN_ATTEMPTS) {
       const lockoutUntil = Date.now() + LOCKOUT_DURATION_MS;
-      localStorage.setItem('digibundle_lockout_until', lockoutUntil.toString());
+      localStorage.setItem('cheap_reels_lockout_until', lockoutUntil.toString());
       return { isLocked: true, attempts, remainingSeconds: Math.ceil(LOCKOUT_DURATION_MS / 1000) };
     }
     return { isLocked: false, attempts, remainingSeconds: 0 };
@@ -133,8 +133,8 @@ export function recordFailedAttempt() {
  */
 export function clearFailedAttempts() {
   try {
-    localStorage.removeItem('digibundle_failed_attempts');
-    localStorage.removeItem('digibundle_lockout_until');
+    localStorage.removeItem('cheap_reels_failed_attempts');
+    localStorage.removeItem('cheap_reels_lockout_until');
   } catch (e) {}
 }
 
@@ -183,7 +183,7 @@ export function validateUtr(utrString, existingOrders = []) {
  */
 export function checkOrderRateLimit() {
   try {
-    const key = 'digibundle_order_history';
+    const key = 'cheap_reels_order_history';
     const raw = localStorage.getItem(key);
     const timestamps = raw ? JSON.parse(raw) : [];
     const now = Date.now();
@@ -209,7 +209,7 @@ export function checkOrderRateLimit() {
  */
 export function recordOrderSubmission() {
   try {
-    const key = 'digibundle_order_history';
+    const key = 'cheap_reels_order_history';
     const raw = localStorage.getItem(key);
     const timestamps = raw ? JSON.parse(raw) : [];
     const now = Date.now();

@@ -35,7 +35,7 @@ export default function MaintenanceScreen({ config, onUnlockAdmin, onTurnOffMain
   // Dynamic SEO & 503 Service Unavailable Meta Tags Injection
   useEffect(() => {
     const prevTitle = document.title;
-    const storeName = config?.storeName || 'DigiBundle';
+    const storeName = config?.storeName || 'Cheap Reels';
     document.title = `[Maintenance] System Upgrade in Progress — ${storeName}`;
 
     // Inject <meta name="robots" content="noindex, nofollow" />
@@ -134,8 +134,8 @@ export default function MaintenanceScreen({ config, onUnlockAdmin, onTurnOffMain
   const whatsappNumber = config?.whatsappNumber || '7017324978';
   const cleanNumber = whatsappNumber.replace(/\D/g, '');
   const finalWaNumber = cleanNumber.startsWith('91') && cleanNumber.length === 12 ? cleanNumber : `91${cleanNumber}`;
-  const whatsappUrl = `https://wa.me/${finalWaNumber}?text=${encodeURIComponent("Hi Admin, I was visiting DigiBundle but the site is undergoing scheduled maintenance. Please notify me once it's back live!")}`;
-  const supportEmail = config?.supportEmail || 'support@digibundle.in';
+  const whatsappUrl = `https://wa.me/${finalWaNumber}?text=${encodeURIComponent("Hi Admin, I was visiting Cheap Reels but the site is undergoing scheduled maintenance. Please notify me once it's back live!")}`;
+  const supportEmail = config?.supportEmail || 'reelscheap@gmail.com';
 
   const handleCopyEmail = () => {
     navigator.clipboard?.writeText(supportEmail);
@@ -213,12 +213,12 @@ export default function MaintenanceScreen({ config, onUnlockAdmin, onTurnOffMain
             <BrandLogo 
               variant="dark"
               customSrc={config?.footerLogo}
-              alt={config?.storeName || "DigiBundle"}
+              alt={config?.storeName || "Cheap Reels"}
               size="lg"
             />
           </div>
           <span className="hidden sm:inline-block text-xs font-semibold tracking-wider text-slate-400 uppercase">
-            {config?.storeName || "DigiBundle"}
+            {config?.storeName || "Cheap Reels"}
           </span>
         </div>
 
@@ -465,7 +465,7 @@ export default function MaintenanceScreen({ config, onUnlockAdmin, onTurnOffMain
 
       {/* Footer */}
       <footer className="max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 text-center text-xs text-slate-400 relative z-20 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p>© {new Date().getFullYear()} {config?.storeName || 'DigiBundle'}. All systems operational & secure.</p>
+        <p>© {new Date().getFullYear()} {config?.storeName || 'Cheap Reels'}. All systems operational & secure.</p>
         
         <div className="flex items-center gap-4 text-[11px] text-slate-400">
           <span className="inline-flex items-center gap-1.5">

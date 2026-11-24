@@ -1,16 +1,16 @@
 /**
- * DigiBundle Official Brand & Design System
+ * Cheap Reels Official Brand & Design System
  * Enterprise-grade tokens and specifications for consistent branding across Storefront & Admin Portal.
  */
 
 export const BRAND_SYSTEM = {
   identity: {
-    brandName: "DigiBundle",
-    tradeName: "DigiBundle",
+    brandName: "Cheap Reels",
+    tradeName: "Cheap Reels Store",
     tagline: "India's Most Affordable Ready-to-Post HD Reels Store",
     promise: "100% Watermark-Free 1080p Full HD Vertical Video Reels with Instant Google Drive Delivery",
     foundedYear: 2026,
-    supportEmail: "support@digibundle.in",
+    supportEmail: "reelscheap@gmail.com",
     supportPhone: "+91 7017324978"
   },
 

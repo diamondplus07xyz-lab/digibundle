@@ -139,7 +139,7 @@ export default function ActivityLogsDashboard({ logs = [], onUpdateLogs, onAddLo
 
   // Export handlers
   const handleExportCSV = () => {
-    const success = exportLogsToCSV(filteredLogs, `digibundle_audit_logs_${Date.now()}.csv`);
+    const success = exportLogsToCSV(filteredLogs, `cheap_reels_audit_logs_${Date.now()}.csv`);
     if (success && onAddLog) {
       onAddLog('ADMIN', 'Audit Logs Exported (CSV)', `Administrator exported ${filteredLogs.length} audit log records as CSV.`, {
         eventName: 'LOGS_EXPORTED',
@@ -150,7 +150,7 @@ export default function ActivityLogsDashboard({ logs = [], onUpdateLogs, onAddLo
   };
 
   const handleExportJSON = () => {
-    const success = exportLogsToJSON(filteredLogs, `digibundle_audit_logs_${Date.now()}.json`);
+    const success = exportLogsToJSON(filteredLogs, `cheap_reels_audit_logs_${Date.now()}.json`);
     if (success && onAddLog) {
       onAddLog('ADMIN', 'Audit Logs Exported (JSON)', `Administrator exported ${filteredLogs.length} audit log records as JSON.`, {
         eventName: 'LOGS_EXPORTED',

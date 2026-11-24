@@ -111,7 +111,7 @@ export default function AdminModal({
     masterVaultThumbnail: config?.masterVaultThumbnail || "https://i.ibb.co/Lzvn9hTm/sheru-bhai-mega-reels-bundle-ad.png",
     adminPasscode: config?.adminPasscode || DEFAULT_ADMIN_HASH,
     whatsappNumber: config?.whatsappNumber || '917017324978',
-    supportEmail: config?.supportEmail || 'support@digibundle.in',
+    supportEmail: config?.supportEmail || 'reelscheap@gmail.com',
     bannerText: config?.bannerText || 'LIMITED TIME OFFER: 2,50,000+ Ready Reels Pack at Flat 95% OFF! Instant Google Drive Access in 5 Seconds',
     showTopBanner: config?.showTopBanner !== false,
     showPurchasePopup: config?.showPurchasePopup !== false,
@@ -132,7 +132,7 @@ export default function AdminModal({
     enabledGateways: config?.enabledGateways || ['upi_qr', 'razorpay'],
     upiGateway: config?.upiGateway || {
       enabled: true,
-      upiId: config?.upiId || 'digibundle@upi',
+      upiId: config?.upiId || 'cheapreels@upi',
       payeeName: config?.upiName || 'DigiBundle'
     },
     paypal: config?.paypal || {
@@ -172,8 +172,8 @@ export default function AdminModal({
     googleSearchConsoleTag: config?.googleSearchConsoleTag || '',
     seoTitle: config?.seoTitle || 'DigiBundle | 2,50,000+ Ready-to-Post HD Reels Bundles',
     seoDescription: config?.seoDescription || 'Get 2,50,000+ ready-to-post 1080p Full HD watermark-free reels bundles with instant Google Drive cloud links at just ₹29. Instagram, Shorts & Facebook.',
-    seoKeywords: config?.seoKeywords || 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, digibundle download, watermark free reels 1080p',
-    canonicalUrl: config?.canonicalUrl || 'https://digibundle.vercel.app',
+    seoKeywords: config?.seoKeywords || 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, cheap reels download, watermark free reels 1080p',
+    canonicalUrl: config?.canonicalUrl || 'https://cheapreels.vercel.app',
     allowRobotsIndex: config?.allowRobotsIndex !== false
   }));
 
@@ -201,7 +201,7 @@ export default function AdminModal({
         seoTitle: config.seoTitle || prev.seoTitle || '',
         seoDescription: config.seoDescription || prev.seoDescription || '',
         seoKeywords: config.seoKeywords || prev.seoKeywords || '',
-        canonicalUrl: config.canonicalUrl || prev.canonicalUrl || 'https://digibundle.vercel.app',
+        canonicalUrl: config.canonicalUrl || prev.canonicalUrl || 'https://cheapreels.vercel.app',
         allowRobotsIndex: config.allowRobotsIndex !== undefined ? config.allowRobotsIndex : (prev.allowRobotsIndex !== false),
         gatewayMode: config.gatewayMode || prev.gatewayMode || 'single',
         activeGateway: config.activeGateway || prev.activeGateway || 'upi_qr',
@@ -209,7 +209,7 @@ export default function AdminModal({
         razorpay: { enabled: false, keyId: '', keySecret: '', mode: 'live', ...(config.razorpay || {}) },
         cashfree: { enabled: false, appId: '', secretKey: '', environment: 'production', ...(config.cashfree || {}) },
         paypal: { enabled: false, clientId: '', clientSecret: '', mode: 'live', currency: 'USD', exchangeRate: 85, ...(config.paypal || {}) },
-        upiGateway: { enabled: true, upiId: config.upiId || 'digibundle@upi', payeeName: config.upiName || 'DigiBundle', ...(config.upiGateway || {}) },
+        upiGateway: { enabled: true, upiId: config.upiId || 'cheapreels@upi', payeeName: config.upiName || 'DigiBundle', ...(config.upiGateway || {}) },
         playStore: config.playStore || prev.playStore
       }));
     }
@@ -218,7 +218,7 @@ export default function AdminModal({
   // Activity Logs state (Stored persistently and synced across PC & Mobile)
   const [activityLogs, setActivityLogs] = useState(() => {
     if (externalActivityLogs && externalActivityLogs.length > 0) return externalActivityLogs;
-    const saved = localStorage.getItem('digibundle_activity_logs');
+    const saved = localStorage.getItem('cheap_reels_activity_logs');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -245,7 +245,7 @@ export default function AdminModal({
 
   // Sync logs to localStorage
   useEffect(() => {
-    localStorage.setItem('digibundle_activity_logs', JSON.stringify(activityLogs));
+    localStorage.setItem('cheap_reels_activity_logs', JSON.stringify(activityLogs));
   }, [activityLogs]);
 
   // Helper to add activity log with full audit trail metadata
@@ -431,7 +431,7 @@ export default function AdminModal({
       // Create new authenticated session with automatic session rotation (Session Fixation Guard)
       const inputHash = await computeSHA256(passcode.trim());
       try {
-        sessionStorage.setItem('digibundle_admin_auth_token', inputHash || DEFAULT_ADMIN_HASH);
+        sessionStorage.setItem('cheap_reels_admin_auth_token', inputHash || DEFAULT_ADMIN_HASH);
       } catch (e) {}
       const newSession = createAdminSession({ adminId: 'admin_master' });
       setCurrentSessionIdState(newSession.id);
@@ -484,7 +484,7 @@ export default function AdminModal({
 
     performAdminLogout(reason);
     try {
-      sessionStorage.removeItem('digibundle_admin_auth_token');
+      sessionStorage.removeItem('cheap_reels_admin_auth_token');
     } catch (e) {}
     setIsAuthenticated(false);
     setCurrentSessionIdState(null);
@@ -503,7 +503,7 @@ export default function AdminModal({
     const toSave = updatedOverride || storeConfig;
     setStoreConfig(toSave);
     try {
-      localStorage.setItem('digibundle_config_v2', JSON.stringify(toSave));
+      localStorage.setItem('cheap_reels_config_v2', JSON.stringify(toSave));
     } catch (e) {}
     onSaveConfig(toSave);
     try {
@@ -624,7 +624,7 @@ export default function AdminModal({
     });
     if (onUpdateOrders) onUpdateOrders(updated);
     try {
-      localStorage.setItem('digibundle_orders', JSON.stringify(updated));
+      localStorage.setItem('cheap_reels_orders', JSON.stringify(updated));
     } catch (e) {}
     try {
       realtimeSync.pushUpdate({ orders: updated, config: storeConfig, bundles, visitorStats, activityLogs, updateType: 'ORDERS_UPDATED' });
@@ -646,7 +646,7 @@ export default function AdminModal({
     });
     if (onUpdateOrders) onUpdateOrders(updated);
     try {
-      localStorage.setItem('digibundle_orders', JSON.stringify(updated));
+      localStorage.setItem('cheap_reels_orders', JSON.stringify(updated));
     } catch (e) {}
     try {
       realtimeSync.pushUpdate({ orders: updated, config: storeConfig, bundles, visitorStats, activityLogs, updateType: 'ORDERS_UPDATED' });
@@ -1056,13 +1056,8 @@ export default function AdminModal({
             <X className="w-4 h-4" />
           </button>
 
-          <div className="bg-white/95 px-4 py-2 rounded-2xl shadow-sm border border-slate-200 inline-flex items-center mx-auto mb-4">
-            <BrandLogo 
-              variant="light"
-              customSrc="/logo.png"
-              alt="DigiBundle Admin"
-              size="md"
-            />
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-400 to-orange-500 text-slate-950 flex items-center justify-center mx-auto mb-4 shadow-md">
+            <Lock className="w-7 h-7" />
           </div>
 
           <h3 className="text-xl font-black text-slate-900 tracking-tight">
@@ -1145,7 +1140,8 @@ export default function AdminModal({
                     </div>
                     <div>
                       <h4 className="text-xs font-black text-white leading-tight flex items-center gap-1">
-                        <span>Digi</span><span className="text-amber-400">Bundle</span>
+                        <span>Cheap</span>
+                        <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent italic">Reels</span>
                       </h4>
                       <span className="text-[9px] font-bold text-amber-400 uppercase tracking-wider block">Admin Console</span>
                     </div>
@@ -1166,7 +1162,6 @@ export default function AdminModal({
                     { id: 'playstore', name: 'Google Play Console', icon: Smartphone },
                     { id: 'searchconsole', name: 'Google Search Console & SEO', icon: Search },
                     { id: 'announcement', name: 'Announcement & Popups', icon: BellRing },
-                    { id: 'offer', name: 'Header Special Offer', icon: Flame },
                     { id: 'maintenance', name: 'Maintenance Mode', icon: Wrench, alert: storeConfig.maintenanceMode },
                     { id: 'analytics', name: 'Google Analytics 4', icon: BarChart3 },
                     { id: 'visitors', name: 'Real Visitors Traffic', icon: Users },
@@ -1243,8 +1238,9 @@ export default function AdminModal({
                   <img src="/brand-icon.png" alt="DigiBundle" className="w-8 h-8 object-contain transition-transform group-hover:scale-110" />
                 </div>
                 <div className="min-w-0">
-                  <h4 className="text-sm font-black text-white leading-tight tracking-tight flex items-center gap-1">
-                    <span>Digi</span><span className="text-amber-400">Bundle</span>
+                  <h4 className="text-sm font-black text-white leading-tight tracking-tight flex items-center gap-1.5">
+                    <span>Cheap</span>
+                    <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent italic">Reels</span>
                   </h4>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -1321,26 +1317,6 @@ export default function AdminModal({
                   storeConfig.showTopBanner ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'
                 }`}>
                   {storeConfig.showTopBanner ? 'RUNNING' : 'STOPPED'}
-                </span>
-              </button>
-
-              {/* 4. Special Offer Banner */}
-              <button
-                onClick={() => setActiveTab('offer')}
-                className={`whitespace-nowrap flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  activeTab === 'offer'
-                    ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 shadow-md'
-                    : 'text-slate-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <Tag className="w-4 h-4 shrink-0" />
-                  <span>Header Offer</span>
-                </div>
-                <span className={`px-1.5 py-0.5 rounded text-[9px] font-black ${
-                  storeConfig.specialOffer?.enabled !== false ? 'bg-emerald-500 text-white' : 'bg-slate-700 text-slate-300'
-                }`}>
-                  {storeConfig.specialOffer?.enabled !== false ? 'ACTIVE' : 'OFF'}
                 </span>
               </button>
 
@@ -1555,7 +1531,6 @@ export default function AdminModal({
                      activeTab === 'searchconsole' ? '🔍 Google SEO' :
                      activeTab === 'gateways' ? '💳 Gateways' :
                      activeTab === 'visitors' ? '👥 Visitors' :
-                     activeTab === 'offer' ? '🔥 Offer' :
                      activeTab === 'announcement' ? '🔔 Alerts' :
                      activeTab === 'maintenance' ? '🛠️ Mode' :
                      activeTab === 'branding' ? '🎨 Branding' : 
@@ -1594,7 +1569,6 @@ export default function AdminModal({
                   {activeTab === 'playstore' && 'Google Play Console Publishing & Android TWA Hub'}
                   {activeTab === 'searchconsole' && 'Google Search Console & SEO Indexing Hub'}
                   {activeTab === 'announcement' && 'Announcement Bar & Live Purchase Popups'}
-                  {activeTab === 'offer' && 'Header Special Offer Banner (Multiple Drive Links)'}
                   {activeTab === 'maintenance' && 'Website Maintenance Mode Controls'}
                   {activeTab === 'analytics' && 'Google Analytics 4 Direct Integration (No Code Needed)'}
                   {activeTab === 'visitors' && 'Real-Time Visitors & Store Traffic'}
@@ -2431,228 +2405,6 @@ export default function AdminModal({
               )}
 
               {/* ==================================================== */}
-              {/* TAB 4: HEADER SPECIAL OFFER BANNER                   */}
-              {/* ==================================================== */}
-              {activeTab === 'offer' && (
-                <div className="max-w-3xl bg-white p-5 sm:p-6 rounded-3xl border border-slate-200 shadow-xs space-y-6">
-                  
-                  {/* Status Banner with End Offer Now Button */}
-                  <div className={`p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
-                    storeConfig.specialOffer?.enabled !== false
-                      ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-                      : 'bg-rose-50 border-rose-200 text-rose-900'
-                  }`}>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className={`w-2.5 h-2.5 rounded-full ${
-                          storeConfig.specialOffer?.enabled !== false ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'
-                        }`} />
-                        <h5 className="font-black text-xs uppercase tracking-wider">
-                          {storeConfig.specialOffer?.enabled !== false 
-                            ? 'Special Offer Status: LIVE ON WEBSITE' 
-                            : 'Special Offer Status: ENDED & HIDDEN FROM WEBSITE'}
-                        </h5>
-                      </div>
-                      <p className="text-xs mt-0.5 opacity-90">
-                        {storeConfig.specialOffer?.enabled !== false 
-                          ? 'This offer appears directly below the header on homepage.' 
-                          : 'Offer is currently hidden from all website visitors.'}
-                      </p>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={handleToggleOffer}
-                      className={`px-4 py-2 rounded-xl font-black text-xs shadow-xs transition cursor-pointer flex items-center justify-center gap-1.5 ${
-                        storeConfig.specialOffer?.enabled !== false
-                          ? 'bg-rose-600 hover:bg-rose-700 text-white'
-                          : 'bg-emerald-600 hover:bg-emerald-700 text-white'
-                      }`}
-                    >
-                      {storeConfig.specialOffer?.enabled !== false ? (
-                        <>
-                          <X className="w-3.5 h-3.5" />
-                          <span>End Offer Now</span>
-                        </>
-                      ) : (
-                        <>
-                          <Check className="w-3.5 h-3.5" />
-                          <span>Re-Activate Offer</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
-
-                  {/* Title & Badge */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-bold text-slate-800 mb-1">Offer Title</label>
-                      <input
-                        type="text"
-                        value={storeConfig.specialOffer?.title || ''}
-                        onChange={(e) => setStoreConfig({
-                          ...storeConfig,
-                          specialOffer: { ...storeConfig.specialOffer, title: e.target.value }
-                        })}
-                        className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-slate-800 mb-1">Badge</label>
-                      <input
-                        type="text"
-                        value={storeConfig.specialOffer?.badge || ''}
-                        onChange={(e) => setStoreConfig({
-                          ...storeConfig,
-                          specialOffer: { ...storeConfig.specialOffer, badge: e.target.value }
-                        })}
-                        className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Subtitle */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-800 mb-1">Subtitle / Pitch</label>
-                    <input
-                      type="text"
-                      value={storeConfig.specialOffer?.subtitle || ''}
-                      onChange={(e) => setStoreConfig({
-                        ...storeConfig,
-                        specialOffer: { ...storeConfig.specialOffer, subtitle: e.target.value }
-                      })}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-700 font-medium"
-                    />
-                  </div>
-
-                  {/* Pricing */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-bold text-slate-800 mb-1">Offer Price (₹)</label>
-                      <input
-                        type="number"
-                        value={storeConfig.specialOffer?.price || 199}
-                        onChange={(e) => setStoreConfig({
-                          ...storeConfig,
-                          specialOffer: { ...storeConfig.specialOffer, price: Number(e.target.value) }
-                        })}
-                        className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-black text-slate-900"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-slate-800 mb-1">Original Price (₹)</label>
-                      <input
-                        type="number"
-                        value={storeConfig.specialOffer?.originalPrice || 2999}
-                        onChange={(e) => setStoreConfig({
-                          ...storeConfig,
-                          specialOffer: { ...storeConfig.specialOffer, originalPrice: Number(e.target.value) }
-                        })}
-                        className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-600"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Offer Thumbnail Upload (Bigger & Prominent) */}
-                  <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
-                    <label className="block text-xs font-black text-slate-900">
-                      Offer Photo (Auto-fits Banner cleanly)
-                    </label>
-                    <div className="flex flex-col sm:flex-row items-center gap-4">
-                      <div className="w-full sm:w-32 h-24 bg-slate-900 rounded-xl overflow-hidden flex items-center justify-center border border-slate-300 shrink-0">
-                        <img 
-                          src={storeConfig.specialOffer?.thumbnail || '/logo.png'} 
-                          alt="" 
-                          className="max-w-full max-h-full object-contain"
-                        />
-                      </div>
-                      <div className="space-y-1.5 flex-1 w-full">
-                        <label className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition">
-                          <Upload className="w-3.5 h-3.5 text-amber-400" />
-                          <span>Upload Banner Image</span>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => handleImageFileUpload(e, 'offer')}
-                            className="hidden"
-                          />
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="Or paste image URL..."
-                          value={storeConfig.specialOffer?.thumbnail || ''}
-                          onChange={(e) => setStoreConfig({
-                            ...storeConfig,
-                            specialOffer: { ...storeConfig.specialOffer, thumbnail: e.target.value }
-                          })}
-                          className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* MULTIPLE GOOGLE DRIVE LINKS MANAGER */}
-                  <div className="p-4 bg-amber-50/60 border border-amber-300 rounded-2xl space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                      <div>
-                        <h5 className="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                          <FolderOpen className="w-4 h-4 text-amber-600" />
-                          <span>Multiple Google Drive Download Links</span>
-                        </h5>
-                        <p className="text-[11px] text-slate-600 mt-0.5">
-                          Add multiple drive folder links so buyers receive all parts automatically.
-                        </p>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={handleAddOfferDriveLink}
-                        className="px-3 py-1.5 bg-slate-900 hover:bg-black text-white rounded-xl text-xs font-bold flex items-center gap-1 shadow-xs cursor-pointer self-start sm:self-auto"
-                      >
-                        <Plus className="w-3.5 h-3.5 text-amber-400" />
-                        <span>Add Drive Link</span>
-                      </button>
-                    </div>
-
-                    <div className="space-y-2.5">
-                      {(storeConfig.specialOffer?.driveLinks || []).map((linkItem, idx) => (
-                        <div key={linkItem.id} className="p-3 bg-white rounded-xl border border-amber-200 shadow-xs flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                          <div className="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
-                            {idx + 1}
-                          </div>
-                          
-                          <input
-                            type="text"
-                            placeholder="Link Title"
-                            value={linkItem.label}
-                            onChange={(e) => handleUpdateOfferDriveLink(linkItem.id, 'label', e.target.value)}
-                            className="w-full sm:w-1/3 px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-900"
-                          />
-
-                          <input
-                            type="text"
-                            placeholder="Drive link..."
-                            value={linkItem.url}
-                            onChange={(e) => handleUpdateOfferDriveLink(linkItem.id, 'url', e.target.value)}
-                            className="w-full sm:flex-1 px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-mono text-amber-800"
-                          />
-
-                          <button
-                            type="button"
-                            onClick={() => handleRemoveOfferDriveLink(linkItem.id)}
-                            className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 cursor-pointer shrink-0 self-end sm:self-auto"
-                            title="Remove Link"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* ==================================================== */}
               {/* TAB 5: WEBSITE MAINTENANCE MODE (PROMINENT ON & OFF) */}
               {/* ==================================================== */}
               {activeTab === 'maintenance' && (
@@ -3020,7 +2772,7 @@ export default function AdminModal({
                             value={storeConfig.supportEmail || ''}
                             onChange={(e) => setStoreConfig({ ...storeConfig, supportEmail: e.target.value })}
                             className="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900"
-                            placeholder="support@digibundle.in"
+                            placeholder="reelscheap@gmail.com"
                           />
                         </div>
                       </div>
@@ -3346,16 +3098,16 @@ export default function AdminModal({
                     </div>
                   </div>
 
-                  {/* 5. Support Email (support@digibundle.in) */}
+                  {/* 5. Support Email (reelscheap@gmail.com) */}
                   <div>
                     <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
                       Store Support Email
                     </label>
                     <input
                       type="email"
-                      value={storeConfig.supportEmail || 'support@digibundle.in'}
+                      value={storeConfig.supportEmail || 'reelscheap@gmail.com'}
                       onChange={(e) => setStoreConfig({ ...storeConfig, supportEmail: e.target.value })}
-                      placeholder="support@digibundle.in"
+                      placeholder="reelscheap@gmail.com"
                       className="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                     />
                   </div>
@@ -3926,7 +3678,7 @@ export default function AdminModal({
                           </label>
                           <input
                             type="text"
-                            value={storeConfig.upiId || 'digibundle@upi'}
+                            value={storeConfig.upiId || 'cheapreels@upi'}
                             onChange={(e) => setStoreConfig({ 
                               ...storeConfig, 
                               upiId: e.target.value.trim(),

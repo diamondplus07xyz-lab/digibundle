@@ -37,23 +37,23 @@ export default function SpecialOfferBanner({ offer, onClaimOffer }) {
           
           {/* Left: Auto-Fit Photo (Compact on Mobile, Large on Desktop) */}
           <div className="w-full lg:w-[420px] xl:w-[460px] h-36 sm:h-56 lg:h-80 bg-slate-900 rounded-xl sm:rounded-2xl overflow-hidden flex items-center justify-center shrink-0 border border-amber-400/30 shadow-2xl relative group">
-            {/* Ambient blurred backdrop so letterbox areas fill seamlessly */}
+            {/* Ambient blurred backdrop so letterbox areas fill seamlessly (Desktop only for instant mobile LCP) */}
             <img
-              src={mobileImgSrc}
+              src={desktopImgSrc}
               alt=""
               aria-hidden="true"
               loading="lazy"
               decoding="async"
               width={480}
               height={360}
-              className="absolute inset-0 w-full h-full object-cover blur-lg scale-125 opacity-50 pointer-events-none"
+              className="hidden sm:block absolute inset-0 w-full h-full object-cover blur-lg scale-125 opacity-50 pointer-events-none"
             />
             {/* Foreground image - 100% visible, sharp, no text covering */}
             <picture className="relative z-10 flex items-center justify-center max-w-full max-h-full">
               <source media="(max-width: 640px)" srcSet={mobileImgSrc} type="image/webp" />
               <source srcSet={desktopImgSrc} type="image/webp" />
               <img
-                src={desktopImgSrc}
+                src={mobileImgSrc}
                 alt={currentOffer.title || "Special Offer"}
                 width={720}
                 height={540}
@@ -77,11 +77,11 @@ export default function SpecialOfferBanner({ offer, onClaimOffer }) {
               </span>
             </div>
 
-            <h3 className="text-base sm:text-2xl lg:text-3xl font-black text-white leading-snug sm:leading-tight">
+            <h2 className="text-base sm:text-2xl lg:text-3xl font-black text-white leading-snug sm:leading-tight">
               {currentOffer.title}
-            </h3>
+            </h2>
 
-            <p className="text-xs sm:text-sm text-slate-300 max-w-2xl font-normal leading-relaxed line-clamp-2 sm:line-clamp-none">
+            <p className="text-xs sm:text-sm text-slate-200 max-w-2xl font-normal leading-relaxed line-clamp-2 sm:line-clamp-none">
               {currentOffer.subtitle}
             </p>
 
@@ -108,13 +108,17 @@ export default function SpecialOfferBanner({ offer, onClaimOffer }) {
             <div className="pt-1.5 sm:pt-3 flex flex-row items-center justify-between sm:justify-start gap-3 sm:gap-4">
               <div className="flex items-baseline gap-1.5 sm:gap-2">
                 <span className="text-2xl sm:text-4xl font-black text-amber-400">₹{currentOffer.price}</span>
-                <span className="text-xs sm:text-base font-semibold text-slate-400 line-through">₹{currentOffer.originalPrice}</span>
+                <span className="text-xs sm:text-base font-semibold text-slate-300 line-through">₹{currentOffer.originalPrice}</span>
                 <span className="text-[10px] sm:text-xs font-black text-emerald-400 bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-md sm:rounded-lg border border-emerald-500/30">
                   {discountPercent}% OFF
                 </span>
               </div>
 
               <button
+                data-action="claim-special-offer"
+                data-price={currentOffer.price}
+                data-title={currentOffer.title}
+                aria-label={`Claim special deal: ${currentOffer.title || 'Creator Bundle'}`}
                 onClick={() => onClaimOffer && onClaimOffer({
                   id: 'special-offer-banner',
                   title: currentOffer.title,

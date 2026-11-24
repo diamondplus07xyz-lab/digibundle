@@ -1,6 +1,7 @@
 # ==============================================================================
 # CHEAPREELS.IN — UNIVERSAL SEARCH ENGINE & AI ASSISTANT ROBOTS DIRECTIVES
 # Target Domain: https://www.cheapreels.in | Mirror: https://cheapreels.vercel.app
+# AI Agent Index: https://www.cheapreels.in/llms.txt
 # Last Updated: 2026-11-24 | Optimized for Traditional & Generative Search Engines
 # ==============================================================================
 
@@ -16,6 +17,7 @@ User-agent: Slurp
 User-agent: Baiduspider
 User-agent: Qwantify
 Allow: /
+Allow: /llms.txt
 Allow: /bundle/
 Allow: /category/
 Allow: /guide/

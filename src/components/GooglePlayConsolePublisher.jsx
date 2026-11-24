@@ -32,12 +32,12 @@ export default function GooglePlayConsolePublisher({ storeConfig, onUpdateConfig
   
   // Local editable playstore configuration
   const playConfig = storeConfig?.playStore || {};
-  const [appName, setAppName] = useState(playConfig.appName || storeConfig?.storeName || 'DigiBundle - 2,50,000+ Viral HD Reels');
-  const [shortName, setShortName] = useState(playConfig.shortName || 'DigiBundle');
-  const [packageName, setPackageName] = useState(playConfig.packageName || 'com.digibundle.app');
+  const [appName, setAppName] = useState(playConfig.appName || storeConfig?.storeName || 'Cheap Reels - 2,50,000+ Viral HD Reels');
+  const [shortName, setShortName] = useState(playConfig.shortName || 'Cheap Reels');
+  const [packageName, setPackageName] = useState(playConfig.packageName || 'com.cheapreels.app');
   const [versionCode, setVersionCode] = useState(playConfig.versionCode || 1);
   const [versionName, setVersionName] = useState(playConfig.versionName || '1.0.0');
-  const [targetUrl, setTargetUrl] = useState(playConfig.targetUrl || 'https://digibundle.vercel.app/');
+  const [targetUrl, setTargetUrl] = useState(playConfig.targetUrl || 'https://cheapreels.vercel.app/');
   const [themeColor, setThemeColor] = useState(playConfig.themeColor || '#0f172a');
   const [bgColor, setBgColor] = useState(playConfig.bgColor || '#020617');
   const [sha256Fingerprint, setSha256Fingerprint] = useState(
@@ -213,7 +213,7 @@ export default function GooglePlayConsolePublisher({ storeConfig, onUpdateConfig
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:scheme="https"
-                    android:host="digibundle.vercel.app" />
+                    android:host="cheapreels.vercel.app" />
             </intent-filter>
         </activity>
     </application>
@@ -256,7 +256,7 @@ dependencies {
 }`;
 
       // 3. Root build.gradle & settings
-      const rootGradle = `// Top-level build file for DigiBundle Android TWA
+      const rootGradle = `// Top-level build file for Cheap Reels Android TWA
 buildscript {
     repositories {
         google()
@@ -288,7 +288,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "DigiBundleApp"
+rootProject.name = "CheapReelsApp"
 include ':app'`;
 
       // 4. assetlinks.json
@@ -305,18 +305,18 @@ include ':app'`;
 
       // 5. Store listing description
       const listingTxt = `APP TITLE (Max 30 chars):
-DigiBundle - Viral Video Bundles
+Cheap Reels - Viral Video Bundles
 
 SHORT DESCRIPTION (Max 80 chars):
 Download 2,50,000+ viral 1080p Full HD vertical reels with instant Drive access.
 
 FULL DESCRIPTION (Formatted for Google Play Console):
-Welcome to DigiBundle — India's #1 Most Affordable Ready-to-Post HD Reels Store!
+Welcome to Cheap Reels — India's #1 Most Affordable Ready-to-Post HD Reels Store!
 
 ⚡ OVER 2,50,000+ VIRAL READY-TO-POST REELS ⚡
 Are you looking to grow your Instagram Theme Page, YouTube Shorts, or TikTok channel to 100K+ followers without showing your face? 
 
-DigiBundle delivers high-converting, premium-quality vertical video bundles starting at just ₹29!
+Cheap Reels delivers high-converting, premium-quality vertical video bundles starting at just ₹29!
 
 🌟 KEY APP FEATURES:
 • Instant Google Drive Access: Get lifetime cloud folder access within seconds.
@@ -340,10 +340,10 @@ Direct 24/7 helpline available via WhatsApp (+91 7017324978).
 
 Official Website: ${targetUrl}
 Privacy Policy: ${targetUrl}privacy.html
-Support Email: support@digibundle.in`;
+Support Email: reelscheap@gmail.com`;
 
       // 6. Step-by-Step Guide
-      const guideMd = `# GOOGLE PLAY CONSOLE SUBMISSION GUIDE (DIGIBUNDLE)
+      const guideMd = `# GOOGLE PLAY CONSOLE SUBMISSION GUIDE (CHEAP REELS)
 
 Bhai, website ko Google Play Store par daalna ab bilkul aasan hai!
 Follow these exact steps:
@@ -363,7 +363,7 @@ Follow these exact steps:
 ### STEP 3: Generate Signed App Bundle (.AAB)
 You have TWO easy methods:
 - **METHOD A (100% Automated Cloud Builder - Recommended)**:
-  Open PWABuilder (https://www.pwabuilder.com/reportcard?site=https%3A%2F%2Fdigibundle.vercel.app)
+  Open PWABuilder (https://www.pwabuilder.com/reportcard?site=https%3A%2F%2Fcheapreels.vercel.app)
   Click "Package for Google Play" -> Enter Package Name: \`${packageName}\` -> Download your signed \`.aab\` file!
 - **METHOD B (Android Studio)**:
   Extract this ZIP file in Android Studio -> Build -> Generate Signed Bundle / APK -> Choose Android App Bundle (.aab).
@@ -389,7 +389,7 @@ Privacy Policy URL for Google Play Console:
       zip.file("play-store-listing.txt", listingTxt);
       zip.file("assetlinks.json", assetlinksContent);
       
-      const appFolder = zip.folder("digibundle-android-project");
+      const appFolder = zip.folder("cheapreels-android-project");
       appFolder.file("build.gradle", rootGradle);
       appFolder.file("settings.gradle", settingsGradle);
       
@@ -404,7 +404,7 @@ Privacy Policy URL for Google Play Console:
       const downloadUrl = URL.createObjectURL(content);
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.download = `DigiBundle-GooglePlay-Package-v${versionCode}.zip`;
+      link.download = `CheapReels-GooglePlay-Package-v${versionCode}.zip`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -425,7 +425,7 @@ Privacy Policy URL for Google Play Console:
     // Validate package name
     const packageRegex = /^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$/;
     if (!packageRegex.test(packageName)) {
-      alert(`Invalid Android Package Name: "${packageName}".\nMust look like "com.digibundle.app" with lowercase letters and dots.`);
+      alert(`Invalid Android Package Name: "${packageName}".\nMust look like "com.cheapreels.app" with lowercase letters and dots.`);
       return;
     }
 
@@ -464,7 +464,7 @@ Privacy Policy URL for Google Play Console:
       if (serviceAccountJson && serviceAccountJson.trim().startsWith('{')) {
         log('✓ Google Cloud Service Account JSON detected: Authenticating OAuth2 token with Google Play Android Developer API v3...');
       } else {
-        log('ℹ️ No custom Service Account JSON entered: Using DigiBundle Standalone TWA Play Store Release Profile...');
+        log('ℹ️ No custom Service Account JSON entered: Using Cheap Reels Standalone TWA Play Store Release Profile...');
       }
       log(`✓ Packaging Android App Bundle (.AAB) artifacts for ${packageName}...`);
     }, 3800);
@@ -627,7 +627,7 @@ Privacy Policy URL for Google Play Console:
                 value={appName}
                 onChange={(e) => setAppName(e.target.value)}
                 className="w-full text-xs font-semibold px-3 py-2.5 rounded-xl border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
-                placeholder="e.g. DigiBundle - 2,50,000+ Viral HD Reels"
+                placeholder="e.g. Cheap Reels - 2,50,000+ Viral HD Reels"
               />
               <span className="text-[10px] text-slate-400 mt-0.5 block">Shown on Google Play search results (max 30-50 chars).</span>
             </div>
@@ -641,7 +641,7 @@ Privacy Policy URL for Google Play Console:
                 value={shortName}
                 onChange={(e) => setShortName(e.target.value)}
                 className="w-full text-xs font-semibold px-3 py-2.5 rounded-xl border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
-                placeholder="e.g. DigiBundle"
+                placeholder="e.g. Cheap Reels"
               />
               <span className="text-[10px] text-slate-400 mt-0.5 block">Name under the app icon on Android phones (max 12 chars).</span>
             </div>
@@ -655,9 +655,9 @@ Privacy Policy URL for Google Play Console:
                 value={packageName}
                 onChange={(e) => setPackageName(e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, ''))}
                 className="w-full text-xs font-mono font-bold px-3 py-2.5 rounded-xl border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-indigo-700"
-                placeholder="com.digibundle.app"
+                placeholder="com.cheapreels.app"
               />
-              <span className="text-[10px] text-slate-400 mt-0.5 block">Unique Google Play identifier (e.g. com.digibundle.app). Cannot be changed after publishing.</span>
+              <span className="text-[10px] text-slate-400 mt-0.5 block">Unique Google Play identifier (e.g. com.cheapreels.app). Cannot be changed after publishing.</span>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
@@ -706,7 +706,7 @@ Privacy Policy URL for Google Play Console:
                 value={targetUrl}
                 onChange={(e) => setTargetUrl(e.target.value)}
                 className="w-full text-xs font-mono px-3 py-2.5 rounded-xl border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-slate-800"
-                placeholder="https://digibundle.vercel.app/"
+                placeholder="https://cheapreels.vercel.app/"
               />
               <span className="text-[10px] text-slate-400 mt-0.5 block">The live website URL loaded inside the full-screen Android app.</span>
             </div>
@@ -844,8 +844,8 @@ Privacy Policy URL for Google Play Console:
 
             <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs font-mono text-slate-600 space-y-1">
               <div className="font-bold text-slate-800 font-sans">📦 Files Included Inside Generated ZIP:</div>
-              <div>• digibundle-android-project/app/src/main/AndroidManifest.xml</div>
-              <div>• digibundle-android-project/app/build.gradle (Android 14 / SDK 34)</div>
+              <div>• cheapreels-android-project/app/src/main/AndroidManifest.xml</div>
+              <div>• cheapreels-android-project/app/build.gradle (Android 14 / SDK 34)</div>
               <div>• assetlinks.json (Digital AssetLinks verification)</div>
               <div>• play-store-listing.txt (Title, Short & Long Descriptions ready to paste)</div>
               <div>• README_FIRST_PLAY_STORE_GUIDE.md (Step-by-step Hindi/English guide)</div>
@@ -1116,7 +1116,7 @@ Privacy Policy URL for Google Play Console:
                 Play Store Title (Max 30 characters)
               </label>
               <button
-                onClick={() => copyToClipboard('DigiBundle - Viral Bundles', 'title')}
+                onClick={() => copyToClipboard('Cheap Reels - Viral Bundles', 'title')}
                 className="text-[11px] font-bold text-amber-600 hover:text-amber-700 flex items-center gap-1 cursor-pointer"
               >
                 {copiedKey === 'title' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
@@ -1124,7 +1124,7 @@ Privacy Policy URL for Google Play Console:
               </button>
             </div>
             <div className="p-2.5 bg-white rounded-lg border border-slate-200 font-mono text-xs text-slate-800 font-bold">
-              DigiBundle - Viral Bundles
+              Cheap Reels - Viral Bundles
             </div>
           </div>
 
@@ -1154,7 +1154,7 @@ Privacy Policy URL for Google Play Console:
                 Full Description (Formatted with bullet points)
               </label>
               <button
-                onClick={() => copyToClipboard(`Welcome to DigiBundle — India's #1 Most Affordable Ready-to-Post HD Reels Store!\n\n⚡ 2,50,000+ VIRAL READY-TO-POST REELS ⚡\nGrow your Instagram Theme Page, YouTube Shorts, or Facebook page without showing your face.\n\n🌟 KEY FEATURES:\n• Instant Google Drive Link Delivery\n• 1080p Full HD MP4 Video Quality\n• 100% Watermark-Free & No Logos\n• Full Commercial & Resell Rights Included\n• AI, Motivation, Finance, Devotional & Luxury Bundles\n\n🔒 SECURE UPI PAYMENT VERIFICATION\n📞 WHATSAPP SUPPORT: +91 7017324978\nOfficial Site: ${targetUrl}`, 'full_desc')}
+                onClick={() => copyToClipboard(`Welcome to Cheap Reels — India's #1 Most Affordable Ready-to-Post HD Reels Store!\n\n⚡ 2,50,000+ VIRAL READY-TO-POST REELS ⚡\nGrow your Instagram Theme Page, YouTube Shorts, or Facebook page without showing your face.\n\n🌟 KEY FEATURES:\n• Instant Google Drive Link Delivery\n• 1080p Full HD MP4 Video Quality\n• 100% Watermark-Free & No Logos\n• Full Commercial & Resell Rights Included\n• AI, Motivation, Finance, Devotional & Luxury Bundles\n\n🔒 SECURE UPI PAYMENT VERIFICATION\n📞 WHATSAPP SUPPORT: +91 7017324978\nOfficial Site: ${targetUrl}`, 'full_desc')}
                 className="text-[11px] font-bold text-amber-600 hover:text-amber-700 flex items-center gap-1 cursor-pointer"
               >
                 {copiedKey === 'full_desc' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
@@ -1162,7 +1162,7 @@ Privacy Policy URL for Google Play Console:
               </button>
             </div>
             <div className="p-2.5 bg-white rounded-lg border border-slate-200 text-xs text-slate-700 whitespace-pre-wrap max-h-36 overflow-y-auto">
-{`Welcome to DigiBundle — India's #1 Most Affordable Ready-to-Post HD Reels Store!
+{`Welcome to Cheap Reels — India's #1 Most Affordable Ready-to-Post HD Reels Store!
 
 ⚡ 2,50,000+ VIRAL READY-TO-POST REELS ⚡
 Grow your Instagram Theme Page, YouTube Shorts, or Facebook page without showing your face.
@@ -1222,7 +1222,7 @@ Official Site: ${targetUrl}`}
               <p className="text-[11px] text-slate-500 mt-0.5">Your existing logo at <code className="font-mono">/logo.png</code> is 512x512 ready.</p>
               <a
                 href="/logo.png"
-                download="digibundle-playstore-icon-512.png"
+                download="cheapreels-playstore-icon-512.png"
                 className="inline-flex items-center gap-1 text-amber-600 hover:underline font-bold mt-1 text-[11px]"
               >
                 <Download className="w-3 h-3" />

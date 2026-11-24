@@ -1,0 +1,46 @@
+{
+  "$schema": "https://agentic.dev/schemas/v1/ard.json",
+  "name": "Cheap Reels",
+  "description": "India's #1 digital store for 1080p Full HD vertical reels bundles with instant Google Drive cloud delivery.",
+  "version": "1.0.0",
+  "homepage": "https://www.cheapreels.in",
+  "resources": [
+    {
+      "id": "reels-catalog",
+      "name": "Viral Reels Bundles Catalog",
+      "type": "catalog",
+      "url": "https://www.cheapreels.in/#bundles-section",
+      "description": "2,50,000+ ready-to-post 1080p Full HD vertical video packs across 130+ viral niches"
+    },
+    {
+      "id": "special-creator-offer",
+      "name": "Special Creator Deal",
+      "type": "offer",
+      "url": "https://www.cheapreels.in/#special-offer",
+      "description": "1,50,000+ Ultimate Creator Reels Mega Bundle at ₹199"
+    },
+    {
+      "id": "master-vault",
+      "name": "All-In-One Master Reels Vault",
+      "type": "bundle",
+      "url": "https://www.cheapreels.in/#bundles-section",
+      "description": "Lifetime access to 2,50,000+ reels across all categories for ₹999"
+    },
+    {
+      "id": "sitemap",
+      "name": "Sitemap",
+      "type": "sitemap",
+      "url": "https://www.cheapreels.in/sitemap.xml"
+    },
+    {
+      "id": "llms-txt",
+      "name": "LLMs Context",
+      "type": "documentation",
+      "url": "https://www.cheapreels.in/llms.txt"
+    }
+  ],
+  "contact": {
+    "support": "https://wa.me/917017324978",
+    "email": "reelscheap@gmail.com"
+  }
+}

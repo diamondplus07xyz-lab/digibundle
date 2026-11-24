@@ -1,6 +1,6 @@
 /**
  * Advanced Activity Logs & Audit Trail Engine
- * DigiBundlefront & Admin Security Infrastructure
+ * Cheap Reels Storefront & Admin Security Infrastructure
  * 
  * Immutability, zero dummy data, anti-injection, sensitive data redaction,
  * CSV export, detailed JSON inspection, and multi-dimensional filtering.
@@ -99,7 +99,7 @@ export function createAuditLogEntry({
     device,
     browser,
     os,
-    ip: ip || (typeof window !== 'undefined' ? (localStorage.getItem('digibundle_device_id') || 'Client') : '127.0.0.1'),
+    ip: ip || (typeof window !== 'undefined' ? (localStorage.getItem('cheap_reels_device_id') || 'Client') : '127.0.0.1'),
     metadata: sanitizedMetadata,
     immutable: true
   };
@@ -253,7 +253,7 @@ export function filterAuditLogs(logs = [], {
 }
 
 // Export Filtered Logs to CSV File (RFC 4180 Compliant)
-export function exportLogsToCSV(logs = [], filename = 'digibundle_audit_logs.csv') {
+export function exportLogsToCSV(logs = [], filename = 'cheap_reels_audit_logs.csv') {
   if (!Array.isArray(logs) || logs.length === 0) {
     alert('No audit logs available to export in current filter.');
     return false;
@@ -319,7 +319,7 @@ export function exportLogsToCSV(logs = [], filename = 'digibundle_audit_logs.csv
 }
 
 // Export Logs to JSON File
-export function exportLogsToJSON(logs = [], filename = 'digibundle_audit_logs.json') {
+export function exportLogsToJSON(logs = [], filename = 'cheap_reels_audit_logs.json') {
   if (!Array.isArray(logs) || logs.length === 0) {
     alert('No audit logs available to export in current filter.');
     return false;

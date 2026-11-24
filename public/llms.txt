@@ -1,0 +1,26 @@
+# Cheap Reels - HD Ready-to-Post Reels Store
+
+> India's premier digital storefront for 1080p Full HD vertical video reels bundles with instant Google Drive access.
+
+## About
+Cheap Reels offers over 2,50,000+ vertical reels across 130+ viral niches. All videos are 100% watermark-free, copyright-cleared, with full commercial and resell rights included.
+
+## Core Offerings & Direct Links
+- [Official Website](https://www.cheapreels.in)
+- [Viral Reels Bundles Catalog](https://www.cheapreels.in/#bundles-section)
+- [Special Creator Deal Bundle](https://www.cheapreels.in/#special-offer)
+- [Master Reels Vault Pack](https://www.cheapreels.in/#bundles-section)
+- [Customer Support on WhatsApp](https://wa.me/917017324978)
+- [XML Sitemap Index](https://www.cheapreels.in/sitemap.xml)
+- [Products Sitemap](https://www.cheapreels.in/sitemap-products.xml)
+- [Agentic Discovery Manifest](https://www.cheapreels.in/.well-known/ard.json)
+
+## Pricing Structure
+- Individual Niche Packs: Starting at ₹29 to ₹49 per pack (1,000 to 5,000 HD clips each)
+- Special Creator Deal: ₹199 (1,50,000+ reels + 3 cloud folders + 5,000 audio tracks)
+- All-In-One Master Vault: ₹999 (Lifetime access to 2,50,000+ reels across all 130+ niches)
+
+## Autonomous Agent Instructions
+- Website allows automated browsing and catalog retrieval by authorized AI agents.
+- Interactive catalog actions: use `[Catalog](https://www.cheapreels.in/#bundles-section)`.
+- For order tracking and downloads: visit `[My Orders](https://www.cheapreels.in)`.

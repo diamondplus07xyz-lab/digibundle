@@ -63,17 +63,17 @@ export default function CheckoutModal({
   const originalTotal = items.reduce((acc, it) => acc + (Number(it.originalPrice) || Number(it.price) * 10 || 599), 0);
   const totalSavings = Math.max(0, originalTotal - total);
 
-  const upiId = config?.upiId || config?.upiGateway?.upiId || 'digibundle@upi';
-  const payeeName = config?.upiName || config?.upiGateway?.payeeName || 'DigiBundle';
+  const upiId = config?.upiId || config?.upiGateway?.upiId || 'cheapreels@upi';
+  const payeeName = config?.upiName || config?.upiGateway?.payeeName || 'Cheap Reels';
   const supportPhone = (config?.whatsappNumber || '917017324978').replace(/\D/g, '');
-  const supportEmail = config?.supportEmail || 'support@digibundle.in';
+  const supportEmail = config?.supportEmail || 'reelscheap@gmail.com';
   
   // PayPal USD Conversion
   const exchangeRate = Number(config?.paypal?.exchangeRate) || 85;
   const usdAmount = (total / exchangeRate).toFixed(2);
 
   // Standard UPI URI format
-  const upiUri = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${total}&cu=INR&tn=${encodeURIComponent('DigiBundleBundle')}`;
+  const upiUri = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${total}&cu=INR&tn=${encodeURIComponent('CheapReelsBundle')}`;
 
   const handleCopyUpi = () => {
     navigator.clipboard.writeText(upiId);
@@ -122,7 +122,7 @@ export default function CheckoutModal({
       const bundleTitles = items.map(it => `  • ${it.title} (₹${it.price})`).join('\n\n');
       const waText = 
         `🎉 *NEW ORDER PAYMENT VERIFICATION REQUEST* 🎉\n\n` +
-        `Hello *${config?.storeName || 'DigiBundle'}* Team,\n` +
+        `Hello *${config?.storeName || 'Cheap Reels'}* Team,\n` +
         `I have completed payment for my reels order via UPI. Please verify my UTR and dispatch my Google Drive link.\n\n` +
         `══════════════════════\n` +
         `📋 *CUSTOMER & ORDER INFO*\n` +
@@ -227,12 +227,12 @@ export default function CheckoutModal({
             key: keyId,
             amount: total * 100, // in paise
             currency: 'INR',
-            name: config?.storeName || 'DigiBundle',
+            name: config?.storeName || 'Cheap Reels',
             description: items.map(i => i.title).join(', ').substring(0, 100),
             image: config?.logo || '/brand-icon.png',
             prefill: {
               name: name || 'Customer',
-              email: email || 'customer@digibundle.com',
+              email: email || 'customer@cheapreels.com',
               contact: whatsapp
             },
             theme: {
@@ -985,7 +985,7 @@ export default function CheckoutModal({
                 </button>
 
                 <a
-                  href={`https://wa.me/${supportPhone}?text=${encodeURIComponent(`Hello DigiBundle Support, I need help with checkout for amount ₹${total}. My WhatsApp is ${whatsapp}.`)}`}
+                  href={`https://wa.me/${supportPhone}?text=${encodeURIComponent(`Hello Cheap Reels Support, I need help with checkout for amount ₹${total}. My WhatsApp is ${whatsapp}.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-3 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-bold rounded-2xl text-xs flex items-center justify-center gap-2 transition"

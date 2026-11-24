@@ -23,7 +23,7 @@ export default function OrderSuccessModal({ order: initialOrder, onClose }) {
 
     const interval = setInterval(() => {
       try {
-        const raw = localStorage.getItem('digibundle_orders');
+        const raw = localStorage.getItem('cheap_reels_orders');
         if (raw) {
           const orders = JSON.parse(raw);
           const found = orders.find(o => o.id === currentOrder.id);
@@ -61,7 +61,7 @@ export default function OrderSuccessModal({ order: initialOrder, onClose }) {
 
   const supportPhone = '917017324978';
   const whatsappUrl = currentOrder.whatsappUrl || 
-    `https://wa.me/${supportPhone}?text=${encodeURIComponent(`Hello DigiBundle, my order ID is #${currentOrder.id} and UTR is ${currentOrder.utr}. Please verify and send my Google Drive link.`)}`;
+    `https://wa.me/${supportPhone}?text=${encodeURIComponent(`Hello Cheap Reels, my order ID is #${currentOrder.id} and UTR is ${currentOrder.utr}. Please verify and send my Google Drive link.`)}`;
 
   const handleCopyUtr = () => {
     navigator.clipboard.writeText(currentOrder.utr || '');

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, MessageCircle, Mail, Shield } from 'lucide-react';
+import { ShieldCheck, MessageCircle, Mail } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 
 export default function Footer({ config, onOpenPolicy }) {
@@ -95,7 +95,7 @@ export default function Footer({ config, onOpenPolicy }) {
           </div>
         </div>
 
-        {/* Bottom Copyright & Made By Vivek Singh */}
+        {/* Bottom Copyright & Made By Vivek Singh (Zero Admin Links) */}
         <div className="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-3">
           <p>© {new Date().getFullYear()} {config.storeName || 'DigiBundle'}. All rights reserved.</p>
           
@@ -103,11 +103,6 @@ export default function Footer({ config, onOpenPolicy }) {
             <span>Made with <span className="text-rose-500">❤️</span> by</span>
             <span className="text-amber-400 font-black tracking-wide">Vivek Singh</span>
           </div>
-
-          <a href="/admin" className="hover:text-slate-300 flex items-center gap-1.5 transition text-[11px]" title="Admin Portal (/admin)">
-            <Shield className="w-3.5 h-3.5 text-slate-500 hover:text-amber-400" />
-            <span>Admin Console</span>
-          </a>
         </div>
 
       </div>

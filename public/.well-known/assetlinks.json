@@ -3,7 +3,7 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.digibundle.app",
+      "package_name": "com.cheapreels.app",
       "sha256_cert_fingerprints": [
         "14:6D:E9:7F:02:4F:9E:57:A8:14:0E:65:05:43:A0:97:78:B2:7A:B4:42:07:4E:AC:8D:1A:03:79:F0:84:7B:69"
       ]

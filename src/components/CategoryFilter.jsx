@@ -18,7 +18,7 @@ const iconMap = {
 
 export default function CategoryFilter({ categories, activeCategory, setActiveCategory }) {
   return (
-    <div className="py-3 overflow-x-auto scrollbar-none">
+    <div className="py-2 overflow-x-auto scrollbar-none">
       <div className="flex items-center gap-2 min-w-max pb-1">
         {categories.map((cat) => {
           const IconComponent = iconMap[cat.icon] || Sparkles;
@@ -28,13 +28,13 @@ export default function CategoryFilter({ categories, activeCategory, setActiveCa
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
                 isActive
-                  ? 'glow-amber-btn text-white scale-[1.03] shadow-md'
-                  : 'bg-white/95 hover:bg-amber-50 text-slate-700 hover:text-slate-950 border border-amber-200/90 shadow-2xs'
+                  ? 'bg-slate-950 text-white shadow-md scale-102'
+                  : 'bg-white/90 hover:bg-white text-slate-800 border border-slate-300 shadow-xs'
               }`}
             >
-              <IconComponent className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-amber-600'}`} />
+              <IconComponent className={`w-3.5 h-3.5 ${isActive ? 'text-amber-400' : 'text-slate-600'}`} />
               <span>{cat.label}</span>
             </button>
           );

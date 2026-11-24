@@ -11,7 +11,7 @@ export default function PolicyModal({ type, onClose }) {
       body: (
         <div className="space-y-3 text-xs text-slate-300 leading-relaxed">
           <p>
-            At <strong>DigiBundle</strong>, we strive to deliver top quality vertical video bundles instantly. Because our products are non-tangible, irrevocable digital goods delivered via cloud storage, refunds are governed strictly under the following terms:
+            At <strong>Cheap Reels Store</strong>, we strive to deliver top quality vertical video bundles instantly. Because our products are non-tangible, irrevocable digital goods delivered via cloud storage, refunds are governed strictly under the following terms:
           </p>
           <h4 className="font-bold text-white text-sm">1. Eligible Refund Scenarios:</h4>
           <ul className="list-disc pl-5 space-y-1">
@@ -36,23 +36,23 @@ export default function PolicyModal({ type, onClose }) {
       body: (
         <div className="space-y-3 text-xs text-slate-300 leading-relaxed">
           <p>
-            By purchasing digital assets from DigiBundle, you agree to the following terms:
+            By purchasing digital assets from Cheap Reels Store, you agree to the following terms:
           </p>
           <ul className="list-disc pl-5 space-y-1">
             <li><strong>Digital Delivery:</strong> All purchases grant non-exclusive access to hosted cloud folders (Google Drive). You are responsible for downloading and archiving copies for your personal or commercial use.</li>
             <li><strong>Commercial & Resell Rights:</strong> Customers are granted rights to edit, re-purpose, remix, and upload these video clips across their social media handles (Instagram Reels, YouTube Shorts, Facebook, TikTok).</li>
-            <li><strong>Platform Compliance:</strong> Users agree to abide by the Community Guidelines and Terms of Service of the respective platforms on which they post. DigiBundle is an independent digital provider and is not affiliated with Instagram, Meta, YouTube, or Google.</li>
+            <li><strong>Platform Compliance:</strong> Users agree to abide by the Community Guidelines and Terms of Service of the respective platforms on which they post. Cheap Reels Store is an independent digital provider and is not affiliated with Instagram, Meta, YouTube, or Google.</li>
           </ul>
         </div>
       )
     },
     about: {
-      title: 'About DigiBundle',
+      title: 'About Cheap Reels Store',
       icon: HelpCircle,
       body: (
         <div className="space-y-3 text-xs text-slate-300 leading-relaxed">
           <p>
-            <strong>DigiBundle</strong> is India's most affordable digital asset repository for content creators, agencies, affiliate marketers, and theme page owners.
+            <strong>Cheap Reels Store</strong> is India's most affordable digital asset repository for content creators, agencies, affiliate marketers, and theme page owners.
           </p>
           <p>
             We curate, organize, and optimize high-definition 1080x1920 vertical video clips across 130+ viral niches so creators don't have to spend 6+ hours editing every single day.

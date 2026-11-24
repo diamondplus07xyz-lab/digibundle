@@ -17,14 +17,14 @@ export default function AnnouncementBar({ text, enabled = true }) {
   const seconds = timeLeft % 60;
 
   return (
-    <div className="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 border-b border-amber-400/70 text-slate-950 text-[11px] sm:text-xs md:text-sm font-semibold py-2 px-3 text-center shadow-xs relative overflow-hidden flex flex-wrap items-center justify-center gap-2">
-      <span className="flex items-center gap-1.5 font-black tracking-wide">
-        <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-orange-600 fill-orange-500 animate-pulse shrink-0" />
-        <span className="text-slate-950 font-bold break-words">
-          {text || "✨ DIGIBUNDLE STUDIO: 50 Handcrafted 1080p Reels Bundles • 100% Watermark-Free • Lifetime Cloud Access"}
+    <div className="bg-slate-950 border-b border-slate-800 text-white text-[11px] sm:text-xs md:text-sm font-medium py-2 px-3 text-center shadow-sm relative overflow-hidden flex flex-wrap items-center justify-center gap-2">
+      <span className="flex items-center gap-1.5 font-bold tracking-wide">
+        <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 fill-amber-400 animate-pulse shrink-0" />
+        <span className="text-white font-semibold break-words">
+          {text || "LIMITED TIME OFFER: 2,50,000+ Ready Reels Pack at Flat 95% OFF! Instant Google Drive Access in 5 Seconds"}
         </span>
       </span>
-      <span className="inline-flex items-center gap-1 bg-slate-950 px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-mono font-black text-amber-300 border border-slate-900 shadow-xs shrink-0">
+      <span className="inline-flex items-center gap-1 bg-slate-900 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-mono font-bold text-amber-300 border border-slate-800 shrink-0">
         <Clock className="w-3 h-3 text-amber-400" />
         Ends in: {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
       </span>

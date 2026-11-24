@@ -1,6 +1,6 @@
 /**
  * First-Party Real-Time Website Traffic & Visitor Analytics Engine
- * DigiBundlefront & Admin Analytics
+ * Cheap Reels Storefront & Admin Analytics
  * 
  * Strict Zero Fake Data: All numbers strictly derived from real recorded visits.
  * Privacy-friendly, anonymous IDs (cr_analytics_vid, cr_analytics_sid).
@@ -8,8 +8,8 @@
  * Direct, Social, UTM, Referrals), Geo (Country & City), and Real-time active heartbeats.
  */
 
-const STORAGE_KEY = 'digibundle_analytics_v1';
-const LEGACY_STORAGE_KEY = 'digibundle_real_visitors_v3';
+const STORAGE_KEY = 'cheap_reels_analytics_v1';
+const LEGACY_STORAGE_KEY = 'cheap_reels_real_visitors_v3';
 
 // Detect Device Type
 export function getDeviceType() {

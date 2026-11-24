@@ -1,13 +1,13 @@
-// Enterprise-grade Session Management & Authentication Security for DigiBundle
+// Enterprise-grade Session Management & Authentication Security for Cheap Reels
 // Manages multi-device admin sessions, idle timeouts, session rotation, and secure revocation
 
 import { pushCloudStoreData } from './cloudSync';
 
 export const DEFAULT_IDLE_TIMEOUT_MINS = 15;
-export const SESSION_STORAGE_KEY = 'digibundle_admin_sessions';
-export const CURRENT_SESSION_ID_KEY = 'digibundle_current_session_id';
-export const SESSION_TIMEOUT_CONFIG_KEY = 'digibundle_session_timeout_mins';
-export const AUTH_COOKIE_NAME = 'digibundle_auth_session';
+export const SESSION_STORAGE_KEY = 'cheap_reels_admin_sessions';
+export const CURRENT_SESSION_ID_KEY = 'cheap_reels_current_session_id';
+export const SESSION_TIMEOUT_CONFIG_KEY = 'cheap_reels_session_timeout_mins';
+export const AUTH_COOKIE_NAME = 'cheap_reels_auth_session';
 
 /**
  * Detects device type, browser, and operating system from navigator
@@ -186,7 +186,7 @@ export function createAdminSession(options = {}) {
     browser: options.browser || info.browser,
     os: options.os || info.os,
     userAgent: info.userAgent,
-    ip: options.ip || (typeof localStorage !== 'undefined' ? localStorage.getItem('digibundle_visitor_ip') || 'Localhost / Direct' : 'Localhost / Direct'),
+    ip: options.ip || (typeof localStorage !== 'undefined' ? localStorage.getItem('cheap_reels_visitor_ip') || 'Localhost / Direct' : 'Localhost / Direct'),
     status: 'active',
     createdAt: new Date(now).toISOString(),
     createdEpoch: now,
@@ -364,7 +364,7 @@ export function performAdminLogout(reason = 'Admin Manual Logout') {
   setCurrentSessionId(null);
   clearAuthCookie();
   try {
-    sessionStorage.removeItem('digibundle_admin_auth_token');
+    sessionStorage.removeItem('cheap_reels_admin_auth_token');
     sessionStorage.clear();
   } catch (e) {}
 
@@ -376,9 +376,9 @@ export function performAdminLogout(reason = 'Admin Manual Logout') {
  */
 export function clearCustomerSession() {
   try {
-    localStorage.removeItem('digibundle_customer_phone');
-    localStorage.removeItem('digibundle_order_history');
-    sessionStorage.removeItem('digibundle_customer_temp');
+    localStorage.removeItem('cheap_reels_customer_phone');
+    localStorage.removeItem('cheap_reels_order_history');
+    sessionStorage.removeItem('cheap_reels_customer_temp');
     return { success: true };
   } catch (e) {
     return { success: false };

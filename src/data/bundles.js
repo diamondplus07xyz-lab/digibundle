@@ -1,3 +1,4 @@
+// Verified Real Bundles with Genuine Drive Links & Vaultzet Photos (126 bundles)
 export const initialBundles = [
   {
     "id": "bundle-1",

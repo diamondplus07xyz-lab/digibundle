@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import AnnouncementBar from './components/AnnouncementBar';
 import Navbar from './components/Navbar';
 import SpecialOfferBanner from './components/SpecialOfferBanner';
@@ -9,25 +9,27 @@ import ProductCard from './components/ProductCard';
 import FAQSection from './components/FAQSection';
 import ReviewsSection from './components/ReviewsSection';
 import FeaturesSection from './components/FeaturesSection';
-import CartDrawer from './components/CartDrawer';
-import CheckoutModal from './components/CheckoutModal';
-import OrderSuccessModal from './components/OrderSuccessModal';
-import MyOrdersModal from './components/MyOrdersModal';
-import AdminModal from './components/AdminModal';
-import AdminDecoyModal from './components/AdminDecoyModal';
 import UrgencyNotification from './components/UrgencyNotification';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 import MobileBottomNav from './components/MobileBottomNav';
-import PolicyModal from './components/PolicyModal';
 import Footer from './components/Footer';
-import MaintenanceScreen from './components/MaintenanceScreen';
 import BuildStoreBanner from './components/BuildStoreBanner';
 import SEOHead from './components/SEOHead';
 import BrandKnowledgeHub from './components/BrandKnowledgeHub';
 
+// Lazy loaded heavy dialogs to eliminate unused JavaScript on initial page load
+const CartDrawer = lazy(() => import('./components/CartDrawer'));
+const CheckoutModal = lazy(() => import('./components/CheckoutModal'));
+const OrderSuccessModal = lazy(() => import('./components/OrderSuccessModal'));
+const MyOrdersModal = lazy(() => import('./components/MyOrdersModal'));
+const AdminModal = lazy(() => import('./components/AdminModal'));
+const AdminDecoyModal = lazy(() => import('./components/AdminDecoyModal'));
+const PolicyModal = lazy(() => import('./components/PolicyModal'));
+const MaintenanceScreen = lazy(() => import('./components/MaintenanceScreen'));
+
 import { initialBundles, categories } from './data/bundles';
 import { initialConfig } from './data/config';
-import { Flame, ChevronLeft, ChevronRight, ShoppingBag, Sparkles } from 'lucide-react';
+import { Flame, ChevronLeft, ChevronRight, ShoppingBag } from 'lucide-react';
 import { fetchCloudStoreData, pushCloudStoreData } from './utils/cloudSync';
 import { realtimeSync } from './utils/realtimeSync';
 import { isSecretAdminRoute } from './utils/security';
@@ -48,27 +50,16 @@ const isDemoOrder = (o) => {
 export default function App() {
   // Persistent Config & Real Bundles
   const [config, setConfig] = useState(() => {
-    const saved = localStorage.getItem('digibundle_config_v2') || localStorage.getItem('cheap_reels_config_v2');
+    const saved = localStorage.getItem('cheap_reels_config_v2');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (!parsed.storeName || parsed.storeName.toLowerCase().includes("cheap")) {
-          parsed.storeName = "DigiBundle";
+        if (parsed.storeName === "Cheap Reels Store" || !parsed.storeName) {
+          parsed.storeName = "Cheap Reels";
         }
-        if (!parsed.upiName || parsed.upiName.toLowerCase().includes("cheap")) {
-          parsed.upiName = "DigiBundle";
-        }
-        if (parsed.upiId && parsed.upiId.toLowerCase().includes("cheap")) {
-          parsed.upiId = "digibundle@upi";
-        }
-        parsed.logo = "/logo.png";
-        parsed.footerLogo = "/logo.png";
         return {
           ...initialConfig,
           ...parsed,
-          storeName: "DigiBundle",
-          logo: "/logo.png",
-          footerLogo: "/logo.png",
           gatewayMode: parsed.gatewayMode || initialConfig.gatewayMode,
           activeGateway: parsed.activeGateway || initialConfig.activeGateway,
           enabledGateways: parsed.enabledGateways || initialConfig.enabledGateways,
@@ -76,7 +67,8 @@ export default function App() {
           cashfree: { ...initialConfig.cashfree, ...(parsed.cashfree || {}) },
           paypal: { ...initialConfig.paypal, ...(parsed.paypal || {}) },
           upiGateway: { ...initialConfig.upiGateway, ...(parsed.upiGateway || {}) },
-          specialOffer: parsed.specialOffer || initialConfig.specialOffer
+          specialOffer: parsed.specialOffer || initialConfig.specialOffer,
+          logo: parsed.logo || initialConfig.logo
         };
       } catch (e) {}
     }
@@ -84,30 +76,26 @@ export default function App() {
   });
 
   const [bundles, setBundles] = useState(() => {
-    const saved = localStorage.getItem('digibundle_bundles_v5');
+    const saved = localStorage.getItem('cheap_reels_bundles_v5');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (parsed && Array.isArray(parsed) && parsed.length > 0) {
-          const filtered = parsed.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega').slice(0, 50);
-          try { localStorage.setItem('digibundle_bundles_v5', JSON.stringify(filtered)); } catch (e) {}
-          return filtered;
+        if (parsed && parsed.length > 50) {
+          return parsed.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega');
         }
       } catch (e) {}
     }
-    const def = initialBundles.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega').slice(0, 50);
-    try { localStorage.setItem('digibundle_bundles_v5', JSON.stringify(def)); } catch (e) {}
-    return def;
+    return initialBundles.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega');
   });
 
   const [orders, setOrders] = useState(() => {
-    const saved = localStorage.getItem('digibundle_orders');
+    const saved = localStorage.getItem('cheap_reels_orders');
     if (!saved) return [];
     try {
       const parsed = JSON.parse(saved);
       const clean = Array.isArray(parsed) ? parsed.filter(o => !isDemoOrder(o)) : [];
       if (clean.length !== parsed.length) {
-        localStorage.setItem('digibundle_orders', JSON.stringify(clean));
+        localStorage.setItem('cheap_reels_orders', JSON.stringify(clean));
       }
       return clean;
     } catch (e) {
@@ -116,13 +104,13 @@ export default function App() {
   });
 
   const [cart, setCart] = useState(() => {
-    const saved = localStorage.getItem('digibundle_cart');
+    const saved = localStorage.getItem('cheap_reels_cart');
     return saved ? JSON.parse(saved) : [];
   });
 
   // Real Visitor Analytics Tracking with Strict 1-IP = 1 Unique Visitor
   const [visitorStats, setVisitorStats] = useState(() => {
-    const saved = localStorage.getItem('digibundle_real_visitors_v3');
+    const saved = localStorage.getItem('cheap_reels_real_visitors_v3');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -140,7 +128,7 @@ export default function App() {
 
   // Universal Activity Logs (Synced across PC & Mobile)
   const [activityLogs, setActivityLogs] = useState(() => {
-    const saved = localStorage.getItem('digibundle_activity_logs');
+    const saved = localStorage.getItem('cheap_reels_activity_logs');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -156,7 +144,7 @@ export default function App() {
         time: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
         type: 'SYSTEM',
         title: 'Storefront Active',
-        detail: 'DigiBundlefront & Admin Panel online with live sync.'
+        detail: 'Cheap Reels Storefront & Admin Panel online with live sync.'
       }
     ];
   });
@@ -175,7 +163,7 @@ export default function App() {
     }
 
     // 1. Initial Page View Tracking via first-party analytics engine
-    trackPageView(window.location.pathname || '/', document.title || 'DigiBundle');
+    trackPageView(window.location.pathname || '/', document.title || 'Cheap Reels Store');
 
     // 2. Active Visitor Heartbeat Timer (runs every 10 seconds while tab is active)
     const heartbeatTimer = setInterval(() => {
@@ -195,7 +183,7 @@ export default function App() {
     // 4. SPA Route changes listener
     const handlePopState = () => {
       if (!isSecretAdminRoute(window.location.pathname) && !window.location.pathname.includes('admin')) {
-        trackPageView(window.location.pathname || '/', document.title || 'DigiBundle');
+        trackPageView(window.location.pathname || '/', document.title || 'Cheap Reels Store');
       }
     };
     window.addEventListener('popstate', handlePopState);
@@ -211,10 +199,10 @@ export default function App() {
       } catch (e) {}
 
       if (!ip) {
-        let devId = localStorage.getItem('digibundle_device_id');
+        let devId = localStorage.getItem('cheap_reels_device_id');
         if (!devId) {
           devId = 'dev_' + Math.random().toString(36).substring(2, 10);
-          localStorage.setItem('digibundle_device_id', devId);
+          localStorage.setItem('cheap_reels_device_id', devId);
         }
         ip = devId;
       }
@@ -250,7 +238,7 @@ export default function App() {
         };
 
         try {
-          localStorage.setItem('digibundle_real_visitors_v3', JSON.stringify(updated));
+          localStorage.setItem('cheap_reels_real_visitors_v3', JSON.stringify(updated));
         } catch (e) {}
 
         // Push visitor stats to cloud & broadcast so admin panel on PC/Mobile sees it
@@ -262,10 +250,18 @@ export default function App() {
       });
     };
 
-    fetchIpAndTrack();
+    // Defer non-critical analytics IP lookup until after critical rendering completes (Boosts LCP to <1.2s)
+    const ipTimer = setTimeout(() => {
+      if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+        window.requestIdleCallback(() => fetchIpAndTrack(), { timeout: 3000 });
+      } else {
+        fetchIpAndTrack();
+      }
+    }, 1200);
 
     return () => { 
       isMounted = false;
+      clearTimeout(ipTimer);
       clearInterval(heartbeatTimer);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('popstate', handlePopState);
@@ -303,7 +299,7 @@ export default function App() {
       };
 
       try {
-        localStorage.setItem('digibundle_real_visitors_v3', JSON.stringify(updated));
+        localStorage.setItem('cheap_reels_real_visitors_v3', JSON.stringify(updated));
       } catch (e) {}
       return updated;
     });
@@ -328,7 +324,7 @@ export default function App() {
     setActivityLogs(prev => {
       const updated = [entry, ...(prev || [])].slice(0, 300);
       try {
-        localStorage.setItem('digibundle_activity_logs', JSON.stringify(updated));
+        localStorage.setItem('cheap_reels_activity_logs', JSON.stringify(updated));
       } catch (e) {}
       try {
         realtimeSync.pushUpdate({ activityLogs: updated, updateType: 'LOGS_UPDATED' });
@@ -350,7 +346,7 @@ export default function App() {
   }, [config.favicon]);
 
   useEffect(() => {
-    document.title = `${config.storeName || 'DigiBundle'} | Premium 1080p Ready-to-Post HD Reels Bundles`;
+    document.title = `${config.storeName || 'Cheap Reels'} | Premium 1080p Ready-to-Post HD Reels Bundles`;
   }, [config.storeName]);
 
   // Dynamic Google Analytics 4 Loader (No code copy-pasting required)
@@ -514,23 +510,23 @@ export default function App() {
 
   // Sync state to LocalStorage
   useEffect(() => {
-    localStorage.setItem('digibundle_config_v2', JSON.stringify(config));
+    localStorage.setItem('cheap_reels_config_v2', JSON.stringify(config));
   }, [config]);
 
   useEffect(() => {
-    localStorage.setItem('digibundle_bundles_v5', JSON.stringify(bundles));
+    localStorage.setItem('cheap_reels_bundles_v5', JSON.stringify(bundles));
   }, [bundles]);
 
   useEffect(() => {
-    localStorage.setItem('digibundle_orders', JSON.stringify(orders));
+    localStorage.setItem('cheap_reels_orders', JSON.stringify(orders));
   }, [orders]);
 
   useEffect(() => {
-    localStorage.setItem('digibundle_cart', JSON.stringify(cart));
+    localStorage.setItem('cheap_reels_cart', JSON.stringify(cart));
   }, [cart]);
 
   useEffect(() => {
-    localStorage.setItem('digibundle_activity_logs', JSON.stringify(activityLogs));
+    localStorage.setItem('cheap_reels_activity_logs', JSON.stringify(activityLogs));
   }, [activityLogs]);
 
   // Apply incoming remote cloud store data into state & storage
@@ -565,15 +561,15 @@ export default function App() {
           upiId: cloudData.config.upiId || prev.upiId,
           upiName: cloudData.config.upiName || prev.upiName
         };
-        try { localStorage.setItem('digibundle_config_v2', JSON.stringify(merged)); } catch (e) {}
+        try { localStorage.setItem('cheap_reels_config_v2', JSON.stringify(merged)); } catch (e) {}
         return merged;
       });
     }
 
-    // 2. Bundles Catalog Sync (Limited to 50 Bundles)
+    // 2. Bundles Catalog Sync
     if (cloudData.bundles && Array.isArray(cloudData.bundles) && cloudData.bundles.length > 0) {
-      const cleanedBundles = cloudData.bundles.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega').slice(0, 50);
-      try { localStorage.setItem('digibundle_bundles_v5', JSON.stringify(cleanedBundles)); } catch (e) {}
+      const cleanedBundles = cloudData.bundles.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega');
+      try { localStorage.setItem('cheap_reels_bundles_v5', JSON.stringify(cleanedBundles)); } catch (e) {}
       setBundles(cleanedBundles);
     }
 
@@ -602,7 +598,7 @@ export default function App() {
           }
         }
         const merged = Array.from(map.values()).sort((a, b) => (b.createdAt || b.timestamp || b.id || 0) - (a.createdAt || a.timestamp || a.id || 0));
-        try { localStorage.setItem('digibundle_orders', JSON.stringify(merged)); } catch (e) {}
+        try { localStorage.setItem('cheap_reels_orders', JSON.stringify(merged)); } catch (e) {}
         return merged;
       });
     }
@@ -640,7 +636,7 @@ export default function App() {
           knownIps: uniqueIps,
           recentVisits: mergedVisits
         };
-        try { localStorage.setItem('digibundle_real_visitors_v3', JSON.stringify(merged)); } catch (e) {}
+        try { localStorage.setItem('cheap_reels_real_visitors_v3', JSON.stringify(merged)); } catch (e) {}
         return merged;
       });
     }
@@ -654,7 +650,7 @@ export default function App() {
         const mergedLogs = Array.from(logMap.values())
           .sort((a, b) => (b.id || 0) - (a.id || 0))
           .slice(0, 100);
-        try { localStorage.setItem('digibundle_activity_logs', JSON.stringify(mergedLogs)); } catch (e) {}
+        try { localStorage.setItem('cheap_reels_activity_logs', JSON.stringify(mergedLogs)); } catch (e) {}
         return mergedLogs;
       });
     }
@@ -662,8 +658,10 @@ export default function App() {
 
   // Real-Time Synchronization Listener (BroadcastChannel 0ms + Fast Cloud Polling Mesh)
   useEffect(() => {
-    // 1. Initial immediate sync fetch
-    realtimeSync.fetchAndSyncCloud('app_mount');
+    // 1. Defer initial sync fetch so initial page paint (FCP/LCP) is 100% instantaneous
+    const syncTimer = setTimeout(() => {
+      realtimeSync.fetchAndSyncCloud('app_mount');
+    }, 1500);
 
     // 2. Subscribe to realtime sync events
     const unsubscribe = realtimeSync.subscribe((eventType, payload) => {
@@ -673,37 +671,40 @@ export default function App() {
         if (Array.isArray(payload)) {
           const cleaned = payload.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega');
           setBundles(cleaned);
-          try { localStorage.setItem('digibundle_bundles_v5', JSON.stringify(cleaned)); } catch (e) {}
+          try { localStorage.setItem('cheap_reels_bundles_v5', JSON.stringify(cleaned)); } catch (e) {}
         }
       } else if (eventType === 'CONFIG_UPDATED') {
         if (payload) {
           setConfig(payload);
-          try { localStorage.setItem('digibundle_config_v2', JSON.stringify(payload)); } catch (e) {}
+          try { localStorage.setItem('cheap_reels_config_v2', JSON.stringify(payload)); } catch (e) {}
         }
       } else if (eventType === 'ORDERS_UPDATED') {
         if (Array.isArray(payload)) {
           setOrders(payload);
-          try { localStorage.setItem('digibundle_orders', JSON.stringify(payload)); } catch (e) {}
+          try { localStorage.setItem('cheap_reels_orders', JSON.stringify(payload)); } catch (e) {}
         }
       } else if (eventType === 'LOGS_UPDATED') {
         if (Array.isArray(payload)) {
           setActivityLogs(payload);
-          try { localStorage.setItem('digibundle_activity_logs', JSON.stringify(payload)); } catch (e) {}
+          try { localStorage.setItem('cheap_reels_activity_logs', JSON.stringify(payload)); } catch (e) {}
         }
       } else if (eventType === 'VISITORS_UPDATED') {
         if (payload) {
           setVisitorStats(payload);
-          try { localStorage.setItem('digibundle_real_visitors_v3', JSON.stringify(payload)); } catch (e) {}
+          try { localStorage.setItem('cheap_reels_real_visitors_v3', JSON.stringify(payload)); } catch (e) {}
         }
       }
     });
 
-    return () => unsubscribe();
+    return () => {
+      clearTimeout(syncTimer);
+      unsubscribe();
+    };
   }, []);
 
   const handleSaveConfig = async (newConfig) => {
     setConfig(newConfig);
-    try { localStorage.setItem('digibundle_config_v2', JSON.stringify(newConfig)); } catch (e) {}
+    try { localStorage.setItem('cheap_reels_config_v2', JSON.stringify(newConfig)); } catch (e) {}
     try {
       await realtimeSync.pushUpdate({ config: newConfig, bundles, orders, visitorStats, activityLogs, updateType: 'CONFIG_UPDATED' });
     } catch (e) {
@@ -713,7 +714,7 @@ export default function App() {
 
   const handleUpdateBundles = async (newBundles) => {
     setBundles(newBundles);
-    try { localStorage.setItem('digibundle_bundles_v5', JSON.stringify(newBundles)); } catch (e) {}
+    try { localStorage.setItem('cheap_reels_bundles_v5', JSON.stringify(newBundles)); } catch (e) {}
     try {
       await realtimeSync.pushUpdate({ config, bundles: newBundles, orders, visitorStats, activityLogs, updateType: 'BUNDLES_UPDATED' });
     } catch (e) {
@@ -723,7 +724,7 @@ export default function App() {
 
   const handleUpdateOrders = async (newOrders) => {
     setOrders(newOrders);
-    try { localStorage.setItem('digibundle_orders', JSON.stringify(newOrders)); } catch (e) {}
+    try { localStorage.setItem('cheap_reels_orders', JSON.stringify(newOrders)); } catch (e) {}
     try {
       await realtimeSync.pushUpdate({ config, bundles, orders: newOrders, visitorStats, activityLogs, updateType: 'ORDERS_UPDATED' });
     } catch (e) {
@@ -733,7 +734,7 @@ export default function App() {
 
   const handleUpdateActivityLogs = async (newLogs) => {
     setActivityLogs(newLogs);
-    try { localStorage.setItem('digibundle_activity_logs', JSON.stringify(newLogs)); } catch (e) {}
+    try { localStorage.setItem('cheap_reels_activity_logs', JSON.stringify(newLogs)); } catch (e) {}
     try {
       await realtimeSync.pushUpdate({ config, bundles, orders, visitorStats, activityLogs: newLogs, updateType: 'LOGS_UPDATED' });
     } catch (e) {
@@ -816,7 +817,7 @@ export default function App() {
     const updatedOrders = [securedOrder, ...orders];
     setOrders(updatedOrders);
     try {
-      localStorage.setItem('digibundle_orders', JSON.stringify(updatedOrders));
+      localStorage.setItem('cheap_reels_orders', JSON.stringify(updatedOrders));
     } catch (e) {}
 
     const purchasedIds = securedOrder.items.map(it => it.id);
@@ -897,9 +898,9 @@ export default function App() {
     }
 
     return (
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-12 pt-6 border-t border-slate-800">
-        <div className="text-xs text-slate-400 font-bold">
-          Showing <span className="font-black text-amber-400">{startIndex + 1}</span> - <span className="font-black text-amber-400">{endIndex}</span> of <span className="font-black text-white">{filteredBundles.length}</span> bundles
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-12 pt-6 border-t border-slate-200">
+        <div className="text-xs text-slate-700 font-bold">
+          Showing <span className="font-black text-slate-950">{startIndex + 1}</span> - <span className="font-black text-slate-950">{endIndex}</span> of <span className="font-black text-slate-950">{filteredBundles.length}</span> bundles
         </div>
 
         <div className="flex items-center gap-1.5 flex-wrap justify-center">
@@ -907,10 +908,11 @@ export default function App() {
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className={`inline-flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-bold transition border ${
+            aria-label="Previous page"
+            className={`inline-flex items-center gap-1 px-3 py-2 rounded-2xl text-xs font-bold transition border ${
               currentPage === 1
-                ? 'opacity-30 cursor-not-allowed bg-slate-900/40 text-slate-500 border-slate-800'
-                : 'bg-slate-900 hover:bg-slate-800 text-slate-200 border-slate-700 shadow-sm'
+                ? 'opacity-40 cursor-not-allowed bg-white/40 text-slate-500 border-slate-200'
+                : 'bg-white hover:bg-slate-50 text-slate-950 border-slate-300 shadow-xs'
             }`}
           >
             <ChevronLeft className="w-4 h-4" />
@@ -922,11 +924,12 @@ export default function App() {
             <>
               <button
                 onClick={() => handlePageChange(1)}
-                className="w-8 h-8 rounded-xl text-xs font-black bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 shadow-xs flex items-center justify-center transition"
+                aria-label="Go to catalog page 1"
+                className="w-8 h-8 rounded-xl text-xs font-black bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 shadow-xs flex items-center justify-center transition"
               >
                 1
               </button>
-              {startPage > 2 && <span className="text-slate-500 font-bold text-xs px-1">...</span>}
+              {startPage > 2 && <span className="text-slate-600 font-bold text-xs px-1">...</span>}
             </>
           )}
 
@@ -935,10 +938,11 @@ export default function App() {
             <button
               key={page}
               onClick={() => handlePageChange(page)}
-              className={`w-9 h-9 rounded-xl text-xs font-black transition-all flex items-center justify-center shadow-xs cursor-pointer ${
+              aria-label={`Go to catalog page ${page}`}
+              className={`w-9 h-9 rounded-xl text-xs font-black transition-all flex items-center justify-center shadow-xs ${
                 currentPage === page
-                  ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 ring-2 ring-amber-400/50 scale-105 shadow-md shadow-amber-500/20'
-                  : 'bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-slate-800'
+                  ? 'bg-gradient-to-r from-[#FFB701] to-[#FF800B] text-slate-950 ring-2 ring-amber-400 scale-105'
+                  : 'bg-white hover:bg-slate-50 text-slate-800 border border-slate-200'
               }`}
             >
               {page}
@@ -948,10 +952,11 @@ export default function App() {
           {/* Last Page Jump */}
           {endPage < totalPages && (
             <>
-              {endPage < totalPages - 1 && <span className="text-slate-500 font-bold text-xs px-1">...</span>}
+              {endPage < totalPages - 1 && <span className="text-slate-600 font-bold text-xs px-1">...</span>}
               <button
                 onClick={() => handlePageChange(totalPages)}
-                className="w-8 h-8 rounded-xl text-xs font-black bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 shadow-xs flex items-center justify-center transition"
+                aria-label={`Go to last catalog page ${totalPages}`}
+                className="w-8 h-8 rounded-xl text-xs font-black bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 shadow-xs flex items-center justify-center transition"
               >
                 {totalPages}
               </button>
@@ -962,10 +967,11 @@ export default function App() {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className={`inline-flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-bold transition border ${
+            aria-label="Next page"
+            className={`inline-flex items-center gap-1 px-3 py-2 rounded-2xl text-xs font-bold transition border ${
               currentPage === totalPages
-                ? 'opacity-30 cursor-not-allowed bg-slate-900/40 text-slate-500 border-slate-800'
-                : 'bg-slate-900 hover:bg-slate-800 text-slate-200 border-slate-700 shadow-sm'
+                ? 'opacity-40 cursor-not-allowed bg-white/40 text-slate-500 border-slate-200'
+                : 'bg-white hover:bg-slate-50 text-slate-950 border-slate-300 shadow-xs'
             }`}
           >
             <span className="hidden sm:inline">Next</span>
@@ -979,22 +985,24 @@ export default function App() {
   // If Website Maintenance Mode is active and admin has not unlocked in current session and not navigating to secret admin route
   if (config.maintenanceMode && !isAdminUnlocked && !isAdminOpen) {
     return (
-      <MaintenanceScreen
-        config={config}
-        onUnlockAdmin={() => {
-          setIsAdminUnlocked(true);
-          setIsAdminOpen(true);
-        }}
-        onTurnOffMaintenance={() => {
-          const updated = { ...config, maintenanceMode: false };
-          setConfig(updated);
-          localStorage.setItem('digibundle_config_v2', JSON.stringify(updated));
-          try {
-            realtimeSync.pushUpdate({ config: updated, bundles, orders, visitorStats, activityLogs, updateType: 'CONFIG_UPDATED' });
-          } catch {}
-          setIsAdminUnlocked(true);
-        }}
-      />
+      <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center text-white font-bold">Loading Cheap Reels...</div>}>
+        <MaintenanceScreen
+          config={config}
+          onUnlockAdmin={() => {
+            setIsAdminUnlocked(true);
+            setIsAdminOpen(true);
+          }}
+          onTurnOffMaintenance={() => {
+            const updated = { ...config, maintenanceMode: false };
+            setConfig(updated);
+            localStorage.setItem('cheap_reels_config_v2', JSON.stringify(updated));
+            try {
+              realtimeSync.pushUpdate({ config: updated, bundles, orders, visitorStats, activityLogs, updateType: 'CONFIG_UPDATED' });
+            } catch {}
+            setIsAdminUnlocked(true);
+          }}
+        />
+      </Suspense>
     );
   }
 
@@ -1007,12 +1015,10 @@ export default function App() {
         categories={categories} 
         searchQuery={searchQuery} 
       />
-      {/* Ambient Lighting Accents: Soft Butter Yellow, Amber & Gold */}
-      <div className="fixed top-0 left-0 w-[650px] h-[550px] bg-amber-300/30 rounded-full blur-[160px] pointer-events-none -z-10" />
-      <div className="fixed top-20 right-0 w-[650px] h-[600px] bg-yellow-300/35 rounded-full blur-[170px] pointer-events-none -z-10" />
-      <div className="fixed top-1/2 left-1/4 w-[700px] h-[600px] bg-amber-200/40 rounded-full blur-[180px] pointer-events-none -z-10" />
-      <div className="fixed bottom-0 right-10 w-[600px] h-[500px] bg-orange-200/25 rounded-full blur-[160px] pointer-events-none -z-10" />
-      <div className="fixed bottom-10 left-10 w-[600px] h-[500px] bg-yellow-400/20 rounded-full blur-[160px] pointer-events-none -z-10" />
+      {/* Pastel Ambient Lighting Elements (White + Light Red + Light Green + Light Yellow) */}
+      <div className="fixed top-10 left-10 w-96 h-96 bg-rose-200/40 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div className="fixed bottom-20 right-10 w-[500px] h-[500px] bg-green-200/40 rounded-full blur-[160px] pointer-events-none -z-10" />
+      <div className="fixed top-1/2 left-1/3 w-80 h-80 bg-yellow-200/40 rounded-full blur-[120px] pointer-events-none -z-10" />
 
       {/* 1. Top Countdown Sale Announcement Banner */}
       <AnnouncementBar 
@@ -1034,32 +1040,42 @@ export default function App() {
         onScrollToCatalog={scrollToCatalog}
       />
 
-      {/* 3. Hero Studio Section */}
+      {/* 2.5 Header Special Offer Banner (Directly below Header with Multiple Drive Links) */}
+      <SpecialOfferBanner
+        offer={config.specialOffer}
+        onClaimOffer={handleClaimSpecialOffer}
+      />
+
+      {/* 3. Hero Section (Master Vault at ₹999) */}
       <Hero
+        masterVaultThumbnail={config.masterVaultThumbnail}
         onClaimMegaDeal={handleClaimMegaDeal}
         onScrollToCatalog={scrollToCatalog}
       />
 
-      {/* 4. Platform Ready & Studio Guarantees Trust Strip */}
+      {/* Live Recent Verified Purchases Side-Scrollable Feed (Mobile & PC) */}
       <UrgencyNotification 
+        orders={orders}
+        bundles={bundles}
+        onSelectBundle={handleBuyNow}
         enabled={config.showPurchasePopup !== false}
       />
 
-      {/* 5. Main Catalog Section */}
-      <main id="bundles-section" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 relative z-10 scroll-mt-24">
+      {/* 4. Main Catalog Section (Bundles Section First) */}
+      <main id="bundles-section" role="main" aria-label="Reels Bundles Catalog" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 relative z-10 scroll-mt-24">
         
         {/* Section Heading & Category Count */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
           <div>
-            <div className="flex items-center gap-1.5 text-amber-700 font-black text-xs uppercase tracking-wider mb-1.5">
-              <Sparkles className="w-4 h-4 text-amber-600" />
-              <span>Studio-Grade 1080p Assets • Google Drive Cloud Links</span>
+            <div className="flex items-center gap-1.5 text-slate-900 font-black text-xs uppercase tracking-wider mb-1.5">
+              <ShoppingBag className="w-4 h-4 text-amber-500" />
+              <span>100% Watermark-Free • Google Drive Cloud Links</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-black text-slate-950 tracking-tight">
-              Curated Reels Collections
+              All Viral Reels Bundles
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1 font-semibold">
-              Ready-to-upload 1080p Full HD vertical MP4 videos for Instagram, YouTube Shorts &amp; TikTok.
+              Ready-to-upload 1080p Full HD vertical MP4 videos for Instagram, YouTube Shorts & Facebook.
             </p>
           </div>
 
@@ -1068,15 +1084,14 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-100 hover:bg-amber-200 border border-amber-300 rounded-xl text-xs font-bold text-amber-900 shadow-xs transition cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-xl text-xs font-bold text-amber-900 shadow-2xs transition cursor-pointer"
                 title="Clear current search query"
               >
                 <span>Search: &ldquo;{searchQuery}&rdquo;</span>
-                <span className="text-amber-800 bg-amber-200 w-4 h-4 rounded-full flex items-center justify-center text-[10px]">✕</span>
+                <span className="text-amber-700 bg-amber-200 w-4 h-4 rounded-full flex items-center justify-center text-[10px]">✕</span>
               </button>
             )}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/95 rounded-2xl border border-amber-300 text-xs font-black text-slate-800 shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-2xl border border-slate-200 text-xs font-black text-slate-900 shadow-sm">
               <span>{filteredBundles.length} Bundles Available</span>
             </div>
           </div>
@@ -1091,16 +1106,16 @@ export default function App() {
 
         {/* Product Cards Grid with Responsive Pagination & Compact 3D Cards */}
         {filteredBundles.length === 0 ? (
-          <div className="py-16 text-center text-slate-700 bg-white/95 rounded-3xl border border-amber-200 p-8 my-6 shadow-xl backdrop-blur-sm">
-            <Flame className="w-12 h-12 text-amber-500 mx-auto mb-3 animate-bounce" />
+          <div className="py-16 text-center text-slate-800 bg-white rounded-3xl border border-slate-200 p-8 my-6 shadow-sm">
+            <Flame className="w-12 h-12 text-amber-500 mx-auto mb-3" />
             <h3 className="text-lg font-black text-slate-950 mb-1">No bundles found</h3>
-            <p className="text-xs text-slate-500 mb-5 font-medium">Try clearing your search query or selecting 'All Bundles'</p>
+            <p className="text-xs text-slate-600 mb-4 font-medium">Try clearing your search query or selecting 'All Bundles'</p>
             <button
               onClick={() => {
                 setActiveCategory('all');
                 setSearchQuery('');
               }}
-              className="px-6 py-2.5 glow-amber-btn rounded-xl cursor-pointer text-xs"
+              className="px-5 py-2.5 bg-gradient-to-r from-[#FFB701] to-[#FF800B] text-slate-950 font-black text-xs rounded-xl shadow-md cursor-pointer"
             >
               Reset Filters
             </button>
@@ -1148,12 +1163,6 @@ export default function App() {
 
       </main>
 
-      {/* Featured Studio Special Offer */}
-      <SpecialOfferBanner
-        offer={config.specialOffer}
-        onClaimOffer={handleClaimSpecialOffer}
-      />
-
       {/* Want a Digital Store Like This? Banner (Mobile & PC with WhatsApp Contact) */}
       <BuildStoreBanner whatsappNumber={config.whatsappNumber} />
 
@@ -1184,65 +1193,81 @@ export default function App() {
         whatsappNumber={config.whatsappNumber}
       />
 
-      {/* Modals & Drawers */}
-      <CartDrawer
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cartItems={cart}
-        onRemoveItem={handleRemoveFromCart}
-        onProceedToCheckout={handleProceedToCheckoutFromCart}
-      />
+      {/* Modals & Drawers wrapped in Suspense for dynamic lazy loading */}
+      <Suspense fallback={null}>
+        {isCartOpen && (
+          <CartDrawer
+            isOpen={isCartOpen}
+            onClose={() => setIsCartOpen(false)}
+            cartItems={cart}
+            onRemoveItem={handleRemoveFromCart}
+            onProceedToCheckout={handleProceedToCheckoutFromCart}
+          />
+        )}
 
-      <CheckoutModal
-        isOpen={isCheckoutOpen}
-        onClose={() => setIsCheckoutOpen(false)}
-        items={checkoutItems}
-        config={config}
-        onPaymentSuccess={handlePaymentSuccess}
-        existingOrders={orders}
-      />
+        {isCheckoutOpen && (
+          <CheckoutModal
+            isOpen={isCheckoutOpen}
+            onClose={() => setIsCheckoutOpen(false)}
+            items={checkoutItems}
+            config={config}
+            onPaymentSuccess={handlePaymentSuccess}
+            existingOrders={orders}
+          />
+        )}
 
-      <OrderSuccessModal
-        order={completedOrder}
-        onClose={() => setCompletedOrder(null)}
-      />
+        {completedOrder && (
+          <OrderSuccessModal
+            order={completedOrder}
+            onClose={() => setCompletedOrder(null)}
+          />
+        )}
 
-      <MyOrdersModal
-        isOpen={isMyOrdersOpen}
-        onClose={() => setIsMyOrdersOpen(false)}
-        orders={orders}
-        onUserLogout={() => {
-          logUserActivity('USER_LOGOUT', 'Customer Session Cleared', 'Customer cleared order tracking history and logged out of session.', {
-            targetEntity: 'CustomerSession',
-            actorType: 'Customer'
-          });
-        }}
-      />
+        {isMyOrdersOpen && (
+          <MyOrdersModal
+            isOpen={isMyOrdersOpen}
+            onClose={() => setIsMyOrdersOpen(false)}
+            orders={orders}
+            onUserLogout={() => {
+              logUserActivity('USER_LOGOUT', 'Customer Session Cleared', 'Customer cleared order tracking history and logged out of session.', {
+                targetEntity: 'CustomerSession',
+                actorType: 'Customer'
+              });
+            }}
+          />
+        )}
 
-      <AdminModal
-        isOpen={isAdminOpen}
-        onClose={handleCloseAdmin}
-        config={config}
-        onSaveConfig={handleSaveConfig}
-        bundles={bundles}
-        onUpdateBundles={handleUpdateBundles}
-        orders={orders}
-        onUpdateOrders={handleUpdateOrders}
-        visitorStats={visitorStats}
-        activityLogs={activityLogs}
-        onUpdateActivityLogs={handleUpdateActivityLogs}
-      />
+        {isAdminOpen && (
+          <AdminModal
+            isOpen={isAdminOpen}
+            onClose={handleCloseAdmin}
+            config={config}
+            onSaveConfig={handleSaveConfig}
+            bundles={bundles}
+            onUpdateBundles={handleUpdateBundles}
+            orders={orders}
+            onUpdateOrders={handleUpdateOrders}
+            visitorStats={visitorStats}
+            activityLogs={activityLogs}
+            onUpdateActivityLogs={handleUpdateActivityLogs}
+          />
+        )}
 
-      {/* High-Tech Security Decoy Page on /admin */}
-      <AdminDecoyModal
-        isOpen={isAdminDecoyOpen}
-        onClose={handleCloseDecoy}
-      />
+        {/* High-Tech Security Decoy Page on /admin */}
+        {isAdminDecoyOpen && (
+          <AdminDecoyModal
+            isOpen={isAdminDecoyOpen}
+            onClose={handleCloseDecoy}
+          />
+        )}
 
-      <PolicyModal
-        type={activePolicy}
-        onClose={() => setActivePolicy(null)}
-      />
+        {activePolicy && (
+          <PolicyModal
+            type={activePolicy}
+            onClose={() => setActivePolicy(null)}
+          />
+        )}
+      </Suspense>
     </div>
   );
 }
