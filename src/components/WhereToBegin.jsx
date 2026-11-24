@@ -1,15 +1,15 @@
 import React from 'react';
-import { Sparkles, CreditCard, Download, Rocket } from 'lucide-react';
+import { Compass, CreditCard, Download, Rocket } from 'lucide-react';
 
 export default function WhereToBegin() {
   const steps = [
     {
       num: '1',
-      icon: Sparkles,
+      icon: Compass,
       iconColor: 'text-indigo-600',
       bgColor: 'bg-indigo-50 border-indigo-200',
       title: 'Choose Your Niche',
-      desc: 'Browse through 130+ viral ready categories including Fitness, Luxury, Anime, Motivation, Art & more.'
+      desc: 'Browse through 50+ curated viral bundles including Fitness, Luxury, AI, Motivation, Cars & more.'
     },
     {
       num: '2',

@@ -17,8 +17,7 @@ import {
   Calendar,
   Radio,
   Layers,
-  Sparkles,
-  ExternalLink,
+    ExternalLink,
   MapPin,
   CheckCircle2
 } from 'lucide-react';

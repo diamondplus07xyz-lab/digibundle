@@ -1,10 +1,10 @@
 /**
- * IndexNow Client Utility for Cheap Reels Store
+ * IndexNow Client Utility for DigiBundle Store
  * Submits updated pages to Bing, Yandex, Seznam & Naver instantaneously
  */
 
 export const INDEXNOW_KEY = 'c7f938e210a442d992e5917812903e48';
-export const PRIMARY_HOST = 'cheapreels.in';
+export const PRIMARY_HOST = 'digibundle.in';
 
 export async function submitUrlsToIndexNow(urls = []) {
   try {

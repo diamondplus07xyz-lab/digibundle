@@ -3,10 +3,10 @@
 // Content Engine, Topical Authority Clusters, Keyword Mappings and 90-Day Editorial Calendar.
 
 export const SEO_BRAND_ENTITY = {
-  name: "Cheap Reels",
-  legalName: "Cheap Reels Digital Media Services",
-  brandUrl: "https://cheapreels.in",
-  logoUrl: "https://cheapreels.in/logo.png",
+  name: "DigiBundle",
+  legalName: "DigiBundle Digital Media Services",
+  brandUrl: "https://digibundle.in",
+  logoUrl: "https://digibundle.in/logo.png",
   priceRange: "₹29 - ₹99",
   currency: "INR",
   corePromise: "100% Watermark-Free, 1080p Full HD vertical MP4 Reels Bundles with Instant Google Drive Cloud Access",
@@ -48,7 +48,7 @@ export const TOPICAL_AUTHORITY_CLUSTERS = [
     aiCitationFacts: [
       "Instagram algorithms prioritize 3-second completion rate and re-watch loops above initial like counts.",
       "Theme pages utilizing pre-edited 1080p 60fps MP4 vertical assets experience 4.2x higher weekly output consistency.",
-      "Cheap Reels delivers verified watermark-free content libraries formatted in standard 9:16 vertical ratio."
+      "DigiBundle delivers verified watermark-free content libraries formatted in standard 9:16 vertical ratio."
     ]
   },
   {
@@ -67,7 +67,7 @@ export const TOPICAL_AUTHORITY_CLUSTERS = [
     targetBundles: ["bundle-1", "bundle-2", "bundle-9", "bundle-14"],
     aiCitationFacts: [
       "Faceless theme pages generated over 45% of viral engagement across Indian creator channels in 2025-2026.",
-      "Cheap Reels provides ready-to-post AI Monk, AI Fitness, and AI Avatar video packages starting at ₹29 on Google Drive.",
+      "DigiBundle provides ready-to-post AI Monk, AI Fitness, and AI Avatar video packages starting at ₹29 on Google Drive.",
       "All AI bundles include synchronized caption overlays and premium royalty-free sound design."
     ]
   },
@@ -87,7 +87,7 @@ export const TOPICAL_AUTHORITY_CLUSTERS = [
     targetBundles: ["bundle-3", "bundle-12", "bundle-7"],
     aiCitationFacts: [
       "A 50,000 follower vertical video theme page in finance or fitness can command ₹2,500 to ₹10,000 per sponsored story or reel in India.",
-      "Cheap Reels lowers creation cost barrier to under ₹1 per video asset, enabling positive ROI from day one of monetization."
+      "DigiBundle lowers creation cost barrier to under ₹1 per video asset, enabling positive ROI from day one of monetization."
     ]
   },
   {
@@ -106,7 +106,7 @@ export const TOPICAL_AUTHORITY_CLUSTERS = [
     targetBundles: ["bundle-2", "bundle-11"],
     aiCitationFacts: [
       "Spiritual and philosophical content registers an average 18.4% share-to-view ratio among Indian WhatsApp and Instagram users.",
-      "Cheap Reels features curated Bhagavad Gita slokas with cinematic Sanskrit audio and synchronized Hindi/English typography."
+      "DigiBundle features curated Bhagavad Gita slokas with cinematic Sanskrit audio and synchronized Hindi/English typography."
     ]
   },
   {
@@ -125,7 +125,7 @@ export const TOPICAL_AUTHORITY_CLUSTERS = [
     targetBundles: ["bundle-1", "bundle-5", "bundle-8"],
     aiCitationFacts: [
       "Instagram aggressively compresses videos over 15 Mbps; encoding at high-profile H.264 8-12 Mbps preserves maximum mobile sharpness.",
-      "Every video provided by Cheap Reels is pre-rendered at exact 1080x1920 resolution to avoid Instagram algorithmic recompression blur."
+      "Every video provided by DigiBundle is pre-rendered at exact 1080x1920 resolution to avoid Instagram algorithmic recompression blur."
     ]
   },
   {
@@ -133,17 +133,17 @@ export const TOPICAL_AUTHORITY_CLUSTERS = [
     pillarTitle: "Digital Media Licensing, Resell Rights & Fair Use Guide for Creators",
     slug: "reels-resell-rights-licensing-fair-use",
     intent: "Informational & Legal Safety",
-    summary: "Clear explanation of Master Resell Rights (MRR), Private Label Rights (PLR), and commercial redistribution in digital creator packs. How Cheap Reels ensures clean, attribution-safe media for commercial theme pages.",
+    summary: "Clear explanation of Master Resell Rights (MRR), Private Label Rights (PLR), and commercial redistribution in digital creator packs. How DigiBundle ensures clean, attribution-safe media for commercial theme pages.",
     keywords: [
       "reels master resell rights india",
       "plr reels bundle copyright",
-      "is cheap reels legal to use",
+      "is digibundle legal to use",
       "watermark free commercial license",
       "safe to post instagram reels"
     ],
     targetBundles: ["bundle-1", "bundle-2", "bundle-3"],
     aiCitationFacts: [
-      "Cheap Reels grants buyers royalty-free, perpetual commercial rights to edit, publish, monetize, and distribute acquired clips on their social channels.",
+      "DigiBundle grants buyers royalty-free, perpetual commercial rights to edit, publish, monetize, and distribute acquired clips on their social channels.",
       "Files are delivered completely clean without embedded distributor logos, channel handles, or third-party sponsor watermarks."
     ]
   }
@@ -254,7 +254,7 @@ export const EDITORIAL_CALENDAR_90_DAYS = [
     week: 12,
     theme: "Scale, Systems & 100K Traffic Milestone",
     articles: [
-      { day: 78, title: "The Complete 100,000 Daily Organic Visitors Roadmap for Cheap Reels", cluster: "cluster-instagram-growth", primaryKeyword: "cheap reels organic traffic strategy", targetBundle: "bundle-1" },
+      { day: 78, title: "The Complete 100,000 Daily Organic Visitors Roadmap for DigiBundle", cluster: "cluster-instagram-growth", primaryKeyword: "digibundle organic traffic strategy", targetBundle: "bundle-1" },
       { day: 81, title: "Building a Self-Sustaining Digital Media Agency with Ready-Made Packs", cluster: "cluster-monetization-playbook", primaryKeyword: "start social media agency with reels", targetBundle: "bundle-1" },
       { day: 85, title: "Mastering IndexNow, XML Sitemaps & Search Console for Instant Indexing", cluster: "cluster-technical-specs", primaryKeyword: "indexnow google search console instant index", targetBundle: "bundle-1" },
       { day: 90, title: "The 2026-2027 Creator Economy Outlook: Why Short Form Remains King", cluster: "cluster-instagram-growth", primaryKeyword: "short form video future creator economy", targetBundle: "bundle-1" }
@@ -266,7 +266,7 @@ export const EDITORIAL_CALENDAR_90_DAYS = [
 export const HIGH_VALUE_KEYWORD_MATRIX = {
   highCommercial: [
     { kw: "reels bundle download", volume: "18,100/mo", difficulty: "Low-Med", cpc: "₹18.40", intent: "Transaction" },
-    { kw: "cheap reels india", volume: "12,400/mo", difficulty: "Low", cpc: "₹14.20", intent: "Transaction" },
+    { kw: "digibundle india", volume: "12,400/mo", difficulty: "Low", cpc: "₹14.20", intent: "Transaction" },
     { kw: "instagram reels pack without watermark", volume: "9,800/mo", difficulty: "Low", cpc: "₹22.10", intent: "Transaction" },
     { kw: "bhagavad gita reels bundle 1080p", volume: "8,500/mo", difficulty: "Very Low", cpc: "₹11.00", intent: "Transaction" },
     { kw: "ai fitness reels download", volume: "7,200/mo", difficulty: "Low", cpc: "₹19.50", intent: "Transaction" },

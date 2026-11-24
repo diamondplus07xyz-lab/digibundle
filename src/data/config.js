@@ -1,13 +1,13 @@
 export const initialConfig = {
-  storeName: "Cheap Reels",
+  storeName: "DigiBundle",
   tagline: "India's Most Affordable Ready-to-Post HD Reels Store",
   logo: "/logo.png",
   footerLogo: "/logo-dark.png",
   favicon: "/brand-icon.png",
-  upiId: "cheapreels@upi",
-  upiName: "Cheap Reels",
+  upiId: "digibundle@upi",
+  upiName: "DigiBundle",
   whatsappNumber: "917017324978",
-  supportEmail: "reelscheap@gmail.com",
+  supportEmail: "support@digibundle.in",
   bannerText: "LIMITED TIME OFFER: 2,50,000+ Ready Reels Pack at Flat 95% OFF! Instant Google Drive Access in 5 Seconds",
   showTopBanner: true,
   showPurchasePopup: true,
@@ -15,10 +15,10 @@ export const initialConfig = {
   
   // Google Search Console & SEO Configuration
   googleSearchConsoleTag: '<meta name="google-site-verification" content="52iB3jq7O_eOpTnutctWvgYo0yqXIIKMWIpZDpVwyZw" />',
-  seoTitle: 'Cheap Reels | 2,50,000+ Ready-to-Post HD Reels Bundles',
+  seoTitle: 'DigiBundle | 2,50,000+ Ready-to-Post HD Reels Bundles',
   seoDescription: 'Get 2,50,000+ ready-to-post 1080p Full HD watermark-free reels bundles with instant Google Drive cloud links at just ₹29. Instagram, Shorts & Facebook.',
-  seoKeywords: 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, cheap reels download, watermark free reels 1080p',
-  canonicalUrl: 'https://www.cheapreels.in',
+  seoKeywords: 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, digibundle download, watermark free reels 1080p',
+  canonicalUrl: 'https://www.digibundle.in',
   allowRobotsIndex: true,
 
   // Maintenance Mode Controls (Premium SaaS Experience)
@@ -45,8 +45,8 @@ export const initialConfig = {
   // Direct UPI QR
   upiGateway: {
     enabled: true,
-    upiId: "cheapreels@upi",
-    payeeName: "Cheap Reels"
+    upiId: "digibundle@upi",
+    payeeName: "DigiBundle"
   },
 
   // Razorpay Integration

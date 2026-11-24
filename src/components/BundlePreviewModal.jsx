@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { X, Play, Pause, CheckCircle, FolderOpen, Zap, Volume2, VolumeX, ExternalLink, Sparkles, Film, VideoOff } from 'lucide-react';
+import { X, Play, Pause, CheckCircle, FolderOpen, Zap, Volume2, VolumeX, ExternalLink, Film, VideoOff } from 'lucide-react';
 import { parseVideoUrl } from '../utils/videoHelper';
 
 export default function BundlePreviewModal({ bundle, onClose, onBuyNow }) {

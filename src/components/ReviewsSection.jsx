@@ -55,7 +55,7 @@ export default function ReviewsSection() {
             Loved By Over 15,000+ Creators
           </h2>
           <p className="text-xs sm:text-sm text-slate-700 font-semibold max-w-xl mx-auto">
-            See what Indian video creators and digital marketers say about Cheap Reels.
+            See what Indian video creators and digital marketers say about DigiBundle.
           </p>
         </div>
 

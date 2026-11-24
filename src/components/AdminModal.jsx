@@ -111,7 +111,7 @@ export default function AdminModal({
     masterVaultThumbnail: config?.masterVaultThumbnail || "https://i.ibb.co/Lzvn9hTm/sheru-bhai-mega-reels-bundle-ad.png",
     adminPasscode: config?.adminPasscode || DEFAULT_ADMIN_HASH,
     whatsappNumber: config?.whatsappNumber || '917017324978',
-    supportEmail: config?.supportEmail || 'reelscheap@gmail.com',
+    supportEmail: config?.supportEmail || 'support@digibundle.in',
     bannerText: config?.bannerText || 'LIMITED TIME OFFER: 2,50,000+ Ready Reels Pack at Flat 95% OFF! Instant Google Drive Access in 5 Seconds',
     showTopBanner: config?.showTopBanner !== false,
     showPurchasePopup: config?.showPurchasePopup !== false,
@@ -132,7 +132,7 @@ export default function AdminModal({
     enabledGateways: config?.enabledGateways || ['upi_qr', 'razorpay'],
     upiGateway: config?.upiGateway || {
       enabled: true,
-      upiId: config?.upiId || 'cheapreels@upi',
+      upiId: config?.upiId || 'digibundle@upi',
       payeeName: config?.upiName || 'DigiBundle'
     },
     paypal: config?.paypal || {
@@ -172,8 +172,8 @@ export default function AdminModal({
     googleSearchConsoleTag: config?.googleSearchConsoleTag || '',
     seoTitle: config?.seoTitle || 'DigiBundle | 2,50,000+ Ready-to-Post HD Reels Bundles',
     seoDescription: config?.seoDescription || 'Get 2,50,000+ ready-to-post 1080p Full HD watermark-free reels bundles with instant Google Drive cloud links at just ₹29. Instagram, Shorts & Facebook.',
-    seoKeywords: config?.seoKeywords || 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, cheap reels download, watermark free reels 1080p',
-    canonicalUrl: config?.canonicalUrl || 'https://cheapreels.vercel.app',
+    seoKeywords: config?.seoKeywords || 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, digibundle download, watermark free reels 1080p',
+    canonicalUrl: config?.canonicalUrl || 'https://digibundle.vercel.app',
     allowRobotsIndex: config?.allowRobotsIndex !== false
   }));
 
@@ -201,7 +201,7 @@ export default function AdminModal({
         seoTitle: config.seoTitle || prev.seoTitle || '',
         seoDescription: config.seoDescription || prev.seoDescription || '',
         seoKeywords: config.seoKeywords || prev.seoKeywords || '',
-        canonicalUrl: config.canonicalUrl || prev.canonicalUrl || 'https://cheapreels.vercel.app',
+        canonicalUrl: config.canonicalUrl || prev.canonicalUrl || 'https://digibundle.vercel.app',
         allowRobotsIndex: config.allowRobotsIndex !== undefined ? config.allowRobotsIndex : (prev.allowRobotsIndex !== false),
         gatewayMode: config.gatewayMode || prev.gatewayMode || 'single',
         activeGateway: config.activeGateway || prev.activeGateway || 'upi_qr',
@@ -209,7 +209,7 @@ export default function AdminModal({
         razorpay: { enabled: false, keyId: '', keySecret: '', mode: 'live', ...(config.razorpay || {}) },
         cashfree: { enabled: false, appId: '', secretKey: '', environment: 'production', ...(config.cashfree || {}) },
         paypal: { enabled: false, clientId: '', clientSecret: '', mode: 'live', currency: 'USD', exchangeRate: 85, ...(config.paypal || {}) },
-        upiGateway: { enabled: true, upiId: config.upiId || 'cheapreels@upi', payeeName: config.upiName || 'DigiBundle', ...(config.upiGateway || {}) },
+        upiGateway: { enabled: true, upiId: config.upiId || 'digibundle@upi', payeeName: config.upiName || 'DigiBundle', ...(config.upiGateway || {}) },
         playStore: config.playStore || prev.playStore
       }));
     }
@@ -1140,8 +1140,8 @@ export default function AdminModal({
                     </div>
                     <div>
                       <h4 className="text-xs font-black text-white leading-tight flex items-center gap-1">
-                        <span>Cheap</span>
-                        <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent italic">Reels</span>
+                        <span>Digi</span>
+                        <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent italic">Bundle</span>
                       </h4>
                       <span className="text-[9px] font-bold text-amber-400 uppercase tracking-wider block">Admin Console</span>
                     </div>
@@ -1239,8 +1239,8 @@ export default function AdminModal({
                 </div>
                 <div className="min-w-0">
                   <h4 className="text-sm font-black text-white leading-tight tracking-tight flex items-center gap-1.5">
-                    <span>Cheap</span>
-                    <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent italic">Reels</span>
+                    <span>Digi</span>
+                    <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent italic">Bundle</span>
                   </h4>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -2772,7 +2772,7 @@ export default function AdminModal({
                             value={storeConfig.supportEmail || ''}
                             onChange={(e) => setStoreConfig({ ...storeConfig, supportEmail: e.target.value })}
                             className="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900"
-                            placeholder="reelscheap@gmail.com"
+                            placeholder="support@digibundle.in"
                           />
                         </div>
                       </div>
@@ -3098,16 +3098,16 @@ export default function AdminModal({
                     </div>
                   </div>
 
-                  {/* 5. Support Email (reelscheap@gmail.com) */}
+                  {/* 5. Support Email (support@digibundle.in) */}
                   <div>
                     <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
                       Store Support Email
                     </label>
                     <input
                       type="email"
-                      value={storeConfig.supportEmail || 'reelscheap@gmail.com'}
+                      value={storeConfig.supportEmail || 'support@digibundle.in'}
                       onChange={(e) => setStoreConfig({ ...storeConfig, supportEmail: e.target.value })}
-                      placeholder="reelscheap@gmail.com"
+                      placeholder="support@digibundle.in"
                       className="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                     />
                   </div>
@@ -3678,7 +3678,7 @@ export default function AdminModal({
                           </label>
                           <input
                             type="text"
-                            value={storeConfig.upiId || 'cheapreels@upi'}
+                            value={storeConfig.upiId || 'digibundle@upi'}
                             onChange={(e) => setStoreConfig({ 
                               ...storeConfig, 
                               upiId: e.target.value.trim(),

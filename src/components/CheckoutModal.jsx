@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
   X, QrCode, Copy, Check, ArrowRight, AlertCircle, Lock, MessageCircle, 
-  ShoppingBag, CreditCard, ShieldCheck, Globe, Zap, ExternalLink, Sparkles,
+  ShoppingBag, CreditCard, ShieldCheck, Globe, Zap, ExternalLink, BadgePercent,
   ChevronRight, RefreshCw, Smartphone, HelpCircle, CheckCircle2, RotateCcw
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
@@ -63,17 +63,17 @@ export default function CheckoutModal({
   const originalTotal = items.reduce((acc, it) => acc + (Number(it.originalPrice) || Number(it.price) * 10 || 599), 0);
   const totalSavings = Math.max(0, originalTotal - total);
 
-  const upiId = config?.upiId || config?.upiGateway?.upiId || 'cheapreels@upi';
-  const payeeName = config?.upiName || config?.upiGateway?.payeeName || 'Cheap Reels';
+  const upiId = config?.upiId || config?.upiGateway?.upiId || 'digibundle@upi';
+  const payeeName = config?.upiName || config?.upiGateway?.payeeName || 'DigiBundle';
   const supportPhone = (config?.whatsappNumber || '917017324978').replace(/\D/g, '');
-  const supportEmail = config?.supportEmail || 'reelscheap@gmail.com';
+  const supportEmail = config?.supportEmail || 'support@digibundle.in';
   
   // PayPal USD Conversion
   const exchangeRate = Number(config?.paypal?.exchangeRate) || 85;
   const usdAmount = (total / exchangeRate).toFixed(2);
 
   // Standard UPI URI format
-  const upiUri = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${total}&cu=INR&tn=${encodeURIComponent('CheapReelsBundle')}`;
+  const upiUri = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${total}&cu=INR&tn=${encodeURIComponent('DigiBundleBundle')}`;
 
   const handleCopyUpi = () => {
     navigator.clipboard.writeText(upiId);
@@ -122,7 +122,7 @@ export default function CheckoutModal({
       const bundleTitles = items.map(it => `  • ${it.title} (₹${it.price})`).join('\n\n');
       const waText = 
         `🎉 *NEW ORDER PAYMENT VERIFICATION REQUEST* 🎉\n\n` +
-        `Hello *${config?.storeName || 'Cheap Reels'}* Team,\n` +
+        `Hello *${config?.storeName || 'DigiBundle'}* Team,\n` +
         `I have completed payment for my reels order via UPI. Please verify my UTR and dispatch my Google Drive link.\n\n` +
         `══════════════════════\n` +
         `📋 *CUSTOMER & ORDER INFO*\n` +
@@ -227,7 +227,7 @@ export default function CheckoutModal({
             key: keyId,
             amount: total * 100, // in paise
             currency: 'INR',
-            name: config?.storeName || 'Cheap Reels',
+            name: config?.storeName || 'DigiBundle',
             description: items.map(i => i.title).join(', ').substring(0, 100),
             image: config?.logo || '/brand-icon.png',
             prefill: {
@@ -457,7 +457,7 @@ export default function CheckoutModal({
                   {discount > 0 && (
                     <div className="flex justify-between items-center text-purple-700 font-bold bg-purple-50 p-1.5 rounded-lg">
                       <span className="flex items-center gap-1 text-[11px]">
-                        <Sparkles className="w-3.5 h-3.5 text-purple-600" />
+                        <BadgePercent className="w-3.5 h-3.5 text-purple-600" />
                         {comboBadge || 'Combo Discount'}
                       </span>
                       <span>-₹{discount}</span>
@@ -985,7 +985,7 @@ export default function CheckoutModal({
                 </button>
 
                 <a
-                  href={`https://wa.me/${supportPhone}?text=${encodeURIComponent(`Hello Cheap Reels Support, I need help with checkout for amount ₹${total}. My WhatsApp is ${whatsapp}.`)}`}
+                  href={`https://wa.me/${supportPhone}?text=${encodeURIComponent(`Hello DigiBundle Support, I need help with checkout for amount ₹${total}. My WhatsApp is ${whatsapp}.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-3 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-bold rounded-2xl text-xs flex items-center justify-center gap-2 transition"

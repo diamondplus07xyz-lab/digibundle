@@ -1,4 +1,4 @@
-// Enterprise-grade Security Utilities for Cheap Reels Admin Panel
+// Enterprise-grade Security Utilities for DigiBundle Admin Panel
 // Features: SHA-256 Cryptographic Hashing, Brute-Force Rate Limiting, Session Auto-Timeout, and Input Sanitization
 
 export const DEFAULT_ADMIN_HASH = '9f5bd4769ef79855c629f60e26112604bf2010bc1ff1a9c89fcc48751887e220'; // SHA-256 of 1Vivek@singh

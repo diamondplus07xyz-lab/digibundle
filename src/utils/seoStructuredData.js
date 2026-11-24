@@ -1,19 +1,19 @@
 /**
- * Universal JSON-LD Structured Data Infrastructure for Cheap Reels (cheapreels.in)
+ * Universal JSON-LD Structured Data Infrastructure for DigiBundle (digibundle.in)
  * Follows schema.org standards for Google Rich Snippets & AI Semantic Knowledge Graph
  * (Organization, WebSite, Product, Offer, BreadcrumbList, FAQPage, HowTo)
  */
 
-export const PRIMARY_DOMAIN = 'https://www.cheapreels.in';
+export const PRIMARY_DOMAIN = 'https://www.digibundle.in';
 
 export function getOrganizationSchema(config = {}) {
-  const storeName = config.storeName || 'Cheap Reels';
+  const storeName = config.storeName || 'DigiBundle';
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': `${PRIMARY_DOMAIN}/#organization`,
     'name': storeName,
-    'alternateName': ['CheapReels', 'Cheap Reels Store', 'CheapReels.in'],
+    'alternateName': ['DigiBundle', 'DigiBundle Store', 'DigiBundle.in'],
     'url': PRIMARY_DOMAIN,
     'logo': {
       '@type': 'ImageObject',
@@ -32,7 +32,7 @@ export function getOrganizationSchema(config = {}) {
         '@type': 'ContactPoint',
         'telephone': '+91-7017324978',
         'contactType': 'customer service',
-        'email': config.supportEmail || 'reelscheap@gmail.com',
+        'email': config.supportEmail || 'support@digibundle.in',
         'availableLanguage': ['English', 'Hindi'],
         'areaServed': 'IN'
       }
@@ -46,7 +46,7 @@ export function getOrganizationSchema(config = {}) {
 }
 
 export function getWebSiteSchema(config = {}) {
-  const storeName = config.storeName || 'Cheap Reels';
+  const storeName = config.storeName || 'DigiBundle';
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -71,7 +71,7 @@ export function getWebSiteSchema(config = {}) {
 
 export function getProductSchema(bundle, config = {}) {
   if (!bundle) return null;
-  const storeName = config.storeName || 'Cheap Reels';
+  const storeName = config.storeName || 'DigiBundle';
   const price = bundle.price || 39;
   const originalPrice = bundle.originalPrice || 799;
 
@@ -160,7 +160,7 @@ export function getHowToSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    'name': 'How to Download and Post Ready-Made Reels from Cheap Reels',
+    'name': 'How to Download and Post Ready-Made Reels from DigiBundle',
     'description': 'Simple 3-step guide to purchasing, downloading, and scheduling watermark-free vertical reels to your Instagram, YouTube Shorts, or Facebook pages.',
     'step': [
       {

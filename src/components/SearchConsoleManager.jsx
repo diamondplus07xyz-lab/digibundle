@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { 
   Globe, Search, CheckCircle2, Copy, Check, ExternalLink, RefreshCw, 
-  FileText, ShieldCheck, Zap, AlertCircle, ArrowRight, Share2, Sparkles, Layers,
+  FileText, ShieldCheck, Zap, AlertCircle, ArrowRight, Share2, Layers,
   Bot, Calendar, Database, Eye, Terminal, Send, CheckCircle, TrendingUp
 } from 'lucide-react';
 import { submitUrlsToIndexNow, INDEXNOW_KEY, PRIMARY_HOST } from '../utils/indexNow';
@@ -31,16 +31,16 @@ export default function SearchConsoleManager({
     storeConfig.bingVerificationTag || ''
   );
   const [seoTitle, setSeoTitle] = useState(
-    storeConfig.seoTitle || 'Cheap Reels | 2,50,000+ Ready-to-Post HD Reels Bundles'
+    storeConfig.seoTitle || 'DigiBundle | 2,50,000+ Ready-to-Post HD Reels Bundles'
   );
   const [seoDescription, setSeoDescription] = useState(
     storeConfig.seoDescription || 'Get 2,50,000+ ready-to-post 1080p Full HD watermark-free reels bundles with instant Google Drive cloud links at just ₹29. Instagram, Shorts & Facebook.'
   );
   const [seoKeywords, setSeoKeywords] = useState(
-    storeConfig.seoKeywords || 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, cheap reels download, watermark free reels 1080p'
+    storeConfig.seoKeywords || 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, digibundle download, watermark free reels 1080p'
   );
   const [canonicalUrl, setCanonicalUrl] = useState(
-    storeConfig.canonicalUrl || 'https://cheapreels.in'
+    storeConfig.canonicalUrl || 'https://digibundle.in'
   );
   const [allowRobotsIndex, setAllowRobotsIndex] = useState(
     storeConfig.allowRobotsIndex !== false
@@ -83,7 +83,7 @@ export default function SearchConsoleManager({
   };
 
   // Sitemap URLs
-  const siteUrl = (canonicalUrl || 'https://cheapreels.in').replace(/\/+$/, '');
+  const siteUrl = (canonicalUrl || 'https://digibundle.in').replace(/\/+$/, '');
   const sitemapIndexUrl = `${siteUrl}/sitemap.xml`;
   const sitemapsList = [
     { name: 'Sitemap Index', url: `${siteUrl}/sitemap.xml`, count: '4 Sub-Sitemaps', type: 'Root Index', priority: '1.0' },
@@ -163,7 +163,7 @@ export default function SearchConsoleManager({
             <span>Search &amp; AI Visibility Engine (Google, Bing &amp; LLM Bots)</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-            Rank, Index &amp; Recommend cheapreels.in
+            Rank, Index &amp; Recommend digibundle.in
           </h3>
           <p className="text-xs sm:text-sm text-slate-300 font-medium mt-1 max-w-2xl">
             Multi-sitemap management, IndexNow instant notification, AI crawler governance (ChatGPT, Claude, Perplexity), and 90-day organic content calendar.
@@ -234,7 +234,7 @@ export default function SearchConsoleManager({
           { id: 'calendar', label: '5. 90-Day Calendar', icon: Calendar },
           { id: 'indexing', label: '6. URL Inspection', icon: Search },
           { id: 'seo', label: '7. Meta Tags', icon: Share2 },
-          { id: 'guide', label: '8. Fast Setup Guide', icon: Sparkles }
+          { id: 'guide', label: '8. Fast Setup Guide', icon: BookOpen }
         ].map(tab => {
           const Icon = tab.icon;
           const isActive = subTab === tab.id;
@@ -267,7 +267,7 @@ export default function SearchConsoleManager({
               <span>Search Engine Ownership Verification</span>
             </h4>
             <p className="text-xs text-slate-500 mt-1">
-              Verify your domain ownership using official HTML meta tags for Google Search Console and Bing Webmaster Tools. Cheap Reels automatically parses and renders them in your storefront &lt;head&gt;.
+              Verify your domain ownership using official HTML meta tags for Google Search Console and Bing Webmaster Tools. DigiBundle automatically parses and renders them in your storefront &lt;head&gt;.
             </p>
           </div>
 
@@ -870,7 +870,7 @@ export default function SearchConsoleManager({
         <div className="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-xs space-y-6">
           <div>
             <h4 className="text-sm font-black text-slate-900 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-blue-600" />
+              <BookOpen className="w-4 h-4 text-blue-600" />
               <span>5-Minute Search Console &amp; Discovery Activation Guide</span>
             </h4>
             <p className="text-xs text-slate-500 mt-1">
@@ -899,7 +899,7 @@ export default function SearchConsoleManager({
               {
                 step: '2',
                 title: 'Add Property as "URL Prefix"',
-                desc: 'Select "URL prefix", enter "https://cheapreels.in" and click Continue.',
+                desc: 'Select "URL prefix", enter "https://digibundle.in" and click Continue.',
                 action: null
               },
               {

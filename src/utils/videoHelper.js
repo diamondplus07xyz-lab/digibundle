@@ -1,5 +1,5 @@
 /**
- * Video Parser & Stream Router for Cheap Reels Store
+ * Video Parser & Stream Router for DigiBundle Store
  * Converts Google Drive video links and direct MP4s into clean, native, 
  * zero-overlay HTML5 video streams with NO Google Drive controls or redirect links.
  */

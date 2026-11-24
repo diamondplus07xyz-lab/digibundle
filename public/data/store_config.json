@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "updatedAt": 1795526280505,
+  "updatedAt": 1795529459554,
   "config": {
     "storeName": "Cheap Reels",
     "tagline": "India's #1 Most Affordable Ready-to-Post HD Reels Hub",
@@ -9904,10 +9904,10 @@
     }
   ],
   "visitorStats": {
-    "totalViews": 152,
+    "totalViews": 154,
     "uniqueVisitors": 26,
     "mobileVisits": 25,
-    "desktopVisits": 135,
+    "desktopVisits": 137,
     "knownIps": [
       "157.49.180.218",
       "157.49.180.240",
@@ -9937,6 +9937,46 @@
       "152.59.89.71"
     ],
     "recentVisits": [
+      {
+        "id": 1795529459533,
+        "ip": "152.59.89.71",
+        "device": "Desktop PC",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "07:40 pm",
+        "date": "24 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795529459531,
+        "ip": "152.59.89.71",
+        "device": "Desktop PC",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "07:40 pm",
+        "date": "24 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795529362638,
+        "ip": "152.59.89.71",
+        "device": "Desktop PC",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "07:39 pm",
+        "date": "24 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795529362635,
+        "ip": "152.59.89.71",
+        "device": "Desktop PC",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "07:39 pm",
+        "date": "24 Nov",
+        "isRepeat": true
+      },
       {
         "id": 1795525480095,
         "ip": "152.59.89.71",
@@ -10894,46 +10934,6 @@
         "location": "India",
         "page": "Previewed Demo Video: 1000+ Space Aesthetic Reels Bu",
         "time": "11:37 pm",
-        "date": "23 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795457236133.7295,
-        "ip": "157.49.181.125",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Previewed Demo Video: 500+ Korean Girl Reels Bundle ",
-        "time": "11:37 pm",
-        "date": "23 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795457236131.589,
-        "ip": "157.49.181.125",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Previewed Demo Video: 500+ Korean Girl Reels Bundle ",
-        "time": "11:37 pm",
-        "date": "23 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795457210655.6313,
-        "ip": "157.49.181.125",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Previewed Demo Video: 1,400+ Hindi Motivational Reel",
-        "time": "11:36 pm",
-        "date": "23 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795457210650.0813,
-        "ip": "157.49.181.125",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Previewed Demo Video: 1,400+ Hindi Motivational Reel",
-        "time": "11:36 pm",
         "date": "23 Nov",
         "isRepeat": true
       }

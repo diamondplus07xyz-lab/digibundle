@@ -1530,7 +1530,7 @@ export const categories = [
   {
     "id": "all",
     "label": "All Bundles",
-    "icon": "Sparkles"
+    "icon": "Layers"
   },
   {
     "id": "ai",
@@ -1560,12 +1560,12 @@ export const categories = [
   {
     "id": "cars",
     "label": "Cars & Supercars",
-    "icon": "DollarSign"
+    "icon": "Car"
   },
   {
     "id": "luxury",
     "label": "Money & Luxury",
-    "icon": "DollarSign"
+    "icon": "Gem"
   },
   {
     "id": "fitness",
@@ -1575,7 +1575,7 @@ export const categories = [
   {
     "id": "animals",
     "label": "Cats, Dogs & Animals",
-    "icon": "Sparkles"
+    "icon": "PawPrint"
   },
   {
     "id": "comedy",
@@ -1585,21 +1585,21 @@ export const categories = [
   {
     "id": "craft",
     "label": "Art, Craft & ASMR",
-    "icon": "Wand2"
+    "icon": "Palette"
   },
   {
     "id": "fashion",
     "label": "Fashion & Models",
-    "icon": "Sparkles"
+    "icon": "Crown"
   },
   {
     "id": "aesthetic",
     "label": "Aesthetic & Nature",
-    "icon": "Sparkles"
+    "icon": "Camera"
   },
   {
     "id": "entertainment",
     "label": "Entertainment",
-    "icon": "Tv"
+    "icon": "Film"
   }
 ];

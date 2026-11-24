@@ -1,6 +1,6 @@
 /**
  * First-Party Real-Time Website Traffic & Visitor Analytics Engine
- * Cheap Reels Storefront & Admin Analytics
+ * DigiBundle Storefront & Admin Analytics
  * 
  * Strict Zero Fake Data: All numbers strictly derived from real recorded visits.
  * Privacy-friendly, anonymous IDs (cr_analytics_vid, cr_analytics_sid).

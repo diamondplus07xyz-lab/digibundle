@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 /**
- * Premium BrandLogo Component for Cheap Reels
+ * Premium BrandLogo Component for DigiBundle
  * Features:
  * - High-DPI Vector Crispness (SVG native + fallback)
  * - Automatic light and dark variant styling
@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 export default function BrandLogo({
   variant = 'light', // 'light' | 'dark' | 'icon'
   customSrc = null,
-  alt = 'Cheap Reels',
+  alt = 'DigiBundle',
   className = '',
   size = 'md', // 'sm' | 'md' | 'lg' | 'xl'
   showBadge = true,

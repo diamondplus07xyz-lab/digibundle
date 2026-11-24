@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Trash2, ShoppingBag, ArrowRight, Sparkles, Tag, CheckCircle } from 'lucide-react';
+import { X, Trash2, ShoppingBag, ArrowRight, Tag, CheckCircle } from 'lucide-react';
 import { calculateCartPricing } from '../utils/pricing';
 
 export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, onProceedToCheckout }) {
@@ -42,7 +42,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
               {discount > 0 ? (
                 <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
               ) : (
-                <Sparkles className="w-4 h-4 text-amber-500 shrink-0" />
+                <Tag className="w-4 h-4 text-amber-500 shrink-0" />
               )}
               <span className="flex-1">{comboBadge || nextTierMessage}</span>
             </div>

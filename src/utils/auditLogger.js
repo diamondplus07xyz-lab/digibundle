@@ -1,6 +1,6 @@
 /**
  * Advanced Activity Logs & Audit Trail Engine
- * Cheap Reels Storefront & Admin Security Infrastructure
+ * DigiBundle Storefront & Admin Security Infrastructure
  * 
  * Immutability, zero dummy data, anti-injection, sensitive data redaction,
  * CSV export, detailed JSON inspection, and multi-dimensional filtering.

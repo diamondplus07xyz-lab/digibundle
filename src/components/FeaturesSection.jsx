@@ -1,28 +1,28 @@
 import React from 'react';
-import { Trophy, CreditCard, DollarSign, Gauge } from 'lucide-react';
+import { Video, QrCode, BadgePercent, Zap } from 'lucide-react';
 
 export default function FeaturesSection() {
   const features = [
     {
-      icon: Trophy,
+      icon: Video,
       title: '1080p HD Quality',
       desc: 'Crystal-clear 1080x1920 Full HD vertical video format. 100% watermark and logo free.',
       bgColor: 'bg-indigo-50 text-indigo-600 border-indigo-100'
     },
     {
-      icon: CreditCard,
+      icon: QrCode,
       title: 'Easy UPI & Card Payments',
       desc: 'Multiple secure options: Direct UPI QR, PhonePe, Google Pay, Paytm, Cards, and Netbanking.',
       bgColor: 'bg-blue-50 text-blue-600 border-blue-100'
     },
     {
-      icon: DollarSign,
+      icon: BadgePercent,
       title: 'Affordable Pricing',
-      desc: 'Individual packs start at just ₹29. Unlock all 126+ packs with the ₹149 Master Vault deal.',
+      desc: 'Individual packs start at just ₹29. Unlock all 50+ curated packs with the ₹149 Master Vault deal.',
       bgColor: 'bg-amber-50 text-amber-600 border-amber-100'
     },
     {
-      icon: Gauge,
+      icon: Zap,
       title: 'Instant 5-Sec Delivery',
       desc: 'Direct official Google Drive link unlocked automatically right after checkout.',
       bgColor: 'bg-emerald-50 text-emerald-600 border-emerald-100'

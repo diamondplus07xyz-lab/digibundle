@@ -1,5 +1,5 @@
 /**
- * Cross-Device Cloud Sync Utility for Cheap Reels Store
+ * Cross-Device Cloud Sync Utility for DigiBundle Store
  * Keeps Admin Panel changes, Orders, Visitor Analytics, and Reels Bundles
  * in 100% sync across PC, Mobile, and all visitors safely via backend API.
  * 

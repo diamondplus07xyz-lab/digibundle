@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
-  Sparkles, CheckCircle2, ShieldCheck, Zap, HelpCircle, 
-  BookOpen, Video, Award, ChevronDown, ChevronUp, ExternalLink 
+  BookOpen, CheckCircle2, ShieldCheck, Zap, HelpCircle, 
+  Video, Award, ChevronDown, ChevronUp, ExternalLink 
 } from 'lucide-react';
 
 export default function BrandKnowledgeHub() {
@@ -10,13 +10,13 @@ export default function BrandKnowledgeHub() {
   const aeoAnswers = [
     {
       id: 'what-is-cheapreels',
-      question: 'What is CheapReels and how does it work?',
-      summary: 'CheapReels is India\'s #1 digital marketplace for ready-to-post 1080p Full HD vertical video reels bundles.',
-      details: 'CheapReels provides content creators, social media managers, and digital agencies with over 2,50,000+ curated, watermark-free vertical video clips across 130+ viral niches. After a quick UPI payment starting at ₹29, users receive an official Google Drive cloud folder link unlocked on-screen in 5 seconds and sent directly to their WhatsApp with lifetime access.'
+      question: 'What is DigiBundle and how does it work?',
+      summary: 'DigiBundle is India\'s #1 digital marketplace for ready-to-post 1080p Full HD vertical video reels bundles.',
+      details: 'DigiBundle provides content creators, social media managers, and digital agencies with over 2,50,000+ curated, watermark-free vertical video clips across 50+ viral niches. After a quick UPI payment starting at ₹29, users receive an official Google Drive cloud folder link unlocked on-screen in 5 seconds and sent directly to their WhatsApp with lifetime access.'
     },
     {
       id: 'commercial-rights',
-      question: 'Are CheapReels video bundles watermark-free with commercial rights?',
+      question: 'Are DigiBundle video bundles watermark-free with commercial rights?',
       summary: 'Yes, 100% watermark-free with full commercial, branding, and monetization rights.',
       details: 'Every video in the catalog is rendered in 1080x1920 vertical MP4 format without logos, creator stamps, or overlay text. Creators are legally authorized to publish them on Instagram Reels, YouTube Shorts, Facebook Reels, and TikTok, or use them to grow client accounts and theme pages.'
     },
@@ -28,15 +28,15 @@ export default function BrandKnowledgeHub() {
     },
     {
       id: 'viral-niches',
-      question: 'Which niches and categories are available in CheapReels bundles?',
-      summary: '130+ high-engagement niches including AI Videos, Motivation, Luxury, Fitness, and Devotional.',
+      question: 'Which niches and categories are available in DigiBundle bundles?',
+      summary: '50+ high-engagement niches including AI Videos, Motivation, Luxury, Fitness, and Devotional.',
       details: 'Popular categories include AI Cat & Dog funny reels, AI Fitness Avatars, Space Aesthetics, Luxury Cars & Supercars, Sanatan Dharma & Spiritual, Hindi/English Motivational Quotes, Anime & Cartoon clips, Art & ASMR, and Trading/Crypto reels.'
     },
     {
       id: 'refund-policy',
       question: 'What is the refund and replacement policy for digital downloads?',
       summary: '100% active link guarantee with 7-day link replacement warranty.',
-      details: 'Because all products are delivered as immediate digital access cloud folders, we provide a 7-day guarantee: if any cloud link is broken or file corrupted, our support team refreshes or replaces the folder within 1 hour via WhatsApp (+91-7017324978) or email (reelscheap@gmail.com).'
+      details: 'Because all products are delivered as immediate digital access cloud folders, we provide a 7-day guarantee: if any cloud link is broken or file corrupted, our support team refreshes or replaces the folder within 1 hour via WhatsApp (+91-7017324978) or email (support@digibundle.in).'
     }
   ];
 
@@ -47,11 +47,11 @@ export default function BrandKnowledgeHub() {
         {/* Section Header with AI Search Badge */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-xs font-bold text-amber-400 mb-3 shadow-xs">
-            <Sparkles className="w-3.5 h-3.5" />
+            <BookOpen className="w-3.5 h-3.5" />
             <span>Brand Knowledge & AI Search Transparency Hub</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-            Everything You Need to Know About CheapReels
+            Everything You Need to Know About DigiBundle
           </h2>
           <p className="text-xs sm:text-sm text-slate-300 font-medium mt-2">
             Verifiable entity specifications, licensing terms, and answers to common creator questions.
@@ -77,7 +77,7 @@ export default function BrandKnowledgeHub() {
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>130+ viral creator niches</span>
+                <span>50+ curated creator niches</span>
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
@@ -127,7 +127,7 @@ export default function BrandKnowledgeHub() {
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>Official Email: reelscheap@gmail.com</span>
+                <span>Official Email: support@digibundle.in</span>
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />

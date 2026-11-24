@@ -11,7 +11,6 @@ import {
   VolumeX, 
   ArrowRight, 
   CornerDownLeft, 
-  Sparkles, 
   Coffee, 
   ShieldAlert, 
   Bug, 
@@ -128,7 +127,7 @@ export default function AdminDecoyModal({ isOpen, onClose }) {
     const lower = trimmed.toLowerCase();
 
     const newEntries = [
-      { type: 'command', text: `guest@cheapreels:~$ ${trimmed}` }
+      { type: 'command', text: `guest@digibundle:~$ ${trimmed}` }
     ];
 
     if (lower === 'clear' || lower === 'cls') {
@@ -169,7 +168,7 @@ export default function AdminDecoyModal({ isOpen, onClose }) {
     } else if (lower.includes('sqlmap') || lower.includes('select') || lower.includes('union') || lower.includes("' or '1'='1")) {
       newEntries.push({
         type: 'warning',
-        text: `[SQLMAP v1.8.9]: Testing connection to CheapReels backend...\n[+] Backend DBMS: Cloud-Isolated / Zero-Knowledge Hash Architecture\n[!] Vulnerability Status: 0 injection points found.\n[!] Frustrated Hacker Detected: 1 (Location: Sitting with laptop & headache)\n[💡 TIP]: Ek glass thanda paani piyo dost, sehat zaroori hai.`
+        text: `[SQLMAP v1.8.9]: Testing connection to DigiBundle backend...\n[+] Backend DBMS: Cloud-Isolated / Zero-Knowledge Hash Architecture\n[!] Vulnerability Status: 0 injection points found.\n[!] Frustrated Hacker Detected: 1 (Location: Sitting with laptop & headache)\n[💡 TIP]: Ek glass thanda paani piyo dost, sehat zaroori hai.`
       });
     } else if (lower === 'rm -rf /' || lower === 'rm -rf' || lower.includes('rm -rf')) {
       playSound('denied');
@@ -189,7 +188,7 @@ export default function AdminDecoyModal({ isOpen, onClose }) {
         text: `Opening Vivek's WhatsApp... Bhai ko seedha message bhejo: 'Bhai talent hai mujhme, website pe admin dhoondh liya tha!' 💬`
       });
       setTimeout(() => {
-        window.open('https://wa.me/917017324978?text=Bhai%20maine%20cheapreels%20pe%20/admin%20hack%20karne%20ka%20try%20kiya%20tha%20😂%20Collab%20ya%20discount%20milega?', '_blank');
+        window.open('https://wa.me/917017324978?text=Bhai%20maine%20digibundle%20pe%20/admin%20hack%20karne%20ka%20try%20kiya%20tha%20😂%20Collab%20ya%20discount%20milega?', '_blank');
       }, 800);
     } else if (lower === 'buy_reels' || lower === 'shop' || lower === 'buy') {
       newEntries.push({
@@ -252,7 +251,7 @@ export default function AdminDecoyModal({ isOpen, onClose }) {
               title="View Certificate"
             />
             <span className="hidden sm:inline-block text-[11px] font-mono text-slate-400 ml-2">
-              bash - 80x24 - vivek@cheapreels: ~ (honeypot decoy)
+              bash - 80x24 - vivek@digibundle: ~ (honeypot decoy)
             </span>
           </div>
 
@@ -386,7 +385,7 @@ export default function AdminDecoyModal({ isOpen, onClose }) {
               className="mt-2 flex items-center gap-2 bg-[#161b22] border border-slate-700/70 rounded-xl px-3 py-2 text-xs"
             >
               <span className="text-emerald-400 font-bold select-none whitespace-nowrap">
-                guest@cheapreels:~$
+                guest@digibundle:~$
               </span>
               <input
                 ref={inputRef}
@@ -419,7 +418,7 @@ export default function AdminDecoyModal({ isOpen, onClose }) {
                     <h3 className="text-sm sm:text-base font-bold text-amber-300">
                       Ek Zaroori Sandesh — Vivek Singh Ki Taraf Se
                     </h3>
-                    <p className="text-[10px] text-slate-400">Cheap Reels Founder • For Our Beloved Hacker Bro</p>
+                    <p className="text-[10px] text-slate-400">DigiBundle Founder • For Our Beloved Hacker Bro</p>
                   </div>
                 </div>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold">
@@ -518,7 +517,7 @@ export default function AdminDecoyModal({ isOpen, onClose }) {
               </div>
 
               <div className="flex items-center justify-between pt-3 border-t border-slate-800 text-[10px] text-slate-400 font-sans">
-                <span>Verified by: Cheap Reels Honeypot</span>
+                <span>Verified by: DigiBundle Honeypot</span>
                 <span className="font-bold text-amber-400 font-mono">Signed: Vivek Singh ✍️</span>
               </div>
             </div>
@@ -528,14 +527,14 @@ export default function AdminDecoyModal({ isOpen, onClose }) {
         {/* Bottom Action Footer Bar */}
         <div className="p-3 sm:p-4 bg-[#161b22] border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-2.5">
           <div className="flex items-center gap-1.5 text-xs text-slate-400 select-none">
-            <Sparkles className="w-4 h-4 text-amber-400" />
-            <span>Cheap Reels Store • Vivek Singh</span>
+            <Terminal className="w-4 h-4 text-amber-400" />
+            <span>DigiBundle Store • Vivek Singh</span>
           </div>
 
           <div className="flex items-center gap-2 w-full sm:w-auto">
             {/* WhatsApp Link to Vivek */}
             <a
-              href="https://wa.me/917017324978?text=Bhai%20maine%20cheapreels%20pe%20/admin%20hack%20karne%20ka%20try%20kiya%20tha%20😂%20Collab%20ya%20discount%20milega?"
+              href="https://wa.me/917017324978?text=Bhai%20maine%20digibundle%20pe%20/admin%20hack%20karne%20ka%20try%20kiya%20tha%20😂%20Collab%20ya%20discount%20milega?"
               target="_blank"
               rel="noreferrer"
               className="flex-1 sm:flex-initial px-3 py-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer"

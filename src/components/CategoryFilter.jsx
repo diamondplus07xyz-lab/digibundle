@@ -1,19 +1,23 @@
 import React from 'react';
 import { 
-  Sparkles, Flame, Bot, Sun, DollarSign, Dumbbell, Gamepad2, Wand2, Smile, Tv 
+  Layers, Flame, Bot, Sun, Dumbbell, Gamepad2, Smile, Car, Gem, PawPrint, Palette, Crown, Camera, Film
 } from 'lucide-react';
 
 const iconMap = {
-  Sparkles,
+  Layers,
   Flame,
   Bot,
   Sun,
-  DollarSign,
   Dumbbell,
   Gamepad2,
-  Wand2,
   Smile,
-  Tv
+  Car,
+  Gem,
+  PawPrint,
+  Palette,
+  Crown,
+  Camera,
+  Film
 };
 
 export default function CategoryFilter({ categories, activeCategory, setActiveCategory }) {
@@ -21,7 +25,7 @@ export default function CategoryFilter({ categories, activeCategory, setActiveCa
     <div className="py-2 overflow-x-auto scrollbar-none">
       <div className="flex items-center gap-2 min-w-max pb-1">
         {categories.map((cat) => {
-          const IconComponent = iconMap[cat.icon] || Sparkles;
+          const IconComponent = iconMap[cat.icon] || Layers;
           const isActive = activeCategory === cat.id;
 
           return (

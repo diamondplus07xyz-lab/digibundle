@@ -8,7 +8,7 @@ export default function MobileBottomNav({
   whatsappNumber
 }) {
   const number = (whatsappNumber || '917017324978').replace(/\D/g, '');
-  const supportUrl = `https://wa.me/${number}?text=${encodeURIComponent('Hello Cheap Reels Support, I have a question about bundles.')}`;
+  const supportUrl = `https://wa.me/${number}?text=${encodeURIComponent('Hello DigiBundle Support, I have a question about bundles.')}`;
 
   const scrollToBundles = () => {
     const el = document.getElementById('bundles-section');

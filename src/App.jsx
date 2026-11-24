@@ -54,8 +54,8 @@ export default function App() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (parsed.storeName === "Cheap Reels Store" || !parsed.storeName) {
-          parsed.storeName = "Cheap Reels";
+        if (parsed.storeName === "DigiBundle Store" || !parsed.storeName) {
+          parsed.storeName = "DigiBundle";
         }
         return {
           ...initialConfig,
@@ -144,7 +144,7 @@ export default function App() {
         time: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
         type: 'SYSTEM',
         title: 'Storefront Active',
-        detail: 'Cheap Reels Storefront & Admin Panel online with live sync.'
+        detail: 'DigiBundle Storefront & Admin Panel online with live sync.'
       }
     ];
   });
@@ -163,7 +163,7 @@ export default function App() {
     }
 
     // 1. Initial Page View Tracking via first-party analytics engine
-    trackPageView(window.location.pathname || '/', document.title || 'Cheap Reels Store');
+    trackPageView(window.location.pathname || '/', document.title || 'DigiBundle Store');
 
     // 2. Active Visitor Heartbeat Timer (runs every 10 seconds while tab is active)
     const heartbeatTimer = setInterval(() => {
@@ -183,7 +183,7 @@ export default function App() {
     // 4. SPA Route changes listener
     const handlePopState = () => {
       if (!isSecretAdminRoute(window.location.pathname) && !window.location.pathname.includes('admin')) {
-        trackPageView(window.location.pathname || '/', document.title || 'Cheap Reels Store');
+        trackPageView(window.location.pathname || '/', document.title || 'DigiBundle Store');
       }
     };
     window.addEventListener('popstate', handlePopState);
@@ -346,7 +346,7 @@ export default function App() {
   }, [config.favicon]);
 
   useEffect(() => {
-    document.title = `${config.storeName || 'Cheap Reels'} | Premium 1080p Ready-to-Post HD Reels Bundles`;
+    document.title = `${config.storeName || 'DigiBundle'} | Premium 1080p Ready-to-Post HD Reels Bundles`;
   }, [config.storeName]);
 
   // Dynamic Google Analytics 4 Loader (No code copy-pasting required)
@@ -985,7 +985,7 @@ export default function App() {
   // If Website Maintenance Mode is active and admin has not unlocked in current session and not navigating to secret admin route
   if (config.maintenanceMode && !isAdminUnlocked && !isAdminOpen) {
     return (
-      <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center text-white font-bold">Loading Cheap Reels...</div>}>
+      <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center text-white font-bold">Loading DigiBundle...</div>}>
         <MaintenanceScreen
           config={config}
           onUnlockAdmin={() => {

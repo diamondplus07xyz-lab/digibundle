@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Clock, MessageCircle, AlertTriangle, ExternalLink, Check, Copy, X, 
-  ShieldAlert, Package, CheckCircle2, Sparkles, FolderOpen, RefreshCw, Lock, ArrowRight
+  ShieldAlert, Package, CheckCircle2, BadgeCheck, FolderOpen, RefreshCw, Lock, ArrowRight
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import BrandLogo from './BrandLogo';
@@ -61,7 +61,7 @@ export default function OrderSuccessModal({ order: initialOrder, onClose }) {
 
   const supportPhone = '917017324978';
   const whatsappUrl = currentOrder.whatsappUrl || 
-    `https://wa.me/${supportPhone}?text=${encodeURIComponent(`Hello Cheap Reels, my order ID is #${currentOrder.id} and UTR is ${currentOrder.utr}. Please verify and send my Google Drive link.`)}`;
+    `https://wa.me/${supportPhone}?text=${encodeURIComponent(`Hello DigiBundle, my order ID is #${currentOrder.id} and UTR is ${currentOrder.utr}. Please verify and send my Google Drive link.`)}`;
 
   const handleCopyUtr = () => {
     navigator.clipboard.writeText(currentOrder.utr || '');
@@ -114,7 +114,7 @@ export default function OrderSuccessModal({ order: initialOrder, onClose }) {
             ) : (
               <>
                 <CheckCircle2 className="w-9 h-9 text-white relative z-10" />
-                <Sparkles className="w-4 h-4 text-emerald-200 absolute -top-1 -right-1 animate-bounce" />
+                <BadgeCheck className="w-4 h-4 text-emerald-200 absolute -top-1 -right-1 animate-bounce" />
               </>
             )}
           </div>

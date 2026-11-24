@@ -1,4 +1,4 @@
-// Enterprise-grade Session Management & Authentication Security for Cheap Reels
+// Enterprise-grade Session Management & Authentication Security for DigiBundle
 // Manages multi-device admin sessions, idle timeouts, session rotation, and secure revocation
 
 import { pushCloudStoreData } from './cloudSync';
