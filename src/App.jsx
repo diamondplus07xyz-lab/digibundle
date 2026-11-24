@@ -609,6 +609,7 @@ export default function App() {
           showPurchasePopup: cloudData.config.showPurchasePopup !== undefined ? cloudData.config.showPurchasePopup : prev.showPurchasePopup,
           upiId: cloudData.config.upiId || prev.upiId,
           upiName: cloudData.config.upiName || prev.upiName,
+          themeBackground: cloudData.config.themeBackground || prev.themeBackground,
           telegramAlerts: cloudData.config.telegramAlerts ? { ...(prev.telegramAlerts || {}), ...cloudData.config.telegramAlerts } : prev.telegramAlerts
         };
         try { localStorage.setItem('cheap_reels_config_v2', JSON.stringify(merged)); } catch (e) {}
@@ -1063,8 +1064,12 @@ export default function App() {
     );
   }
 
+  const isLightRed = config?.themeBackground === 'light-red';
+
   return (
-    <div className="min-h-screen text-slate-900 flex flex-col relative overflow-hidden pb-16 sm:pb-0">
+    <div className={`min-h-screen text-slate-900 flex flex-col relative overflow-hidden pb-16 sm:pb-0 transition-colors duration-500 ${
+      isLightRed ? 'bg-[#fff5f5]' : 'bg-[#f0fbf5]'
+    }`}>
       {/* Dynamic SEO, Open Graph & Structured Data (JSON-LD) */}
       <SEOHead 
         config={config} 
@@ -1072,10 +1077,18 @@ export default function App() {
         categories={categories} 
         searchQuery={searchQuery} 
       />
-      {/* Pastel Ambient Lighting Elements (White + Light Red + Light Green + Light Yellow) */}
-      <div className="fixed top-10 left-10 w-96 h-96 bg-rose-200/40 rounded-full blur-[140px] pointer-events-none -z-10" />
-      <div className="fixed bottom-20 right-10 w-[500px] h-[500px] bg-green-200/40 rounded-full blur-[160px] pointer-events-none -z-10" />
-      <div className="fixed top-1/2 left-1/3 w-80 h-80 bg-yellow-200/40 rounded-full blur-[120px] pointer-events-none -z-10" />
+      {/* Pure Single-Tone Ambient Lighting (Zero Color Mixture: strictly only matching tone) */}
+      {isLightRed ? (
+        <>
+          <div className="fixed top-10 left-10 w-[500px] h-[500px] bg-rose-200/35 rounded-full blur-[160px] pointer-events-none -z-10" />
+          <div className="fixed bottom-20 right-10 w-[600px] h-[600px] bg-rose-100/45 rounded-full blur-[180px] pointer-events-none -z-10" />
+        </>
+      ) : (
+        <>
+          <div className="fixed top-10 left-10 w-[500px] h-[500px] bg-emerald-200/35 rounded-full blur-[160px] pointer-events-none -z-10" />
+          <div className="fixed bottom-20 right-10 w-[600px] h-[600px] bg-green-100/45 rounded-full blur-[180px] pointer-events-none -z-10" />
+        </>
+      )}
 
       {/* 1. Top Countdown Sale Announcement Banner */}
       <AnnouncementBar 

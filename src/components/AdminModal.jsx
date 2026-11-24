@@ -3538,6 +3538,75 @@ export default function AdminModal({
                     </div>
                   </div>
 
+                  {/* Global Background Theme Selector (User Requested: Light Green or Light Red, No Combination) */}
+                  <div className="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">
+                          Global Website Background Tone
+                        </span>
+                        <span className="text-[11px] text-slate-500">
+                          Single-tone soothing background with zero color mixing.
+                        </span>
+                      </div>
+                      <span className={`px-2.5 py-1 rounded-md text-[10px] font-black uppercase tracking-wider ${
+                        storeConfig.themeBackground === 'light-red'
+                          ? 'bg-rose-100 text-rose-700 border border-rose-200'
+                          : 'bg-emerald-100 text-emerald-700 border border-emerald-200'
+                      }`}>
+                        {storeConfig.themeBackground === 'light-red' ? '🌸 Light Red Active' : '🌿 Light Green Active'}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3 pt-1">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = { ...storeConfig, themeBackground: 'light-green' };
+                          setStoreConfig(updated);
+                          handleSaveStoreConfig(updated);
+                          showNotification('🌿 Website background set to Pure Light Green!');
+                        }}
+                        className={`p-3 rounded-xl border text-left flex items-center gap-3 transition cursor-pointer ${
+                          storeConfig.themeBackground !== 'light-red'
+                            ? 'bg-[#f0fbf5] border-emerald-500 ring-2 ring-emerald-400/40 shadow-xs'
+                            : 'bg-white border-slate-200 hover:border-emerald-300'
+                        }`}
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-emerald-100 border border-emerald-300 flex items-center justify-center text-base shrink-0">
+                          🌿
+                        </div>
+                        <div>
+                          <div className="text-xs font-black text-slate-900">Pure Light Green</div>
+                          <div className="text-[10px] text-slate-500 font-mono">#f0fbf5 (Mint)</div>
+                        </div>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = { ...storeConfig, themeBackground: 'light-red' };
+                          setStoreConfig(updated);
+                          handleSaveStoreConfig(updated);
+                          showNotification('🌸 Website background set to Pure Light Red!');
+                        }}
+                        className={`p-3 rounded-xl border text-left flex items-center gap-3 transition cursor-pointer ${
+                          storeConfig.themeBackground === 'light-red'
+                            ? 'bg-[#fff5f5] border-rose-500 ring-2 ring-rose-400/40 shadow-xs'
+                            : 'bg-white border-slate-200 hover:border-rose-300'
+                        }`}
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-rose-100 border border-rose-300 flex items-center justify-center text-base shrink-0">
+                          🌸
+                        </div>
+                        <div>
+                          <div className="text-xs font-black text-slate-900">Pure Light Red</div>
+                          <div className="text-[10px] text-slate-500 font-mono">#fff5f5 (Rose)</div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+
                   {/* 1. Website Header Logo Upload */}
                   <div className="p-4 bg-amber-50/70 border border-amber-200 rounded-2xl">
                     <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">

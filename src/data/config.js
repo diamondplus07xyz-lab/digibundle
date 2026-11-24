@@ -1,5 +1,6 @@
 export const initialConfig = {
   storeName: "Cheap Reels",
+  themeBackground: "light-green", // "light-green" | "light-red" (Single-tone, Zero combination)
   tagline: "India's Most Affordable Ready-to-Post HD Reels Store",
   logo: "/logo.png",
   footerLogo: "/logo-dark.png",
