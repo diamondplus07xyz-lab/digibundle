@@ -2,13 +2,24 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { 
   X, QrCode, Copy, Check, ArrowRight, AlertCircle, Lock, MessageCircle, 
   ShoppingBag, CreditCard, ShieldCheck, Globe, Zap, ExternalLink, Sparkles,
-  ChevronRight, RefreshCw, Smartphone, HelpCircle, CheckCircle2, RotateCcw
+  ChevronRight, RefreshCw, Smartphone, HelpCircle, CheckCircle2, RotateCcw,
+  User, Mail, MapPin
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { calculateCartPricing } from '../utils/pricing';
 import { validateUtr, checkOrderRateLimit, recordOrderSubmission, sanitizeInput } from '../utils/security';
 import { initialBundles } from '../data/bundles';
 import BrandLogo from './BrandLogo';
+
+// Comprehensive Indian States List for mandatory customer checkout details
+const INDIAN_STATES = [
+  'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
+  'Delhi (NCR)', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh',
+  'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra',
+  'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab',
+  'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
+  'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Other / Union Territory'
+];
 
 export default function CheckoutModal({ 
   isOpen, 
@@ -18,9 +29,22 @@ export default function CheckoutModal({
   onPaymentSuccess,
   existingOrders = []
 }) {
-  const [name, setName] = useState('');
-  const [whatsapp, setWhatsapp] = useState('');
-  const [email, setEmail] = useState('');
+  // Prepopulate from saved customer details if available for seamless checkout
+  const [name, setName] = useState(() => {
+    try { return localStorage.getItem('cheap_reels_cust_name') || ''; } catch (e) { return ''; }
+  });
+  const [whatsapp, setWhatsapp] = useState(() => {
+    try { return localStorage.getItem('cheap_reels_cust_phone') || ''; } catch (e) { return ''; }
+  });
+  const [email, setEmail] = useState(() => {
+    try { return localStorage.getItem('cheap_reels_cust_email') || ''; } catch (e) { return ''; }
+  });
+  const [customerState, setCustomerState] = useState(() => {
+    try { return localStorage.getItem('cheap_reels_cust_state') || ''; } catch (e) { return ''; }
+  });
+  const [city, setCity] = useState(() => {
+    try { return localStorage.getItem('cheap_reels_cust_city') || ''; } catch (e) { return ''; }
+  });
   const [utr, setUtr] = useState('');
   const [paymentApp, setPaymentApp] = useState('PhonePe');
   const [copied, setCopied] = useState(false);
@@ -84,11 +108,46 @@ export default function CheckoutModal({
 
   const handleProceedToPayment = (e) => {
     e.preventDefault();
-    const cleanPhone = whatsapp.replace(/\D/g, '');
-    if (!cleanPhone || cleanPhone.length !== 10) {
-      setError('Please enter a valid 10-digit Indian WhatsApp number.');
+
+    const cleanName = (name || '').trim();
+    if (!cleanName || cleanName.length < 2) {
+      setError('Please enter your full name (कृपया अपना पूरा नाम दर्ज करें).');
       return;
     }
+
+    const cleanPhone = whatsapp.replace(/\D/g, '');
+    if (!cleanPhone || cleanPhone.length !== 10) {
+      setError('Please enter a valid 10-digit Indian WhatsApp number (10 अंकों का व्हाट्सएप नंबर).');
+      return;
+    }
+
+    const cleanEmail = (email || '').trim().toLowerCase();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!cleanEmail || !emailRegex.test(cleanEmail)) {
+      setError('Please enter a valid email address (कृपया सही ईमेल आईडी दर्ज करें).');
+      return;
+    }
+
+    if (!customerState) {
+      setError('Please select your state (कृपया अपना राज्य चुनें).');
+      return;
+    }
+
+    const cleanCity = (city || '').trim();
+    if (!cleanCity || cleanCity.length < 2) {
+      setError('Please enter your city (कृपया अपना शहर दर्ज करें).');
+      return;
+    }
+
+    // Save customer details in localStorage for future convenience
+    try {
+      localStorage.setItem('cheap_reels_cust_name', cleanName);
+      localStorage.setItem('cheap_reels_cust_phone', cleanPhone);
+      localStorage.setItem('cheap_reels_cust_email', cleanEmail);
+      localStorage.setItem('cheap_reels_cust_state', customerState);
+      localStorage.setItem('cheap_reels_cust_city', cleanCity);
+    } catch (err) {}
+
     setError('');
     setStep(2);
   };
@@ -132,6 +191,7 @@ export default function CheckoutModal({
         `👤 *Name:* ${name || 'Customer'}\n` +
         `📱 *WhatsApp:* ${whatsapp}\n` +
         `📧 *Email:* ${email || 'Not provided'}\n` +
+        `📍 *Location:* ${city ? `${city}, ` : ''}${customerState || 'India'}\n` +
         `💳 *Paid Via:* ${paymentApp} (UPI QR)\n` +
         `💰 *Amount Paid:* ₹${total}\n` +
         `🔢 *12-Digit UTR / Ref No:* ${cleanUtr}\n` +
@@ -156,9 +216,11 @@ export default function CheckoutModal({
 
       const order = {
         id: orderId,
-        name: name || 'Customer',
+        name: (name || 'Customer').trim(),
         whatsapp,
-        email: email || supportEmail,
+        email: (email || supportEmail).trim(),
+        state: customerState || '',
+        city: (city || '').trim(),
         total,
         items,
         gateway: 'upi_qr',
@@ -185,9 +247,11 @@ export default function CheckoutModal({
       const orderId = 'CR-' + Math.floor(100000 + Math.random() * 900000);
       const order = {
         id: orderId,
-        name: name || 'Customer',
+        name: (name || 'Customer').trim(),
         whatsapp,
-        email: email || supportEmail,
+        email: (email || supportEmail).trim(),
+        state: customerState || '',
+        city: (city || '').trim(),
         total,
         items,
         gateway: 'Razorpay',
@@ -339,6 +403,8 @@ export default function CheckoutModal({
       name: customerName,
       whatsapp: cleanPhone,
       email: customerEmail,
+      state: customerState || '',
+      city: (city || '').trim(),
       total,
       items: securedItems,
       gateway: 'Cashfree',
@@ -368,6 +434,8 @@ export default function CheckoutModal({
           customerName,
           customerEmail,
           customerPhone: cleanPhone,
+          customerState: customerState || '',
+          customerCity: (city || '').trim(),
           returnUrl,
           items: securedItems.map(i => ({ id: i.id, title: i.title, price: i.price, driveLink: i.driveLink }))
         })
@@ -438,9 +506,11 @@ export default function CheckoutModal({
       const paypalPaymentId = 'PAYID-' + Math.random().toString(36).substring(2, 10).toUpperCase();
       const order = {
         id: orderId,
-        name: name || 'Customer',
+        name: (name || 'Customer').trim(),
         whatsapp,
-        email: email || supportEmail,
+        email: (email || supportEmail).trim(),
+        state: customerState || '',
+        city: (city || '').trim(),
         total,
         items,
         gateway: 'PayPal',
@@ -615,11 +685,40 @@ export default function CheckoutModal({
                 </div>
               </div>
 
-              {/* Customer WhatsApp Form */}
-              <div className="space-y-3 pt-1">
+              {/* Customer Details Form (All Fields Required) */}
+              <div className="space-y-3.5 pt-1">
+                <div className="flex items-center justify-between pb-1 border-b border-slate-200/80">
+                  <span className="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+                    <User className="w-4 h-4 text-purple-600" />
+                    <span>Customer Details / ग्राहक की जानकारी</span>
+                  </span>
+                  <span className="text-[10px] text-rose-500 font-bold bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
+                    * All fields required
+                  </span>
+                </div>
+
+                {/* 1. Full Name */}
                 <div>
                   <label className="block text-xs font-bold text-slate-800 mb-1">
-                    WhatsApp Mobile Number <span className="text-rose-500">*</span>
+                    Full Name / आपका पूरा नाम <span className="text-rose-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <input
+                      type="text"
+                      required
+                      placeholder="Enter your full name (e.g. Rahul Sharma)"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="w-full bg-slate-50/50 border border-slate-300 rounded-xl pl-9 pr-3.5 py-2.5 text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                    />
+                  </div>
+                </div>
+
+                {/* 2. WhatsApp Mobile Number */}
+                <div>
+                  <label className="block text-xs font-bold text-slate-800 mb-1">
+                    WhatsApp Mobile Number / व्हाट्सएप नंबर <span className="text-rose-500">*</span>
                   </label>
                   <div className="flex rounded-xl shadow-2xs overflow-hidden border border-slate-300 focus-within:ring-2 focus-within:ring-purple-600 focus-within:border-transparent">
                     <span className="inline-flex items-center px-3 bg-slate-100 text-slate-700 font-bold text-xs border-r border-slate-300 select-none">
@@ -641,30 +740,63 @@ export default function CheckoutModal({
                   </p>
                 </div>
 
+                {/* 3. Email Address */}
                 <div>
                   <label className="block text-xs font-bold text-slate-800 mb-1">
-                    Full Name (Optional)
+                    Email Address / ईमेल आईडी <span className="text-rose-500">*</span>
                   </label>
-                  <input
-                    type="text"
-                    placeholder="Your Name (e.g. Rahul Sharma)"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-slate-50/50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-600"
-                  />
+                  <div className="relative">
+                    <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <input
+                      type="email"
+                      required
+                      placeholder="Enter your email (e.g. rahul@gmail.com)"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full bg-slate-50/50 border border-slate-300 rounded-xl pl-9 pr-3.5 py-2.5 text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                    />
+                  </div>
+                  <p className="text-[11px] text-slate-500 mt-1 flex items-center gap-1 font-medium">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    Order invoice & backup Google Drive link will be sent to this email.
+                  </p>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-slate-800 mb-1">
-                    Email Address (Optional)
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="name@example.com (for backup invoice)"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-slate-50/50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-600"
-                  />
+                {/* 4. State & City */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-800 mb-1">
+                      State / राज्य <span className="text-rose-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <MapPin className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      <select
+                        required
+                        value={customerState}
+                        onChange={(e) => setCustomerState(e.target.value)}
+                        className="w-full bg-slate-50/50 border border-slate-300 rounded-xl pl-9 pr-3 py-2.5 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-600 cursor-pointer"
+                      >
+                        <option value="">Select State</option>
+                        {INDIAN_STATES.map((st) => (
+                          <option key={st} value={st}>{st}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-800 mb-1">
+                      City / शहर <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="City (e.g. Mumbai, Delhi, Jaipur)"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      className="w-full bg-slate-50/50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -707,16 +839,28 @@ export default function CheckoutModal({
                 </div>
               )}
 
-              {/* Total Payable Reminder Banner */}
-              <div className="flex items-center justify-between p-3.5 bg-purple-50/70 border border-purple-200/80 rounded-2xl">
-                <div>
-                  <span className="text-[11px] font-bold text-slate-600 block">Total Payable:</span>
-                  <span className="text-xl font-black text-purple-900">₹{total}</span>
+              {/* Total Payable Reminder Banner with Full Customer Details */}
+              <div className="p-3.5 bg-purple-50/70 border border-purple-200/80 rounded-2xl space-y-2">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-[11px] font-bold text-slate-600 block">Total Payable:</span>
+                    <span className="text-xl font-black text-purple-900">₹{total}</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[11px] font-bold text-slate-500 block">WhatsApp:</span>
+                    <span className="text-xs font-black text-slate-800">+91 {whatsapp}</span>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <span className="text-[11px] font-bold text-slate-500 block">Order Phone:</span>
-                  <span className="text-xs font-black text-slate-800">+91 {whatsapp}</span>
+                <div className="pt-2 border-t border-purple-200/60 flex items-center justify-between text-[11px] text-slate-600">
+                  <span className="truncate max-w-[200px]"><b>Name:</b> {name}</span>
+                  <span className="truncate max-w-[220px]"><b>Email:</b> {email}</span>
                 </div>
+                {(city || customerState) && (
+                  <div className="text-[10px] text-slate-500 flex items-center gap-1 font-medium">
+                    <MapPin className="w-3 h-3 text-purple-500" />
+                    <span>{[city, customerState].filter(Boolean).join(', ')}</span>
+                  </div>
+                )}
               </div>
 
               {/* GATEWAYS SELECTION (IF MULTIPLE ENABLED) */}

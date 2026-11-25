@@ -72,6 +72,7 @@ export const sendTelegramOrderAlert = async (order, config) => {
   const customerName = order.customerName || order.name || 'Direct Customer';
   const customerPhone = order.customerPhone || order.whatsapp || 'Not provided';
   const customerEmail = order.customerEmail || order.email || 'Not provided';
+  const customerLocation = [order.city, order.state].filter(Boolean).join(', ');
   const totalAmount = order.amount !== undefined ? order.amount : (order.total || 29);
 
   let paymentMethodLabel = '📱 Direct UPI QR';
@@ -107,6 +108,7 @@ export const sendTelegramOrderAlert = async (order, config) => {
     `• <b>Name:</b> ${customerName}`,
     `• <b>WhatsApp / Phone:</b> <code>${customerPhone}</code>`,
     `• <b>Email:</b> ${customerEmail}`,
+    customerLocation ? `• <b>Location:</b> ${customerLocation}` : null,
     ``,
     `🛍️ <b>Purchased Bundles:</b>`,
     itemsList,
@@ -114,7 +116,7 @@ export const sendTelegramOrderAlert = async (order, config) => {
     `⏰ <b>Date & Time:</b> ${getFormattedTime()}`,
     `━━━━━━━━━━━━━━━━━━━━━━━━━`,
     `⚡ <i>Access link delivery dispatched to customer!</i>`
-  ].join('\n');
+  ].filter(line => line !== null).join('\n');
 
   return sendTelegramMessage(tgConfig.botToken, tgConfig.chatId, message);
 };

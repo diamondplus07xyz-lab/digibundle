@@ -2242,6 +2242,18 @@ export default function AdminModal({
                                   <span className="font-mono text-slate-700">{customerPhone}</span>
                                 </div>
                               )}
+                              {ord.email && (
+                                <div className="flex items-center justify-between text-[11px]">
+                                  <span className="text-slate-500">Email:</span>
+                                  <span className="font-mono text-slate-700 truncate max-w-[180px]">{ord.email}</span>
+                                </div>
+                              )}
+                              {(ord.city || ord.state) && (
+                                <div className="flex items-center justify-between text-[11px]">
+                                  <span className="text-slate-500">Location:</span>
+                                  <span className="text-slate-700 font-medium">{[ord.city, ord.state].filter(Boolean).join(', ')}</span>
+                                </div>
+                              )}
                             </div>
 
                             <div className="pt-2 border-t border-slate-100 flex items-center justify-end gap-2">
@@ -2346,7 +2358,13 @@ export default function AdminModal({
                                   {/* Customer Info */}
                                   <td className="px-3 py-2.5">
                                     <span className="font-bold text-slate-900 block">{ord.name || 'Customer'}</span>
-                                    <span className="text-[11px] text-slate-500 font-mono">{customerPhone || 'No phone'}</span>
+                                    <span className="text-[11px] text-slate-600 font-mono block">{customerPhone || 'No phone'}</span>
+                                    {ord.email && <span className="text-[10px] text-slate-500 font-mono block truncate max-w-[160px]">{ord.email}</span>}
+                                    {(ord.city || ord.state) && (
+                                      <span className="text-[10px] text-purple-700 font-bold block">
+                                        {[ord.city, ord.state].filter(Boolean).join(', ')}
+                                      </span>
+                                    )}
                                   </td>
 
                                   {/* Bundles */}

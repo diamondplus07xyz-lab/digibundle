@@ -60,7 +60,9 @@ export default async function handler(req, res) {
           items: cached?.items || null,
           customer_name: cached?.customerName || cfData.customer_details?.customer_name,
           customer_phone: cached?.customerPhone || cfData.customer_details?.customer_phone,
-          customer_email: cached?.customerEmail || cfData.customer_details?.customer_email
+          customer_email: cached?.customerEmail || cfData.customer_details?.customer_email,
+          customer_state: cached?.customerState || '',
+          customer_city: cached?.customerCity || ''
         });
       } else {
         return res.status(cfRes.status).json({
@@ -79,7 +81,7 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
-      const { orderId, amount, customerName, customerEmail, customerPhone, returnUrl, items } = body || {};
+      const { orderId, amount, customerName, customerEmail, customerPhone, customerState, customerCity, returnUrl, items } = body || {};
 
       if (!orderId || !amount || Number(amount) <= 0) {
         return res.status(400).json({ success: false, error: 'Valid orderId and amount are required' });
@@ -88,6 +90,8 @@ export default async function handler(req, res) {
       const cleanPhone = (customerPhone || '').replace(/\D/g, '').slice(-10) || '9999999999';
       const cleanName = (customerName || 'Customer').trim();
       const cleanEmail = (customerEmail || 'support@cheapreels.in').trim();
+      const cleanState = (customerState || '').trim();
+      const cleanCity = (customerCity || '').trim();
       const cleanOrderId = String(orderId).trim();
 
       // Cache pending order so redirect return can recover items and Drive links immediately
@@ -97,6 +101,8 @@ export default async function handler(req, res) {
         customerName: cleanName,
         customerEmail: cleanEmail,
         customerPhone: cleanPhone,
+        customerState: cleanState,
+        customerCity: cleanCity,
         items: Array.isArray(items) ? items : [],
         createdAt: Date.now()
       });

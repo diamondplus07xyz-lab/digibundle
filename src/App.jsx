@@ -575,6 +575,8 @@ export default function App() {
             name: pending?.name || data.customer_name || 'Valued Customer',
             whatsapp: pending?.whatsapp || data.customer_phone || '',
             email: pending?.email || data.customer_email || 'support@cheapreels.in',
+            state: pending?.state || data.customer_state || '',
+            city: pending?.city || data.customer_city || '',
             total: data.order_amount || pending?.total || 39,
             items: securedItems,
             gateway: 'Cashfree',
