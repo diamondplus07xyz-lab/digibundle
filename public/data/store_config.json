@@ -1,8 +1,8 @@
 {
   "version": "2.0",
-  "updatedAt": 1795613156374,
+  "updatedAt": 1795613231294,
   "lastModifiedByDevice": "cr_des_qv1970_mwv1iij6",
-  "lastModifiedDeviceLabel": "💻 PC (Windows · Google Chrome)",
+  "lastModifiedDeviceLabel": "📱 Mobile (Windows · Google Chrome)",
   "config": {
     "storeName": "Cheap Reels",
     "themeBackground": "white",
@@ -4290,9 +4290,9 @@
     }
   ],
   "visitorStats": {
-    "totalViews": 168,
+    "totalViews": 169,
     "uniqueVisitors": 60,
-    "mobileVisits": 31,
+    "mobileVisits": 32,
     "desktopVisits": 151,
     "knownIps": [
       "157.49.180.218",
@@ -4357,6 +4357,26 @@
       "157.49.80.25"
     ],
     "recentVisits": [
+      {
+        "id": 1795613226232,
+        "ip": "157.49.80.25",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "06:57 pm",
+        "date": "25 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795613153893.399,
+        "ip": "157.49.80.25",
+        "device": "Desktop PC",
+        "location": "India",
+        "page": "Previewed Demo Video: 1000+ Space Aesthetic Reels Bu",
+        "time": "06:55 pm",
+        "date": "25 Nov",
+        "isRepeat": true
+      },
       {
         "id": 1795613132154,
         "ip": "157.49.80.25",
@@ -5334,26 +5354,6 @@
         "location": "India",
         "page": "Storefront (Home Catalog)",
         "time": "12:51 am",
-        "date": "24 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795461035019,
-        "ip": "157.49.181.79",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "12:40 am",
-        "date": "24 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795461035003,
-        "ip": "157.49.181.79",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "12:40 am",
         "date": "24 Nov",
         "isRepeat": true
       }
