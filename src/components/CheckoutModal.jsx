@@ -274,21 +274,34 @@ export default function CheckoutModal({
   // Helper to dynamically load Cashfree Web Checkout SDK v3
   const loadCashfreeSdk = () => {
     return new Promise((resolve, reject) => {
-      if (window.Cashfree) {
+      if (typeof window !== 'undefined' && window.Cashfree) {
         resolve(window.Cashfree);
         return;
       }
-      const existingScript = document.querySelector('script[src="https://sdk.cashfree.com/js/v3/cashfree.js"]');
-      if (existingScript) {
-        existingScript.addEventListener('load', () => resolve(window.Cashfree));
-        return;
-      }
-      const script = document.createElement('script');
-      script.src = 'https://sdk.cashfree.com/js/v3/cashfree.js';
-      script.async = true;
-      script.onload = () => resolve(window.Cashfree);
-      script.onerror = () => reject(new Error('Unable to connect to Cashfree payment gateway SDK. Please check your internet connection.'));
-      document.body.appendChild(script);
+      let attempts = 0;
+      const interval = setInterval(() => {
+        if (typeof window !== 'undefined' && window.Cashfree) {
+          clearInterval(interval);
+          resolve(window.Cashfree);
+        } else if (attempts >= 25) { // 2.5 seconds
+          clearInterval(interval);
+          const existingScript = document.querySelector('script[src*="cashfree"]');
+          if (!existingScript) {
+            const script = document.createElement('script');
+            script.src = 'https://sdk.cashfree.com/js/v3/cashfree.js';
+            script.async = true;
+            script.onload = () => {
+              if (window.Cashfree) resolve(window.Cashfree);
+              else reject(new Error('Cashfree SDK loaded but could not initialize.'));
+            };
+            script.onerror = () => reject(new Error('Unable to connect to Cashfree payment gateway SDK. Please check your internet connection or ad blocker.'));
+            document.head.appendChild(script);
+          } else {
+            reject(new Error('Unable to connect to Cashfree payment gateway SDK. Please check your internet connection or ad blocker.'));
+          }
+        }
+        attempts++;
+      }, 100);
     });
   };
 
@@ -328,22 +341,23 @@ export default function CheckoutModal({
         throw new Error(data?.error || 'Failed to initialize Cashfree payment session');
       }
 
-      // 2. Load SDK and trigger Cashfree Checkout Modal
+      // 2. Load SDK and trigger Cashfree Checkout Modal / Redirect
       const CashfreeSdk = await loadCashfreeSdk();
       const isProd = config?.cashfree?.environment !== 'sandbox';
       const cashfree = CashfreeSdk({ mode: isProd ? 'production' : 'sandbox' });
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
 
       cashfree.checkout({
         paymentSessionId: data.payment_session_id,
-        redirectTarget: '_modal'
+        redirectTarget: isMobile ? '_self' : '_modal'
       }).then((result) => {
-        if (result.error) {
+        if (result && result.error) {
           console.warn('Cashfree payment notice:', result.error);
           setIsProcessing(false);
           if (result.error.code !== 'MODAL_CLOSED') {
             setError(result.error.message || 'Cashfree payment was cancelled or incomplete.');
           }
-        } else if (result.paymentDetails) {
+        } else if (result && result.paymentDetails) {
           // Cashfree confirmed payment
           const order = {
             id: orderId,
@@ -365,6 +379,13 @@ export default function CheckoutModal({
         } else {
           setIsProcessing(false);
         }
+      }).catch((checkoutErr) => {
+        console.warn('Cashfree modal checkout error, attempting redirect fallback:', checkoutErr);
+        // Fallback to full page redirect if modal is blocked
+        cashfree.checkout({
+          paymentSessionId: data.payment_session_id,
+          redirectTarget: '_self'
+        });
       });
     } catch (err) {
       console.error('Cashfree PG error:', err);
