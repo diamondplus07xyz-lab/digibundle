@@ -1,7 +1,7 @@
 {
   "version": "2.0",
-  "updatedAt": 1795613894668,
-  "lastModifiedByDevice": "cr_des_qv1970_mwv1iij6",
+  "updatedAt": 1795614515337,
+  "lastModifiedByDevice": "cr_des_gm9p36_mwufotix",
   "lastModifiedDeviceLabel": "💻 PC (Windows · Google Chrome)",
   "config": {
     "storeName": "Cheap Reels",
@@ -126,7 +126,15 @@
     "seoKeywords": "reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, cheap reels download, watermark free reels 1080p",
     "canonicalUrl": "https://cheapreels.vercel.app",
     "allowRobotsIndex": true,
-    "lastSyncAuditCheck": 1795613092869
+    "lastSyncAuditCheck": 1795613092869,
+    "bingVerificationTag": "",
+    "telegramAlerts": {
+      "enabled": true,
+      "botToken": "9148128408:AAFIGvvKsbxLv1QYcp39HKAADSKQsZG6j0A",
+      "chatId": "5151255259",
+      "notifyOnSale": true,
+      "notifyOnCheckout": true
+    }
   },
   "bundles": [
     {
