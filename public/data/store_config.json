@@ -1,6 +1,8 @@
 {
   "version": "2.0",
-  "updatedAt": 1795614925070,
+  "updatedAt": 1795615544977,
+  "lastModifiedByDevice": "unknown",
+  "lastModifiedDeviceLabel": "Admin Terminal",
   "config": {
     "storeName": "Cheap Reels",
     "themeBackground": "white",
