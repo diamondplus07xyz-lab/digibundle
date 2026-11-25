@@ -392,14 +392,15 @@ export default async function handler(req, res) {
       cacheData = updatedData;
       lastCacheTime = nowTimestamp;
 
-      // 4. Commit updated data to Central Database (GitHub API)
+      // 4. Commit updated data to Central Database (GitHub API) only for Admin changes or Orders
       let commitConfirmed = false;
       let commitError = null;
+      const shouldCommitToGit = isAdmin || payload.updateType === 'ORDERS_UPDATED' || payload.action === 'customer_order_verified';
 
-      if (GITHUB_TOKEN) {
+      if (GITHUB_TOKEN && shouldCommitToGit) {
         const base64Content = Buffer.from(JSON.stringify(updatedData, null, 2)).toString('base64');
         const commitBody = JSON.stringify({
-          message: `Universal cross-device sync [skip ci] (${isAdmin ? 'Admin' : 'Telemetry'})`,
+          message: `Universal cross-device sync [skip ci] (${isAdmin ? 'Admin' : 'Order Update'})`,
           content: base64Content,
           ...(primarySha ? { sha: primarySha } : {})
         });
