@@ -94,7 +94,12 @@ export default function ProductCard({
               controlsList="nodownload noplaybackrate nofullscreen"
               disablePictureInPicture
               onError={() => {
-                setVideoError(true);
+                if (videoRef.current && videoData.directStreamUrl && videoRef.current.src !== videoData.directStreamUrl) {
+                  videoRef.current.src = videoData.directStreamUrl;
+                  videoRef.current.play().catch(() => {});
+                } else {
+                  setVideoError(true);
+                }
               }}
               onContextMenu={(e) => e.preventDefault()}
               style={{

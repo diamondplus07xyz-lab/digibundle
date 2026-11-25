@@ -8,9 +8,7 @@
   }
 
   body {
-    background: linear-gradient(120deg, #E62718 0%, #EE5114 25%, #FCB02D 50%, #EEE0B7 75%, #70AEAB 100%);
-    background-attachment: fixed;
-    background-size: cover;
+    background: #ffffff;
     min-height: 100vh;
     color: #0f172a;
     font-family: 'Sora', sans-serif;

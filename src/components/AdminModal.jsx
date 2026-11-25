@@ -3554,18 +3554,46 @@ export default function AdminModal({
                           ? 'bg-rose-100 text-rose-700 border border-rose-200'
                           : storeConfig.themeBackground === 'light-green'
                           ? 'bg-emerald-100 text-emerald-700 border border-emerald-200'
-                          : 'bg-amber-100 text-amber-800 border border-amber-300'
+                          : storeConfig.themeBackground?.startsWith?.('linear-gradient')
+                          ? 'bg-amber-100 text-amber-800 border border-amber-300'
+                          : 'bg-slate-100 text-slate-800 border border-slate-300'
                       }`}>
                         {storeConfig.themeBackground === 'light-red' 
                           ? '🌸 Light Red Active' 
                           : storeConfig.themeBackground === 'light-green'
                           ? '🌿 Light Green Active'
-                          : '🌅 Sunset Prism Gradient Active'}
+                          : storeConfig.themeBackground?.startsWith?.('linear-gradient')
+                          ? '🌅 Sunset Prism Gradient Active'
+                          : '⚪ Pure White Active'}
                       </span>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-                      {/* 1. Sunset Prism Gradient */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+                      {/* 1. Pure White (Default) */}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = { ...storeConfig, themeBackground: 'white' };
+                          setStoreConfig(updated);
+                          handleSaveStoreConfig(updated);
+                          showNotification('⚪ Website background set to Pure White!');
+                        }}
+                        className={`p-3 rounded-xl border text-left flex items-center gap-2.5 transition cursor-pointer ${
+                          !storeConfig.themeBackground || storeConfig.themeBackground === 'white' || storeConfig.themeBackground === '#ffffff'
+                            ? 'bg-white border-blue-600 ring-2 ring-blue-500/30 shadow-xs'
+                            : 'bg-white border-slate-200 hover:border-slate-400'
+                        }`}
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-slate-100 border border-slate-300 flex items-center justify-center text-base shrink-0">
+                          ⚪
+                        </div>
+                        <div>
+                          <div className="text-xs font-black text-slate-900">Pure White</div>
+                          <div className="text-[10px] text-slate-500 font-mono">#ffffff (Clean)</div>
+                        </div>
+                      </button>
+
+                      {/* 2. Sunset Prism Gradient */}
                       <button
                         type="button"
                         onClick={() => {
@@ -3577,8 +3605,8 @@ export default function AdminModal({
                           handleSaveStoreConfig(updated);
                           showNotification('🌅 Website background set to Sunset Prism Linear Gradient!');
                         }}
-                        className={`p-3 rounded-xl border text-left flex items-center gap-3 transition cursor-pointer ${
-                          storeConfig.themeBackground !== 'light-red' && storeConfig.themeBackground !== 'light-green'
+                        className={`p-3 rounded-xl border text-left flex items-center gap-2.5 transition cursor-pointer ${
+                          storeConfig.themeBackground?.startsWith?.('linear-gradient')
                             ? 'bg-amber-50/60 border-amber-500 ring-2 ring-amber-400/40 shadow-xs'
                             : 'bg-white border-slate-200 hover:border-amber-300'
                         }`}
@@ -3591,11 +3619,11 @@ export default function AdminModal({
                         </div>
                         <div>
                           <div className="text-xs font-black text-slate-900">Sunset Prism</div>
-                          <div className="text-[10px] text-slate-500 font-mono">120deg Linear Grad</div>
+                          <div className="text-[10px] text-slate-500 font-mono">Linear Grad</div>
                         </div>
                       </button>
 
-                      {/* 2. Pure Light Green */}
+                      {/* 3. Pure Light Green */}
                       <button
                         type="button"
                         onClick={() => {
@@ -3604,7 +3632,7 @@ export default function AdminModal({
                           handleSaveStoreConfig(updated);
                           showNotification('🌿 Website background set to Pure Light Green!');
                         }}
-                        className={`p-3 rounded-xl border text-left flex items-center gap-3 transition cursor-pointer ${
+                        className={`p-3 rounded-xl border text-left flex items-center gap-2.5 transition cursor-pointer ${
                           storeConfig.themeBackground === 'light-green'
                             ? 'bg-[#f0fbf5] border-emerald-500 ring-2 ring-emerald-400/40 shadow-xs'
                             : 'bg-white border-slate-200 hover:border-emerald-300'
@@ -3614,12 +3642,12 @@ export default function AdminModal({
                           🌿
                         </div>
                         <div>
-                          <div className="text-xs font-black text-slate-900">Pure Light Green</div>
-                          <div className="text-[10px] text-slate-500 font-mono">#f0fbf5 (Mint)</div>
+                          <div className="text-xs font-black text-slate-900">Light Green</div>
+                          <div className="text-[10px] text-slate-500 font-mono">#f0fbf5</div>
                         </div>
                       </button>
 
-                      {/* 3. Pure Light Red */}
+                      {/* 4. Pure Light Red */}
                       <button
                         type="button"
                         onClick={() => {
@@ -3628,7 +3656,7 @@ export default function AdminModal({
                           handleSaveStoreConfig(updated);
                           showNotification('🌸 Website background set to Pure Light Red!');
                         }}
-                        className={`p-3 rounded-xl border text-left flex items-center gap-3 transition cursor-pointer ${
+                        className={`p-3 rounded-xl border text-left flex items-center gap-2.5 transition cursor-pointer ${
                           storeConfig.themeBackground === 'light-red'
                             ? 'bg-[#fff5f5] border-rose-500 ring-2 ring-rose-400/40 shadow-xs'
                             : 'bg-white border-slate-200 hover:border-rose-300'
@@ -3638,8 +3666,8 @@ export default function AdminModal({
                           🌸
                         </div>
                         <div>
-                          <div className="text-xs font-black text-slate-900">Pure Light Red</div>
-                          <div className="text-[10px] text-slate-500 font-mono">#fff5f5 (Rose)</div>
+                          <div className="text-xs font-black text-slate-900">Light Red</div>
+                          <div className="text-[10px] text-slate-500 font-mono">#fff5f5</div>
                         </div>
                       </button>
                     </div>

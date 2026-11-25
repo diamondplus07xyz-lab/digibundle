@@ -61,7 +61,7 @@ export default function App() {
         return {
           ...initialConfig,
           ...parsed,
-          themeBackground: (parsed.themeBackground && parsed.themeBackground !== 'light-green')
+          themeBackground: (parsed.themeBackground && !parsed.themeBackground.startsWith('linear-gradient') && parsed.themeBackground !== 'light-green')
             ? parsed.themeBackground
             : initialConfig.themeBackground,
           gatewayMode: parsed.gatewayMode || initialConfig.gatewayMode,
@@ -85,7 +85,17 @@ export default function App() {
       try {
         const parsed = JSON.parse(saved);
         if (parsed && parsed.length > 50) {
-          return parsed.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega');
+          return initialBundles
+            .filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega')
+            .map(initB => {
+              const userB = parsed.find(p => p.id === initB.id);
+              if (!userB) return initB;
+              return {
+                ...initB,
+                ...userB,
+                videoPreview: userB.videoPreview || initB.videoPreview || ''
+              };
+            });
         }
       } catch (e) {}
     }
@@ -1067,18 +1077,23 @@ export default function App() {
     );
   }
 
-  const currentBgTheme = config?.themeBackground || "linear-gradient(120deg, #E62718 0%, #EE5114 25%, #FCB02D 50%, #EEE0B7 75%, #70AEAB 100%)";
+  const currentBgTheme = config?.themeBackground || "white";
   const isLightRed = currentBgTheme === 'light-red';
   const isLightGreen = currentBgTheme === 'light-green';
+  const isGradient = typeof currentBgTheme === 'string' && currentBgTheme.startsWith('linear-gradient');
 
   const backgroundStyle = isLightRed
     ? { backgroundColor: '#fff5f5' }
     : isLightGreen
     ? { backgroundColor: '#f0fbf5' }
-    : {
+    : isGradient
+    ? {
         background: currentBgTheme,
         backgroundAttachment: 'fixed',
         backgroundSize: 'cover'
+      }
+    : {
+        backgroundColor: '#ffffff'
       };
 
   return (
