@@ -75,41 +75,47 @@ export default function ProductCard({
         }`}
       >
         {activePlaying && hasVideo ? (
-          /* INLINE ACTIVE VIDEO PLAYER ON THIS CARD - 100% UNRESTRICTED & ZERO OVERLAYS ON TOP */
-          <div 
-            className="relative w-full h-full bg-black select-none cursor-pointer"
-            onClick={handleStopClick}
-            title="Tap video to stop preview"
-          >
-            <video
-              ref={videoRef}
-              src={videoData.url}
-              poster={bundle.thumbnail}
-              autoPlay
-              loop
-              muted={isMuted}
-              playsInline
-              webkit-playsinline="true"
-              preload="auto"
-              controlsList="nodownload noplaybackrate nofullscreen"
-              disablePictureInPicture
-              onError={() => {
-                if (videoRef.current && videoData.directStreamUrl && videoRef.current.src !== videoData.directStreamUrl) {
-                  videoRef.current.src = videoData.directStreamUrl;
-                  videoRef.current.play().catch(() => {});
-                } else {
-                  setVideoError(true);
-                }
-              }}
-              onContextMenu={(e) => e.preventDefault()}
-              style={{
-                WebkitTouchCallout: 'none',
-                WebkitUserSelect: 'none',
-                userSelect: 'none'
-              }}
-              className="w-full h-full object-cover"
-            />
-            {videoError && (
+          /* INLINE ACTIVE VIDEO PLAYER ON THIS CARD - SUPPORTS DIRECT GOOGLE DRIVE EMBED & HTML5 VIDEO */
+          <div className="relative w-full h-full bg-black select-none">
+            {videoData.fileId ? (
+              <iframe
+                src={`https://drive.google.com/file/d/${videoData.fileId}/preview`}
+                title={bundle.title}
+                className="w-full h-full border-0 bg-black"
+                allow="autoplay; encrypted-media; fullscreen"
+                allowFullScreen
+              />
+            ) : (
+              <video
+                ref={videoRef}
+                src={videoData.url}
+                poster={bundle.thumbnail}
+                autoPlay
+                loop
+                muted={isMuted}
+                playsInline
+                webkit-playsinline="true"
+                preload="auto"
+                controlsList="nodownload noplaybackrate nofullscreen"
+                disablePictureInPicture
+                onError={() => {
+                  if (videoRef.current && videoData.directStreamUrl && videoRef.current.src !== videoData.directStreamUrl) {
+                    videoRef.current.src = videoData.directStreamUrl;
+                    videoRef.current.play().catch(() => {});
+                  } else {
+                    setVideoError(true);
+                  }
+                }}
+                onContextMenu={(e) => e.preventDefault()}
+                style={{
+                  WebkitTouchCallout: 'none',
+                  WebkitUserSelect: 'none',
+                  userSelect: 'none'
+                }}
+                className="w-full h-full object-cover"
+              />
+            )}
+            {videoError && !videoData.fileId && (
               <div className="absolute inset-0 flex flex-col items-center justify-center p-4 bg-slate-900/90 text-white text-center">
                 <AlertCircle className="w-8 h-8 text-rose-500 mb-2" />
                 <p className="text-xs font-bold">Video preview error</p>
@@ -166,7 +172,7 @@ export default function ProductCard({
             {hasVideo ? (
               activePlaying ? (
                 <div className="flex items-center gap-1.5 shrink-0">
-                  {videoData.type === 'direct' && !videoError && (
+                  {!videoData.fileId && videoData.type === 'direct' && !videoError && (
                     <button
                       type="button"
                       aria-label={isMuted ? "Unmute video sound" : "Mute video sound"}
