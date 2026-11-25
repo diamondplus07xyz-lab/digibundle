@@ -500,7 +500,7 @@ export default function AdminModal({
     showNotification('Logged out successfully.');
   };
 
-  const handleSaveStoreConfig = (updatedOverride) => {
+  const handleSaveStoreConfig = async (updatedOverride) => {
     const toSave = updatedOverride || storeConfig;
     setStoreConfig(toSave);
     try {
@@ -508,12 +508,25 @@ export default function AdminModal({
     } catch (e) {}
     onSaveConfig(toSave);
     try {
-      realtimeSync.pushUpdate({ config: toSave, bundles, orders, visitorStats, activityLogs, updateType: 'CONFIG_UPDATED' });
+      const res = await realtimeSync.pushUpdate({ 
+        config: toSave, 
+        bundles, 
+        orders, 
+        visitorStats, 
+        activityLogs, 
+        updateType: 'CONFIG_UPDATED',
+        action: 'admin_action'
+      });
+      if (res && res.success) {
+        addLog('BRANDING', 'Store Config Saved', `Saved settings: Store Name "${toSave.storeName}". Central DB synchronized.`);
+        showNotification('Settings saved to Central Database & synchronized across all devices!');
+      } else {
+        showNotification(`Database write notice: ${res?.error || 'Saved locally, syncing to cloud'}`);
+      }
     } catch (e) {
       console.warn('Auto realtime cloud sync failed:', e);
+      showNotification(`Sync notice: ${e.message}`);
     }
-    addLog('BRANDING', 'Store Config Saved', `Saved settings: Store Name "${toSave.storeName}".`);
-    showNotification('Settings saved & broadcast in real time to all devices!');
   };
 
   // Toggle Header Offer on/off immediately
@@ -866,7 +879,7 @@ export default function AdminModal({
   }, [editingBundle]);
 
   // Bundle Actions with Sanitization & Real-Time Sync
-  const handleSaveBundleEdit = (e) => {
+  const handleSaveBundleEdit = async (e) => {
     e.preventDefault();
     if (!editingBundle) return;
 
@@ -886,27 +899,53 @@ export default function AdminModal({
     );
     onUpdateBundles(updatedBundles);
     try {
-      realtimeSync.pushUpdate({ config: storeConfig, bundles: updatedBundles, orders, visitorStats, activityLogs, updateType: 'BUNDLES_UPDATED' });
-    } catch (err) {}
-    addLog('BUNDLES', 'Bundle Updated', `Updated bundle "${sanitizedBundle.title}" (ID: ${sanitizedBundle.id}).`);
-    showNotification(`Bundle "${sanitizedBundle.title.substring(0, 24)}..." saved & broadcast in real time!`);
+      const res = await realtimeSync.pushUpdate({ 
+        config: storeConfig, 
+        bundles: updatedBundles, 
+        orders, 
+        visitorStats, 
+        activityLogs, 
+        updateType: 'BUNDLES_UPDATED',
+        action: 'admin_action'
+      });
+      if (res && res.success) {
+        addLog('BUNDLES', 'Bundle Updated', `Updated bundle "${sanitizedBundle.title}" (ID: ${sanitizedBundle.id}). Central DB updated.`);
+        showNotification(`Bundle "${sanitizedBundle.title.substring(0, 24)}..." saved & synced to all devices!`);
+      } else {
+        showNotification(`Database write notice: ${res?.error || 'Saved locally, syncing to cloud'}`);
+      }
+    } catch (err) {
+      showNotification(`Sync notice: ${err.message}`);
+    }
     realtimeSync.setActiveFormTracker(null);
     setEditingBundle(null);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (!bundleToDelete) return;
     const updatedBundles = bundles.filter(b => b.id !== bundleToDelete.id);
     onUpdateBundles(updatedBundles);
     try {
-      realtimeSync.pushUpdate({ config: storeConfig, bundles: updatedBundles, orders, visitorStats, activityLogs, updateType: 'BUNDLES_UPDATED' });
+      const res = await realtimeSync.pushUpdate({ 
+        config: storeConfig, 
+        bundles: updatedBundles, 
+        orders, 
+        visitorStats, 
+        activityLogs, 
+        updateType: 'BUNDLES_UPDATED',
+        action: 'admin_action'
+      });
+      if (res && res.success) {
+        addLog('BUNDLES', 'Bundle Deleted', `Deleted bundle "${bundleToDelete.title}" (ID: ${bundleToDelete.id}).`);
+        showNotification(`Bundle "${bundleToDelete.title.substring(0, 24)}..." deleted & synced across all devices!`);
+      } else {
+        showNotification(`Database write notice: ${res?.error || 'Saved locally'}`);
+      }
     } catch (err) {}
-    addLog('BUNDLES', 'Bundle Deleted', `Deleted bundle "${bundleToDelete.title}" (ID: ${bundleToDelete.id}).`);
-    showNotification(`Bundle "${bundleToDelete.title.substring(0, 24)}..." deleted & auto-synced!`);
     setBundleToDelete(null);
   };
 
-  const handleDuplicateBundle = (bundleToDup) => {
+  const handleDuplicateBundle = async (bundleToDup) => {
     if (!bundleToDup) return;
     const duplicatedId = 'bundle-' + Date.now();
     const duplicated = {
@@ -917,14 +956,26 @@ export default function AdminModal({
     const updatedBundles = [duplicated, ...bundles];
     onUpdateBundles(updatedBundles);
     try {
-      realtimeSync.pushUpdate({ config: storeConfig, bundles: updatedBundles, orders, visitorStats, activityLogs, updateType: 'BUNDLES_UPDATED' });
+      const res = await realtimeSync.pushUpdate({ 
+        config: storeConfig, 
+        bundles: updatedBundles, 
+        orders, 
+        visitorStats, 
+        activityLogs, 
+        updateType: 'BUNDLES_UPDATED',
+        action: 'admin_action'
+      });
+      if (res && res.success) {
+        addLog('BUNDLES', 'Bundle Duplicated', `Duplicated "${bundleToDup.title}" as ID: ${duplicatedId}.`);
+        showNotification('Bundle duplicated successfully & synchronized across all devices!');
+      } else {
+        showNotification(`Database notice: ${res?.error || 'Saved locally'}`);
+      }
     } catch (err) {}
-    addLog('BUNDLES', 'Bundle Duplicated', `Duplicated "${bundleToDup.title}" as ID: ${duplicatedId}.`);
-    showNotification('Bundle duplicated successfully & synchronized!');
     setEditingBundle(duplicated);
   };
 
-  const handleCreateBundle = (e) => {
+  const handleCreateBundle = async (e) => {
     e.preventDefault();
     if (!newBundleData.title.trim()) {
       alert('Please enter bundle title');
@@ -943,10 +994,22 @@ export default function AdminModal({
     const updatedBundles = [created, ...bundles];
     onUpdateBundles(updatedBundles);
     try {
-      realtimeSync.pushUpdate({ config: storeConfig, bundles: updatedBundles, orders, visitorStats, activityLogs, updateType: 'BUNDLES_UPDATED' });
+      const res = await realtimeSync.pushUpdate({ 
+        config: storeConfig, 
+        bundles: updatedBundles, 
+        orders, 
+        visitorStats, 
+        activityLogs, 
+        updateType: 'BUNDLES_UPDATED',
+        action: 'admin_action'
+      });
+      if (res && res.success) {
+        addLog('BUNDLES', 'Bundle Created', `Published new bundle "${created.title}" (ID: ${created.id}).`);
+        showNotification('New bundle published & synchronized across all devices!');
+      } else {
+        showNotification(`Database notice: ${res?.error || 'Saved locally'}`);
+      }
     } catch (err) {}
-    addLog('BUNDLES', 'Bundle Created', `Published new bundle "${created.title}" (ID: ${created.id}).`);
-    showNotification('New bundle published & synchronized across all devices!');
     setIsAddingNew(false);
   };
 

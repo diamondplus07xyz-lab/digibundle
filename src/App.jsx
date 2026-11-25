@@ -80,13 +80,13 @@ export default function App() {
   });
 
   const [bundles, setBundles] = useState(() => {
-    // Priority: initialBundles contains the freshly extracted Google Drive preview videos and exact Dizozet photos
     const saved = localStorage.getItem('cheap_reels_bundles_v8');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (parsed && parsed.length > 50) {
-          return initialBundles
+        if (parsed && Array.isArray(parsed) && parsed.length > 50) {
+          const initIds = new Set(initialBundles.map(b => b.id));
+          const mapped = initialBundles
             .filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega')
             .map(initB => {
               const userB = parsed.find(p => p.id === initB.id);
@@ -94,19 +94,16 @@ export default function App() {
               return {
                 ...initB,
                 ...userB,
-                thumbnail: initB.thumbnail || userB.thumbnail,
-                videoPreview: initB.videoPreview || userB.videoPreview || ''
+                thumbnail: userB.thumbnail || initB.thumbnail,
+                videoPreview: userB.videoPreview !== undefined ? userB.videoPreview : (initB.videoPreview || ''),
+                driveLink: userB.driveLink !== undefined ? userB.driveLink : (initB.driveLink || '')
               };
             });
+          const customBundles = parsed.filter(p => p && p.id && !initIds.has(p.id) && p.id !== 'bundle-mega-all-in-one' && p.category !== 'mega');
+          return [...mapped, ...customBundles];
         }
       } catch (e) {}
     }
-    // Clean old v5/v6/v7 cache so all devices immediately get fresh Dizozet photos
-    try { 
-      localStorage.removeItem('cheap_reels_bundles_v5'); 
-      localStorage.removeItem('cheap_reels_bundles_v6'); 
-      localStorage.removeItem('cheap_reels_bundles_v7'); 
-    } catch (e) {}
     const fresh = initialBundles.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega');
     try { localStorage.setItem('cheap_reels_bundles_v8', JSON.stringify(fresh)); } catch (e) {}
     return fresh;
@@ -732,10 +729,8 @@ export default function App() {
 
   // Real-Time Synchronization Listener (BroadcastChannel 0ms + Fast Cloud Polling Mesh)
   useEffect(() => {
-    // 1. Defer initial sync fetch so initial page paint (FCP/LCP) is 100% instantaneous
-    const syncTimer = setTimeout(() => {
-      realtimeSync.fetchAndSyncCloud('app_mount');
-    }, 1500);
+    // 1. Trigger instant cloud synchronization on app mount to get single source of truth immediately
+    realtimeSync.fetchAndSyncCloud('app_mount');
 
     // 2. Subscribe to realtime sync events
     const unsubscribe = realtimeSync.subscribe((eventType, payload) => {
@@ -771,7 +766,6 @@ export default function App() {
     });
 
     return () => {
-      clearTimeout(syncTimer);
       unsubscribe();
     };
   }, []);
@@ -780,7 +774,7 @@ export default function App() {
     setConfig(newConfig);
     try { localStorage.setItem('cheap_reels_config_v2', JSON.stringify(newConfig)); } catch (e) {}
     try {
-      await realtimeSync.pushUpdate({ config: newConfig, bundles, orders, visitorStats, activityLogs, updateType: 'CONFIG_UPDATED' });
+      await realtimeSync.pushUpdate({ config: newConfig, bundles, orders, visitorStats, activityLogs, updateType: 'CONFIG_UPDATED', action: 'admin_action' });
     } catch (e) {
       console.warn('Realtime sync config push warning:', e);
     }
@@ -790,7 +784,7 @@ export default function App() {
     setBundles(newBundles);
     try { localStorage.setItem('cheap_reels_bundles_v8', JSON.stringify(newBundles)); } catch (e) {}
     try {
-      await realtimeSync.pushUpdate({ config, bundles: newBundles, orders, visitorStats, activityLogs, updateType: 'BUNDLES_UPDATED' });
+      await realtimeSync.pushUpdate({ config, bundles: newBundles, orders, visitorStats, activityLogs, updateType: 'BUNDLES_UPDATED', action: 'admin_action' });
     } catch (e) {
       console.warn('Realtime sync bundles push warning:', e);
     }
@@ -800,7 +794,7 @@ export default function App() {
     setOrders(newOrders);
     try { localStorage.setItem('cheap_reels_orders', JSON.stringify(newOrders)); } catch (e) {}
     try {
-      await realtimeSync.pushUpdate({ config, bundles, orders: newOrders, visitorStats, activityLogs, updateType: 'ORDERS_UPDATED' });
+      await realtimeSync.pushUpdate({ config, bundles, orders: newOrders, visitorStats, activityLogs, updateType: 'ORDERS_UPDATED', action: 'admin_action' });
     } catch (e) {
       console.warn('Realtime sync orders push warning:', e);
     }
@@ -810,7 +804,7 @@ export default function App() {
     setActivityLogs(newLogs);
     try { localStorage.setItem('cheap_reels_activity_logs', JSON.stringify(newLogs)); } catch (e) {}
     try {
-      await realtimeSync.pushUpdate({ config, bundles, orders, visitorStats, activityLogs: newLogs, updateType: 'LOGS_UPDATED' });
+      await realtimeSync.pushUpdate({ config, bundles, orders, visitorStats, activityLogs: newLogs, updateType: 'LOGS_UPDATED', action: 'admin_action' });
     } catch (e) {
       console.warn('Realtime sync activity logs push warning:', e);
     }

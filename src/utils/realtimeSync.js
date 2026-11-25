@@ -277,7 +277,7 @@ class RealtimeSyncManager {
       const isFromOtherDevice = !cloudData.lastModifiedByDevice || cloudData.lastModifiedByDevice !== this.deviceId;
       const isNewer = remoteUpdatedAt > this.lastProcessedCloudUpdatedAt;
 
-      if (isNewer && (isFromOtherDevice || triggerSource === 'window_focus' || triggerSource === 'force_sync')) {
+      if (isNewer && (isFromOtherDevice || triggerSource === 'window_focus' || triggerSource === 'force_sync' || triggerSource === 'app_mount' || triggerSource === 'network_reconnect')) {
         this.lastProcessedCloudUpdatedAt = remoteUpdatedAt;
 
         // Check if admin is currently typing in an active form
@@ -350,7 +350,11 @@ class RealtimeSyncManager {
       };
 
       const result = await originalPushCloud(payload);
-      this.syncState = 'connected';
+      if (result && result.success) {
+        this.syncState = 'connected';
+      } else {
+        this.syncState = 'error';
+      }
       this.lastSyncTime = Date.now();
       this.notifyStatusChange();
       return result;
@@ -358,7 +362,7 @@ class RealtimeSyncManager {
       console.error('Failed to push realtime update to cloud:', err);
       this.syncState = 'error';
       this.notifyStatusChange();
-      throw err;
+      return { success: false, error: err?.message || 'Push update network failure' };
     }
   }
 
