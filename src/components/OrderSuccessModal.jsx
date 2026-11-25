@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Clock, MessageCircle, AlertTriangle, ExternalLink, Check, Copy, X, 
-  ShieldAlert, Package, CheckCircle2, BadgeCheck, FolderOpen, RefreshCw, Lock, ArrowRight
+  ShieldAlert, Package, CheckCircle2, Sparkles, FolderOpen, RefreshCw, Lock, ArrowRight
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import BrandLogo from './BrandLogo';
 
-export default function OrderSuccessModal({ order: initialOrder, onClose }) {
+export default function OrderSuccessModal({ order: initialOrder, onClose, config = {} }) {
   const [currentOrder, setCurrentOrder] = useState(initialOrder);
   const [copiedUtr, setCopiedUtr] = useState(false);
   const [copiedOrderId, setCopiedOrderId] = useState(false);
@@ -59,9 +59,10 @@ export default function OrderSuccessModal({ order: initialOrder, onClose }) {
   const isPending = currentOrder.status === 'PENDING_VERIFICATION' || currentOrder.driveLinkUnlocked === false;
   const isVerified = !isPending;
 
-  const supportPhone = '917017324978';
-  const whatsappUrl = currentOrder.whatsappUrl || 
-    `https://wa.me/${supportPhone}?text=${encodeURIComponent(`Hello DigiBundle, my order ID is #${currentOrder.id} and UTR is ${currentOrder.utr}. Please verify and send my Google Drive link.`)}`;
+  const supportPhone = (config?.whatsappNumber || currentOrder.whatsappNumber || '').replace(/\D/g, '');
+  const storeName = config?.storeName || 'Cheap Reels';
+  const whatsappUrl = currentOrder.whatsappUrl || (supportPhone ? 
+    `https://wa.me/${supportPhone}?text=${encodeURIComponent(`Hello ${storeName}, my order ID is #${currentOrder.id} and UTR is ${currentOrder.utr}. Please verify and send my Google Drive link.`)}` : '#');
 
   const handleCopyUtr = () => {
     navigator.clipboard.writeText(currentOrder.utr || '');
@@ -114,7 +115,7 @@ export default function OrderSuccessModal({ order: initialOrder, onClose }) {
             ) : (
               <>
                 <CheckCircle2 className="w-9 h-9 text-white relative z-10" />
-                <BadgeCheck className="w-4 h-4 text-emerald-200 absolute -top-1 -right-1 animate-bounce" />
+                <Sparkles className="w-4 h-4 text-emerald-200 absolute -top-1 -right-1 animate-bounce" />
               </>
             )}
           </div>

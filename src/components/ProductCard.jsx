@@ -141,16 +141,6 @@ export default function ProductCard({
                 e.target.src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80";
               }}
             />
-
-            {/* Subtle Gradient Shade on desktop hover (ONLY if bundle has a demo video) */}
-            {hasVideo && (
-              <div className="hidden sm:flex absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover/thumb:opacity-100 transition-opacity duration-300 items-center justify-center">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-900/90 hover:bg-black text-white font-bold text-xs rounded-xl shadow-lg transform -translate-y-1 group-hover/thumb:translate-y-0 transition-transform">
-                  <Play className="w-3.5 h-3.5 fill-white" />
-                  <span>Play Demo</span>
-                </span>
-              </div>
-            )}
           </div>
         )}
       </div>

@@ -5,7 +5,7 @@ import {
   ShieldCheck, 
   CheckCircle2, 
   Clock, 
-  Wrench, 
+  Sparkles, 
   RefreshCw, 
   AlertCircle, 
   ArrowRight, 
@@ -35,7 +35,7 @@ export default function MaintenanceScreen({ config, onUnlockAdmin, onTurnOffMain
   // Dynamic SEO & 503 Service Unavailable Meta Tags Injection
   useEffect(() => {
     const prevTitle = document.title;
-    const storeName = config?.storeName || 'DigiBundle';
+    const storeName = config?.storeName || 'Cheap Reels';
     document.title = `[Maintenance] System Upgrade in Progress — ${storeName}`;
 
     // Inject <meta name="robots" content="noindex, nofollow" />
@@ -131,11 +131,11 @@ export default function MaintenanceScreen({ config, onUnlockAdmin, onTurnOffMain
   };
 
   // Support Contacts
-  const whatsappNumber = config?.whatsappNumber || '7017324978';
+  const whatsappNumber = config?.whatsappNumber || '';
   const cleanNumber = whatsappNumber.replace(/\D/g, '');
-  const finalWaNumber = cleanNumber.startsWith('91') && cleanNumber.length === 12 ? cleanNumber : `91${cleanNumber}`;
-  const whatsappUrl = `https://wa.me/${finalWaNumber}?text=${encodeURIComponent("Hi Admin, I was visiting DigiBundle but the site is undergoing scheduled maintenance. Please notify me once it's back live!")}`;
-  const supportEmail = config?.supportEmail || 'support@digibundle.in';
+  const finalWaNumber = cleanNumber ? (cleanNumber.startsWith('91') && cleanNumber.length === 12 ? cleanNumber : `91${cleanNumber}`) : '';
+  const whatsappUrl = finalWaNumber ? `https://wa.me/${finalWaNumber}?text=${encodeURIComponent("Hi, I was visiting the store but it is undergoing scheduled maintenance. Please notify me once it's back live!")}` : '#';
+  const supportEmail = config?.supportEmail || '';
 
   const handleCopyEmail = () => {
     navigator.clipboard?.writeText(supportEmail);
@@ -213,12 +213,12 @@ export default function MaintenanceScreen({ config, onUnlockAdmin, onTurnOffMain
             <BrandLogo 
               variant="dark"
               customSrc={config?.footerLogo}
-              alt={config?.storeName || "DigiBundle"}
+              alt={config?.storeName || "Cheap Reels"}
               size="lg"
             />
           </div>
           <span className="hidden sm:inline-block text-xs font-semibold tracking-wider text-slate-400 uppercase">
-            {config?.storeName || "DigiBundle"}
+            {config?.storeName || "Cheap Reels"}
           </span>
         </div>
 
@@ -269,7 +269,7 @@ export default function MaintenanceScreen({ config, onUnlockAdmin, onTurnOffMain
 
             {/* Mini badge icon */}
             <div className="absolute -bottom-2 -right-2 p-1.5 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white shadow-lg border border-white/20">
-              <Wrench className="w-3.5 h-3.5 text-cyan-200" />
+              <Sparkles className="w-3.5 h-3.5 text-cyan-200" />
             </div>
           </div>
         </div>
@@ -328,7 +328,7 @@ export default function MaintenanceScreen({ config, onUnlockAdmin, onTurnOffMain
 
           {countdown.isCompleted ? (
             <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-bold text-center backdrop-blur-md shadow-lg animate-fadeIn flex items-center justify-center gap-2.5">
-              <CheckCircle2 className="w-5 h-5 text-emerald-400 animate-pulse" />
+              <Sparkles className="w-5 h-5 text-emerald-400 animate-spin" style={{ animationDuration: '4s' }} />
               <div>
                 <p className="text-sm sm:text-base font-black">We're Almost Back!</p>
                 <p className="text-xs text-emerald-400/80 font-normal">Final verification checks are completing. The site will go live in moments.</p>
@@ -465,7 +465,7 @@ export default function MaintenanceScreen({ config, onUnlockAdmin, onTurnOffMain
 
       {/* Footer */}
       <footer className="max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 text-center text-xs text-slate-400 relative z-20 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p>© {new Date().getFullYear()} {config?.storeName || 'DigiBundle'}. All systems operational & secure.</p>
+        <p>© {new Date().getFullYear()} {config?.storeName || 'Cheap Reels'}. All systems operational & secure.</p>
         
         <div className="flex items-center gap-4 text-[11px] text-slate-400">
           <span className="inline-flex items-center gap-1.5">

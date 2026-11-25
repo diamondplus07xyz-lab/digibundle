@@ -111,8 +111,8 @@ export default function AdminModal({
     favicon: config?.favicon || '/brand-icon.png',
     masterVaultThumbnail: config?.masterVaultThumbnail || "https://i.ibb.co/Lzvn9hTm/sheru-bhai-mega-reels-bundle-ad.png",
     adminPasscode: config?.adminPasscode || DEFAULT_ADMIN_HASH,
-    whatsappNumber: config?.whatsappNumber || '917017324978',
-    supportEmail: config?.supportEmail || 'reelscheap@gmail.com',
+    whatsappNumber: config?.whatsappNumber || '',
+    supportEmail: config?.supportEmail || '',
     bannerText: config?.bannerText || 'LIMITED TIME OFFER: 2,50,000+ Ready Reels Pack at Flat 95% OFF! Instant Google Drive Access in 5 Seconds',
     showTopBanner: config?.showTopBanner !== false,
     showPurchasePopup: config?.showPurchasePopup !== false,
@@ -133,8 +133,8 @@ export default function AdminModal({
     enabledGateways: config?.enabledGateways || ['upi_qr', 'razorpay'],
     upiGateway: config?.upiGateway || {
       enabled: true,
-      upiId: config?.upiId || 'cheapreels@upi',
-      payeeName: config?.upiName || 'Cheap Reels'
+      upiId: config?.upiId || '',
+      payeeName: config?.upiName || config?.storeName || 'Cheap Reels'
     },
     paypal: config?.paypal || {
       enabled: false,
@@ -210,7 +210,7 @@ export default function AdminModal({
         razorpay: { enabled: false, keyId: '', keySecret: '', mode: 'live', ...(config.razorpay || {}) },
         cashfree: { enabled: false, appId: '', secretKey: '', environment: 'production', ...(config.cashfree || {}) },
         paypal: { enabled: false, clientId: '', clientSecret: '', mode: 'live', currency: 'USD', exchangeRate: 85, ...(config.paypal || {}) },
-        upiGateway: { enabled: true, upiId: config.upiId || 'cheapreels@upi', payeeName: config.upiName || 'Cheap Reels', ...(config.upiGateway || {}) },
+        upiGateway: { enabled: true, upiId: config.upiId || '', payeeName: config.upiName || config.storeName || 'Cheap Reels', ...(config.upiGateway || {}) },
         playStore: config.playStore || prev.playStore
       }));
     }
@@ -1779,6 +1779,66 @@ export default function AdminModal({
               {/* ==================================================== */}
               {activeTab === 'bundles' && (
                 <div className="space-y-4">
+                  {/* 📱 Mobile & PC Data Sync & Backup Tool */}
+                  <div className="bg-gradient-to-r from-emerald-50 via-teal-50 to-blue-50 p-4 rounded-2xl border border-emerald-300 shadow-xs space-y-2.5">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div>
+                        <h4 className="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1.5">
+                          <span>📱 Mobile-to-PC Demo Links & Bundles Sync</span>
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold">1-Click Tool</span>
+                        </h4>
+                        <p className="text-[11px] text-slate-600 mt-0.5 font-medium">
+                          Agar aapne mobile se demo video links lagaye hain, toh niche button se JSON copy karke chat me paste kar dein taaki woh GitHub me permanently save ho jayein:
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const jsonStr = JSON.stringify(bundles, null, 2);
+                          navigator.clipboard?.writeText(jsonStr);
+                          const blob = new Blob([jsonStr], { type: 'application/json' });
+                          const url = URL.createObjectURL(blob);
+                          const a = document.createElement('a');
+                          a.href = url;
+                          a.download = `cheap_reels_bundles_backup_${Date.now()}.json`;
+                          a.click();
+                          showNotification('📋 Bundles JSON (with all Demo Links) copied to clipboard & downloaded!');
+                        }}
+                        className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black flex items-center gap-2 shadow-xs transition active:scale-95 cursor-pointer"
+                      >
+                        <Copy className="w-4 h-4" />
+                        <span>📋 1-Click Copy All Bundles JSON</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const input = prompt('Paste your Bundles JSON here to import:');
+                          if (input) {
+                            try {
+                              const parsed = JSON.parse(input);
+                              if (Array.isArray(parsed) && parsed.length > 0) {
+                                onUpdateBundles(parsed);
+                                showNotification(`✅ Successfully imported ${parsed.length} bundles with all demo links!`);
+                              } else {
+                                alert('Invalid format. Please paste a valid bundles JSON array.');
+                              }
+                            } catch (e) {
+                              alert('Failed to parse JSON. Please check the pasted text.');
+                            }
+                          }
+                        }}
+                        className="px-3.5 py-2 bg-slate-900 hover:bg-black text-white rounded-xl text-xs font-black flex items-center gap-2 shadow-xs transition active:scale-95 cursor-pointer"
+                      >
+                        <FolderOpen className="w-4 h-4" />
+                        <span>📥 Import Bundles JSON</span>
+                      </button>
+                    </div>
+                  </div>
+
                   {/* Search & Actions Bar */}
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
                     <div className="flex-1 flex flex-wrap items-center gap-2">
@@ -3797,9 +3857,9 @@ export default function AdminModal({
                     </label>
                     <input
                       type="email"
-                      value={storeConfig.supportEmail || 'reelscheap@gmail.com'}
+                      value={storeConfig.supportEmail || ''}
                       onChange={(e) => setStoreConfig({ ...storeConfig, supportEmail: e.target.value })}
-                      placeholder="reelscheap@gmail.com"
+                      placeholder="support@example.com"
                       className="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                     />
                   </div>
@@ -4370,7 +4430,8 @@ export default function AdminModal({
                           </label>
                           <input
                             type="text"
-                            value={storeConfig.upiId || 'cheapreels@upi'}
+                            value={storeConfig.upiId || ''}
+                            placeholder="yourbusiness@upi"
                             onChange={(e) => setStoreConfig({ 
                               ...storeConfig, 
                               upiId: e.target.value.trim(),

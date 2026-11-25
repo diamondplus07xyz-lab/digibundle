@@ -1137,6 +1137,7 @@ export default function App() {
         storeName={config.storeName}
         logo={config.logo}
         bundles={bundles}
+        whatsappNumber={config.whatsappNumber}
         onSelectBundle={handleBuyNow}
         onScrollToCatalog={scrollToCatalog}
       />
@@ -1149,6 +1150,7 @@ export default function App() {
 
       {/* 3. Hero Section (Master Vault at ₹999) */}
       <Hero
+        config={config}
         masterVaultThumbnail={config.masterVaultThumbnail}
         onClaimMegaDeal={handleClaimMegaDeal}
         onScrollToCatalog={scrollToCatalog}
@@ -1274,7 +1276,7 @@ export default function App() {
       <ReviewsSection />
 
       {/* Brand Knowledge Hub (GEO Entities & AEO Conversational Q&A for Search & LLM Bots) */}
-      <BrandKnowledgeHub />
+      <BrandKnowledgeHub config={config} />
 
       {/* 7. Frequently Asked Questions */}
       <FAQSection />
@@ -1320,6 +1322,7 @@ export default function App() {
         {completedOrder && (
           <OrderSuccessModal
             order={completedOrder}
+            config={config}
             onClose={() => setCompletedOrder(null)}
           />
         )}
@@ -1327,6 +1330,7 @@ export default function App() {
         {isMyOrdersOpen && (
           <MyOrdersModal
             isOpen={isMyOrdersOpen}
+            whatsappNumber={config.whatsappNumber}
             onClose={() => setIsMyOrdersOpen(false)}
             orders={orders}
             onUserLogout={() => {
@@ -1358,6 +1362,7 @@ export default function App() {
         {isAdminDecoyOpen && (
           <AdminDecoyModal
             isOpen={isAdminDecoyOpen}
+            whatsappNumber={config?.whatsappNumber}
             onClose={handleCloseDecoy}
           />
         )}

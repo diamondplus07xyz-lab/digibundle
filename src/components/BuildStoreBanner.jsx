@@ -1,10 +1,10 @@
 import React from 'react';
-import { MessageCircle, Rocket, CheckCircle2, ArrowRight, Smartphone, Zap, ShieldCheck, Code2 } from 'lucide-react';
+import { MessageCircle, Sparkles, CheckCircle2, ArrowRight, Smartphone, Zap, ShieldCheck } from 'lucide-react';
 
-export default function BuildStoreBanner({ whatsappNumber = '917017324978' }) {
+export default function BuildStoreBanner({ whatsappNumber }) {
   const digits = (whatsappNumber || '').replace(/[^0-9]/g, '');
-  const cleanNumber = digits.length === 10 ? `91${digits}` : (digits || '917017324978');
-  const whatsappUrl = `https://wa.me/${cleanNumber}?text=Hello%20Vivek,%20I%20want%20to%20build%20a%20digital%20store%20website%20like%20DigiBundle!%20Please%20share%20details.`;
+  const cleanNumber = digits.length === 10 ? `91${digits}` : digits;
+  const whatsappUrl = cleanNumber ? `https://wa.me/${cleanNumber}?text=Hello,%20I%20want%20to%20build%20a%20digital%20store%20website%20like%20this!%20Please%20share%20details.` : '#';
 
   return (
     <section 
@@ -24,7 +24,7 @@ export default function BuildStoreBanner({ whatsappNumber = '917017324978' }) {
             
             {/* Top Pill */}
             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-400/20 border border-amber-400/40 rounded-full text-[11px] sm:text-xs font-black text-amber-300 uppercase tracking-wider mb-3.5 shadow-xs">
-              <Rocket className="w-3.5 h-3.5 text-amber-400" />
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
               <span>Get Your Own Digital Store in 24 Hours</span>
             </div>
 
@@ -32,14 +32,14 @@ export default function BuildStoreBanner({ whatsappNumber = '917017324978' }) {
             <h2 className="text-2xl sm:text-4xl lg:text-4xl font-black text-white tracking-tight leading-tight">
               Want a Website &amp; Digital Store <br className="hidden sm:inline" />
               <span className="bg-gradient-to-r from-amber-400 via-orange-300 to-amber-200 bg-clip-text text-transparent">
-                Just Like DigiBundle?
+                Just Like Cheap Reels?
               </span>
             </h2>
 
             {/* Description */}
             <p className="mt-3 text-xs sm:text-sm text-slate-300 font-medium max-w-2xl leading-relaxed">
               Launch your own high-earning reels &amp; digital products store! Get 100% automated UPI QR payments, 
-              complete Admin Panel, pre-loaded 50+ viral HD reels bundles, and instant Google Drive cloud delivery. Crafted with precision — Made by Vivek Singh.
+              complete Admin Panel, pre-loaded 120+ viral HD reels bundles, and instant Google Drive cloud delivery.
             </p>
 
             {/* Highlights Grid */}
@@ -60,10 +60,6 @@ export default function BuildStoreBanner({ whatsappNumber = '917017324978' }) {
                 <Smartphone className="w-4 h-4 text-amber-400 shrink-0" />
                 <span>Mobile &amp; PC Ready</span>
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400/20 border border-amber-400/40 text-amber-300">
-                <Code2 className="w-4 h-4 text-amber-300 shrink-0" />
-                <span>Made by Vivek Singh</span>
-              </span>
             </div>
           </div>
 
@@ -79,7 +75,7 @@ export default function BuildStoreBanner({ whatsappNumber = '917017324978' }) {
               <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center shrink-0 shadow-xs">
                 <MessageCircle className="w-4 h-4 text-emerald-600 fill-emerald-600" />
               </div>
-              <span>WhatsApp: +91 7017324978</span>
+              <span>WhatsApp: {cleanNumber ? `+${cleanNumber}` : 'Support Available'}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
 

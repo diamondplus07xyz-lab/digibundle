@@ -3,7 +3,7 @@ import { X, Search, PackageCheck, FolderOpen, ExternalLink, Calendar, AlertCircl
 import { maskPhoneNumber } from '../utils/security';
 import { clearCustomerSession } from '../utils/sessionManager';
 
-export default function MyOrdersModal({ isOpen, onClose, orders, onUserLogout }) {
+export default function MyOrdersModal({ isOpen, onClose, orders, onUserLogout, whatsappNumber }) {
   const [query, setQuery] = useState('');
   const [searched, setSearched] = useState(false);
   const [logoutMessage, setLogoutMessage] = useState('');
@@ -120,14 +120,14 @@ export default function MyOrdersModal({ isOpen, onClose, orders, onUserLogout })
               </p>
               <div className="space-y-3">
                 {orders.map((order) => (
-                  <OrderItemCard key={order.id} order={order} />
+                  <OrderItemCard key={order.id} order={order} whatsappNumber={whatsappNumber} />
                 ))}
               </div>
             </div>
           ) : searched && filteredOrders.length > 0 ? (
             <div className="space-y-3">
               {filteredOrders.map((order) => (
-                <OrderItemCard key={order.id} order={order} />
+                <OrderItemCard key={order.id} order={order} whatsappNumber={whatsappNumber} />
               ))}
             </div>
           ) : (
@@ -145,10 +145,11 @@ export default function MyOrdersModal({ isOpen, onClose, orders, onUserLogout })
   );
 }
 
-function OrderItemCard({ order }) {
+function OrderItemCard({ order, whatsappNumber }) {
   const isPending = order.status === 'PENDING_VERIFICATION' || order.driveLinkUnlocked === false;
   const primaryLink = order.items[0]?.driveLink || "https://drive.google.com";
-  const whatsappUrl = order.whatsappUrl || `https://wa.me/917017324978?text=${encodeURIComponent(`Hello, my order is ${order.id} and UTR is ${order.utr}. Please verify and send my Google Drive link.`)}`;
+  const cleanPhone = (whatsappNumber || '').replace(/\D/g, '');
+  const whatsappUrl = order.whatsappUrl || (cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Hello, my order is ${order.id} and UTR is ${order.utr}. Please verify and send my Google Drive link.`)}` : '#');
 
   return (
     <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 space-y-3">

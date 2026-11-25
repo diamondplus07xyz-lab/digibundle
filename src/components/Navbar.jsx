@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { ShoppingBag, Search, PackageCheck, Menu, X, ArrowRight, MessageCircle, HelpCircle, Star, Layers, FolderOpen, Play, CheckCircle2, ChevronRight } from 'lucide-react';
+import { ShoppingBag, Search, PackageCheck, Menu, X, ArrowRight, MessageCircle, HelpCircle, Star, Sparkles, FolderOpen, Play, CheckCircle2, ChevronRight } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 
 export default function Navbar({ 
@@ -11,6 +11,7 @@ export default function Navbar({
   storeName,
   logo,
   bundles = [],
+  whatsappNumber,
   onSelectBundle,
   onScrollToCatalog
 }) {
@@ -110,7 +111,7 @@ export default function Navbar({
                 <BrandLogo 
                   variant="light"
                   customSrc={logo}
-                  alt={storeName || "DigiBundle"}
+                  alt={storeName || "Cheap Reels"}
                   size="md"
                 />
               </div>
@@ -405,7 +406,7 @@ export default function Navbar({
               <BrandLogo 
                 variant="light" 
                 customSrc={logo} 
-                alt={storeName || "DigiBundle"} 
+                alt={storeName || "Cheap Reels"} 
                 size="sm" 
               />
               <button
@@ -423,7 +424,7 @@ export default function Navbar({
                 className="w-full p-2.5 rounded-xl text-left text-xs font-bold text-slate-800 hover:bg-amber-50 hover:text-amber-800 flex items-center justify-between"
               >
                 <span className="flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-amber-500" />
+                  <Sparkles className="w-4 h-4 text-amber-500" />
                   All Reels Bundles
                 </span>
                 <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
@@ -486,7 +487,7 @@ export default function Navbar({
               {/* WhatsApp Support Link */}
               <div className="pt-4">
                 <a
-                  href="https://wa.me/917017324978?text=Hello%20DigiBundle%20Support"
+                  href={`https://wa.me/${(whatsappNumber || '').replace(/\D/g, '')}?text=Hello%20${encodeURIComponent(storeName || 'Cheap Reels')}%20Support`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-black flex items-center justify-center gap-2"
