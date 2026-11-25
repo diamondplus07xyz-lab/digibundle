@@ -12,7 +12,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.85,
     "reviewsCount": 240,
-    "thumbnail": "/thumbnails/bundle-1.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/space-aesthetic-reels-bundle-5-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1y4aucRU8hnO_FEqkIUZZyMN71tkfWHrS/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1Ykmi_mcwvChCkcL1hMtEdW6AJAW3reVU",
     "links": [
@@ -42,7 +42,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.86,
     "reviewsCount": 277,
-    "thumbnail": "/thumbnails/bundle-2.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/ai-cats-reels-bundle-5-2.jpg",
     "videoPreview": "https://drive.google.com/file/d/1ZNyCbwyP1fodUGGfcJBQut5f21D2PvR-/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1bnJYTUN-rVq1syfZ0gN_5OrYyshbe_Fw",
     "links": [
@@ -72,7 +72,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.87,
     "reviewsCount": 314,
-    "thumbnail": "/thumbnails/bundle-3.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/ai-dogs-reels-bundle-5-2.jpg",
     "videoPreview": "https://drive.google.com/file/d/1RNwYWSts7lzrGzNgWiYxlgEhsAX8QNIg/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1VIrNbAvfy-iVRttNRKKdagAW8B1Q2fV_",
     "links": [
@@ -102,7 +102,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.88,
     "reviewsCount": 351,
-    "thumbnail": "/thumbnails/bundle-4.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/korean-girl-reels-bundle-5-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1EMseCEku0njzMxNQZ8UDifKHyYMY6Jwz/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1Gsv266UM7MuF-fjWgpC2smKPvYmh1en_",
     "links": [
@@ -132,7 +132,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.89,
     "reviewsCount": 388,
-    "thumbnail": "/thumbnails/bundle-5.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/hindi-motivational-reels-bundle-7-768x576.jpg",
     "videoPreview": "https://drive.google.com/file/d/1ghSv5ZALaDAUtpg9b0XGgIjjHylBL8Ba/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1XZ00wKCxPruEpTyDmRxtLzP3GxPG3N1W",
     "links": [
@@ -162,7 +162,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.9,
     "reviewsCount": 425,
-    "thumbnail": "/thumbnails/bundle-6.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/god-reels-bundle-5-2-1-768x576.jpg",
     "videoPreview": "https://drive.google.com/file/d/1vDOO30TKzJUTQ-_UXe798jOu6cLsj34l/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1zReKMy4EctgGD2MWsL6SS25qXhQwjlPq",
     "links": [
@@ -192,7 +192,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.91,
     "reviewsCount": 462,
-    "thumbnail": "/thumbnails/bundle-7.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/ai-motivational-reels-bundle-5-2.jpg",
     "videoPreview": "https://drive.google.com/file/d/1ghSv5ZALaDAUtpg9b0XGgIjjHylBL8Ba/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1kj3D8LqbD-hMOVOD8i0yroA6o3HTdtpp?usp=sharing",
     "links": [
@@ -222,7 +222,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.92,
     "reviewsCount": 499,
-    "thumbnail": "/thumbnails/bundle-8.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/sigma-male-reels-bundle-5-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1Bi7o-bds_DXnbAK79n4FDhFPzB3j5PI7/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1yuIaelcfvKommBi5uD7WhRA8HBnt5KbH",
     "links": [
@@ -252,7 +252,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.93,
     "reviewsCount": 536,
-    "thumbnail": "/thumbnails/bundle-9.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/domo-ai-reels-bundle-5-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1c2mkeLCTJ4GNxe6jTxsYb4C_u8codSet/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1tXuZA2NwHm5WvwAvddkzhsTUMn4nN4-C",
     "links": [
@@ -282,7 +282,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.94,
     "reviewsCount": 573,
-    "thumbnail": "/thumbnails/bundle-10.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/emotional-reels-bundle-6-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/13yEhNuEovMLuHLmiMVmlqXMVjg0m7RZz/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1ymqRm0p1P7v67HFeP6Y9ww4tqm7-WyVt",
     "links": [
@@ -312,7 +312,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.95,
     "reviewsCount": 610,
-    "thumbnail": "/thumbnails/bundle-11.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/free-fire-reels-bundle-2-5-2.jpg",
     "videoPreview": "https://drive.google.com/file/d/1R-5zUeV4oa_HnK56zOKGi5lZ3RJi3Ci5/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1o4MMXlLZ3XxKtovFDMGgT9v7sHiP6c1b",
     "links": [
@@ -342,7 +342,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.96,
     "reviewsCount": 647,
-    "thumbnail": "/thumbnails/bundle-12.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/pubg-bgmi-reels-bundle-2-5-2.jpg",
     "videoPreview": "https://drive.google.com/file/d/1Wue8Fkgpk2Us7waKDBCo77IsSBVo-m8o/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/10GYoFNhVUcJH0-uCTjV6gbQ9GUFqn1kT",
     "links": [
@@ -372,7 +372,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.97,
     "reviewsCount": 684,
-    "thumbnail": "/thumbnails/bundle-13.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/clash-royale-clash-of-clans-reels-bundle-2-5-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1ePafShg6IOfnqrCdsqmE-5r4WqCauLn9/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1-bD8mfZ18M-78IWKsz-QpoY-1f52L_Yi",
     "links": [
@@ -402,7 +402,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.98,
     "reviewsCount": 721,
-    "thumbnail": "/thumbnails/bundle-14.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/cute-cats-reels-bundle-2-5-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1lylhuTJF1WSjJ1I6m5zfCpMP55oUzPtU/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1FzX1JR3R7ue-5f32BBj4bnoGK9m8XjB_",
     "links": [
@@ -432,7 +432,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.99,
     "reviewsCount": 758,
-    "thumbnail": "/thumbnails/bundle-15.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/aesthetic-couple-reels-bundle-2-5-2-1-768x576.jpg",
     "videoPreview": "https://drive.google.com/file/d/19kzLwa-Eh0a7OEKGpzCFMnEt45vB2PSv/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/19Keg7QTg-fPPnFr00_2xJy7Nb-dLqNNi",
     "links": [
@@ -462,7 +462,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.85,
     "reviewsCount": 795,
-    "thumbnail": "/thumbnails/bundle-16.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/cycling-reels-bundle-2-5-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1VUFBTHsH8zkHkpW66bCF9GNbBxJH1zZc/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1MAYeihHGT85ZWXWqEdng6vPP5RCpvPfy",
     "links": [
@@ -492,7 +492,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.86,
     "reviewsCount": 832,
-    "thumbnail": "/thumbnails/bundle-17.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/aesthetic-snow-reels-bundle-2-5-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1an5-TKVnx5n6dn3F4sxcjcYmkquklVfZ/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1wipbO6v0Pfi6EPt1JnNztsHECXi-GX7E",
     "links": [
@@ -522,7 +522,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.87,
     "reviewsCount": 869,
-    "thumbnail": "/thumbnails/bundle-18.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/aesthetic-trees-reels-bundle-2-5-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1RA2niyyuO6efNVLnJj8oDi4HIDKYaayu/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1TXgXXFJm-9ptbeICP6cfwZu6p0HdaGV-",
     "links": [
@@ -552,7 +552,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.88,
     "reviewsCount": 906,
-    "thumbnail": "/thumbnails/bundle-19.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/aesthetic-rain-reels-bundle-2-5-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1PpJjboMcQQf3tNHQu3lRLL57-5MEb-eG/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/14i0HoZUv1oe38NNiPmt8lBRem037dCbO",
     "links": [
@@ -582,7 +582,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.89,
     "reviewsCount": 943,
-    "thumbnail": "/thumbnails/bundle-20.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/aesthetic-ocean-sunset-cloud-reels-bundle-2-5-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/196oyLWe6MiGtG7YSdeR9GGKAmP9cft6D/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/16EcQQ0-T8VlqN3Oz4yLUzYzHWFxHZYhD",
     "links": [
@@ -612,7 +612,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.9,
     "reviewsCount": 980,
-    "thumbnail": "/thumbnails/bundle-21.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/stoic-mindset-reels-bundle-5-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/15vjS8awgwcRjo40jbFS5zTH03-vAkkwO/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/109C355WAq_1FFadGL66ipVYZOg8IoQUS",
     "links": [
@@ -642,7 +642,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.91,
     "reviewsCount": 1017,
-    "thumbnail": "/thumbnails/bundle-22.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/relatable-reels-bundle-5-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1vofE5iph57fE-uRgdyScVR5x5yyb6GpK/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1Or4h2L72G85tsYC8SCJgLxTXgN3pOy2L",
     "links": [
@@ -672,7 +672,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.92,
     "reviewsCount": 1054,
-    "thumbnail": "/thumbnails/bundle-23.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/adult-talks-reels-bundle-5-2-1-768x576.jpg",
     "videoPreview": "https://drive.google.com/file/d/17YdxxtLOLb4v-y92wM8t1IyggJT1pREs/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1Q8ey_u913UoxNAjcAQ_bqcqUYkT-NdrK",
     "links": [
@@ -702,7 +702,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.93,
     "reviewsCount": 1091,
-    "thumbnail": "/thumbnails/bundle-24.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/long-movie-clips-reels-bundle-5-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1QNNAyllJlGp1_HiEzKQbMHQ-iFp63fKS/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1pqAW8ayU14D57AQuVlwlsQR6MEo86ndV",
     "links": [
@@ -732,7 +732,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.94,
     "reviewsCount": 1128,
-    "thumbnail": "/thumbnails/bundle-25.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/superhero-reels-bundle-5-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1O3yRsWkjHJ2n4gVMXpGEzlYzY0Q-sVea/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/13FHnU5c-OBbf1PbJoX_ecLKi9RXVKi34",
     "links": [
@@ -762,7 +762,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.95,
     "reviewsCount": 1165,
-    "thumbnail": "/thumbnails/bundle-26.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/billionaire-lifestyle-reels-bundle-5-2.jpg",
     "videoPreview": "https://drive.google.com/file/d/1pB7FNdmJlae8gWLF0ozGrsKjxvJTaLBq/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1a05WsTVABvi8r5gcCcgfA9Fx-88DseMc",
     "links": [
@@ -792,7 +792,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.96,
     "reviewsCount": 1202,
-    "thumbnail": "/thumbnails/bundle-27.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/retro-bollywood-reels-bundle-4-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/12rTYcNWBAmXkXylG_yBLljz-y4qFhp8q/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1pNpYCJI2VkgwlYcS1Hru5vBb5E1Ho9zM",
     "links": [
@@ -822,7 +822,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.97,
     "reviewsCount": 1239,
-    "thumbnail": "/thumbnails/bundle-28.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/mythical-reels-bundle-4-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1iywpXQBuJH2rCTqGexjfpC-ISHxndWfe/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1zTU283ItPP2_rsXZW-qhu-d-vg5ACJal",
     "links": [
@@ -852,7 +852,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.98,
     "reviewsCount": 1276,
-    "thumbnail": "/thumbnails/bundle-29.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/mafia-cars-reels-bundle-4-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1xkHKQHIOPk0Lm0sL2p5t1rKufsnm9m4X/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1SJ8-JFS-kCC58nPL8-CqL1xsi3ATrwGa",
     "links": [
@@ -882,7 +882,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.99,
     "reviewsCount": 1313,
-    "thumbnail": "/thumbnails/bundle-30.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/funny-fails-reels-bundle-4-2.jpg",
     "videoPreview": "https://drive.google.com/file/d/16GGlBPz_n5m8R0f0i5IjkPfk53X2Agr9/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1eFbpXREAMtzb4YyLKdZ9s4tx4MrH9w7l",
     "links": [
@@ -912,7 +912,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.85,
     "reviewsCount": 1350,
-    "thumbnail": "/thumbnails/bundle-31.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/stop-scrolling-reels-bundle-4-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/12_X0RyDiQ3Az_m7ppttO1jwqM59QZyH8/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1As8EsNnBFVbU3VPU4F6A5UHI4U77Dm0Y",
     "links": [
@@ -942,7 +942,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.86,
     "reviewsCount": 1387,
-    "thumbnail": "/thumbnails/bundle-32.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/faceless-ai-tech-reels-bundle-4-2.jpg",
     "videoPreview": "https://drive.google.com/file/d/1vh7cpBgJ11U6-td4KyuZaYy9XbPhBx42/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1QihzRWsY3AupO4suLSDp1VOQIKfb3hXm",
     "links": [
@@ -972,7 +972,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.87,
     "reviewsCount": 1424,
-    "thumbnail": "/thumbnails/bundle-33.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/ai-story-reels-bundle-4-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1XsLSFtiIAFQFkJQZozDs_lZdKSWwORyD/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1_9Bc62KBfWmEwAqqCSy3m93zDXaSMRAz",
     "links": [
@@ -1002,7 +1002,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.88,
     "reviewsCount": 1461,
-    "thumbnail": "/thumbnails/bundle-34.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/runway-models-reels-bundle-4-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/17e5iKY8_R01L2TaHc71e2dKMankMX302/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/10PTEaF19fN1FeCtD88KKsvOH7G06kEz3",
     "links": [
@@ -1032,7 +1032,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.89,
     "reviewsCount": 1498,
-    "thumbnail": "/thumbnails/bundle-35.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/ai-funny-reels-bundle-4-2-768x576.jpg",
     "videoPreview": "https://drive.google.com/file/d/1KbvBqkpW6MjEOlHl_1iThvdFn3OqNM-W/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1RW0s9SkE-yctXnzP88p8NKxGBF9u2hC4",
     "links": [
@@ -1062,7 +1062,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.9,
     "reviewsCount": 1535,
-    "thumbnail": "/thumbnails/bundle-36.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/premanand-ji-maharaj-reels-bundle-4-2.png",
     "videoPreview": "https://drive.google.com/file/d/1vDOO30TKzJUTQ-_UXe798jOu6cLsj34l/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1K6aLaTQteuVbkETjMNSu-qTBcKNauvty",
     "links": [
@@ -1092,7 +1092,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.91,
     "reviewsCount": 1572,
-    "thumbnail": "/thumbnails/bundle-37.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/cringe-reels-bundle-4-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1hq7jOaB2MP0IXqWGSdCbqL_1K5gjONIJ/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1_9pvf_-cGy-o73_uUpf_9bszLuHMZGDY",
     "links": [
@@ -1122,7 +1122,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.92,
     "reviewsCount": 1609,
-    "thumbnail": "/thumbnails/bundle-38.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/funny-comments-reels-bundle-4-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1aKk_rzXFCE-Otl-7rMUIH3T38tGGOXMG/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1n5Kmptz2Xsy58yJmtYCDxZUMcvAMmCGj",
     "links": [
@@ -1152,7 +1152,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.93,
     "reviewsCount": 1646,
-    "thumbnail": "/thumbnails/bundle-39.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/camera-tips-photography-reels-bundle-4-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1qLJ0TQsImgo6JsiLELSlbaJQ61SEKltT/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1URrxhfqB5Uj7oAtx38iFEKFmmqSmg32q",
     "links": [
@@ -1182,7 +1182,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.94,
     "reviewsCount": 1683,
-    "thumbnail": "/thumbnails/bundle-40.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/dosti-friendship-reels-bundle-4-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1snRiTAWr21ki1BSqD8seaOpeZgiY7psI/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/17RWTBSDlYDOPAgc74bYYcsrVXB0l_7oO",
     "links": [
@@ -1212,7 +1212,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.95,
     "reviewsCount": 1720,
-    "thumbnail": "/thumbnails/bundle-41.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/dark-aesthetic-reels-bundle-4-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1q4QvSfZK7-nCyP52ouBea1M4ToQx-OuB/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1QOkJHMXKxOG833xPTHbk0Vxr-ng8OK2Y",
     "links": [
@@ -1242,7 +1242,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.96,
     "reviewsCount": 1757,
-    "thumbnail": "/thumbnails/bundle-42.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/1200-glass-cutting-asmr-reels-bundle-4-2.jpg",
     "videoPreview": "https://drive.google.com/file/d/18kVrAnlWsAskKJL7pN3iJpk4kn_rnQJx/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1zgV15R7qa6qPcY7upFQ6qngLXKzYlyQZ",
     "links": [
@@ -1272,7 +1272,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.97,
     "reviewsCount": 1794,
-    "thumbnail": "/thumbnails/bundle-43.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/1500-ai-funny-kids-reels-bundle-4-2-768x576.jpg",
     "videoPreview": "https://drive.google.com/file/d/1qKA3SR4YUwUrrT9plEAILUp6FeN40qOG/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1of_cQj0SqyJcdozmHAvEr05NlllYxVEc",
     "links": [
@@ -1302,7 +1302,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.98,
     "reviewsCount": 1831,
-    "thumbnail": "/thumbnails/bundle-44.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/450-ai-health-awareness-reels-bundle-4-2-768x576.jpg",
     "videoPreview": "https://drive.google.com/file/d/1aOuTQzt2Ma-xjyLm2g-G7o0mQ79W1_P-/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1Mu-5JCOzb_mRlmS8I5CHvNV1RBm6iZ4c",
     "links": [
@@ -1336,7 +1336,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.99,
     "reviewsCount": 1868,
-    "thumbnail": "/thumbnails/bundle-45.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/10000-hot-girls-reels-bundle-4-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1ecw7v1ROwQSUO1XNpalWVyTaX60f19XQ/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1DaIU_BeG5NCj6TfbxABFT_ORhJRcjAid",
     "links": [
@@ -1374,7 +1374,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.85,
     "reviewsCount": 1905,
-    "thumbnail": "/thumbnails/bundle-46.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/500-ai-influencer-girls-reels-bundle-4-2-768x576.jpg",
     "videoPreview": "https://drive.google.com/file/d/1t6tOf4dzvKk_LsBxQP0s9DRo60cyNqoD/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1u_rKqdkS6Znyce33vqqBaDJ6A6ov5XWk?usp=sharing",
     "links": [
@@ -1404,7 +1404,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.86,
     "reviewsCount": 1942,
-    "thumbnail": "/thumbnails/bundle-47.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/1000-hot-webseries-clips-bundle-reels-bundle-4-2-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/18LwmSNyjsWi7_4sRXrKJWEEtr9FXxCcM/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/17ua0IomCH1ot8D1nlO3kNSGw-NzvUTC1?usp=sharing",
     "links": [
@@ -1434,7 +1434,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.87,
     "reviewsCount": 1979,
-    "thumbnail": "/thumbnails/bundle-48.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/1500-mad-scientist-reels-bundle-4-2-1024x768.jpg",
     "videoPreview": "https://drive.google.com/file/d/1QJUJ-oMGCpl41D--_530JgUaezAEI_-g/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1CVdhGLvj8P3eyylSjtVmYEXn0txZ5twd",
     "links": [
@@ -1472,7 +1472,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.88,
     "reviewsCount": 2016,
-    "thumbnail": "/thumbnails/bundle-49.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/500-ai-baby-dancing-reels-bundle-4-2-768x576.png",
     "videoPreview": "https://drive.google.com/file/d/1pAWX8Tb0eKsMaj5L5QzYNga9SOymhws0/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1D-FsxjxkDAZ2-De3X7ovnNlrB5MPZV0f",
     "links": [
@@ -1506,7 +1506,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.89,
     "reviewsCount": 253,
-    "thumbnail": "/thumbnails/bundle-50.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/ai-hulk-reels-bundle-4-2.webp",
     "videoPreview": "https://drive.google.com/file/d/1Jmq6EY5jexZgklPOjhs3pR3Y4p_HCKz-/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1Z2CwE7IuC15fIieUqtAv0h6-1zrCtLUD",
     "links": [
@@ -1536,7 +1536,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.9,
     "reviewsCount": 290,
-    "thumbnail": "/thumbnails/bundle-51.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/glowing_motion_graphics_reel_bundle-reels-bundle-4-2-1.png",
     "videoPreview": "https://drive.google.com/file/d/1PeYBU95afNUOmMU-Y_2_eNTzUIMWciWS/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1BhSfthOy9i0K5z-BLDW53v1xAR_nnrKP?usp=drive_link",
     "links": [
@@ -1570,7 +1570,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.91,
     "reviewsCount": 327,
-    "thumbnail": "/thumbnails/bundle-52.jpg",
+    "thumbnail": "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&q=80",
     "videoPreview": "https://drive.google.com/file/d/1v4K7Sh02rmoPtFkROleV1nlbBGi9nFTS/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1saR2zoFd47npssYG0PnUeY8HMD5Zky5o",
     "links": [
@@ -1600,7 +1600,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.92,
     "reviewsCount": 364,
-    "thumbnail": "/thumbnails/bundle-53.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/animated_gym_reels_bundle-reels-bundle-7-2-1024x768.png",
     "videoPreview": "https://drive.google.com/file/d/1xmj3aQGk0Ra7vXJLpnJYFg-pNegjeFVr/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1vBx4tzfMJGCUNlg-78YMbbq6qCqr6CQF",
     "links": [
@@ -1630,7 +1630,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.93,
     "reviewsCount": 401,
-    "thumbnail": "/thumbnails/bundle-54.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/ai_miniature_reels_pack_poster-reels-bundle-7-2.png",
     "videoPreview": "https://drive.google.com/file/d/1ZNyCbwyP1fodUGGfcJBQut5f21D2PvR-/view?usp=drivesdk",
     "driveLink": "https://mega.nz/folder/CBERSKwa#pI4Sxxrk091xYXFNIxe-CA",
     "links": [
@@ -1660,7 +1660,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.94,
     "reviewsCount": 438,
-    "thumbnail": "/thumbnails/bundle-55.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/600_ai_animal_reels_bundle-reels-bundle-7-2-1.png",
     "videoPreview": "https://drive.google.com/file/d/1ZNyCbwyP1fodUGGfcJBQut5f21D2PvR-/view?usp=drivesdk",
     "driveLink": "https://mega.nz/folder/PQFiUSiD#rT7w4RzI9yzFGoBrcvUCCQ",
     "links": [
@@ -1690,7 +1690,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.95,
     "reviewsCount": 475,
-    "thumbnail": "/thumbnails/bundle-56.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/1000_ai_story_reels_bundle-reels-bundle-7-2.png",
     "videoPreview": "https://drive.google.com/file/d/1IdnKrdy0AhfYBbFWVVCVpm1fr6x7UPXH/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1G377wwyyilxxaBuDamJZsnR2j8emleN5",
     "links": [
@@ -1720,7 +1720,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.96,
     "reviewsCount": 512,
-    "thumbnail": "/thumbnails/bundle-57.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/600_ai_tiny_dancers_reels_bundle-reels-bundle-5-2-1.png",
     "videoPreview": "https://drive.google.com/file/d/188z92TGJegPRzPx6Vm-UaQUEb30uzxle/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1o_O5sBBhML79QKJOagwUmlp-6qWk5dFp?usp=sharing",
     "links": [
@@ -1750,7 +1750,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.97,
     "reviewsCount": 549,
-    "thumbnail": "/thumbnails/bundle-58.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/ai_hindi_story_reels_bundle-reels-bundle-5-2.png",
     "videoPreview": "https://drive.google.com/file/d/1qjDsuVfCf1i7LAd01eMbyDACbLfVl054/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1lbPsLSl_18aMRjS0l3aJXka5in9jhDLe?usp=sharing",
     "links": [
@@ -1780,7 +1780,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.98,
     "reviewsCount": 586,
-    "thumbnail": "/thumbnails/bundle-59.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/ai_monkey_vlogging_reels_bundle-reels-bundle-5-2.png",
     "videoPreview": "https://drive.google.com/file/d/1AIHykM2WyPzlrXisJqf4v4lrg9PjiCSF/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1XJJb-JvApUfR5mVlssZrzC36B1p8ltaU",
     "links": [
@@ -1810,7 +1810,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.99,
     "reviewsCount": 623,
-    "thumbnail": "/thumbnails/bundle-60.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/9000_art_craft_reels_bundle-reels-bundle-5-2.png",
     "videoPreview": "https://drive.google.com/file/d/1V9vA58izHcRTtCr-vwT5SdG4qrMxTGwL/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1uvX4I50ffSWSI4I0391SHuMA87ap8MEL?usp=share_link",
     "links": [
@@ -1864,7 +1864,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.85,
     "reviewsCount": 660,
-    "thumbnail": "/thumbnails/bundle-61.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/600-ghibli-style-reels-bundle-5-2.png",
     "videoPreview": "https://drive.google.com/file/d/1v4K7Sh02rmoPtFkROleV1nlbBGi9nFTS/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1saR2zoFd47npssYG0PnUeY8HMD5Zky5o",
     "links": [
@@ -1894,7 +1894,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.86,
     "reviewsCount": 697,
-    "thumbnail": "/thumbnails/bundle-62.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/600-ai-baby-podcast-bundle-reels-bundle-5-2.png",
     "videoPreview": "https://drive.google.com/file/d/19un7TZf8i1Jr96zBKm0KdkrT9bHnV6zE/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/13sRBc7fYdv5POO4Gh4SOJJBLacrFXazA",
     "links": [
@@ -1932,7 +1932,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.87,
     "reviewsCount": 734,
-    "thumbnail": "/thumbnails/bundle-63.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/500-viral-ai-celebrity-reels-bundle-5-2-1.png",
     "videoPreview": "https://drive.google.com/file/d/170tmFgkLi2NqrwW0rajIU-0WTB3Mji1d/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1szhIza2r97vuxXg8T_fEASUte-BDKrc0",
     "links": [
@@ -1962,7 +1962,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.88,
     "reviewsCount": 771,
-    "thumbnail": "/thumbnails/bundle-64.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/200-ai-patal-lok-narkh-yamraj-reels-reels-bundle-5-2-1.png",
     "videoPreview": "https://drive.google.com/file/d/1oztvHGzA2XeNCCWQHGO-L9LQd3zRjsxP/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1sR-kTocZYa70fDAlt1nri1sLSVVbCoEw",
     "links": [
@@ -1992,7 +1992,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.89,
     "reviewsCount": 808,
-    "thumbnail": "/thumbnails/bundle-65.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/500-ai-anime-girl-aesthetic-lifestyle-reels-reels-bundle-5-2-1.png",
     "videoPreview": "https://drive.google.com/file/d/1NdSM0V3pxFu8t-KtbRYK-bW9CyCvCjGU/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1GotSOpN8Wg82R0gkxn_ZXc6KbDuk7ANa?usp=drive_link",
     "links": [
@@ -2022,7 +2022,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.9,
     "reviewsCount": 845,
-    "thumbnail": "/thumbnails/bundle-66.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/5000-trending-ai-anime-reels-bundle-4-2.png",
     "videoPreview": "https://drive.google.com/file/d/1LErwgIwuXr_sg0nk_KNWfkrRsUspxKr6/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1xJE-N3Oi3VCCMmke82obnC1HQwp3615k",
     "links": [
@@ -2052,7 +2052,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.91,
     "reviewsCount": 882,
-    "thumbnail": "/thumbnails/bundle-67.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/800-ai-horror-reels-bundle-2-2-1.png",
     "videoPreview": "https://drive.google.com/file/d/1D8e3kCnE1PZEhiJ_szhwm34XYodNYqxf/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1UqLiv-4GDWsef3_VuAkf3misrI9vd4tT",
     "links": [
@@ -2082,7 +2082,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.92,
     "reviewsCount": 919,
-    "thumbnail": "/thumbnails/bundle-68.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/1000-ai-dog-reels-bundle-1-2-1.png",
     "videoPreview": "https://drive.google.com/file/d/11gBTNP4DcGEy74KWwfeRpqlZqtuwa9zu/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1pzrBTYK_rbJwxSK2RTVjC9u6OKjHTH3Z",
     "links": [
@@ -2112,7 +2112,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.93,
     "reviewsCount": 956,
-    "thumbnail": "/thumbnails/bundle-69.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/3200-ultimate-twisted-world-reel-bundle-reels-bundle-1-2-768x576.png",
     "videoPreview": "https://drive.google.com/file/d/1n5zsIndIWEDxh6IJJtGD2DxBXdKfv4F8/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1zUBkXWAQozA4f28W8AhhFKpg94qLVw3F?usp=sharing",
     "links": [
@@ -2146,7 +2146,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.94,
     "reviewsCount": 993,
-    "thumbnail": "/thumbnails/bundle-70.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/5000-ai-funny-story-reels-bundle-1-2.png",
     "videoPreview": "https://drive.google.com/file/d/1tdnelwuJtODBLwA1LHZvfsZzHScm2Sw_/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1ruIFMzQ7vNv2cm3nPV0AJv_xCcB16nL4",
     "links": [
@@ -2176,7 +2176,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.95,
     "reviewsCount": 1030,
-    "thumbnail": "/thumbnails/bundle-71.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/9000-foreign-models-reels-bundle-pack-1-2-1.png",
     "videoPreview": "https://drive.google.com/file/d/1-zcfcxkcOvB-lNqQ3vS2OuceJpEr3734/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1TIPCKgYu8iPnXgurqdzwBGfQlUGM2z8a",
     "links": [
@@ -2206,7 +2206,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.96,
     "reviewsCount": 1067,
-    "thumbnail": "/thumbnails/bundle-72.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/500-ai-indian-glamour-model-reels-bundle-1-2-1.png",
     "videoPreview": "https://drive.google.com/file/d/1YWjcXmydum4GQX6hNhzliTjCux0JBOuh/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1TSbXdYIXyC_ifUhqWNUKvvaY-T0UU2yI?usp=drive_link",
     "links": [
@@ -2236,7 +2236,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.97,
     "reviewsCount": 1104,
-    "thumbnail": "/thumbnails/bundle-73.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/500-hot-anushka-sen-ai-reels-bundle-1-2-1.png",
     "videoPreview": "https://drive.google.com/file/d/15rSKn4-kPUhctGZQ8p3vKLdgXGxt6dPn/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/u/0/folders/1Y2aHFLb7TlYMwH1EwKPjYZOSa5cqs0Ao",
     "links": [
@@ -2266,7 +2266,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.98,
     "reviewsCount": 1141,
-    "thumbnail": "/thumbnails/bundle-74.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/ai-3d-cartoon-reels-bundle-1-2.png",
     "videoPreview": "https://drive.google.com/file/d/1dNeQrKKMSBar89JJFqU8fVS6J0TzkkBN/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1W4-qvHY3eVqBzT6EDm6CJmP5ENDdSVBh?usp=drive_link",
     "links": [
@@ -2296,7 +2296,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.99,
     "reviewsCount": 1178,
-    "thumbnail": "/thumbnails/bundle-75.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/1000-ulti-pulti-duniya-ulti-duniya-reverse-world-ai-reels-bundle-2.png",
     "videoPreview": "https://drive.google.com/file/d/1n5zsIndIWEDxh6IJJtGD2DxBXdKfv4F8/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1zUBkXWAQozA4f28W8AhhFKpg94qLVw3F?usp=sharing",
     "links": [
@@ -2330,7 +2330,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.85,
     "reviewsCount": 1215,
-    "thumbnail": "/thumbnails/bundle-76.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/500-snake-ulti-duniya-reverse-world-ai-reels-bundle-2-768x576.png",
     "videoPreview": "https://drive.google.com/file/d/1woFGULsheasctjZtTViRCSqCO726PYNy/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1CksKkU1ERAuhD9hgBZNP7xP9g068mG-c?usp=sharing",
     "links": [
@@ -2360,7 +2360,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.86,
     "reviewsCount": 1252,
-    "thumbnail": "/thumbnails/bundle-77.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/2500-stickman-animation-reels-bundle-2-1024x768.png",
     "videoPreview": "https://drive.google.com/file/d/1Ik3wruoh3HV-L8VB74DtE4qHZE_GBd5G/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1yuOoZ2f7P3tdj8ubF_J-hLEkts0jXmW3",
     "links": [
@@ -2390,7 +2390,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.87,
     "reviewsCount": 1289,
-    "thumbnail": "/thumbnails/bundle-78.jpg",
+    "thumbnail": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&q=80",
     "videoPreview": "https://drive.google.com/file/d/1NdSM0V3pxFu8t-KtbRYK-bW9CyCvCjGU/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1F_WfvwkakHLd1E06LC5cbdHb23U7hpfx",
     "links": [
@@ -2420,7 +2420,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.88,
     "reviewsCount": 1326,
-    "thumbnail": "/thumbnails/bundle-79.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/indian-cricket-reels-bundle-3-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1x0mW4HY0Q-pMRkKS4MXi0z9GFTA8KEyx/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/19ZOdWVrqXqH3G_RGIVDKIQ_THtAv3zao",
     "links": [
@@ -2450,7 +2450,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.89,
     "reviewsCount": 1363,
-    "thumbnail": "/thumbnails/bundle-80.jpg",
+    "thumbnail": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80",
     "videoPreview": "https://drive.google.com/file/d/1ZNyCbwyP1fodUGGfcJBQut5f21D2PvR-/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/17TZxcANBRfCZQL0G0ZUnIeQ2FyVElq6A",
     "links": [
@@ -2480,7 +2480,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.9,
     "reviewsCount": 1400,
-    "thumbnail": "/thumbnails/bundle-81.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/ai-tech-reels-bundle-3-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1vh7cpBgJ11U6-td4KyuZaYy9XbPhBx42/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1YKqZJe120qfeXoGIflkgjRC8z4-pdVks",
     "links": [
@@ -2510,7 +2510,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.91,
     "reviewsCount": 1437,
-    "thumbnail": "/thumbnails/bundle-82.jpg",
+    "thumbnail": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80",
     "videoPreview": "https://drive.google.com/file/d/1q4QvSfZK7-nCyP52ouBea1M4ToQx-OuB/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1nt5d6bKEApAr2PXI8FzcRGTlpKN6ZTRz",
     "links": [
@@ -2540,7 +2540,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.92,
     "reviewsCount": 1474,
-    "thumbnail": "/thumbnails/bundle-83.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/art-craft-reels-bundle-3-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1IdnKrdy0AhfYBbFWVVCVpm1fr6x7UPXH/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1_ZOSrPjtftLH7zA3vQkPR8eCOuApUSzk",
     "links": [
@@ -2570,7 +2570,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.93,
     "reviewsCount": 1511,
-    "thumbnail": "/thumbnails/bundle-84.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/business-growth-motivational-reels-bundle-3-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1iHpHH1C6JiEF4olW7GxoJEMiIBlym9TX/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1mrPzK5Zz9ZbEk6rUDQSRYb52UHG4dsaf",
     "links": [
@@ -2600,7 +2600,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.94,
     "reviewsCount": 1548,
-    "thumbnail": "/thumbnails/bundle-85.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/mega-car-reels-bundle-3.jpg",
     "videoPreview": "https://drive.google.com/file/d/1koP9Pb28FhEoS15PX8UVlnldd0DFiuHx/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1xyepyNXc_j_ThL0A_vzfqTek5g4BRKJm",
     "links": [
@@ -2630,7 +2630,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.95,
     "reviewsCount": 1585,
-    "thumbnail": "/thumbnails/bundle-86.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/gym-fitness-reels-bundle-3.jpg",
     "videoPreview": "https://drive.google.com/file/d/1kAI9afW7FQK_F_7PCpUM7QQ4S9AXdop6/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1n9s_PYqWku13IDw1SwlsnVmH5rfXR_A8",
     "links": [
@@ -2660,7 +2660,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.96,
     "reviewsCount": 1622,
-    "thumbnail": "/thumbnails/bundle-87.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/universe-reels-bundle-3-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1m0pbrNNPzD0NVo6GToCpzoc_CqHIgteK/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1ILhXC3Ey7EPlGBW-ZfCdPXRc7Su5Wl0x",
     "links": [
@@ -2690,7 +2690,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.97,
     "reviewsCount": 1659,
-    "thumbnail": "/thumbnails/bundle-88.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/nature-reels-bundle.jpg",
     "videoPreview": "https://drive.google.com/file/d/1HWmc4wvJwZVPXf7NLfRCBwlGTk-VwOgM/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1C01i82juFKh7IvP42VhRwDz4PVcMsbRl",
     "links": [
@@ -2720,7 +2720,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.98,
     "reviewsCount": 1696,
-    "thumbnail": "/thumbnails/bundle-89.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/sanatan-dharm-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1684blnIYtiFUNHZA4ufwKBTsMuLa-8a7/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1awCPTpgpRAYdh7pDs6P5CvLeIG-HCyrl",
     "links": [
@@ -2750,7 +2750,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.99,
     "reviewsCount": 1733,
-    "thumbnail": "/thumbnails/bundle-90.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/ai-islamic-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1Ik3wruoh3HV-L8VB74DtE4qHZE_GBd5G/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1XfuZBqpSPGmMVwM4TUPn3dzUdW-T3PuC",
     "links": [
@@ -2780,7 +2780,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.85,
     "reviewsCount": 1770,
-    "thumbnail": "/thumbnails/bundle-91.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/car-luxury-lifestyle-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1kSvngS5I2ldVkoBNBN6Z_mgrHQ1SxXbH/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1hpwetf4zqIs1Yt0R0g8dBREDJ_oN61oW",
     "links": [
@@ -2810,7 +2810,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.86,
     "reviewsCount": 1807,
-    "thumbnail": "/thumbnails/bundle-92.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/zig-sharko-cartoon-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1NdSM0V3pxFu8t-KtbRYK-bW9CyCvCjGU/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1sDrsT8RnCKR6uLR3oczZmAlT3jwAAoYW",
     "links": [
@@ -2840,7 +2840,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.87,
     "reviewsCount": 1844,
-    "thumbnail": "/thumbnails/bundle-93.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/tools-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/127NvgukjLUiDtVjbAnSRuEJVZl3VIfZu/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1_JDuQqRyk5hDe6JiTVHwRx3c51BtHWQu",
     "links": [
@@ -2870,7 +2870,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.88,
     "reviewsCount": 1881,
-    "thumbnail": "/thumbnails/bundle-94.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/satisfying-reels-bundle.jpg",
     "videoPreview": "https://drive.google.com/file/d/1k250OMPcpJZejxCxMfLVBV9XWPpxfTUZ/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1jzhyjsiKPRWJSZZSsasz4qq8Kq9qapV5",
     "links": [
@@ -2900,7 +2900,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.89,
     "reviewsCount": 1918,
-    "thumbnail": "/thumbnails/bundle-95.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/tools-tips-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1LGWS4FuDGPEvtN5de7qtUJqvazi7VlnH/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1V43pBAdaa4Xhtzvc5blXkeYMDr7RSa7l",
     "links": [
@@ -2930,7 +2930,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.9,
     "reviewsCount": 1955,
-    "thumbnail": "/thumbnails/bundle-96.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/woodwork-reels-bundle.jpg",
     "videoPreview": "https://drive.google.com/file/d/1RxUR5WD1Z493anW3_H9GkRFyeGYyl6wv/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1J7byJvBRrULtgysJ9eeXF7pWWtISxsIU",
     "links": [
@@ -2960,7 +2960,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.91,
     "reviewsCount": 1992,
-    "thumbnail": "/thumbnails/bundle-97.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/paper-art-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1Izmfq6J3xB7PZ11qWOXj6yyHdKEhPfVA/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1HI2Q3zmom9MkblsgdgT-9sjjtFp5jDY3",
     "links": [
@@ -2990,7 +2990,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.92,
     "reviewsCount": 2029,
-    "thumbnail": "/thumbnails/bundle-98.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/anime-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1LErwgIwuXr_sg0nk_KNWfkrRsUspxKr6/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1xJE-N3Oi3VCCMmke82obnC1HQwp3615k",
     "links": [
@@ -3020,7 +3020,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.93,
     "reviewsCount": 266,
-    "thumbnail": "/thumbnails/bundle-99.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/trending-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/12T21fVdEFFKAD40-KQvNx-9vsvfqlT7d/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1U-hv1MG7Uh_ZXMcqsC48EXLSMkkcU2qU",
     "links": [
@@ -3050,7 +3050,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.94,
     "reviewsCount": 303,
-    "thumbnail": "/thumbnails/bundle-100.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/athletic-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1t6tOf4dzvKk_LsBxQP0s9DRo60cyNqoD/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1abXzzLDuRm_WGrwGz-Zh5O798-JKvJAd",
     "links": [
@@ -3080,7 +3080,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.95,
     "reviewsCount": 340,
-    "thumbnail": "/thumbnails/bundle-101.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/stock-market-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1FhjTgpmunTYwyoCp4nyGpOiTSVVm416B/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/193sV7W9KGkZPVkVbs4rjFmHEu5Is8qZV",
     "links": [
@@ -3110,7 +3110,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.96,
     "reviewsCount": 377,
-    "thumbnail": "/thumbnails/bundle-102.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/attitude-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1wv2dCpyg94Y5-aHLQur6o9-PXlTtZ0lF/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1dsXbUDAfyBsCRd7dRP4G530OZBnA14pU",
     "links": [
@@ -3140,7 +3140,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.97,
     "reviewsCount": 414,
-    "thumbnail": "/thumbnails/bundle-103.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/business-tips-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1EaCZUUbgFJ-3kL7UHeb1G4vGZAx_sPGZ/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/19OihxyPDGIludrkNUL-G35tqdY_607tM",
     "links": [
@@ -3170,7 +3170,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.98,
     "reviewsCount": 451,
-    "thumbnail": "/thumbnails/bundle-104.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/craft-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1684blnIYtiFUNHZA4ufwKBTsMuLa-8a7/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1_Q5PqpgLgqMHBarzNVsv_JHA_iC_P0qb",
     "links": [
@@ -3200,7 +3200,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.99,
     "reviewsCount": 488,
-    "thumbnail": "/thumbnails/bundle-105.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/football-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1aK2d_F0awcE8kMAnOLozLxzXwPvxpqFL/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/file/d/1aK2d_F0awcE8kMAnOLozLxzXwPvxpqFL/view",
     "links": [
@@ -3230,7 +3230,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.85,
     "reviewsCount": 525,
-    "thumbnail": "/thumbnails/bundle-106.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/09/mega-anime-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1n5zsIndIWEDxh6IJJtGD2DxBXdKfv4F8/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1vAkSCfTcXPen5pDkwMgUmbAOqGQZxfwF",
     "links": [
@@ -3260,7 +3260,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.86,
     "reviewsCount": 562,
-    "thumbnail": "/thumbnails/bundle-107.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/ai-story-chats-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1eLo3Ti5oNASPXD2m0TqGtxEJIS_Or_ZY/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1hJVNPA3gfW7eBQV8d8jIlBnd58vPeEdi",
     "links": [
@@ -3290,7 +3290,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.87,
     "reviewsCount": 599,
-    "thumbnail": "/thumbnails/bundle-108.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/travel-tourism-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1h1GyaHlJBc3OsobGk6XKV_GAebNerqgM/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1JRQJT6nav8ck4Io20evLRZye3X5bwwbr",
     "links": [
@@ -3320,7 +3320,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.88,
     "reviewsCount": 636,
-    "thumbnail": "/thumbnails/bundle-109.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/podcast-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/123EZW_t-KAwtw_o91vWqhzMSKakhLBju/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1SS373xT-XsdvYf21Gd8taTWBLPksq3lt",
     "links": [
@@ -3350,7 +3350,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.89,
     "reviewsCount": 673,
-    "thumbnail": "/thumbnails/bundle-110.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/f1-cars-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1cBAyLbrSRkatlEPzEqMcMWOcIXrkz0AR/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/18H9J4dQM9RYqypGHNo3SJcXwmhaIQRtx",
     "links": [
@@ -3380,7 +3380,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.9,
     "reviewsCount": 710,
-    "thumbnail": "/thumbnails/bundle-111.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/magic-tricks-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1ZNyCbwyP1fodUGGfcJBQut5f21D2PvR-/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1p8xVvq6PR9VgDgrzfmEd9z32R4bye7ym",
     "links": [
@@ -3410,7 +3410,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.91,
     "reviewsCount": 747,
-    "thumbnail": "/thumbnails/bundle-112.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/arpit-bala-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1YPXq852wMXBKrpswwhzF8sZHvUezssRs/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1r8ovSI42eWdAcvNwMqOOq7x6rMnvh6p5",
     "links": [
@@ -3440,7 +3440,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.92,
     "reviewsCount": 784,
-    "thumbnail": "/thumbnails/bundle-113.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/humanity-kindness-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/15vjS8awgwcRjo40jbFS5zTH03-vAkkwO/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1CBvANc9GOwSbCri3DL-y_GVWFBp3q0C9",
     "links": [
@@ -3470,7 +3470,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.93,
     "reviewsCount": 821,
-    "thumbnail": "/thumbnails/bundle-114.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/girl-dancing-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1pZy8R7TCr40ozvN9tfo-sOCX7bK8GIVf/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/15Pp0qQiJGYZqfZr4J2J-DFs0BPQ-Lzbh",
     "links": [
@@ -3500,7 +3500,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.94,
     "reviewsCount": 858,
-    "thumbnail": "/thumbnails/bundle-115.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/basketball-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1XMKSexmVzSLo75njzj44zLA_t5mnhYm7/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/112l3L-WD0ji90I1BRc7yedn4Y4dpWWU4",
     "links": [
@@ -3530,7 +3530,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.95,
     "reviewsCount": 895,
-    "thumbnail": "/thumbnails/bundle-116.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/women-fitness-reels-bundle-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1VUFBTHsH8zkHkpW66bCF9GNbBxJH1zZc/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1wO80Fsj5oKn4uUutgCdnJO2aMGVhscJT",
     "links": [
@@ -3560,7 +3560,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.96,
     "reviewsCount": 932,
-    "thumbnail": "/thumbnails/bundle-117.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/gym-tips-reels-bundle-1-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1VUFBTHsH8zkHkpW66bCF9GNbBxJH1zZc/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1-WHmvzyZMcZih1FuwQzPG9hSWoC9AYF5",
     "links": [
@@ -3590,7 +3590,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.97,
     "reviewsCount": 969,
-    "thumbnail": "/thumbnails/bundle-118.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/ai-models-reels-bundle-1-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1-6RubPUHjcwqRxjUqMi14Oq93cmoB3GW/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1DAqZZxw2PO8MHCsysTayNNaUurV0vz0s",
     "links": [
@@ -3620,7 +3620,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.98,
     "reviewsCount": 1006,
-    "thumbnail": "/thumbnails/bundle-119.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/calisthenics-reels-bundle-1-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1KqnOk-52MgqKCTTJs9VoZv_Evj3NQMz5/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1uM9O1q1pMTR7NnxKaoSDzh-fMDy1dpiW",
     "links": [
@@ -3650,7 +3650,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.99,
     "reviewsCount": 1043,
-    "thumbnail": "/thumbnails/bundle-120.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/valorant-reels-bundle-1-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1gM9eZMQ3xZ8UwNwB3ip9LSEThxSsMTKD/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/129_QHHY58bk0QSyXSyZYL02gMSoAbb4R",
     "links": [
@@ -3680,7 +3680,7 @@ export const initialBundles = [
     "badge": "\ud83d\udd25 BESTSELLER",
     "rating": 4.85,
     "reviewsCount": 1080,
-    "thumbnail": "/thumbnails/bundle-121.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/aesthetic-girls-reels-bundle-1-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1sXgQiLxN5LxOzilzRjXtfIhs1rQBOsH4/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/13VgKgjRmMZbfXoHDEp7oR3s4M4GnTyp6",
     "links": [
@@ -3710,7 +3710,7 @@ export const initialBundles = [
     "badge": "\u26a1 VIRAL HIT",
     "rating": 4.86,
     "reviewsCount": 1117,
-    "thumbnail": "/thumbnails/bundle-122.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/high-testosterone-reels-bundle-1-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/13AW7KkhbKxxQ4UecbRoQKnc1Jpa6vDf_/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1dVJW_jXWA-deq09xPOve3hThm6GeH9-J",
     "links": [
@@ -3740,7 +3740,7 @@ export const initialBundles = [
     "badge": "\u2b50 TOP RATED",
     "rating": 4.87,
     "reviewsCount": 1154,
-    "thumbnail": "/thumbnails/bundle-123.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/fortnite-reels-bundle-1-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1dRr_ZmPhUaU3pzr13qJMiF96s2x2vibW/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1nblaVctP_v1v0qcqlmggPPFY_iKfg9B4",
     "links": [
@@ -3770,7 +3770,7 @@ export const initialBundles = [
     "badge": "\ud83d\udc8e HIGH DEMAND",
     "rating": 4.88,
     "reviewsCount": 1191,
-    "thumbnail": "/thumbnails/bundle-124.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/trick-shots-reels-bundle-1-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/1Z_Mq7R1yM9RT6MhFrdwwC8NRqOvP8WPM/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1fGo03pctv_Eg198z3_eptes0LXHK_Sr3",
     "links": [
@@ -3800,7 +3800,7 @@ export const initialBundles = [
     "badge": "\ud83d\ude80 TRENDING",
     "rating": 4.89,
     "reviewsCount": 1228,
-    "thumbnail": "/thumbnails/bundle-125.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/call-of-duty-reels-bundle-1-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/13y9voiZOJvsh-ICBPLaNqoFgvFw8JiXv/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/1JNU1nIqzTN3e2gw5d8x4Av9ZuCfb06tw",
     "links": [
@@ -3830,7 +3830,7 @@ export const initialBundles = [
     "badge": "\u2728 HD 1080p",
     "rating": 4.9,
     "reviewsCount": 1265,
-    "thumbnail": "/thumbnails/bundle-126.jpg",
+    "thumbnail": "https://reelsbundles.in/wp-content/uploads/2026/10/slowed-reels-bundle-1-1.jpg",
     "videoPreview": "https://drive.google.com/file/d/18LRxXwMArr5S8YKz2G-mkEYVezOw9S6v/view?usp=drivesdk",
     "driveLink": "https://drive.google.com/drive/folders/16T-xOwRrYpNXKsmFnoO16o_K5AE5YZcW",
     "links": [

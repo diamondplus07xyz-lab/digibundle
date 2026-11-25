@@ -144,7 +144,7 @@ export default function ProductCard({
               className={`w-full h-full object-cover transition-transform duration-500 ${hasVideo ? 'group-hover/thumb:scale-105' : ''}`}
               onError={(e) => {
                 e.target.onerror = null;
-                e.target.src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80";
+                e.target.src = `/thumbnails/${bundle.id}.jpg`;
               }}
             />
           </div>

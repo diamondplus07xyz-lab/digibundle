@@ -80,8 +80,8 @@ export default function App() {
   });
 
   const [bundles, setBundles] = useState(() => {
-    // Priority: initialBundles contains the freshly extracted Google Drive preview videos and new custom thumbnails
-    const saved = localStorage.getItem('cheap_reels_bundles_v7');
+    // Priority: initialBundles contains the freshly extracted Google Drive preview videos and exact Dizozet photos
+    const saved = localStorage.getItem('cheap_reels_bundles_v8');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -101,13 +101,14 @@ export default function App() {
         }
       } catch (e) {}
     }
-    // Clean old v5/v6 cache so all devices immediately get fresh thumbnails and video links
+    // Clean old v5/v6/v7 cache so all devices immediately get fresh Dizozet photos
     try { 
       localStorage.removeItem('cheap_reels_bundles_v5'); 
       localStorage.removeItem('cheap_reels_bundles_v6'); 
+      localStorage.removeItem('cheap_reels_bundles_v7'); 
     } catch (e) {}
     const fresh = initialBundles.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega');
-    try { localStorage.setItem('cheap_reels_bundles_v7', JSON.stringify(fresh)); } catch (e) {}
+    try { localStorage.setItem('cheap_reels_bundles_v8', JSON.stringify(fresh)); } catch (e) {}
     return fresh;
   });
 
@@ -585,7 +586,7 @@ export default function App() {
   }, [config]);
 
   useEffect(() => {
-    localStorage.setItem('cheap_reels_bundles_v7', JSON.stringify(bundles));
+    localStorage.setItem('cheap_reels_bundles_v8', JSON.stringify(bundles));
   }, [bundles]);
 
   useEffect(() => {
@@ -642,7 +643,7 @@ export default function App() {
     // 2. Bundles Catalog Sync
     if (cloudData.bundles && Array.isArray(cloudData.bundles) && cloudData.bundles.length > 0) {
       const cleanedBundles = cloudData.bundles.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega');
-      try { localStorage.setItem('cheap_reels_bundles_v7', JSON.stringify(cleanedBundles)); } catch (e) {}
+      try { localStorage.setItem('cheap_reels_bundles_v8', JSON.stringify(cleanedBundles)); } catch (e) {}
       setBundles(cleanedBundles);
     }
 
@@ -744,7 +745,7 @@ export default function App() {
         if (Array.isArray(payload)) {
           const cleaned = payload.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega');
           setBundles(cleaned);
-          try { localStorage.setItem('cheap_reels_bundles_v7', JSON.stringify(cleaned)); } catch (e) {}
+          try { localStorage.setItem('cheap_reels_bundles_v8', JSON.stringify(cleaned)); } catch (e) {}
         }
       } else if (eventType === 'CONFIG_UPDATED') {
         if (payload) {
@@ -787,7 +788,7 @@ export default function App() {
 
   const handleUpdateBundles = async (newBundles) => {
     setBundles(newBundles);
-    try { localStorage.setItem('cheap_reels_bundles_v7', JSON.stringify(newBundles)); } catch (e) {}
+    try { localStorage.setItem('cheap_reels_bundles_v8', JSON.stringify(newBundles)); } catch (e) {}
     try {
       await realtimeSync.pushUpdate({ config, bundles: newBundles, orders, visitorStats, activityLogs, updateType: 'BUNDLES_UPDATED' });
     } catch (e) {
