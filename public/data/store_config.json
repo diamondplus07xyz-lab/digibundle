@@ -1,8 +1,8 @@
 {
   "version": "2.0",
-  "updatedAt": 1795613269198,
-  "lastModifiedByDevice": "cr_des_qv1970_mwv1iij6",
-  "lastModifiedDeviceLabel": "📱 Mobile (Windows · Google Chrome)",
+  "updatedAt": 1795613605463,
+  "lastModifiedByDevice": "cr_des_gm9p36_mwufotix",
+  "lastModifiedDeviceLabel": "💻 PC (Windows · Google Chrome)",
   "config": {
     "storeName": "Cheap Reels",
     "themeBackground": "white",
@@ -4290,10 +4290,10 @@
     }
   ],
   "visitorStats": {
-    "totalViews": 170,
+    "totalViews": 171,
     "uniqueVisitors": 60,
     "mobileVisits": 33,
-    "desktopVisits": 151,
+    "desktopVisits": 152,
     "knownIps": [
       "157.49.180.218",
       "157.49.180.240",
@@ -4358,6 +4358,16 @@
     ],
     "recentVisits": [
       {
+        "id": 1795613603497,
+        "ip": "157.49.80.25",
+        "device": "Desktop PC",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "07:03 pm",
+        "date": "25 Nov",
+        "isRepeat": true
+      },
+      {
         "id": 1795613266786,
         "ip": "157.49.80.25",
         "device": "Mobile Phone",
@@ -4414,6 +4424,16 @@
         "location": "India",
         "page": "Storefront (Home Catalog)",
         "time": "06:33 pm",
+        "date": "25 Nov",
+        "isRepeat": false
+      },
+      {
+        "id": 1795611319207,
+        "ip": "157.49.80.25",
+        "device": "Desktop PC",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "06:25 pm",
         "date": "25 Nov",
         "isRepeat": false
       },
@@ -5329,26 +5349,6 @@
       },
       {
         "id": 1795462282145,
-        "ip": "157.49.181.79",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "01:01 am",
-        "date": "24 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795462281799,
-        "ip": "157.49.181.79",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "01:01 am",
-        "date": "24 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795462281796,
         "ip": "157.49.181.79",
         "device": "Desktop PC",
         "location": "India",
