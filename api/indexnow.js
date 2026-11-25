@@ -3,7 +3,7 @@
 // Automatically notifies search engines of created or modified URLs in real time.
 
 export const INDEXNOW_KEY = 'c7f938e210a442d992e5917812903e48';
-export const INDEXNOW_HOST = 'cheapreels.in';
+export const INDEXNOW_HOST = 'www.cheapreels.in';
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
