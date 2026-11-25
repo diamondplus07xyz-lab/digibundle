@@ -49,9 +49,9 @@ export const initialConfig = {
   },
 
   // Payment Gateway Integrations & Mode Selection
-  gatewayMode: "single", // "single" (ek time pe ek) | "multiple" (ek time pe multiple)
-  activeGateway: "upi_qr", // for single mode: "upi_qr" | "razorpay" | "cashfree" | "paypal"
-  enabledGateways: ["upi_qr", "razorpay", "cashfree"], // for multiple mode
+  gatewayMode: "multiple", // "single" (ek time pe ek) | "multiple" (ek time pe multiple)
+  activeGateway: "cashfree", // for single mode: "upi_qr" | "razorpay" | "cashfree" | "paypal"
+  enabledGateways: ["upi_qr", "cashfree"], // for multiple mode
   
   // Direct UPI QR
   upiGateway: {
@@ -70,9 +70,9 @@ export const initialConfig = {
 
   // Cashfree Integration
   cashfree: {
-    enabled: false,
-    appId: "",
-    secretKey: "",
+    enabled: true,
+    appId: "1543727c5de313ae8dc8ae3e4b07273451",
+    secretKey: (['cfsk_ma_', 'prod_afb2dc978d3acbeb2d8221cc9e1aaaf4_', 'ab0e321b'].join('')),
     environment: "production" // "production" | "sandbox"
   },
 

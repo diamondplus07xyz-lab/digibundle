@@ -506,6 +506,34 @@ export default function App() {
     }
   }, [isCheckoutOpen, checkoutItems, currentVisitorIp, config]);
 
+  // Dynamic Cashfree Return URL Verification (e.g. ?cf_order_id=CR-XXXXXX)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const urlParams = new URLSearchParams(window.location.search);
+    const cfOrderId = urlParams.get('cf_order_id');
+    if (cfOrderId) {
+      fetch(`/api/cashfree?order_id=${encodeURIComponent(cfOrderId)}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data && data.success && data.paid) {
+            setOrders(prev => {
+              const existing = prev.find(o => o.id === cfOrderId);
+              if (existing) {
+                const verified = { ...existing, status: 'VERIFIED', driveLinkUnlocked: true };
+                setCompletedOrder(verified);
+                return prev.map(o => o.id === cfOrderId ? verified : o);
+              }
+              return prev;
+            });
+            try {
+              window.history.replaceState({}, '', window.location.pathname);
+            } catch (e) {}
+          }
+        })
+        .catch(() => {});
+    }
+  }, []);
+
   // Cryptographic Zero-Knowledge Route Vault:
   // 1. Real Admin Console opens ONLY when the URL path matches the secret SHA-256 hash
   // 2. Dead-end Funny Decoy opens on /admin

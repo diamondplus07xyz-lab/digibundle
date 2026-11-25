@@ -271,32 +271,106 @@ export default function CheckoutModal({
     }
   };
 
+  // Helper to dynamically load Cashfree Web Checkout SDK v3
+  const loadCashfreeSdk = () => {
+    return new Promise((resolve, reject) => {
+      if (window.Cashfree) {
+        resolve(window.Cashfree);
+        return;
+      }
+      const existingScript = document.querySelector('script[src="https://sdk.cashfree.com/js/v3/cashfree.js"]');
+      if (existingScript) {
+        existingScript.addEventListener('load', () => resolve(window.Cashfree));
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = 'https://sdk.cashfree.com/js/v3/cashfree.js';
+      script.async = true;
+      script.onload = () => resolve(window.Cashfree);
+      script.onerror = () => reject(new Error('Unable to connect to Cashfree payment gateway SDK. Please check your internet connection.'));
+      document.body.appendChild(script);
+    });
+  };
+
   // 3. Cashfree Payment Handler
-  const handleCashfreePayment = () => {
+  const handleCashfreePayment = async () => {
+    const cleanPhone = whatsapp.replace(/\D/g, '').slice(-10);
+    if (!cleanPhone || cleanPhone.length < 10) {
+      setError('Please enter a valid 10-digit WhatsApp number to receive your Google Drive access links');
+      return;
+    }
+
     setIsProcessing(true);
     setError('');
 
-    setTimeout(() => {
-      const orderId = 'CR-' + Math.floor(100000 + Math.random() * 900000);
-      const cfPaymentId = 'CF-' + Date.now().toString(36).toUpperCase();
-      const order = {
-        id: orderId,
-        name: name || 'Customer',
-        whatsapp,
-        email: email || supportEmail,
-        total,
-        items,
-        gateway: 'Cashfree',
-        paymentApp: 'Cashfree PG',
-        paymentId: cfPaymentId,
-        utr: cfPaymentId,
-        status: 'VERIFIED',
-        driveLinkUnlocked: true,
-        date: new Date().toISOString()
-      };
+    const orderId = 'CR-' + Math.floor(100000 + Math.random() * 900000);
+    const customerName = (name || 'Customer').trim();
+    const customerEmail = (email || supportEmail || 'support@cheapreels.in').trim();
+
+    try {
+      // 1. Create order on Cashfree serverless backend
+      const res = await fetch('/api/cashfree', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId,
+          amount: total,
+          customerName,
+          customerEmail,
+          customerPhone: cleanPhone,
+          items: items.map(i => ({ id: i.id, title: i.title, price: i.price }))
+        })
+      });
+
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok || !data || !data.success || !data.payment_session_id) {
+        throw new Error(data?.error || 'Failed to initialize Cashfree payment session');
+      }
+
+      // 2. Load SDK and trigger Cashfree Checkout Modal
+      const CashfreeSdk = await loadCashfreeSdk();
+      const isProd = config?.cashfree?.environment !== 'sandbox';
+      const cashfree = CashfreeSdk({ mode: isProd ? 'production' : 'sandbox' });
+
+      cashfree.checkout({
+        paymentSessionId: data.payment_session_id,
+        redirectTarget: '_modal'
+      }).then((result) => {
+        if (result.error) {
+          console.warn('Cashfree payment notice:', result.error);
+          setIsProcessing(false);
+          if (result.error.code !== 'MODAL_CLOSED') {
+            setError(result.error.message || 'Cashfree payment was cancelled or incomplete.');
+          }
+        } else if (result.paymentDetails) {
+          // Cashfree confirmed payment
+          const order = {
+            id: orderId,
+            name: customerName,
+            whatsapp,
+            email: customerEmail,
+            total,
+            items,
+            gateway: 'Cashfree',
+            paymentApp: 'Cashfree PG',
+            paymentId: result.paymentDetails?.paymentMessage || ('CF-' + Date.now().toString(36).toUpperCase()),
+            utr: result.paymentDetails?.referenceId || orderId,
+            status: 'VERIFIED',
+            driveLinkUnlocked: true,
+            date: new Date().toISOString()
+          };
+          setIsProcessing(false);
+          onPaymentSuccess(order);
+        } else {
+          setIsProcessing(false);
+        }
+      });
+    } catch (err) {
+      console.error('Cashfree PG error:', err);
       setIsProcessing(false);
-      onPaymentSuccess(order);
-    }, 1200);
+      setError(err.message || 'Cashfree gateway is temporarily busy. You can also pay via Direct UPI QR.');
+    }
   };
 
   // 4. PayPal Payment Handler
