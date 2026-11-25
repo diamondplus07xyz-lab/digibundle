@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "updatedAt": 1795614515337,
+  "updatedAt": 1795614567514,
   "lastModifiedByDevice": "cr_des_gm9p36_mwufotix",
   "lastModifiedDeviceLabel": "💻 PC (Windows · Google Chrome)",
   "config": {
@@ -49,7 +49,7 @@
     },
     "cashfree": {
       "enabled": false,
-      "appId": "",
+      "appId": "1543727c5de313ae8dc8ae3e4b07273451",
       "environment": "production"
     },
     "paypal": {
