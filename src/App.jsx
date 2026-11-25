@@ -486,6 +486,7 @@ export default function App() {
   const [isAdminDecoyOpen, setIsAdminDecoyOpen] = useState(false);
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
   const [activePolicy, setActivePolicy] = useState(null);
+  const [cashfreeVerifying, setCashfreeVerifying] = useState(false);
 
   // Real-Time Telegram Alert for High-Intent Checkout Visits (Lead Alerts)
   useEffect(() => {
@@ -511,28 +512,160 @@ export default function App() {
     if (typeof window === 'undefined') return;
     const urlParams = new URLSearchParams(window.location.search);
     const cfOrderId = urlParams.get('cf_order_id');
-    if (cfOrderId) {
-      fetch(`/api/cashfree?order_id=${encodeURIComponent(cfOrderId)}`)
-        .then(r => r.json())
-        .then(data => {
-          if (data && data.success && data.paid) {
-            setOrders(prev => {
-              const existing = prev.find(o => o.id === cfOrderId);
-              if (existing) {
-                const verified = { ...existing, status: 'VERIFIED', driveLinkUnlocked: true };
-                setCompletedOrder(verified);
-                return prev.map(o => o.id === cfOrderId ? verified : o);
-              }
-              return prev;
-            });
+    if (!cfOrderId) return;
+
+    setCashfreeVerifying(true);
+
+    let attempts = 0;
+    const maxAttempts = 6;
+
+    const verifyAndFulfill = async () => {
+      try {
+        attempts++;
+        const res = await fetch(`/api/cashfree?order_id=${encodeURIComponent(cfOrderId)}`);
+        const data = await res.json().catch(() => null);
+
+        if (data && (data.paid || data.order_status === 'PAID')) {
+          setCashfreeVerifying(false);
+
+          // 1. Recover pending order from localStorage
+          let pending = null;
+          try {
+            const raw = localStorage.getItem('cheap_reels_pending_cf_order');
+            if (raw) pending = JSON.parse(raw);
+          } catch (e) {}
+
+          // 2. Determine purchased items
+          let rawItems = [];
+          if (pending && pending.id === cfOrderId && Array.isArray(pending.items) && pending.items.length > 0) {
+            rawItems = pending.items;
+          } else if (Array.isArray(data.items) && data.items.length > 0) {
+            rawItems = data.items;
+          } else {
+            // Check in existing orders in localStorage
             try {
-              window.history.replaceState({}, '', window.location.pathname);
+              const savedOrders = JSON.parse(localStorage.getItem('cheap_reels_orders') || '[]');
+              const matchedOrder = savedOrders.find(o => o.id === cfOrderId);
+              if (matchedOrder && matchedOrder.items?.length > 0) {
+                rawItems = matchedOrder.items;
+              }
             } catch (e) {}
           }
-        })
-        .catch(() => {});
-    }
-  }, []);
+
+          // If still no items, match by order amount or default to first bundle
+          if (!rawItems || rawItems.length === 0) {
+            const matchedBundle = bundles.find(b => b.price === (data.order_amount || 39)) || bundles[0] || initialBundles[0];
+            rawItems = [matchedBundle];
+          }
+
+          // 3. Attach genuine, verified Google Drive folder links from initialBundles master vault
+          const securedItems = rawItems.map(it => {
+            const master = initialBundles.find(b => b.id === it.id) || bundles.find(b => b.id === it.id) || initialBundles[0];
+            const driveLink = master?.driveLink || it.driveLink || 'https://drive.google.com';
+            return {
+              ...it,
+              driveLink,
+              links: master?.links || it.links || [{ label: 'Bundle Access Link', url: driveLink }]
+            };
+          });
+
+          // 4. Construct the complete verified order object
+          const verifiedOrder = {
+            id: cfOrderId,
+            name: pending?.name || data.customer_name || 'Valued Customer',
+            whatsapp: pending?.whatsapp || data.customer_phone || '',
+            email: pending?.email || data.customer_email || 'support@cheapreels.in',
+            total: data.order_amount || pending?.total || 39,
+            items: securedItems,
+            gateway: 'Cashfree',
+            paymentApp: 'Cashfree PG',
+            paymentId: cfOrderId,
+            utr: cfOrderId,
+            status: 'VERIFIED',
+            driveLinkUnlocked: true,
+            date: pending?.date || new Date().toISOString()
+          };
+
+          // 5. Update state & permanent localStorage
+          setOrders(prev => {
+            const others = (prev || []).filter(o => o.id !== cfOrderId);
+            return [verifiedOrder, ...others];
+          });
+          try {
+            const savedOrders = JSON.parse(localStorage.getItem('cheap_reels_orders') || '[]');
+            const others = savedOrders.filter(o => o.id !== cfOrderId);
+            localStorage.setItem('cheap_reels_orders', JSON.stringify([verifiedOrder, ...others]));
+            localStorage.removeItem('cheap_reels_pending_cf_order');
+          } catch (e) {}
+
+          // 6. Clear purchased items from shopping cart
+          const purchasedIds = securedItems.map(it => it.id);
+          setCart(prev => (prev || []).filter(it => !purchasedIds.includes(it.id)));
+          try {
+            const currentCart = JSON.parse(localStorage.getItem('cheap_reels_cart') || '[]');
+            localStorage.setItem('cheap_reels_cart', JSON.stringify(currentCart.filter(it => !purchasedIds.includes(it.id))));
+          } catch (e) {}
+
+          // 7. IMMEDIATELY POP UP THE ORDER SUCCESS & GOOGLE DRIVE UNLOCK MODAL
+          setCompletedOrder(verifiedOrder);
+
+          // 8. Log activity
+          logUserActivity('ORDER_VERIFIED', 'Cashfree Payment Confirmed', `Order #${cfOrderId} verified via Cashfree PG. Google Drive download folder unlocked.`, {
+            targetEntity: 'Order',
+            targetId: cfOrderId,
+            metadata: { orderId: cfOrderId, amount: verifiedOrder.total, gateway: 'Cashfree' }
+          });
+
+          // 9. Sync with Central Database in real time
+          try {
+            realtimeSync.pushUpdate({
+              orders: [verifiedOrder, ...orders.filter(o => o.id !== cfOrderId)],
+              config,
+              bundles,
+              updateType: 'ORDERS_UPDATED'
+            });
+          } catch (e) {}
+
+          // 10. Send Telegram Alert to Admin
+          try {
+            sendTelegramOrderAlert(verifiedOrder, config);
+          } catch (e) {}
+
+          // 11. Clean URL query string cleanly
+          try {
+            window.history.replaceState({}, '', window.location.pathname);
+          } catch (e) {}
+
+        } else if (data && (data.order_status === 'ACTIVE' || data.order_status === 'PENDING') && attempts < maxAttempts) {
+          // Cashfree order status is still propagating, retry in 1.5 seconds
+          setTimeout(verifyAndFulfill, 1500);
+        } else {
+          // Finished attempts or payment was not successful
+          setCashfreeVerifying(false);
+          // If pending order exists in localStorage and was already marked VERIFIED previously, restore it
+          try {
+            const savedOrders = JSON.parse(localStorage.getItem('cheap_reels_orders') || '[]');
+            const existing = savedOrders.find(o => o.id === cfOrderId && o.status === 'VERIFIED');
+            if (existing) {
+              setCompletedOrder(existing);
+            }
+          } catch (e) {}
+          try {
+            window.history.replaceState({}, '', window.location.pathname);
+          } catch (e) {}
+        }
+      } catch (err) {
+        console.error('Cashfree return verification error:', err);
+        if (attempts < maxAttempts) {
+          setTimeout(verifyAndFulfill, 1500);
+        } else {
+          setCashfreeVerifying(false);
+        }
+      }
+    };
+
+    verifyAndFulfill();
+  }, [bundles, config]);
 
   // Cryptographic Zero-Knowledge Route Vault:
   // 1. Real Admin Console opens ONLY when the URL path matches the secret SHA-256 hash
@@ -1404,6 +1537,13 @@ export default function App() {
             type={activePolicy}
             onClose={() => setActivePolicy(null)}
           />
+        )}
+
+        {cashfreeVerifying && (
+          <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[100] bg-emerald-600 text-white font-black px-6 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-pulse border border-emerald-400">
+            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            <span className="text-sm">Payment Received! Unlocking Your Google Drive Link...</span>
+          </div>
         )}
       </Suspense>
     </div>

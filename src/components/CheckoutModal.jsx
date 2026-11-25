@@ -7,6 +7,7 @@ import {
 import { QRCodeSVG } from 'qrcode.react';
 import { calculateCartPricing } from '../utils/pricing';
 import { validateUtr, checkOrderRateLimit, recordOrderSubmission, sanitizeInput } from '../utils/security';
+import { initialBundles } from '../data/bundles';
 import BrandLogo from './BrandLogo';
 
 export default function CheckoutModal({ 
@@ -305,7 +306,7 @@ export default function CheckoutModal({
     });
   };
 
-  // 3. Cashfree Payment Handler
+  // 3. Cashfree Payment Handler with Instant Google Drive Unlock & Pre-Storage
   const handleCashfreePayment = async () => {
     const cleanPhone = whatsapp.replace(/\D/g, '').slice(-10);
     if (!cleanPhone || cleanPhone.length < 10) {
@@ -319,6 +320,42 @@ export default function CheckoutModal({
     const orderId = 'CR-' + Math.floor(100000 + Math.random() * 900000);
     const customerName = (name || 'Customer').trim();
     const customerEmail = (email || supportEmail || 'support@cheapreels.in').trim();
+    const currentOrigin = typeof window !== 'undefined' ? window.location.origin : 'https://www.cheapreels.in';
+    const returnUrl = `${currentOrigin}/?cf_order_id=${encodeURIComponent(orderId)}`;
+
+    // Attach verified Google Drive links from master vault
+    const securedItems = items.map(it => {
+      const master = initialBundles.find(b => b.id === it.id);
+      const link = master?.driveLink || it.driveLink || 'https://drive.google.com';
+      return {
+        ...it,
+        driveLink: link,
+        links: master?.links || it.links || [{ label: 'Bundle Access Link', url: link }]
+      };
+    });
+
+    const pendingOrder = {
+      id: orderId,
+      name: customerName,
+      whatsapp: cleanPhone,
+      email: customerEmail,
+      total,
+      items: securedItems,
+      gateway: 'Cashfree',
+      paymentApp: 'Cashfree PG',
+      paymentId: orderId,
+      utr: orderId,
+      status: 'PENDING_VERIFICATION',
+      driveLinkUnlocked: false,
+      date: new Date().toISOString()
+    };
+
+    // Store pending order in localStorage BEFORE checkout so mobile redirects instantly recover everything
+    try {
+      localStorage.setItem('cheap_reels_pending_cf_order', JSON.stringify(pendingOrder));
+      const existingOrders = JSON.parse(localStorage.getItem('cheap_reels_orders') || '[]');
+      localStorage.setItem('cheap_reels_orders', JSON.stringify([pendingOrder, ...existingOrders.filter(o => o.id !== orderId)]));
+    } catch (e) {}
 
     try {
       // 1. Create order on Cashfree serverless backend
@@ -331,7 +368,8 @@ export default function CheckoutModal({
           customerName,
           customerEmail,
           customerPhone: cleanPhone,
-          items: items.map(i => ({ id: i.id, title: i.title, price: i.price }))
+          returnUrl,
+          items: securedItems.map(i => ({ id: i.id, title: i.title, price: i.price, driveLink: i.driveLink }))
         })
       });
 
@@ -358,24 +396,20 @@ export default function CheckoutModal({
             setError(result.error.message || 'Cashfree payment was cancelled or incomplete.');
           }
         } else if (result && result.paymentDetails) {
-          // Cashfree confirmed payment
-          const order = {
-            id: orderId,
-            name: customerName,
-            whatsapp,
-            email: customerEmail,
-            total,
-            items,
-            gateway: 'Cashfree',
-            paymentApp: 'Cashfree PG',
-            paymentId: result.paymentDetails?.paymentMessage || ('CF-' + Date.now().toString(36).toUpperCase()),
-            utr: result.paymentDetails?.referenceId || orderId,
+          // Cashfree confirmed payment inside modal
+          const verifiedOrder = {
+            ...pendingOrder,
             status: 'VERIFIED',
             driveLinkUnlocked: true,
+            paymentId: result.paymentDetails?.paymentMessage || ('CF-' + Date.now().toString(36).toUpperCase()),
+            utr: result.paymentDetails?.referenceId || orderId,
             date: new Date().toISOString()
           };
+          try {
+            localStorage.removeItem('cheap_reels_pending_cf_order');
+          } catch (e) {}
           setIsProcessing(false);
-          onPaymentSuccess(order);
+          onPaymentSuccess(verifiedOrder);
         } else {
           setIsProcessing(false);
         }

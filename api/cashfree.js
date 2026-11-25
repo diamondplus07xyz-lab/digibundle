@@ -1,10 +1,13 @@
 // Vercel Serverless Function: /api/cashfree
 // Enterprise Cashfree Payment Gateway Order Creation & Verification Endpoint
-// Supports Cashfree PG v2023-08-01 API
+// Supports Cashfree PG v2023-08-01 API with Automatic Google Drive Delivery
 
 const DEFAULT_CASHFREE_APP_ID = process.env.CASHFREE_APP_ID || '1543727c5de313ae8dc8ae3e4b07273451';
 const DEFAULT_CASHFREE_SECRET_KEY = process.env.CASHFREE_SECRET_KEY || (['cfsk_ma_', 'prod_afb2dc978d3acbeb2d8221cc9e1aaaf4_', 'ab0e321b'].join(''));
 const CASHFREE_ENV = process.env.CASHFREE_ENV || 'production';
+
+// Persistent in-memory cache across serverless invocations for instantaneous order reconstruction
+const pendingCashfreeOrders = global.__pendingCashfreeOrders || (global.__pendingCashfreeOrders = new Map());
 
 export default async function handler(req, res) {
   // CORS Security Headers
@@ -23,7 +26,7 @@ export default async function handler(req, res) {
     : 'https://api.cashfree.com/pg';
 
   // =========================================================================
-  // GET: Verify payment status of an existing Cashfree order
+  // GET: Verify payment status of an existing Cashfree order & return items/links
   // =========================================================================
   if (req.method === 'GET') {
     const { order_id } = req.query;
@@ -31,8 +34,10 @@ export default async function handler(req, res) {
       return res.status(400).json({ success: false, error: 'Missing order_id query parameter' });
     }
 
+    const cleanOrderId = String(order_id).trim();
+
     try {
-      const cfRes = await fetch(`${baseUrl}/orders/${encodeURIComponent(order_id)}`, {
+      const cfRes = await fetch(`${baseUrl}/orders/${encodeURIComponent(cleanOrderId)}`, {
         method: 'GET',
         headers: {
           'x-client-id': DEFAULT_CASHFREE_APP_ID,
@@ -43,13 +48,19 @@ export default async function handler(req, res) {
       });
 
       const cfData = await cfRes.json();
+      const cached = pendingCashfreeOrders.get(cleanOrderId);
+
       if (cfRes.ok) {
         return res.status(200).json({
           success: true,
           order_id: cfData.order_id,
           order_status: cfData.order_status,
           order_amount: cfData.order_amount,
-          paid: cfData.order_status === 'PAID'
+          paid: cfData.order_status === 'PAID',
+          items: cached?.items || null,
+          customer_name: cached?.customerName || cfData.customer_details?.customer_name,
+          customer_phone: cached?.customerPhone || cfData.customer_details?.customer_phone,
+          customer_email: cached?.customerEmail || cfData.customer_details?.customer_email
         });
       } else {
         return res.status(cfRes.status).json({
@@ -68,7 +79,7 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
-      const { orderId, amount, customerName, customerEmail, customerPhone } = body || {};
+      const { orderId, amount, customerName, customerEmail, customerPhone, returnUrl, items } = body || {};
 
       if (!orderId || !amount || Number(amount) <= 0) {
         return res.status(400).json({ success: false, error: 'Valid orderId and amount are required' });
@@ -77,9 +88,32 @@ export default async function handler(req, res) {
       const cleanPhone = (customerPhone || '').replace(/\D/g, '').slice(-10) || '9999999999';
       const cleanName = (customerName || 'Customer').trim();
       const cleanEmail = (customerEmail || 'support@cheapreels.in').trim();
+      const cleanOrderId = String(orderId).trim();
+
+      // Cache pending order so redirect return can recover items and Drive links immediately
+      pendingCashfreeOrders.set(cleanOrderId, {
+        orderId: cleanOrderId,
+        amount: Number(amount),
+        customerName: cleanName,
+        customerEmail: cleanEmail,
+        customerPhone: cleanPhone,
+        items: Array.isArray(items) ? items : [],
+        createdAt: Date.now()
+      });
+
+      // Prune old cached orders older than 24h
+      const now = Date.now();
+      for (const [key, val] of pendingCashfreeOrders.entries()) {
+        if (now - (val.createdAt || 0) > 86400000) {
+          pendingCashfreeOrders.delete(key);
+        }
+      }
+
+      const defaultReturnUrl = `https://www.cheapreels.in/?cf_order_id=${encodeURIComponent(cleanOrderId)}`;
+      const targetReturnUrl = returnUrl || defaultReturnUrl;
 
       const orderPayload = {
-        order_id: String(orderId).trim(),
+        order_id: cleanOrderId,
         order_amount: Number(amount),
         order_currency: 'INR',
         customer_details: {
@@ -89,9 +123,12 @@ export default async function handler(req, res) {
           customer_phone: cleanPhone
         },
         order_meta: {
-          return_url: `https://www.cheapreels.in/?cf_order_id=${encodeURIComponent(orderId)}`
+          return_url: targetReturnUrl
         },
-        order_note: `Cheap Reels Store Order: ${orderId}`
+        order_tags: {
+          order_id: cleanOrderId.slice(0, 40)
+        },
+        order_note: `Cheap Reels Store: ${cleanOrderId}`
       };
 
       const cfRes = await fetch(`${baseUrl}/orders`, {
