@@ -506,6 +506,16 @@ export default function CheckoutModal({
     const cleanEmail = (email || supportEmail || 'support@cheapreels.in').trim();
     const orderId = 'CR-' + Math.floor(100000 + Math.random() * 900000);
 
+    // Attach verified Google Drive links from master vault
+    const securedItems = items.map(it => {
+      const master = initialBundles.find(b => b.id === it.id);
+      const link = master?.driveLink || it.driveLink || 'https://drive.google.com';
+      return {
+        ...it,
+        driveLink: link
+      };
+    });
+
     const pendingOrder = {
       id: orderId,
       name: cleanName,
@@ -517,7 +527,7 @@ export default function CheckoutModal({
       usdAmount,
       items: securedItems,
       gateway: 'PayPal',
-      paymentApp: `PayPal ($${usdAmount} USD)`,
+      paymentApp: `PayPal ($${usdDisplay} USD)`,
       paymentId: orderId,
       utr: orderId,
       status: 'PENDING_VERIFICATION',
@@ -561,8 +571,8 @@ export default function CheckoutModal({
       // Redirect customer to official PayPal live checkout page
       window.location.href = data.approveUrl;
     } catch (err) {
-      console.warn('PayPal live API connection error, falling back to instant fulfillment if sandbox/offline:', err);
-      // Fallback for development/testing if API is blocked by network
+      console.warn('PayPal live API connection notice:', err);
+      // Fallback: If offline, preview, or direct fulfillment simulated, unlock Drive folder immediately
       const paypalPaymentId = 'PAYID-' + Math.random().toString(36).substring(2, 10).toUpperCase();
       const verifiedOrder = {
         ...pendingOrder,
@@ -666,7 +676,7 @@ export default function CheckoutModal({
                     Order Summary ({items.length} Bundle{items.length > 1 ? 's' : ''})
                   </span>
                   <span className="text-xs font-bold text-slate-500">
-                    {items.reduce((acc, it) => acc + (it.clipCount || 1000), 0).toLocaleString()}+ Reels
+                    {items.reduce((acc, it) => acc + (typeof it.clipCount === 'number' ? it.clipCount : (parseInt(String(it.clipCount || '').replace(/\D/g, ''), 10) || 1000)), 0).toLocaleString()}+ Reels
                   </span>
                 </div>
 
@@ -675,9 +685,11 @@ export default function CheckoutModal({
                   {items.map((it, idx) => (
                     <div key={idx} className="flex items-center justify-between text-xs py-1">
                       <div className="min-w-0 pr-2">
-                        <p className="font-bold text-slate-900 truncate">{it.title}</p>
+                        <p className="font-bold text-slate-900 truncate">{(it.title || '').replace(/&amp;/g, '&')}</p>
                         <p className="text-[10px] text-slate-500">
-                          {it.clipCount || 1000}+ Clips • 1080p Full HD
+                          {typeof it.clipCount === 'string' && it.clipCount.includes('Reel') 
+                            ? it.clipCount 
+                            : `${(typeof it.clipCount === 'number' ? it.clipCount : (parseInt(String(it.clipCount || '').replace(/\D/g, ''), 10) || 1000)).toLocaleString()}+ Clips`} • 1080p Full HD
                         </p>
                       </div>
                       <div className="text-right shrink-0">
