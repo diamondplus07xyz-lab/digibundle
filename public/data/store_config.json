@@ -1,8 +1,8 @@
 {
   "version": "2.0",
-  "updatedAt": 1795689619658,
-  "lastModifiedByDevice": "cr_mob_e38xbb_mwxf8git",
-  "lastModifiedDeviceLabel": "📱 Mobile (iOS · Google Chrome)",
+  "updatedAt": 1795690019502,
+  "lastModifiedByDevice": "cr_mob_1kbvw4_mwxfh0lk",
+  "lastModifiedDeviceLabel": "📱 Mobile (Android · Google Chrome)",
   "config": {
     "storeName": "Cheap Reels",
     "themeBackground": "white",
@@ -4302,9 +4302,9 @@
     }
   ],
   "visitorStats": {
-    "totalViews": 241,
-    "uniqueVisitors": 109,
-    "mobileVisits": 76,
+    "totalViews": 242,
+    "uniqueVisitors": 110,
+    "mobileVisits": 77,
     "desktopVisits": 189,
     "knownIps": [
       "157.49.180.218",
@@ -4415,9 +4415,20 @@
       "152.59.199.109",
       "152.59.88.21",
       "106.76.64.53",
-      "152.59.49.38"
+      "152.59.49.38",
+      "152.56.139.54"
     ],
     "recentVisits": [
+      {
+        "id": 1795690018667,
+        "ip": "152.56.139.54",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "04:16 pm",
+        "date": "26 Nov",
+        "isRepeat": false
+      },
       {
         "id": 1795689619351,
         "ip": "152.59.49.38",
@@ -5405,16 +5416,6 @@
         "location": "India",
         "page": "Storefront (Home Catalog)",
         "time": "06:57 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795613153893.399,
-        "ip": "157.49.80.25",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Previewed Demo Video: 1000+ Space Aesthetic Reels Bu",
-        "time": "06:55 pm",
         "date": "25 Nov",
         "isRepeat": true
       }
