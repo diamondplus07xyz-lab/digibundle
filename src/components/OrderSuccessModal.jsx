@@ -164,7 +164,9 @@ export default function OrderSuccessModal({ order: initialOrder, onClose, config
 
             <div className="flex justify-between items-center text-slate-400">
               <span className="font-semibold">Amount Paid:</span>
-              <span className="font-black text-white text-sm">₹{currentOrder.total}</span>
+              <span className="font-black text-white text-sm">
+                {currentOrder.gateway === 'PayPal' ? `$${Math.round(currentOrder.total)} USD` : `₹${currentOrder.total}`}
+              </span>
             </div>
 
             <div className="flex justify-between items-center text-slate-400">
@@ -258,13 +260,17 @@ export default function OrderSuccessModal({ order: initialOrder, onClose, config
               {currentOrder.items.map((item, idx) => (
                 <div key={idx} className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between text-xs gap-3">
                   <div className="min-w-0">
-                    <p className="font-bold text-white truncate">{item.title}</p>
+                    <p className="font-bold text-white truncate">{(item.title || '').replace(/&amp;/g, '&')}</p>
                     <p className="text-[11px] text-slate-400">
-                      {item.clipCount || 1000}+ Reels • 1080p Full HD • Watermark-Free
+                      {typeof item.clipCount === 'string' && item.clipCount.includes('Reel')
+                        ? item.clipCount
+                        : `${(typeof item.clipCount === 'number' ? item.clipCount : (parseInt(String(item.clipCount || '').replace(/\D/g, ''), 10) || 1000)).toLocaleString()}+ Reels`} • 1080p Full HD • Watermark-Free
                     </p>
                   </div>
                   <div className="text-right shrink-0">
-                    <span className="font-black text-amber-400 block">₹{item.price}</span>
+                    <span className="font-black text-amber-400 block">
+                      {currentOrder.gateway === 'PayPal' ? `$${item.price} USD` : `₹${item.price}`}
+                    </span>
                     {isVerified && item.driveLink && (
                       <a 
                         href={item.driveLink}
