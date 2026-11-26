@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "updatedAt": 1795710883057,
+  "updatedAt": 1795710902391,
   "lastModifiedByDevice": "cr_mob_9wiicq_mwusx6a9",
   "lastModifiedDeviceLabel": "📱 Mobile (Android · Google Chrome)",
   "config": {
@@ -55,7 +55,6 @@
     "paypal": {
       "enabled": true,
       "clientId": "BAALe8zSTmDk7iOAzhSFRd19k5u-53gVI6S-ImiFUcN_2mQGxGY1wRXPde7eMctzsxmIvZM5D98bbqQyZk",
-      "clientSecret": "ED0OHtTxr3I33_••••••••••••••••••••",
       "mode": "live",
       "currency": "USD",
       "exchangeRate": 85
