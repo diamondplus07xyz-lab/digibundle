@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "updatedAt": 1795700163578,
+  "updatedAt": 1795700207407,
   "lastModifiedByDevice": "cr_mob_wop2gf_mwxei986",
   "lastModifiedDeviceLabel": "📱 Mobile (iOS · Google Chrome)",
   "config": {
@@ -4301,9 +4301,9 @@
     }
   ],
   "visitorStats": {
-    "totalViews": 239,
+    "totalViews": 240,
     "uniqueVisitors": 107,
-    "mobileVisits": 74,
+    "mobileVisits": 75,
     "desktopVisits": 189,
     "knownIps": [
       "157.49.180.218",
@@ -4415,6 +4415,16 @@
       "122.161.64.246"
     ],
     "recentVisits": [
+      {
+        "id": 1795700207070,
+        "ip": "122.161.64.246",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "07:06 PM",
+        "date": "26 Nov",
+        "isRepeat": true
+      },
       {
         "id": 1795699924029,
         "ip": "122.161.64.246",
@@ -5402,16 +5412,6 @@
         "location": "India",
         "page": "Storefront (Home Catalog)",
         "time": "06:57 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795613153893.399,
-        "ip": "157.49.80.25",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Previewed Demo Video: 1000+ Space Aesthetic Reels Bu",
-        "time": "06:55 pm",
         "date": "25 Nov",
         "isRepeat": true
       }
