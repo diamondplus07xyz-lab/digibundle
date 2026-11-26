@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "updatedAt": 1795700468653,
+  "updatedAt": 1795701197294,
   "lastModifiedByDevice": "cr_mob_wop2gf_mwxei986",
   "lastModifiedDeviceLabel": "📱 Mobile (iOS · Google Chrome)",
   "config": {
@@ -4301,9 +4301,9 @@
     }
   ],
   "visitorStats": {
-    "totalViews": 242,
+    "totalViews": 243,
     "uniqueVisitors": 107,
-    "mobileVisits": 77,
+    "mobileVisits": 78,
     "desktopVisits": 189,
     "knownIps": [
       "157.49.180.218",
@@ -4415,6 +4415,16 @@
       "122.161.64.246"
     ],
     "recentVisits": [
+      {
+        "id": 1795701196761,
+        "ip": "122.161.64.246",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "07:23 PM",
+        "date": "26 Nov",
+        "isRepeat": true
+      },
       {
         "id": 1795700468084,
         "ip": "122.161.64.246",
@@ -5402,16 +5412,6 @@
         "location": "India",
         "page": "Storefront (Home Catalog)",
         "time": "07:03 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795613266786,
-        "ip": "157.49.80.25",
-        "device": "Mobile Phone",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "06:57 pm",
         "date": "25 Nov",
         "isRepeat": true
       }
