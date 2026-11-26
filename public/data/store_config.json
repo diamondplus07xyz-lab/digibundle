@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "updatedAt": 1795719231987,
+  "updatedAt": 1795719275012,
   "lastModifiedByDevice": "cr_mob_9wiicq_mwusx6a9",
   "lastModifiedDeviceLabel": "📱 Mobile (Android · Google Chrome)",
   "config": {
@@ -4319,9 +4319,9 @@
     }
   ],
   "visitorStats": {
-    "totalViews": 250,
+    "totalViews": 251,
     "uniqueVisitors": 114,
-    "mobileVisits": 85,
+    "mobileVisits": 86,
     "desktopVisits": 189,
     "knownIps": [
       "157.49.180.218",
@@ -4440,6 +4440,16 @@
       "152.58.96.176"
     ],
     "recentVisits": [
+      {
+        "id": 1795719275269,
+        "ip": "152.58.96.176",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "12:24 am",
+        "date": "27 Nov",
+        "isRepeat": true
+      },
       {
         "id": 1795719231863,
         "ip": "152.58.96.176",
@@ -5426,16 +5436,6 @@
         "device": "Mobile Phone",
         "location": "India",
         "page": "Previewed Demo Video: 1200+ Aesthetic Trees Reels Bu",
-        "time": "10:10 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795624855819.7026,
-        "ip": "157.49.66.90",
-        "device": "Mobile Phone",
-        "location": "India",
-        "page": "Previewed Demo Video: 2000+ Aesthetic Snow Reels Bun",
         "time": "10:10 pm",
         "date": "25 Nov",
         "isRepeat": true
