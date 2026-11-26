@@ -1,7 +1,7 @@
 {
   "version": "2.0",
-  "updatedAt": 1795695777418,
-  "lastModifiedByDevice": "cr_mob_4irttl_mwxiwenu",
+  "updatedAt": 1795696406232,
+  "lastModifiedByDevice": "cr_mob_32tvcx_mwxj9rbk",
   "lastModifiedDeviceLabel": "📱 Mobile (Android · Google Chrome)",
   "config": {
     "storeName": "Cheap Reels",
@@ -4302,9 +4302,9 @@
     }
   ],
   "visitorStats": {
-    "totalViews": 248,
-    "uniqueVisitors": 115,
-    "mobileVisits": 83,
+    "totalViews": 249,
+    "uniqueVisitors": 116,
+    "mobileVisits": 84,
     "desktopVisits": 189,
     "knownIps": [
       "157.49.180.218",
@@ -4421,9 +4421,20 @@
       "223.238.138.107",
       "152.59.6.165",
       "223.184.222.9",
-      "157.49.105.38"
+      "157.49.105.38",
+      "152.59.120.234"
     ],
     "recentVisits": [
+      {
+        "id": 1795696399187,
+        "ip": "152.59.120.234",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "06:03 pm",
+        "date": "26 Nov",
+        "isRepeat": false
+      },
       {
         "id": 1795695776754,
         "ip": "157.49.105.38",
@@ -5413,16 +5424,6 @@
         "time": "02:17 pm",
         "date": "25 Nov",
         "isRepeat": false
-      },
-      {
-        "id": 1795616205392.0015,
-        "ip": "157.49.80.25",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Clicked Buy Now: 700+ AI Cats Reels Bundle – Cu",
-        "time": "07:46 pm",
-        "date": "25 Nov",
-        "isRepeat": true
       }
     ]
   },
