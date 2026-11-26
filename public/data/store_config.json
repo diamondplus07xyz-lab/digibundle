@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "updatedAt": 1795692860548,
+  "updatedAt": 1795692882492,
   "lastModifiedByDevice": "cr_mob_ssvx5s_mwxh5epu",
   "lastModifiedDeviceLabel": "📱 Mobile (Android · Google Chrome)",
   "config": {
@@ -4302,9 +4302,9 @@
     }
   ],
   "visitorStats": {
-    "totalViews": 246,
+    "totalViews": 247,
     "uniqueVisitors": 114,
-    "mobileVisits": 81,
+    "mobileVisits": 82,
     "desktopVisits": 189,
     "knownIps": [
       "157.49.180.218",
@@ -4423,6 +4423,46 @@
       "223.184.222.9"
     ],
     "recentVisits": [
+      {
+        "id": 1795692881785,
+        "ip": "223.184.222.9",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "05:04 pm",
+        "date": "26 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795692859666.3052,
+        "ip": "223.184.222.9",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Previewed Demo Video: 1000+ Space Aesthetic Reels Bu",
+        "time": "05:04 pm",
+        "date": "26 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795692852749.6885,
+        "ip": "223.184.222.9",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Clicked Buy Now: 1000+ Space Aesthetic Reels Bu",
+        "time": "05:04 pm",
+        "date": "26 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795692852740.165,
+        "ip": "223.184.222.9",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Clicked Claim Mega Deal",
+        "time": "05:04 pm",
+        "date": "26 Nov",
+        "isRepeat": true
+      },
       {
         "id": 1795692836985,
         "ip": "223.184.222.9",
@@ -5380,46 +5420,6 @@
         "location": "India",
         "page": "Storefront (Home Catalog)",
         "time": "07:46 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795616001371,
-        "ip": "157.49.80.25",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "07:43 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795615712303.4382,
-        "ip": "157.49.80.240",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Clicked Buy Now: 1000+ Space Aesthetic Reels Bu",
-        "time": "07:38 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795615707204,
-        "ip": "157.49.80.240",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "07:38 pm",
-        "date": "25 Nov",
-        "isRepeat": false
-      },
-      {
-        "id": 1795613892710,
-        "ip": "157.49.80.25",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "07:08 pm",
         "date": "25 Nov",
         "isRepeat": true
       }
