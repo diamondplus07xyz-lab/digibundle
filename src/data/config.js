@@ -51,7 +51,7 @@ export const initialConfig = {
   // Payment Gateway Integrations & Mode Selection
   gatewayMode: "multiple", // "single" (ek time pe ek) | "multiple" (ek time pe multiple)
   activeGateway: "cashfree", // for single mode: "upi_qr" | "razorpay" | "cashfree" | "paypal"
-  enabledGateways: ["upi_qr", "cashfree"], // for multiple mode
+  enabledGateways: ["cashfree", "paypal", "upi_qr"], // for multiple mode
   
   // Direct UPI QR
   upiGateway: {
@@ -78,9 +78,9 @@ export const initialConfig = {
 
   // PayPal Integration
   paypal: {
-    enabled: false,
-    clientId: "",
-    clientSecret: "",
+    enabled: true,
+    clientId: "BAALe8zSTmDk7iOAzhSFRd19k5u-53gVI6S-ImiFUcN_2mQGxGY1wRXPde7eMctzsxmIvZM5D98bbqQyZk",
+    clientSecret: "ED0OHtTxr3I33_vLgz9kfNnlAP4hLRrldqrIrwd4CFFBnDM2glFj4sebft27YOH632bpXDgtJkWVQBSP",
     mode: "live", // "live" | "sandbox"
     currency: "USD", // "USD" | "INR"
     exchangeRate: 85 // 1 USD = 85 INR

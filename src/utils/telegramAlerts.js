@@ -100,7 +100,7 @@ export const sendTelegramOrderAlert = async (order, config) => {
     `💰 <b>NEW SALE RECEIVED — CHEAPREELS.IN</b> 💰`,
     `━━━━━━━━━━━━━━━━━━━━━━━━━`,
     `📦 <b>Order ID:</b> <code>#${order.id}</code>`,
-    `💵 <b>Total Amount:</b> <b>₹${totalAmount}</b>`,
+    `💵 <b>Total Amount:</b> <b>${order.usdAmount ? `$${order.usdAmount} USD (₹${totalAmount})` : `₹${totalAmount}`}</b>`,
     `💳 <b>Payment Mode:</b> ${paymentMethodLabel}`,
     `🔢 <b>UTR / Txn Ref:</b> <code>${utrOrTxn}</code>`,
     ``,

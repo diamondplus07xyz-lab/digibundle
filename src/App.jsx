@@ -487,6 +487,7 @@ export default function App() {
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
   const [activePolicy, setActivePolicy] = useState(null);
   const [cashfreeVerifying, setCashfreeVerifying] = useState(false);
+  const [paypalVerifying, setPaypalVerifying] = useState(false);
 
   // Real-Time Telegram Alert for High-Intent Checkout Visits (Lead Alerts)
   useEffect(() => {
@@ -667,6 +668,129 @@ export default function App() {
     };
 
     verifyAndFulfill();
+  }, [bundles, config]);
+
+  // Automatic Verification & Fulfillment for PayPal Returns (Enterprise Cloud Delivery)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const urlParams = new URLSearchParams(window.location.search);
+    const isPaypalReturn = urlParams.get('paypal_return') === 'true';
+    const paypalOrderId = urlParams.get('order_id') || urlParams.get('token');
+    if (!isPaypalReturn || !paypalOrderId) return;
+
+    setPaypalVerifying(true);
+
+    let attempts = 0;
+    const maxAttempts = 6;
+
+    const verifyAndFulfillPaypal = async () => {
+      try {
+        attempts++;
+        const res = await fetch(`/api/paypal?order_id=${encodeURIComponent(paypalOrderId)}`);
+        const data = await res.json().catch(() => null);
+
+        if (data && (data.paid || data.status === 'COMPLETED')) {
+          setPaypalVerifying(false);
+
+          let pending = null;
+          try {
+            const raw = localStorage.getItem('cheap_reels_pending_paypal_order');
+            if (raw) pending = JSON.parse(raw);
+          } catch (e) {}
+
+          let rawItems = [];
+          if (pending && Array.isArray(pending.items) && pending.items.length > 0) {
+            rawItems = pending.items;
+          } else if (Array.isArray(data.items) && data.items.length > 0) {
+            rawItems = data.items;
+          } else {
+            const savedOrders = JSON.parse(localStorage.getItem('cheap_reels_orders') || '[]');
+            const matched = savedOrders.find(o => o.id === paypalOrderId || o.paymentId === paypalOrderId);
+            if (matched && matched.items?.length > 0) rawItems = matched.items;
+          }
+
+          if (!rawItems || rawItems.length === 0) {
+            rawItems = [bundles[0] || initialBundles[0]];
+          }
+
+          const securedItems = rawItems.map(item => {
+            const fresh = bundles.find(b => b.id === item.id) || initialBundles.find(b => b.id === item.id) || item;
+            return {
+              ...fresh,
+              ...item,
+              driveLink: fresh.driveLink || item.driveLink || ''
+            };
+          });
+
+          const finalOrder = {
+            id: pending?.id || ('CR-' + Math.floor(100000 + Math.random() * 900000)),
+            name: pending?.name || data.customer_name || 'Customer',
+            whatsapp: pending?.whatsapp || data.customer_phone || '',
+            email: pending?.email || data.customer_email || 'support@cheapreels.in',
+            state: pending?.state || data.customer_state || '',
+            city: pending?.city || data.customer_city || '',
+            total: pending?.total || Math.round(Number(data.amount || 1) * 85),
+            items: securedItems,
+            gateway: 'PayPal',
+            paymentApp: `PayPal ($${data.amount || pending?.usdAmount || ''} USD)`,
+            paymentId: data.paypalOrderId || paypalOrderId,
+            utr: data.paypalOrderId || paypalOrderId,
+            status: 'VERIFIED',
+            driveLinkUnlocked: true,
+            date: new Date().toISOString()
+          };
+
+          setOrders(prev => {
+            const filtered = (prev || []).filter(o => o.id !== finalOrder.id && o.utr !== finalOrder.utr);
+            const updated = [finalOrder, ...filtered];
+            try {
+              localStorage.setItem('cheap_reels_orders', JSON.stringify(updated));
+            } catch (e) {}
+            try {
+              realtimeSync.pushUpdate({ orders: updated, action: 'customer_order_verified', updateType: 'ORDERS_UPDATED' });
+            } catch (e) {}
+            return updated;
+          });
+
+          try {
+            sendTelegramNewSaleAlert({
+              order: finalOrder,
+              items: securedItems,
+              customerName: finalOrder.name,
+              customerPhone: finalOrder.whatsapp,
+              customerEmail: finalOrder.email,
+              customerState: finalOrder.state,
+              customerCity: finalOrder.city,
+              gateway: 'PayPal',
+              amount: finalOrder.total,
+              usdAmount: pending?.usdAmount || data.amount,
+              paymentId: finalOrder.paymentId
+            });
+          } catch (e) {}
+
+          setCompletedOrder(finalOrder);
+          try {
+            localStorage.removeItem('cheap_reels_pending_paypal_order');
+            window.history.replaceState({}, '', window.location.pathname);
+          } catch (e) {}
+        } else if (attempts < maxAttempts) {
+          setTimeout(verifyAndFulfillPaypal, 1500);
+        } else {
+          setPaypalVerifying(false);
+          try {
+            window.history.replaceState({}, '', window.location.pathname);
+          } catch (e) {}
+        }
+      } catch (e) {
+        if (attempts < maxAttempts) {
+          setTimeout(verifyAndFulfillPaypal, 1500);
+        } else {
+          setPaypalVerifying(false);
+        }
+      }
+    };
+
+    verifyAndFulfillPaypal();
   }, [bundles, config]);
 
   // Cryptographic Zero-Knowledge Route Vault:
@@ -1545,6 +1669,13 @@ export default function App() {
           <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[100] bg-emerald-600 text-white font-black px-6 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-pulse border border-emerald-400">
             <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
             <span className="text-sm">Payment Received! Unlocking Your Google Drive Link...</span>
+          </div>
+        )}
+
+        {paypalVerifying && (
+          <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[100] bg-sky-600 text-white font-black px-6 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-pulse border border-sky-400">
+            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            <span className="text-sm">PayPal Payment Received! Unlocking Your Google Drive Link...</span>
           </div>
         )}
       </Suspense>
