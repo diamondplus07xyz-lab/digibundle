@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "updatedAt": 1795710902391,
+  "updatedAt": 1795711029413,
   "lastModifiedByDevice": "cr_mob_9wiicq_mwusx6a9",
   "lastModifiedDeviceLabel": "📱 Mobile (Android · Google Chrome)",
   "config": {
@@ -137,6 +137,32 @@
     }
   },
   "bundles": [
+    {
+      "title": "2000+ GTA VI reels bundle ",
+      "category": "ai",
+      "categoryLabel": "AI Reels",
+      "price": 99,
+      "originalPrice": 799,
+      "clipCount": "2,000+ Reels",
+      "badge": "POPULAR",
+      "thumbnail": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
+      "videoPreview": "",
+      "driveLink": "https://drive.google.com/drive/folders/18nLnqA1tVAEUAnDuGdtUptHZOaRM3cl3?usp=sharing",
+      "features": [
+        "1080p Full HD MP4",
+        "No Watermark",
+        "Google Drive Instant Access"
+      ],
+      "id": "bundle-1795711028475",
+      "rating": 4.85,
+      "reviewsCount": 120,
+      "links": [
+        {
+          "label": "Bundle Access Link",
+          "url": "https://drive.google.com/drive/folders/18nLnqA1tVAEUAnDuGdtUptHZOaRM3cl3?usp=sharing"
+        }
+      ]
+    },
     {
       "id": "bundle-1",
       "title": "1000+ Space Aesthetic Reels Bundle – Cinematic Space Videos for Reels &amp;amp; Shorts",
