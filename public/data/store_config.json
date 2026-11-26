@@ -1,7 +1,7 @@
 {
   "version": "2.0",
-  "updatedAt": 1795702890795,
-  "lastModifiedByDevice": "cr_mob_bmnyig_mwxn1pr7",
+  "updatedAt": 1795710883057,
+  "lastModifiedByDevice": "cr_mob_9wiicq_mwusx6a9",
   "lastModifiedDeviceLabel": "📱 Mobile (Android · Google Chrome)",
   "config": {
     "storeName": "Cheap Reels",
@@ -4301,9 +4301,9 @@
     }
   ],
   "visitorStats": {
-    "totalViews": 245,
-    "uniqueVisitors": 108,
-    "mobileVisits": 80,
+    "totalViews": 246,
+    "uniqueVisitors": 112,
+    "mobileVisits": 81,
     "desktopVisits": 189,
     "knownIps": [
       "157.49.180.218",
@@ -4413,9 +4413,23 @@
       "152.58.188.11",
       "157.46.5.43",
       "122.161.64.246",
-      "1.38.127.18"
+      "1.38.127.18",
+      "152.59.199.109",
+      "152.59.88.21",
+      "106.76.64.53",
+      "152.58.96.6"
     ],
     "recentVisits": [
+      {
+        "id": 1795710883275,
+        "ip": "152.58.96.6",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "10:04 pm",
+        "date": "26 Nov",
+        "isRepeat": false
+      },
       {
         "id": 1795702750840,
         "ip": "1.38.127.18",
@@ -4513,6 +4527,46 @@
         "location": "India",
         "page": "Storefront (Home Catalog)",
         "time": "06:24 pm",
+        "date": "26 Nov",
+        "isRepeat": false
+      },
+      {
+        "id": 1795689320779,
+        "ip": "106.76.64.53",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "04:05 pm",
+        "date": "26 Nov",
+        "isRepeat": false
+      },
+      {
+        "id": 1795689172580.694,
+        "ip": "152.59.88.21",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Clicked Buy Now: 1000+ Space Aesthetic Reels Bu",
+        "time": "04:02 pm",
+        "date": "26 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795689163432,
+        "ip": "152.59.88.21",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "04:02 pm",
+        "date": "26 Nov",
+        "isRepeat": false
+      },
+      {
+        "id": 1795688640679,
+        "ip": "152.59.199.109",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "03:54 pm",
         "date": "26 Nov",
         "isRepeat": false
       },
@@ -5363,56 +5417,6 @@
         "location": "India",
         "page": "Storefront (Home Catalog)",
         "time": "02:17 pm",
-        "date": "25 Nov",
-        "isRepeat": false
-      },
-      {
-        "id": 1795616205392.0015,
-        "ip": "157.49.80.25",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Clicked Buy Now: 700+ AI Cats Reels Bundle – Cu",
-        "time": "07:46 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795616202032,
-        "ip": "157.49.80.25",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "07:46 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795616001371,
-        "ip": "157.49.80.25",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "07:43 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795615712303.4382,
-        "ip": "157.49.80.240",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Clicked Buy Now: 1000+ Space Aesthetic Reels Bu",
-        "time": "07:38 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795615707204,
-        "ip": "157.49.80.240",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "07:38 pm",
         "date": "25 Nov",
         "isRepeat": false
       }
