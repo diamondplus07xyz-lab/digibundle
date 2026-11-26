@@ -91,8 +91,9 @@ export default function CheckoutModal({
 
   const upiId = config?.upiId || config?.upiGateway?.upiId || '';
   const payeeName = config?.upiName || config?.upiGateway?.payeeName || config?.storeName || 'Cheap Reels';
-  const supportPhone = (config?.whatsappNumber || '').replace(/\D/g, '');
-  const supportEmail = config?.supportEmail || '';
+  const rawSupport = (config?.whatsappNumber || '7017324978').replace(/\D/g, '');
+  const supportPhone = rawSupport.length === 10 ? `91${rawSupport}` : (rawSupport || '917017324978');
+  const supportEmail = config?.supportEmail || 'reelscheap@gmail.com';
   
   // PayPal International Dynamic Dollar Pricing (GTA 6: $19.99 USD, other items 1:1 USD)
   const calculatedUsd = calculateUsdTotal(items, total);

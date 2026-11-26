@@ -195,7 +195,7 @@ function OrderItemCard({ order, whatsappNumber }) {
               className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-400 font-bold text-xs rounded-lg border border-emerald-500/30 transition"
             >
               <MessageCircle className="w-3.5 h-3.5" />
-              <span>Verify on WhatsApp</span>
+              <span>Verify on WhatsApp (+91 7017324978)</span>
             </a>
           </>
         ) : (

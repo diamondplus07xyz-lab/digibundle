@@ -75,7 +75,7 @@ export default function BuildStoreBanner({ whatsappNumber }) {
               <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center shrink-0 shadow-xs">
                 <MessageCircle className="w-4 h-4 text-emerald-600 fill-emerald-600" />
               </div>
-              <span>WhatsApp: {cleanNumber ? `+${cleanNumber}` : 'Support Available'}</span>
+              <span>WhatsApp: +91 7017324978</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
 

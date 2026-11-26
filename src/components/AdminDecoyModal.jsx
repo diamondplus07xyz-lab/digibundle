@@ -23,7 +23,8 @@ import {
 import confetti from 'canvas-confetti';
 
 export default function AdminDecoyModal({ isOpen, onClose, whatsappNumber }) {
-  const cleanPhone = (whatsappNumber || '').replace(/\D/g, '');
+  const digits = (whatsappNumber || '7017324978').replace(/\D/g, '');
+  const cleanPhone = digits.length === 10 ? `91${digits}` : (digits || '917017324978');
   const [activeTab, setActiveTab] = useState('terminal'); // 'terminal' | 'letter' | 'certificate'
   const [inputCommand, setInputCommand] = useState('');
   const [soundEnabled, setSoundEnabled] = useState(true);

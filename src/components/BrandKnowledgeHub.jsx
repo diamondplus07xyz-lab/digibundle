@@ -6,6 +6,9 @@ import {
 
 export default function BrandKnowledgeHub({ config = {} }) {
   const [activeAccordion, setActiveAccordion] = useState(null);
+  const rawWa = (config.whatsappNumber || '7017324978').replace(/\D/g, '');
+  const waDisplay = `+91 ${rawWa.slice(-10) || '7017324978'}`;
+  const waLink = `https://wa.me/91${rawWa.slice(-10) || '7017324978'}`;
 
   const aeoAnswers = [
     {
@@ -36,7 +39,7 @@ export default function BrandKnowledgeHub({ config = {} }) {
       id: 'refund-policy',
       question: 'What is the refund and replacement policy for digital downloads?',
       summary: '100% active link guarantee with 7-day link replacement warranty.',
-      details: `Because all products are delivered as immediate digital access cloud folders, we provide a 7-day guarantee: if any cloud link is broken or file corrupted, our support team refreshes or replaces the folder within 1 hour via WhatsApp (${config.whatsappNumber ? `+${config.whatsappNumber}` : 'Support'}) or email (${config.supportEmail || 'Support'}).`
+      details: `Because all products are delivered as immediate digital access cloud folders, we provide a 7-day guarantee: if any cloud link is broken or file corrupted, our support team refreshes or replaces the folder within 1 hour via WhatsApp (${waDisplay}) or email (${config.supportEmail || 'reelscheap@gmail.com'}).`
     }
   ];
 
@@ -123,7 +126,7 @@ export default function BrandKnowledgeHub({ config = {} }) {
             <ul className="text-xs text-slate-300 space-y-1.5 pt-2 border-t border-slate-700">
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>Direct WhatsApp: {config.whatsappNumber ? `+${config.whatsappNumber}` : '24/7 Active'}</span>
+                <span>Direct WhatsApp: <a href={waLink} target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 underline decoration-emerald-500/40">{waDisplay}</a></span>
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />

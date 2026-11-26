@@ -5,7 +5,9 @@ export default function Hero({ onClaimMegaDeal, onScrollToCatalog, masterVaultTh
   const isDefaultVault = !masterVaultThumbnail || masterVaultThumbnail.includes('sheru-bhai-mega-reels-bundle-ad');
   const vaultImg = isDefaultVault ? "/special-offer.webp" : masterVaultThumbnail;
   const rawSupport = (config?.whatsappNumber || '7017324978').replace(/\D/g, '');
-  const supportPhone = `+${rawSupport.length === 10 ? `91${rawSupport}` : rawSupport}`;
+  const tenDigit = rawSupport.slice(-10) || '7017324978';
+  const supportPhone = `+91 ${tenDigit}`;
+  const whatsappUrl = `https://wa.me/91${tenDigit}`;
 
   return (
     <section className="relative pt-8 pb-12 sm:pt-14 sm:pb-16 border-b border-slate-300">
@@ -57,7 +59,7 @@ export default function Hero({ onClaimMegaDeal, onScrollToCatalog, masterVaultTh
                 <span className="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center shrink-0">
                   <MessageCircle className="w-3.5 h-3.5 text-purple-600" />
                 </span>
-                <span>Direct WhatsApp Support: <strong className="text-slate-950 font-black">{supportPhone}</strong></span>
+                <span>Direct WhatsApp Support: <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-slate-950 font-black hover:text-purple-600 transition underline decoration-purple-300 underline-offset-2">{supportPhone}</a></span>
               </li>
             </ul>
 

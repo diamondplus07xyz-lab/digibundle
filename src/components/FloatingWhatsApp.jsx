@@ -18,7 +18,7 @@ export default function FloatingWhatsApp({ whatsappNumber }) {
     >
       <MessageCircle className="w-6 h-6 fill-white text-emerald-500 group-hover:rotate-12 transition-transform" />
       <span className="hidden sm:inline font-bold text-xs text-slate-950">
-        WhatsApp Help
+        WhatsApp (+91 7017324978)
       </span>
     </a>
   );

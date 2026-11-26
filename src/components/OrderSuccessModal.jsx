@@ -246,7 +246,7 @@ export default function OrderSuccessModal({ order: initialOrder, onClose, config
                 className="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-xl text-xs sm:text-sm shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 transition hover:scale-[1.01] active:scale-[0.99]"
               >
                 <MessageCircle className="w-5 h-5 fill-white" />
-                <span>Chat on WhatsApp to Speed Up Verification</span>
+                <span>Chat on WhatsApp (+91 7017324978) to Speed Up Verification</span>
                 <ExternalLink className="w-4 h-4" />
               </a>
 

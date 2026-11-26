@@ -30,7 +30,7 @@ export function getOrganizationSchema(config = {}) {
     'contactPoint': [
       {
         '@type': 'ContactPoint',
-        'telephone': '+91-7017324978',
+        'telephone': '+91 7017324978',
         'contactType': 'customer service',
         'email': config.supportEmail || 'reelscheap@gmail.com',
         'availableLanguage': ['English', 'Hindi'],

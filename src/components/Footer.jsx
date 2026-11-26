@@ -5,7 +5,10 @@ import BrandLogo from './BrandLogo';
 export default function Footer({ config = {}, onOpenPolicy }) {
   const footerLogo = config.footerLogo || config.logo;
   const supportEmail = config.supportEmail || "reelscheap@gmail.com";
-  const whatsappDisplay = config.whatsappNumber ? `+${config.whatsappNumber.replace(/\D/g, '')}` : 'Active Help';
+  const rawNumber = (config.whatsappNumber || '7017324978').replace(/\D/g, '');
+  const tenDigit = rawNumber.slice(-10) || '7017324978';
+  const whatsappDisplay = `+91 ${tenDigit}`;
+  const whatsappUrl = `https://wa.me/91${tenDigit}`;
 
   return (
     <footer role="contentinfo" className="bg-slate-950 border-t border-slate-800 text-slate-300 py-12 px-4 sm:px-6 lg:px-8 shadow-2xl relative z-10">
@@ -68,7 +71,9 @@ export default function Footer({ config = {}, onOpenPolicy }) {
               </li>
               <li className="pt-1 flex items-center gap-1.5 font-semibold text-white">
                 <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
-                <span>WhatsApp: {whatsappDisplay}</span>
+                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition">
+                  WhatsApp: {whatsappDisplay}
+                </a>
               </li>
               <li className="flex items-center gap-1.5 font-semibold text-amber-300">
                 <Mail className="w-3.5 h-3.5 text-amber-400" />

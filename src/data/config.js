@@ -7,7 +7,7 @@ export const initialConfig = {
   favicon: "/brand-icon.png",
   upiId: "cheapreels@upi",
   upiName: "Cheap Reels",
-  whatsappNumber: "917017324978",
+  whatsappNumber: "+91 7017324978",
   supportEmail: "reelscheap@gmail.com",
   bannerText: "LIMITED TIME OFFER: 2,50,000+ Ready Reels Pack at Flat 95% OFF! Instant Google Drive Access in 5 Seconds",
   showTopBanner: true,
