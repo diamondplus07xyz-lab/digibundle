@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "updatedAt": 1795714617741,
+  "updatedAt": 1795714621359,
   "lastModifiedByDevice": "cr_mob_wop2gf_mwxei986",
   "lastModifiedDeviceLabel": "📱 Mobile (iOS · Google Chrome)",
   "config": {
@@ -4447,6 +4447,16 @@
     ],
     "recentVisits": [
       {
+        "id": 1795714621071,
+        "ip": "122.161.64.246",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "11:07 PM",
+        "date": "26 Nov",
+        "isRepeat": true
+      },
+      {
         "id": 1795714616701,
         "ip": "122.161.64.246",
         "device": "Mobile Phone",
@@ -5432,16 +5442,6 @@
         "device": "Mobile Phone",
         "location": "India",
         "page": "Previewed Demo Video: 2000+ Aesthetic Snow Reels Bun",
-        "time": "10:10 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795624850597.6655,
-        "ip": "157.49.66.90",
-        "device": "Mobile Phone",
-        "location": "India",
-        "page": "Previewed Demo Video: 3000+ Cycling Reels Bundle – C",
         "time": "10:10 pm",
         "date": "25 Nov",
         "isRepeat": true
