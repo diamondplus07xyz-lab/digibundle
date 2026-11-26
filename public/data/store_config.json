@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "updatedAt": 1795711476084,
+  "updatedAt": 1795711893914,
   "lastModifiedByDevice": "cr_mob_9wiicq_mwusx6a9",
   "lastModifiedDeviceLabel": "📱 Mobile (Android · Google Chrome)",
   "config": {
@@ -4326,9 +4326,9 @@
     }
   ],
   "visitorStats": {
-    "totalViews": 248,
+    "totalViews": 249,
     "uniqueVisitors": 113,
-    "mobileVisits": 83,
+    "mobileVisits": 84,
     "desktopVisits": 189,
     "knownIps": [
       "157.49.180.218",
@@ -4446,6 +4446,36 @@
       "45.22.20.255"
     ],
     "recentVisits": [
+      {
+        "id": 1795711893815,
+        "ip": "152.58.96.6",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "10:21 pm",
+        "date": "26 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795711465759.1438,
+        "ip": "152.58.96.6",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Previewed Demo Video: 1000+ Space Aesthetic Reels Bu",
+        "time": "10:14 pm",
+        "date": "26 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795711380532.0493,
+        "ip": "152.58.96.6",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Clicked Buy Now: 2000+ GTA VI reels bundle",
+        "time": "10:13 pm",
+        "date": "26 Nov",
+        "isRepeat": true
+      },
       {
         "id": 1795711368647,
         "ip": "152.58.96.6",
@@ -5415,36 +5445,6 @@
         "time": "10:10 pm",
         "date": "25 Nov",
         "isRepeat": false
-      },
-      {
-        "id": 1795617409175.328,
-        "ip": "157.49.80.25",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Clicked Buy Now: 1000+ Space Aesthetic Reels Bu",
-        "time": "08:06 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795617400361,
-        "ip": "157.49.80.25",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "08:06 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795617091661.2534,
-        "ip": "Device #qumly820",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Clicked Buy Now: 1000+ Space Aesthetic Reels Bu",
-        "time": "08:01 pm",
-        "date": "25 Nov",
-        "isRepeat": true
       }
     ]
   },
