@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Clock, FolderOpen, ArrowRight, ShoppingBag, ShieldCheck, DownloadCloud } from 'lucide-react';
 import { initialConfig } from '../data/config';
+import { isInternationalVisitor } from '../utils/geoPricing';
 
 export default function SpecialOfferBanner({ offer, onClaimOffer }) {
   const currentOffer = offer || initialConfig.specialOffer;
@@ -105,13 +106,28 @@ export default function SpecialOfferBanner({ offer, onClaimOffer }) {
             </div>
 
             {/* Price & Claim CTA Button */}
-            <div className="pt-1.5 sm:pt-3 flex flex-row items-center justify-between sm:justify-start gap-3 sm:gap-4">
-              <div className="flex items-baseline gap-1.5 sm:gap-2">
-                <span className="text-2xl sm:text-4xl font-black text-amber-400">₹{currentOffer.price}</span>
-                <span className="text-xs sm:text-base font-semibold text-slate-300 line-through">₹{currentOffer.originalPrice}</span>
-                <span className="text-[10px] sm:text-xs font-black text-emerald-400 bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-md sm:rounded-lg border border-emerald-500/30">
-                  {discountPercent}% OFF
-                </span>
+            <div className="pt-1.5 sm:pt-3 flex flex-row items-center justify-between sm:justify-start gap-3 sm:gap-4 flex-wrap">
+              <div className="flex items-baseline gap-1.5 sm:gap-2 flex-wrap">
+                {isInternationalVisitor() ? (
+                  <>
+                    <span className="text-2xl sm:text-4xl font-black text-amber-400">$19.99 USD</span>
+                    <span className="text-xs sm:text-base font-semibold text-slate-300 line-through">$49.99 USD</span>
+                    <span className="text-[10px] sm:text-xs font-black text-emerald-400 bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-md sm:rounded-lg border border-emerald-500/30">
+                      60% OFF
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-2xl sm:text-4xl font-black text-amber-400">₹{currentOffer.price}</span>
+                    <span className="text-xs sm:text-base font-semibold text-slate-300 line-through">₹{currentOffer.originalPrice}</span>
+                    <span className="text-[10px] sm:text-xs font-mono font-bold text-sky-300 bg-sky-950/60 px-2 py-0.5 rounded-md border border-sky-400/30">
+                      $19.99 USD (Int'l)
+                    </span>
+                    <span className="text-[10px] sm:text-xs font-black text-emerald-400 bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-md sm:rounded-lg border border-emerald-500/30">
+                      {discountPercent}% OFF
+                    </span>
+                  </>
+                )}
               </div>
 
               <button

@@ -32,7 +32,6 @@ import SessionManagerDashboard from './SessionManagerDashboard';
 import SessionWarningModal from './SessionWarningModal';
 import BrandLogo from './BrandLogo';
 import SyncStatusBadge from './SyncStatusBadge';
-import ConflictAlertBanner from './ConflictAlertBanner';
 import { realtimeSync } from '../utils/realtimeSync';
 import { createAuditLogEntry } from '../utils/auditLogger';
 import { 
@@ -1821,18 +1820,7 @@ export default function AdminModal({
               </div>
             </div>
 
-            {/* Conflict Alert Banner (If concurrent device edits detected) */}
-            <ConflictAlertBanner 
-              onApplyRemoteUpdate={(remoteData) => {
-                if (remoteData?.bundles) onUpdateBundles(remoteData.bundles);
-                if (remoteData?.config) setStoreConfig(prev => ({ ...prev, ...remoteData.config }));
-                setEditingBundle(null);
-                showNotification('Remote updates applied from cloud!');
-              }}
-              onKeepLocalEdits={() => {
-                showNotification('Kept local edits.');
-              }}
-            />
+            {/* Scrollable Body (One-Way Direct Push Active) */}
 
             {/* Scrollable Body */}
             <div className="flex-1 overflow-y-auto p-3 sm:p-6 pb-20 md:pb-6 space-y-6">

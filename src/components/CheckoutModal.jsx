@@ -9,6 +9,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { calculateCartPricing } from '../utils/pricing';
 import { validateUtr, checkOrderRateLimit, recordOrderSubmission, sanitizeInput } from '../utils/security';
 import { initialBundles } from '../data/bundles';
+import { calculateUsdTotal, isGtaItem } from '../utils/geoPricing';
 import BrandLogo from './BrandLogo';
 
 // Comprehensive Indian States List for mandatory customer checkout details
@@ -93,9 +94,10 @@ export default function CheckoutModal({
   const supportPhone = (config?.whatsappNumber || '').replace(/\D/g, '');
   const supportEmail = config?.supportEmail || '';
   
-  // PayPal International 1:1 Direct Dollar Pricing (e.g., 149 Rs -> 149 USD)
-  const usdDisplay = Math.round(total);
-  const usdAmount = Number(usdDisplay).toFixed(2);
+  // PayPal International Dynamic Dollar Pricing (GTA 6: $19.99 USD, other items 1:1 USD)
+  const calculatedUsd = calculateUsdTotal(items, total);
+  const usdDisplay = calculatedUsd.toFixed(2).replace(/\.00$/, '');
+  const usdAmount = Number(calculatedUsd).toFixed(2);
 
   // Standard UPI URI format
   const upiUri = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${total}&cu=INR&tn=${encodeURIComponent('CheapReelsBundle')}`;

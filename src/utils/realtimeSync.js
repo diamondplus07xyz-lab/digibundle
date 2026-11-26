@@ -177,36 +177,10 @@ class RealtimeSyncManager {
     });
   }
 
-  // Handle incoming broadcast from another tab/window
+  // Handle incoming broadcast from another tab/window (One-Way Direct Sync)
   handleIncomingBroadcast(data) {
     if (!data || !data.type) return;
     if (data.sourceDeviceId === this.deviceId && data.broadcastSource === 'same_tab') return;
-
-    // Check conflict if admin is actively editing a form
-    if (this.activeFormTracker && this.activeFormTracker.isDirty) {
-      if (data.type === 'BUNDLES_UPDATED' && this.activeFormTracker.type === 'bundle') {
-        this.activeConflict = {
-          type: 'bundle',
-          message: `Product edits detected from ${data.deviceInfo?.label || 'another device'}.`,
-          incomingData: data.payload,
-          timestamp: data.timestamp
-        };
-        this.syncState = 'conflict';
-        this.notifyStatusChange();
-        return;
-      }
-      if (data.type === 'CONFIG_UPDATED' && this.activeFormTracker.type === 'config') {
-        this.activeConflict = {
-          type: 'config',
-          message: `Settings modified remotely from ${data.deviceInfo?.label || 'another device'}.`,
-          incomingData: data.payload,
-          timestamp: data.timestamp
-        };
-        this.syncState = 'conflict';
-        this.notifyStatusChange();
-        return;
-      }
-    }
 
     this.notifyListeners(data.type, data.payload, {
       source: 'broadcast',
@@ -281,29 +255,17 @@ class RealtimeSyncManager {
       if (isNewer && (isFromOtherDevice || triggerSource === 'window_focus' || triggerSource === 'force_sync' || triggerSource === 'app_mount' || triggerSource === 'network_reconnect')) {
         this.lastProcessedCloudUpdatedAt = remoteUpdatedAt;
 
-        // Check if admin is currently typing in an active form
-        if (this.activeFormTracker && this.activeFormTracker.isDirty) {
-          this.activeConflict = {
-            type: this.activeFormTracker.type,
-            message: `Remote update received from ${cloudData.lastModifiedDeviceLabel || 'another device'}.`,
-            incomingData: cloudData,
-            timestamp: remoteUpdatedAt
-          };
-          this.syncState = 'conflict';
-          this.notifyStatusChange();
-        } else {
-          // Notify app of remote data update
-          this.notifyListeners('CLOUD_DATA_SYNCED', cloudData, {
-            source: 'cloud',
-            triggerSource,
-            updatedAt: remoteUpdatedAt,
-            deviceInfo: {
-              id: cloudData.lastModifiedByDevice,
-              label: cloudData.lastModifiedDeviceLabel
-            }
-          });
-          this.syncState = 'connected';
-        }
+        // Direct One-Way Apply
+        this.notifyListeners('CLOUD_DATA_SYNCED', cloudData, {
+          source: 'cloud',
+          triggerSource,
+          updatedAt: remoteUpdatedAt,
+          deviceInfo: {
+            id: cloudData.lastModifiedByDevice,
+            label: cloudData.lastModifiedDeviceLabel
+          }
+        });
+        this.syncState = 'connected';
       }
 
       this.lastSyncTime = Date.now();
