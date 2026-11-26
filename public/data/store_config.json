@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "updatedAt": 1795711366581,
+  "updatedAt": 1795711380693,
   "lastModifiedByDevice": "cr_mob_9wiicq_mwusx6a9",
   "lastModifiedDeviceLabel": "📱 Mobile (Android · Google Chrome)",
   "config": {
@@ -4326,9 +4326,9 @@
     }
   ],
   "visitorStats": {
-    "totalViews": 247,
+    "totalViews": 248,
     "uniqueVisitors": 113,
-    "mobileVisits": 82,
+    "mobileVisits": 83,
     "desktopVisits": 189,
     "knownIps": [
       "157.49.180.218",
@@ -4446,6 +4446,26 @@
       "45.22.20.255"
     ],
     "recentVisits": [
+      {
+        "id": 1795711368647,
+        "ip": "152.58.96.6",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "10:12 pm",
+        "date": "26 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795711359628.1582,
+        "ip": "152.58.96.6",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Clicked Buy Now: 2000+ GTA VI reels bundle",
+        "time": "10:12 pm",
+        "date": "26 Nov",
+        "isRepeat": true
+      },
       {
         "id": 1795711294661,
         "ip": "45.22.20.255",
@@ -5425,26 +5445,6 @@
         "time": "08:01 pm",
         "date": "25 Nov",
         "isRepeat": true
-      },
-      {
-        "id": 1795617072954,
-        "ip": "Device #qumly820",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "08:01 pm",
-        "date": "25 Nov",
-        "isRepeat": false
-      },
-      {
-        "id": 1795616974584,
-        "ip": "Device #d7c8mfnn",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "07:59 pm",
-        "date": "25 Nov",
-        "isRepeat": false
       }
     ]
   },
