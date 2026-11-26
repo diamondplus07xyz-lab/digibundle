@@ -1,8 +1,8 @@
 {
   "version": "2.0",
-  "updatedAt": 1795711294881,
-  "lastModifiedByDevice": "cr_mob_bhm1ow_mwxs51in",
-  "lastModifiedDeviceLabel": "📱 Mobile (iOS · Apple Safari)",
+  "updatedAt": 1795711366581,
+  "lastModifiedByDevice": "cr_mob_9wiicq_mwusx6a9",
+  "lastModifiedDeviceLabel": "📱 Mobile (Android · Google Chrome)",
   "config": {
     "storeName": "Cheap Reels",
     "themeBackground": "white",
@@ -4326,9 +4326,9 @@
     }
   ],
   "visitorStats": {
-    "totalViews": 246,
+    "totalViews": 247,
     "uniqueVisitors": 113,
-    "mobileVisits": 81,
+    "mobileVisits": 82,
     "desktopVisits": 189,
     "knownIps": [
       "157.49.180.218",
@@ -4455,6 +4455,26 @@
         "time": "11:41 AM",
         "date": "26 Nov",
         "isRepeat": false
+      },
+      {
+        "id": 1795711188676,
+        "ip": "152.58.96.6",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "10:09 pm",
+        "date": "26 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795711172934.1108,
+        "ip": "Mobile Visitor",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Previewed Demo Video: 2000+ GTA VI reels bundle",
+        "time": "10:09 pm",
+        "date": "26 Nov",
+        "isRepeat": true
       },
       {
         "id": 1795710883275,
@@ -5425,26 +5445,6 @@
         "time": "07:59 pm",
         "date": "25 Nov",
         "isRepeat": false
-      },
-      {
-        "id": 1795616665265.4504,
-        "ip": "157.49.80.25",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Clicked Buy Now: 1000+ Space Aesthetic Reels Bu",
-        "time": "07:54 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795616659496,
-        "ip": "157.49.80.25",
-        "device": "Desktop PC",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "07:54 pm",
-        "date": "25 Nov",
-        "isRepeat": true
       }
     ]
   },
