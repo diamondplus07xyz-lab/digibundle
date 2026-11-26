@@ -106,8 +106,8 @@ export const initialConfig = {
     driveLinks: [
       {
         id: "gta-6-drive-folder",
-        label: "GTA 6 Master Cloud Folder (2000+ Reels)",
-        url: "https://drive.google.com/drive/folders/10GYoFNhVUcJH0-uCTjV6gbQ9GUFqn1kT"
+        label: "GTA VI Master Cloud Folder (2000+ Reels)",
+        url: "https://drive.google.com/drive/folders/18nLnqA1tVAEUAnDuGdtUptHZOaRM3cl3?usp=sharing"
       }
     ]
   }

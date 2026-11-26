@@ -148,8 +148,9 @@ export default function MyOrdersModal({ isOpen, onClose, orders, onUserLogout, w
 function OrderItemCard({ order, whatsappNumber }) {
   const isPending = order.status === 'PENDING_VERIFICATION' || order.driveLinkUnlocked === false;
   const primaryLink = order.items[0]?.driveLink || "https://drive.google.com";
-  const cleanPhone = (whatsappNumber || '').replace(/\D/g, '');
-  const whatsappUrl = order.whatsappUrl || (cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Hello, my order is ${order.id} and UTR is ${order.utr}. Please verify and send my Google Drive link.`)}` : '#');
+  const raw = (whatsappNumber || '7017324978').replace(/\D/g, '');
+  const cleanPhone = raw.length === 10 ? `91${raw}` : (raw || '917017324978');
+  const whatsappUrl = order.whatsappUrl || `https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Hello, my order is ${order.id} and UTR is ${order.utr}. Please verify and send my Google Drive link.`)}`;
 
   return (
     <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 space-y-3">

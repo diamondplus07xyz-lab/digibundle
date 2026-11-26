@@ -71,7 +71,7 @@ export default function App() {
           cashfree: { ...initialConfig.cashfree, ...(parsed.cashfree || {}) },
           paypal: { ...initialConfig.paypal, ...(parsed.paypal || {}) },
           upiGateway: { ...initialConfig.upiGateway, ...(parsed.upiGateway || {}) },
-          specialOffer: (parsed.specialOffer && parsed.specialOffer.title?.includes('GTA 6')) ? parsed.specialOffer : initialConfig.specialOffer,
+          specialOffer: (parsed.specialOffer && (parsed.specialOffer.title?.toLowerCase().includes('gta'))) ? { ...initialConfig.specialOffer, ...parsed.specialOffer, enabled: true } : initialConfig.specialOffer,
           logo: parsed.logo || initialConfig.logo
         };
       } catch (e) {}
@@ -575,7 +575,7 @@ export default function App() {
             id: cfOrderId,
             name: pending?.name || data.customer_name || 'Valued Customer',
             whatsapp: pending?.whatsapp || data.customer_phone || '',
-            email: pending?.email || data.customer_email || 'support@cheapreels.in',
+            email: pending?.email || data.customer_email || 'reelscheap@gmail.com',
             state: pending?.state || data.customer_state || '',
             city: pending?.city || data.customer_city || '',
             total: data.order_amount || pending?.total || 39,
@@ -726,7 +726,7 @@ export default function App() {
             id: pending?.id || ('CR-' + Math.floor(100000 + Math.random() * 900000)),
             name: pending?.name || data.customer_name || 'Customer',
             whatsapp: pending?.whatsapp || data.customer_phone || '',
-            email: pending?.email || data.customer_email || 'support@cheapreels.in',
+            email: pending?.email || data.customer_email || 'reelscheap@gmail.com',
             state: pending?.state || data.customer_state || '',
             city: pending?.city || data.customer_city || '',
             total: pending?.total || Math.round(Number(data.amount || 1)),

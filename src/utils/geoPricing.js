@@ -25,7 +25,12 @@ export function isGtaItem(item) {
   if (!item) return false;
   const id = String(item.id || '').toLowerCase();
   const title = String(item.title || '').toLowerCase();
-  return id === 'bundle-127' || id.includes('gta') || title.includes('gta 6') || title.includes('grand theft auto');
+  return id === 'bundle-1795711028475' || 
+         id === 'bundle-127' || 
+         id === 'special-offer-banner' || 
+         id.includes('gta') || 
+         title.includes('gta') || 
+         title.includes('grand theft auto');
 }
 
 export function calculateUsdTotal(items = [], inrTotal = 0) {
@@ -66,11 +71,11 @@ export function getItemPriceDisplay(item, forceInternational = false) {
       currency: 'INR',
       symbol: '₹',
       price: 99,
-      originalPrice: 999,
+      originalPrice: 799,
       formattedPrice: '₹99',
-      formattedOriginalPrice: '₹999',
+      formattedOriginalPrice: '₹799',
       intlNote: '$19.99 USD (Int\'l)',
-      discountPercent: 90,
+      discountPercent: 88,
       isGta: true
     };
   }

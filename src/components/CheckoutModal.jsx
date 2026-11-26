@@ -207,13 +207,11 @@ export default function CheckoutModal({
 
       const whatsappRedirectUrl = `https://wa.me/${supportPhone}?text=${encodeURIComponent(waText)}`;
 
+      // Open WhatsApp in new tab if permitted, keeping the user securely on OrderSuccessModal
       try {
-        const newTab = window.open(whatsappRedirectUrl, '_blank');
-        if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
-          window.location.href = whatsappRedirectUrl;
-        }
+        window.open(whatsappRedirectUrl, '_blank');
       } catch (e) {
-        window.location.href = whatsappRedirectUrl;
+        // Handled seamlessly on OrderSuccessModal with prominent WhatsApp button
       }
 
       const order = {
@@ -385,7 +383,7 @@ export default function CheckoutModal({
 
     const orderId = 'CR-' + Math.floor(100000 + Math.random() * 900000);
     const customerName = (name || 'Customer').trim();
-    const customerEmail = (email || supportEmail || 'support@cheapreels.in').trim();
+    const customerEmail = (email || supportEmail || 'reelscheap@gmail.com').trim();
     const currentOrigin = typeof window !== 'undefined' ? window.location.origin : 'https://www.cheapreels.in';
     const returnUrl = `${currentOrigin}/?cf_order_id=${encodeURIComponent(orderId)}`;
 
@@ -505,7 +503,7 @@ export default function CheckoutModal({
 
     const cleanName = (name || 'Customer').trim();
     const cleanPhone = whatsapp ? whatsapp.replace(/\D/g, '') : '';
-    const cleanEmail = (email || supportEmail || 'support@cheapreels.in').trim();
+    const cleanEmail = (email || supportEmail || 'reelscheap@gmail.com').trim();
     const orderId = 'CR-' + Math.floor(100000 + Math.random() * 900000);
 
     // Attach verified Google Drive links from master vault

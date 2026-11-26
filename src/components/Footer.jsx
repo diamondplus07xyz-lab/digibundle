@@ -4,7 +4,7 @@ import BrandLogo from './BrandLogo';
 
 export default function Footer({ config = {}, onOpenPolicy }) {
   const footerLogo = config.footerLogo || config.logo;
-  const supportEmail = config.supportEmail || "support@cheapreels.in";
+  const supportEmail = config.supportEmail || "reelscheap@gmail.com";
   const whatsappDisplay = config.whatsappNumber ? `+${config.whatsappNumber.replace(/\D/g, '')}` : 'Active Help';
 
   return (

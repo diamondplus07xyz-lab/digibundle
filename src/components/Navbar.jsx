@@ -487,7 +487,7 @@ export default function Navbar({
               {/* WhatsApp Support Link */}
               <div className="pt-4">
                 <a
-                  href={`https://wa.me/${(whatsappNumber || '').replace(/\D/g, '')}?text=Hello%20${encodeURIComponent(storeName || 'Cheap Reels')}%20Support`}
+                  href={`https://wa.me/${((whatsappNumber || '7017324978').replace(/\D/g, '')).length === 10 ? '91' + (whatsappNumber || '7017324978').replace(/\D/g, '') : ((whatsappNumber || '7017324978').replace(/\D/g, '') || '917017324978')}?text=Hello%20${encodeURIComponent(storeName || 'Cheap Reels')}%20Support`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-black flex items-center justify-center gap-2"

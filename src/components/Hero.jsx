@@ -4,7 +4,8 @@ import { Check, ArrowRight, Download, MessageCircle, ShoppingBag } from 'lucide-
 export default function Hero({ onClaimMegaDeal, onScrollToCatalog, masterVaultThumbnail, config = {} }) {
   const isDefaultVault = !masterVaultThumbnail || masterVaultThumbnail.includes('sheru-bhai-mega-reels-bundle-ad');
   const vaultImg = isDefaultVault ? "/special-offer.webp" : masterVaultThumbnail;
-  const supportPhone = config?.whatsappNumber ? `+${config.whatsappNumber.replace(/\D/g, '')}` : '24/7 Helpline Active';
+  const rawSupport = (config?.whatsappNumber || '7017324978').replace(/\D/g, '');
+  const supportPhone = `+${rawSupport.length === 10 ? `91${rawSupport}` : rawSupport}`;
 
   return (
     <section className="relative pt-8 pb-12 sm:pt-14 sm:pb-16 border-b border-slate-300">

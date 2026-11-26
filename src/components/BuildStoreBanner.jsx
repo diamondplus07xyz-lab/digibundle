@@ -2,9 +2,9 @@ import React from 'react';
 import { MessageCircle, Sparkles, CheckCircle2, ArrowRight, Smartphone, Zap, ShieldCheck } from 'lucide-react';
 
 export default function BuildStoreBanner({ whatsappNumber }) {
-  const digits = (whatsappNumber || '').replace(/[^0-9]/g, '');
-  const cleanNumber = digits.length === 10 ? `91${digits}` : digits;
-  const whatsappUrl = cleanNumber ? `https://wa.me/${cleanNumber}?text=Hello,%20I%20want%20to%20build%20a%20digital%20store%20website%20like%20this!%20Please%20share%20details.` : '#';
+  const digits = (whatsappNumber || '7017324978').replace(/[^0-9]/g, '');
+  const cleanNumber = digits.length === 10 ? `91${digits}` : (digits || '917017324978');
+  const whatsappUrl = `https://wa.me/${cleanNumber}?text=Hello,%20I%20want%20to%20build%20a%20digital%20store%20website%20like%20this!%20Please%20share%20details.`;
 
   return (
     <section 

@@ -89,7 +89,7 @@ export default async function handler(req, res) {
 
       const cleanPhone = (customerPhone || '').replace(/\D/g, '').slice(-10) || '9999999999';
       const cleanName = (customerName || 'Customer').trim();
-      const cleanEmail = (customerEmail || 'support@cheapreels.in').trim();
+      const cleanEmail = (customerEmail || 'reelscheap@gmail.com').trim();
       const cleanState = (customerState || '').trim();
       const cleanCity = (customerCity || '').trim();
       const cleanOrderId = String(orderId).trim();

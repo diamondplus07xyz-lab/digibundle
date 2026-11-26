@@ -238,7 +238,7 @@ export default async function handler(req, res) {
         usdAmount: formattedUsd,
         inrTotal: inrTotal || 0,
         customerName: customerName || 'Customer',
-        customerEmail: customerEmail || 'support@cheapreels.in',
+        customerEmail: customerEmail || 'reelscheap@gmail.com',
         customerPhone: customerPhone || '',
         customerState: customerState || '',
         customerCity: customerCity || '',

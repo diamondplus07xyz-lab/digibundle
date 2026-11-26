@@ -7,8 +7,9 @@ export default function MobileBottomNav({
   onOpenMyOrders,
   whatsappNumber
 }) {
-  const number = (whatsappNumber || '').replace(/\D/g, '');
-  const supportUrl = number ? `https://wa.me/${number}?text=${encodeURIComponent('Hello Cheap Reels Support, I have a question about bundles.')}` : '#bundles-section';
+  const raw = (whatsappNumber || '7017324978').replace(/\D/g, '');
+  const number = raw.length === 10 ? `91${raw}` : (raw || '917017324978');
+  const supportUrl = `https://wa.me/${number}?text=${encodeURIComponent('Hello Cheap Reels Support, I have a question about bundles.')}`;
 
   const scrollToBundles = () => {
     const el = document.getElementById('bundles-section');
