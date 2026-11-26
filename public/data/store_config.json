@@ -1,8 +1,8 @@
 {
   "version": "2.0",
-  "updatedAt": 1795688151726,
-  "lastModifiedByDevice": "cr_mob_hvydkn_mwxecpe8",
-  "lastModifiedDeviceLabel": "📱 Mobile (Android · Google Chrome)",
+  "updatedAt": 1795688397273,
+  "lastModifiedByDevice": "cr_mob_wop2gf_mwxei986",
+  "lastModifiedDeviceLabel": "📱 Mobile (iOS · Google Chrome)",
   "config": {
     "storeName": "Cheap Reels",
     "themeBackground": "white",
@@ -4302,9 +4302,9 @@
     }
   ],
   "visitorStats": {
-    "totalViews": 236,
-    "uniqueVisitors": 104,
-    "mobileVisits": 71,
+    "totalViews": 237,
+    "uniqueVisitors": 105,
+    "mobileVisits": 72,
     "desktopVisits": 189,
     "knownIps": [
       "157.49.180.218",
@@ -4410,9 +4410,20 @@
       "152.59.150.126",
       "223.191.100.155",
       "152.58.188.11",
-      "157.46.5.43"
+      "157.46.5.43",
+      "122.161.64.246"
     ],
     "recentVisits": [
+      {
+        "id": 1795688396730,
+        "ip": "122.161.64.246",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "03:49 PM",
+        "date": "26 Nov",
+        "isRepeat": false
+      },
       {
         "id": 1795688140030,
         "ip": "157.46.5.43",
@@ -5400,16 +5411,6 @@
         "location": "India",
         "page": "Storefront (Home Catalog)",
         "time": "06:19 pm",
-        "date": "25 Nov",
-        "isRepeat": false
-      },
-      {
-        "id": 1795608309856,
-        "ip": "152.59.121.195",
-        "device": "Mobile Phone",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "05:35 pm",
         "date": "25 Nov",
         "isRepeat": false
       }
