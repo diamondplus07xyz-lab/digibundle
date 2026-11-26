@@ -89,33 +89,25 @@ export const initialConfig = {
   // Special Offer Banner Below Header (With Multiple Google Drive Links)
   specialOffer: {
     enabled: true,
-    badge: "EXCLUSIVE CREATOR DEAL",
-    title: "1,50,000+ Ultimate Creator Reels Mega Bundle",
-    subtitle: "Unlock 3 Massive Multi-Part Cloud Folders + Bonus Viral Audio Tracks with Lifetime Access!",
-    price: 199,
-    originalPrice: 2999,
-    thumbnail: "/special-offer.webp",
-    clipCount: "1,50,000+ Reels",
+    badge: "🔥 SPECIAL OFFER — ₹99 ONLY",
+    title: "GTA 6 Reels Bundle (2000+ 4K Cinematic & Gameplay Clips)",
+    subtitle: "Download 2000+ 4K Ultra HD Grand Theft Auto VI Cinematic & Gameplay Edits. No Watermark, Instant Google Drive Delivery, Full Commercial & Monetization Rights Included!",
+    price: 99,
+    originalPrice: 999,
+    thumbnail: "/thumbnails/gta-6-reels-bundle.webp",
+    clipCount: "2000+ Reels",
     features: [
-      "3 Dedicated Google Drive Folders Included",
-      "100% Watermark-free 1080p Full HD MP4",
-      "Bonus: 5,000+ Trending Background MP3s"
+      "2000+ 4K Ultra HD & 1080p Clips",
+      "Cinematic & Action Gameplay Edits",
+      "Shorts & Reels 9:16 Vertical Ready",
+      "Organized Google Drive Folder Access",
+      "Instant Digital Delivery"
     ],
     driveLinks: [
       {
-        id: "link-1",
-        label: "Drive Folder Part 1 (Motivation, AI & Finance)",
-        url: "https://drive.google.com/drive/folders/1Ykmi_mcwvChCkcL1hMtEdW6AJAW3reVU"
-      },
-      {
-        id: "link-2",
-        label: "Drive Folder Part 2 (Fitness, Luxury, Anime & Devotional)",
-        url: "https://drive.google.com/drive/folders/1XZ00wKCxPruEpTyDmRxtLzP3GxPG3N1W"
-      },
-      {
-        id: "link-3",
-        label: "Bonus Cloud Folder (5,000+ Trending MP3 Audios)",
-        url: "https://drive.google.com/drive/folders/1zReKMy4EctgGD2MWsL6SS25qXhQwjlPq"
+        id: "gta-6-drive-folder",
+        label: "GTA 6 Master Cloud Folder (2000+ Reels)",
+        url: "https://drive.google.com/drive/folders/10GYoFNhVUcJH0-uCTjV6gbQ9GUFqn1kT"
       }
     ]
   }

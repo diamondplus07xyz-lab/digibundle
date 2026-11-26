@@ -1,5 +1,37 @@
-// Verified Real Bundles with Genuine Drive Links & Vaultzet Photos (126 bundles)
+// Verified Real Bundles with Genuine Drive Links & Vaultzet Photos (127 bundles)
 export const initialBundles = [
+  {
+    "id": "bundle-127",
+    "title": "2000+ GTA 6 Reels Bundle – Grand Theft Auto VI 4K Cinematic & Gameplay Clips",
+    "subtitle": "Complete 2,000+ 4K Ultra HD ready to upload GTA 6 Reels for Instagram & YouTube Shorts. No watermark.",
+    "category": "gaming",
+    "categoryLabel": "Gaming",
+    "price": 99,
+    "originalPrice": 999,
+    "clipCount": "2,000+ Reels",
+    "badge": "🔥 SPECIAL OFFER",
+    "rating": 4.98,
+    "reviewsCount": 380,
+    "thumbnail": "/thumbnails/gta-6-reels-bundle.webp",
+    "driveLink": "https://drive.google.com/drive/folders/10GYoFNhVUcJH0-uCTjV6gbQ9GUFqn1kT",
+    "links": [
+      {
+        "label": "GTA 6 Master Cloud Folder",
+        "url": "https://drive.google.com/drive/folders/10GYoFNhVUcJH0-uCTjV6gbQ9GUFqn1kT"
+      }
+    ],
+    "features": [
+      "Instant access to 2,000+ 4K & HD GTA 6 Reels",
+      "1080x1920 Full HD Vertical MP4",
+      "100% Watermark-Free & No Logos",
+      "Cinematic & Gameplay Action Edits",
+      "Instant Google Drive Delivery",
+      "Full Commercial & Monetization Rights"
+    ],
+    "featured": true,
+    "isSpecialOffer": true,
+    "tags": ["gta 6", "gta", "grand theft auto vi", "gaming reels", "vice city", "4k gameplay"]
+  },
   {
     "id": "bundle-1",
     "title": "1000+ Space Aesthetic Reels Bundle \u2013 Cinematic Space Videos for Reels & Shorts",

@@ -270,12 +270,13 @@ class RealtimeSyncManager {
         return;
       }
 
-      const remoteUpdatedAt = cloudData.updatedAt || 0;
+      const rawTimestamp = cloudData.updatedAt;
+      const remoteUpdatedAt = typeof rawTimestamp === 'number' ? rawTimestamp : (Date.parse(rawTimestamp) || Date.now());
 
       // If remote data has a timestamp, and we haven't processed it yet
       // (and it wasn't pushed by ourselves within the last 1.5 seconds)
       const isFromOtherDevice = !cloudData.lastModifiedByDevice || cloudData.lastModifiedByDevice !== this.deviceId;
-      const isNewer = remoteUpdatedAt > this.lastProcessedCloudUpdatedAt;
+      const isNewer = remoteUpdatedAt > (this.lastProcessedCloudUpdatedAt || 0);
 
       if (isNewer && (isFromOtherDevice || triggerSource === 'window_focus' || triggerSource === 'force_sync' || triggerSource === 'app_mount' || triggerSource === 'network_reconnect')) {
         this.lastProcessedCloudUpdatedAt = remoteUpdatedAt;

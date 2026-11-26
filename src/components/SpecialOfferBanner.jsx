@@ -89,7 +89,7 @@ export default function SpecialOfferBanner({ offer, onClaimOffer }) {
             <div className="pt-0.5 sm:pt-2">
               <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 mb-1.5 sm:mb-2">
                 <FolderOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" />
-                Includes {currentOffer.driveLinks?.length || 3} Multi-Part Cloud Drive Folders
+                Includes {currentOffer.driveLinks?.length === 1 ? 'Instant Google Drive Cloud Folder' : `${currentOffer.driveLinks?.length || 1} Multi-Part Cloud Folders`}
               </span>
 
               {/* Multiple Drive Links Pill Previews (Visible on sm/desktop, condensed on mobile) */}

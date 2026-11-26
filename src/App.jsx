@@ -71,7 +71,7 @@ export default function App() {
           cashfree: { ...initialConfig.cashfree, ...(parsed.cashfree || {}) },
           paypal: { ...initialConfig.paypal, ...(parsed.paypal || {}) },
           upiGateway: { ...initialConfig.upiGateway, ...(parsed.upiGateway || {}) },
-          specialOffer: parsed.specialOffer || initialConfig.specialOffer,
+          specialOffer: (parsed.specialOffer && parsed.specialOffer.title?.includes('GTA 6')) ? parsed.specialOffer : initialConfig.specialOffer,
           logo: parsed.logo || initialConfig.logo
         };
       } catch (e) {}
