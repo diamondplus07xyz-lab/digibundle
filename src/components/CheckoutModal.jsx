@@ -93,9 +93,9 @@ export default function CheckoutModal({
   const supportPhone = (config?.whatsappNumber || '').replace(/\D/g, '');
   const supportEmail = config?.supportEmail || '';
   
-  // PayPal USD Conversion
-  const exchangeRate = Number(config?.paypal?.exchangeRate) || 85;
-  const usdAmount = (total / exchangeRate).toFixed(2);
+  // PayPal International 1:1 Direct Dollar Pricing (e.g., 149 Rs -> 149 USD)
+  const usdDisplay = Math.round(total);
+  const usdAmount = Number(usdDisplay).toFixed(2);
 
   // Standard UPI URI format
   const upiUri = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${total}&cu=INR&tn=${encodeURIComponent('CheapReelsBundle')}`;
@@ -901,10 +901,9 @@ export default function CheckoutModal({
                     <span className="text-[11px] font-bold text-slate-600 block">Total Payable:</span>
                     {selectedGateway === 'paypal' ? (
                       <div className="flex items-baseline gap-2 flex-wrap">
-                        <span className="text-2xl font-black text-sky-700 font-mono">${usdAmount} USD</span>
-                        <span className="text-xs text-slate-400 line-through">₹{total}</span>
-                        <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-full">
-                          Auto-Converted to USD
+                        <span className="text-2xl font-black text-sky-700 font-mono">${usdDisplay} USD</span>
+                        <span className="text-[10px] font-bold text-sky-800 bg-sky-100/90 px-2 py-0.5 rounded-full border border-sky-300/60">
+                          International Dollar Price
                         </span>
                       </div>
                     ) : (
@@ -1002,7 +1001,7 @@ export default function CheckoutModal({
                         <Globe className="w-5 h-5 text-sky-600 shrink-0" />
                         <div className="min-w-0">
                           <p className="text-xs font-black text-slate-900 truncate">PayPal</p>
-                          <p className="text-[10px] text-slate-500 font-medium">USD (${usdAmount})</p>
+                          <p className="text-[10px] text-sky-700 font-bold font-mono">${usdDisplay} USD</p>
                         </div>
                       </button>
                     )}
@@ -1245,11 +1244,10 @@ export default function CheckoutModal({
                       PayPal International Checkout
                     </h4>
                     <div className="mt-2 flex items-center justify-center gap-2">
-                      <span className="text-2xl font-black text-sky-700 font-mono">${usdAmount} USD</span>
-                      <span className="text-xs text-slate-400 line-through">₹{total}</span>
+                      <span className="text-3xl font-black text-sky-700 font-mono">${usdDisplay} USD</span>
                     </div>
                     <p className="text-xs text-slate-500 mt-1">
-                      Auto-Converted: <strong className="text-slate-800">${usdAmount} USD</strong> (1 USD ≈ ₹{exchangeRate})
+                      International Customers: <strong className="text-slate-800">${usdDisplay} USD</strong>
                     </p>
                   </div>
 
@@ -1265,7 +1263,7 @@ export default function CheckoutModal({
                         <span>Connecting to PayPal...</span>
                       </div>
                     ) : (
-                      <span>Pay ${usdAmount} USD via PayPal</span>
+                      <span>Pay ${usdDisplay} USD via PayPal</span>
                     )}
                   </button>
 
