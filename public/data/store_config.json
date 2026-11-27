@@ -1,8 +1,8 @@
 {
   "version": "2.0",
-  "updatedAt": 1795715608035,
-  "lastModifiedByDevice": "cr_des_gm9p36_mwufotix",
-  "lastModifiedDeviceLabel": "💻 PC (Windows · Google Chrome)",
+  "updatedAt": 1795719466382,
+  "lastModifiedByDevice": "cr_mob_9wiicq_mwusx6a9",
+  "lastModifiedDeviceLabel": "📱 Mobile (Android · Google Chrome)",
   "config": {
     "storeName": "Cheap Reels",
     "themeBackground": "white",
@@ -4319,9 +4319,9 @@
     }
   ],
   "visitorStats": {
-    "totalViews": 249,
-    "uniqueVisitors": 113,
-    "mobileVisits": 84,
+    "totalViews": 253,
+    "uniqueVisitors": 114,
+    "mobileVisits": 88,
     "desktopVisits": 189,
     "knownIps": [
       "157.49.180.218",
@@ -4436,9 +4436,80 @@
       "152.59.88.21",
       "106.76.64.53",
       "152.58.96.6",
-      "45.22.20.255"
+      "45.22.20.255",
+      "152.58.96.176"
     ],
     "recentVisits": [
+      {
+        "id": 1795719406820,
+        "ip": "152.58.96.176",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "12:26 am",
+        "date": "27 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795719343401.6477,
+        "ip": "152.58.96.176",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Clicked Buy Now: 1000+ AI Dogs Reels Bundle – V",
+        "time": "12:25 am",
+        "date": "27 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795719326256,
+        "ip": "152.58.96.176",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "12:25 am",
+        "date": "27 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795719295866.112,
+        "ip": "152.58.96.176",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Clicked Buy Now: 2000+ GTA VI Reels Bundle (4K ",
+        "time": "12:24 am",
+        "date": "27 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795719295860.1047,
+        "ip": "152.58.96.176",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Clicked Special Offer",
+        "time": "12:24 am",
+        "date": "27 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795719275269,
+        "ip": "152.58.96.176",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "12:24 am",
+        "date": "27 Nov",
+        "isRepeat": true
+      },
+      {
+        "id": 1795719231863,
+        "ip": "152.58.96.176",
+        "device": "Mobile Phone",
+        "location": "India",
+        "page": "Storefront (Home Catalog)",
+        "time": "12:23 am",
+        "date": "27 Nov",
+        "isRepeat": false
+      },
       {
         "id": 1795714616701,
         "ip": "122.161.64.246",
@@ -5366,76 +5437,6 @@
         "location": "India",
         "page": "Previewed Demo Video: 3000+ Cycling Reels Bundle – C",
         "time": "10:12 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795624902605.5222,
-        "ip": "157.49.66.90",
-        "device": "Mobile Phone",
-        "location": "India",
-        "page": "Previewed Demo Video: 700+ AI Cats Reels Bundle – Cu",
-        "time": "10:11 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795624894302.014,
-        "ip": "157.49.66.90",
-        "device": "Mobile Phone",
-        "location": "India",
-        "page": "Previewed Demo Video: 1000+ Space Aesthetic Reels Bu",
-        "time": "10:11 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795624892477,
-        "ip": "157.49.66.90",
-        "device": "Mobile Phone",
-        "location": "India",
-        "page": "Storefront (Home Catalog)",
-        "time": "10:11 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795624863882.0437,
-        "ip": "157.49.66.90",
-        "device": "Mobile Phone",
-        "location": "India",
-        "page": "Previewed Demo Video: 1500+ Aesthetic Rain Reels Bun",
-        "time": "10:11 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795624859506.106,
-        "ip": "157.49.66.90",
-        "device": "Mobile Phone",
-        "location": "India",
-        "page": "Previewed Demo Video: 1200+ Aesthetic Trees Reels Bu",
-        "time": "10:10 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795624855819.7026,
-        "ip": "157.49.66.90",
-        "device": "Mobile Phone",
-        "location": "India",
-        "page": "Previewed Demo Video: 2000+ Aesthetic Snow Reels Bun",
-        "time": "10:10 pm",
-        "date": "25 Nov",
-        "isRepeat": true
-      },
-      {
-        "id": 1795624850597.6655,
-        "ip": "157.49.66.90",
-        "device": "Mobile Phone",
-        "location": "India",
-        "page": "Previewed Demo Video: 3000+ Cycling Reels Bundle – C",
-        "time": "10:10 pm",
         "date": "25 Nov",
         "isRepeat": true
       }
