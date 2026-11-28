@@ -1,11 +1,14 @@
 import React from 'react';
-import { X, Trash2, ShoppingBag, ArrowRight, Tag, CheckCircle } from 'lucide-react';
+import { X, Trash2, ShoppingBag, ArrowRight, Sparkles, Tag, CheckCircle } from 'lucide-react';
 import { calculateCartPricing } from '../utils/pricing';
+import { getItemPriceDisplay, calculateUsdTotal, isInternationalVisitor } from '../utils/geoPricing';
 
 export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, onProceedToCheckout }) {
   if (!isOpen) return null;
 
   const { subtotal, discount, finalTotal, comboBadge, nextTierMessage, itemsCount } = calculateCartPricing(cartItems);
+  const isIntl = isInternationalVisitor();
+  const totalUsd = calculateUsdTotal(cartItems, finalTotal);
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
@@ -42,7 +45,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
               {discount > 0 ? (
                 <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
               ) : (
-                <Tag className="w-4 h-4 text-amber-500 shrink-0" />
+                <Sparkles className="w-4 h-4 text-amber-500 shrink-0" />
               )}
               <span className="flex-1">{comboBadge || nextTierMessage}</span>
             </div>
@@ -77,9 +80,18 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
                     <h4 className="text-xs font-bold text-slate-900 truncate">{item.title}</h4>
                     <p className="text-[11px] text-slate-500 font-medium">{item.clipCount}</p>
                     <div className="flex items-baseline gap-2 mt-0.5">
-                      <span className="text-sm font-black text-slate-950">₹{item.price}</span>
-                      {item.originalPrice && (
-                        <span className="text-[11px] text-slate-400 line-through">₹{item.originalPrice}</span>
+                      {isIntl ? (
+                        <>
+                          <span className="text-sm font-black text-sky-700">{getItemPriceDisplay(item, true).formattedPrice}</span>
+                          <span className="text-[11px] text-slate-400 font-mono">(₹{item.price})</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-sm font-black text-slate-950">₹{item.price}</span>
+                          {item.originalPrice && (
+                            <span className="text-[11px] text-slate-400 line-through">₹{item.originalPrice}</span>
+                          )}
+                        </>
                       )}
                     </div>
                   </div>
@@ -115,10 +127,17 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
                 <div className="flex justify-between items-baseline pt-1 border-t border-slate-200 text-sm">
                   <span className="text-xs font-black text-slate-900 uppercase">Total Payable</span>
                   <div className="flex items-baseline gap-2">
-                    {discount > 0 && (
+                    {discount > 0 && !isIntl && (
                       <span className="text-xs text-slate-400 line-through">₹{subtotal}</span>
                     )}
-                    <span className="text-xl font-black text-slate-950">₹{finalTotal}</span>
+                    {isIntl ? (
+                      <div className="text-right">
+                        <span className="text-xl font-black text-sky-700 font-mono">${totalUsd} USD</span>
+                        <span className="text-[11px] text-slate-400 font-mono block">(₹{finalTotal})</span>
+                      </div>
+                    ) : (
+                      <span className="text-xl font-black text-slate-950">₹{finalTotal}</span>
+                    )}
                   </div>
                 </div>
               </div>

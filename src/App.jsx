@@ -33,6 +33,7 @@ import { Flame, ChevronLeft, ChevronRight, ShoppingBag } from 'lucide-react';
 import { fetchCloudStoreData, pushCloudStoreData } from './utils/cloudSync';
 import { realtimeSync } from './utils/realtimeSync';
 import { isSecretAdminRoute } from './utils/security';
+import { isInternationalVisitor } from './utils/geoPricing';
 import { trackPageView, trackHeartbeat, isBot } from './utils/trafficTracker';
 import { createAuditLogEntry } from './utils/auditLogger';
 import { sendTelegramOrderAlert, sendTelegramCheckoutIntentAlert } from './utils/telegramAlerts';
@@ -242,7 +243,7 @@ export default function App() {
           id: Date.now(),
           ip: ip.startsWith('dev_') ? 'Device #' + ip.replace('dev_', '') : ip,
           device: isMobileDevice ? 'Mobile Phone' : 'Desktop PC',
-          location: 'India',
+          location: isInternationalVisitor() ? 'International (Global)' : 'India',
           page: 'Storefront (Home Catalog)',
           time: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }),
           date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }),

@@ -166,13 +166,23 @@ export default function OrderSuccessModal({ order: initialOrder, onClose, config
             <div className="flex justify-between items-center text-slate-400">
               <span className="font-semibold">Amount Paid:</span>
               <span className="font-black text-white text-sm">
-                {currentOrder.gateway === 'PayPal' ? `$${Math.round(currentOrder.total)} USD` : `₹${currentOrder.total}`}
+                {currentOrder.gateway === 'PayPal' 
+                  ? `$${currentOrder.usdAmount || (currentOrder.paymentApp?.match(/\$([0-9.]+)/)?.[1]) || '19.99'} USD` 
+                  : `₹${currentOrder.total}`}
               </span>
             </div>
 
             <div className="flex justify-between items-center text-slate-400">
               <span className="font-semibold">Customer WhatsApp:</span>
-              <span className="font-bold text-slate-200">+91 {currentOrder.whatsapp}</span>
+              <span className="font-bold text-slate-200">
+                {(() => {
+                  const num = String(currentOrder.whatsapp || '').trim();
+                  if (num.startsWith('+')) return num;
+                  const digits = num.replace(/\D/g, '');
+                  if (digits.length === 10) return `+91 ${digits}`;
+                  return digits ? `+${digits}` : 'N/A';
+                })()}
+              </span>
             </div>
 
             <div className="flex justify-between items-center text-slate-400">

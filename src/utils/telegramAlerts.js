@@ -8,6 +8,16 @@
  * Runs asynchronously via fetch with zero main-thread blocking.
  */
 
+const escapeHtml = (str) => {
+  if (!str || typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+};
+
 const getFormattedTime = () => {
   return new Date().toLocaleString('en-IN', {
     timeZone: 'Asia/Kolkata',
@@ -69,10 +79,10 @@ export const sendTelegramOrderAlert = async (order, config) => {
   if (!tgConfig || !tgConfig.enabled || tgConfig.notifyOnSale === false) return;
   if (!tgConfig.botToken || !tgConfig.chatId) return;
 
-  const customerName = order.customerName || order.name || 'Direct Customer';
-  const customerPhone = order.customerPhone || order.whatsapp || 'Not provided';
-  const customerEmail = order.customerEmail || order.email || 'Not provided';
-  const customerLocation = [order.city, order.state].filter(Boolean).join(', ');
+  const customerName = escapeHtml(order.customerName || order.name || 'Direct Customer');
+  const customerPhone = escapeHtml(order.customerPhone || order.whatsapp || 'Not provided');
+  const customerEmail = escapeHtml(order.customerEmail || order.email || 'Not provided');
+  const customerLocation = escapeHtml([order.city, order.state].filter(Boolean).join(', '));
   const totalAmount = order.amount !== undefined ? order.amount : (order.total || 29);
 
   let paymentMethodLabel = '📱 Direct UPI QR';
@@ -84,22 +94,22 @@ export const sendTelegramOrderAlert = async (order, config) => {
     } else if (order.gateway.toLowerCase().includes('paypal')) {
       paymentMethodLabel = '🌐 PayPal International';
     } else if (order.paymentApp) {
-      paymentMethodLabel = `📱 UPI (${order.paymentApp})`;
+      paymentMethodLabel = `📱 UPI (${escapeHtml(order.paymentApp)})`;
     }
   } else if (order.paymentMethod) {
-    paymentMethodLabel = order.paymentMethod;
+    paymentMethodLabel = escapeHtml(order.paymentMethod);
   }
 
   const itemsList = Array.isArray(order.items) && order.items.length > 0
-    ? order.items.map((it, idx) => `  ${idx + 1}. <b>${it.title || 'Reel Bundle'}</b> (₹${it.price || 29})`).join('\n')
-    : `  1. <b>${order.bundleTitle || 'HD Reels Bundle'}</b> (₹${totalAmount})`;
+    ? order.items.map((it, idx) => `  ${idx + 1}. <b>${escapeHtml(it.title || 'Reel Bundle')}</b> (₹${it.price || 29})`).join('\n')
+    : `  1. <b>${escapeHtml(order.bundleTitle || 'HD Reels Bundle')}</b> (₹${totalAmount})`;
 
-  const utrOrTxn = order.utr || order.transactionId || order.paymentId || order.referenceId || 'Auto Verified';
+  const utrOrTxn = escapeHtml(order.utr || order.transactionId || order.paymentId || order.referenceId || 'Auto Verified');
 
   const message = [
     `💰 <b>NEW SALE RECEIVED — CHEAPREELS.IN</b> 💰`,
     `━━━━━━━━━━━━━━━━━━━━━━━━━`,
-    `📦 <b>Order ID:</b> <code>#${order.id}</code>`,
+    `📦 <b>Order ID:</b> <code>#${escapeHtml(order.id)}</code>`,
     `💵 <b>Total Amount:</b> <b>${order.usdAmount ? `$${order.usdAmount} USD (₹${totalAmount})` : `₹${totalAmount}`}</b>`,
     `💳 <b>Payment Mode:</b> ${paymentMethodLabel}`,
     `🔢 <b>UTR / Txn Ref:</b> <code>${utrOrTxn}</code>`,
@@ -144,7 +154,7 @@ export const sendTelegramCheckoutIntentAlert = async ({ items, totalAmount, visi
   lastAlertBundleId = currentBundleKey;
 
   const bundleNames = Array.isArray(items) && items.length > 0
-    ? items.map(i => i.title).join(', ')
+    ? items.map(i => escapeHtml(i.title || 'Reel Bundle')).join(', ')
     : 'Featured HD Reels Bundle';
 
   const deviceText = isMobile ? '📱 Mobile Phone' : '💻 Desktop PC';
@@ -155,7 +165,7 @@ export const sendTelegramCheckoutIntentAlert = async ({ items, totalAmount, visi
     `🛍️ <b>Reel Bundle:</b> ${bundleNames}`,
     `💵 <b>Cart Value:</b> <b>₹${totalAmount}</b>`,
     `📱 <b>Device:</b> ${deviceText}`,
-    `🌐 <b>Visitor IP:</b> <code>${visitorIp || 'Active Visitor'}</code>`,
+    `🌐 <b>Visitor IP:</b> <code>${escapeHtml(visitorIp || 'Active Visitor')}</code>`,
     `⏰ <b>Time:</b> ${getFormattedTime()}`,
     `━━━━━━━━━━━━━━━━━━━━━━━━━`,
     `👉 <i>Customer is currently choosing payment method (UPI / Gateway)...</i>`

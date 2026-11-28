@@ -9,17 +9,18 @@ import { QRCodeSVG } from 'qrcode.react';
 import { calculateCartPricing } from '../utils/pricing';
 import { validateUtr, checkOrderRateLimit, recordOrderSubmission, sanitizeInput } from '../utils/security';
 import { initialBundles } from '../data/bundles';
-import { calculateUsdTotal, isGtaItem } from '../utils/geoPricing';
+import { calculateUsdTotal, isGtaItem, isInternationalVisitor } from '../utils/geoPricing';
 import BrandLogo from './BrandLogo';
 
-// Comprehensive Indian States List for mandatory customer checkout details
+// Comprehensive Indian States & International List for mandatory customer checkout details
 const INDIAN_STATES = [
   'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
   'Delhi (NCR)', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh',
   'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra',
   'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab',
   'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
-  'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Other / Union Territory'
+  'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Other / Union Territory',
+  'International / Outside India'
 ];
 
 export default function CheckoutModal({ 
@@ -193,9 +194,17 @@ export default function CheckoutModal({
     }
 
     const cleanPhone = whatsapp.replace(/\D/g, '');
-    if (!cleanPhone || cleanPhone.length !== 10) {
-      setError('Please enter a valid 10-digit Indian WhatsApp number (10 अंकों का व्हाट्सएप नंबर).');
-      return;
+    const isIntl = isInternationalVisitor();
+    if (isIntl) {
+      if (!cleanPhone || cleanPhone.length < 7 || cleanPhone.length > 16) {
+        setError('Please enter a valid phone/WhatsApp number with country code (7 to 16 digits).');
+        return;
+      }
+    } else {
+      if (!cleanPhone || (cleanPhone.length !== 10 && (cleanPhone.length < 10 || cleanPhone.length > 13))) {
+        setError('Please enter a valid 10-digit Indian WhatsApp number (10 अंकों का व्हाट्सएप नंबर).');
+        return;
+      }
     }
 
     const cleanEmail = (email || '').trim().toLowerCase();
@@ -845,17 +854,17 @@ export default function CheckoutModal({
                 {/* 2. WhatsApp Mobile Number */}
                 <div>
                   <label className="block text-xs font-bold text-slate-800 mb-1">
-                    WhatsApp Mobile Number / व्हाट्सएप नंबर <span className="text-rose-500">*</span>
+                    {isInternationalVisitor() ? 'WhatsApp / Phone (With Country Code)' : 'WhatsApp Mobile Number / व्हाट्सएप नंबर'} <span className="text-rose-500">*</span>
                   </label>
                   <div className="flex rounded-xl shadow-2xs overflow-hidden border border-slate-300 focus-within:ring-2 focus-within:ring-purple-600 focus-within:border-transparent">
                     <span className="inline-flex items-center px-3 bg-slate-100 text-slate-700 font-bold text-xs border-r border-slate-300 select-none">
-                      🇮🇳 +91
+                      {isInternationalVisitor() ? '🌍 Int\'l' : '🇮🇳 +91'}
                     </span>
                     <input
                       type="tel"
                       required
-                      maxLength={10}
-                      placeholder="Enter 10-digit number (e.g. 9876543210)"
+                      maxLength={isInternationalVisitor() ? 16 : 10}
+                      placeholder={isInternationalVisitor() ? 'e.g. 12025550192 (with country code)' : 'Enter 10-digit number (e.g. 9876543210)'}
                       value={whatsapp}
                       onChange={(e) => setWhatsapp(e.target.value.replace(/\D/g, ''))}
                       className="w-full bg-slate-50/50 px-3.5 py-2.5 text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-none"
@@ -893,7 +902,7 @@ export default function CheckoutModal({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-bold text-slate-800 mb-1">
-                      State / राज्य <span className="text-rose-500">*</span>
+                      {isInternationalVisitor() ? 'State / Region / Country' : 'State / राज्य'} <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                       <MapPin className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -903,7 +912,7 @@ export default function CheckoutModal({
                         onChange={(e) => setCustomerState(e.target.value)}
                         className="w-full bg-slate-50/50 border border-slate-300 rounded-xl pl-9 pr-3 py-2.5 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-600 cursor-pointer"
                       >
-                        <option value="">Select State</option>
+                        <option value="">{isInternationalVisitor() ? 'Select State / Country' : 'Select State'}</option>
                         {INDIAN_STATES.map((st) => (
                           <option key={st} value={st}>{st}</option>
                         ))}
@@ -913,7 +922,7 @@ export default function CheckoutModal({
 
                   <div>
                     <label className="block text-xs font-bold text-slate-800 mb-1">
-                      City / शहर <span className="text-rose-500">*</span>
+                      {isInternationalVisitor() ? 'City / Town' : 'City / शहर'} <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="text"

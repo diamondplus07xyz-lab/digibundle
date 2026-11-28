@@ -486,15 +486,22 @@ export default function Navbar({
 
               {/* WhatsApp Support Link */}
               <div className="pt-4">
-                <a
-                  href={`https://wa.me/917017324978?text=Hello%20${encodeURIComponent(storeName || 'Cheap Reels')}%20Support`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-black flex items-center justify-center gap-2"
-                >
-                  <MessageCircle className="w-4 h-4 text-emerald-600" />
-                  <span>WhatsApp: +91 7017324978</span>
-                </a>
+                {(() => {
+                  const rawWa = (whatsappNumber || '7017324978').replace(/\D/g, '');
+                  const waDigits = rawWa.slice(-10) || '7017324978';
+                  const dynamicWaUrl = `https://wa.me/91${waDigits}?text=Hello%20${encodeURIComponent(storeName || 'Cheap Reels')}%20Support`;
+                  return (
+                    <a
+                      href={dynamicWaUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-black flex items-center justify-center gap-2"
+                    >
+                      <MessageCircle className="w-4 h-4 text-emerald-600" />
+                      <span>WhatsApp: +91 {waDigits}</span>
+                    </a>
+                  );
+                })()}
               </div>
             </div>
 

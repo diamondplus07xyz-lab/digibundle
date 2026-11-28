@@ -65,8 +65,12 @@ const isDemoOrder = (o) => {
 function isValidOrderSchema(o) {
   if (!o || typeof o !== 'object') return false;
   if (!o.id || typeof o.id !== 'string' || !/^(CR|CRS)-[a-zA-Z0-9_-]{4,32}$/i.test(o.id)) return false;
-  if (typeof o.amount !== 'number' || o.amount <= 0 || o.amount > 500000) return false;
+  const orderAmount = typeof o.total === 'number' ? o.total : (typeof o.amount === 'number' ? o.amount : Number(o.total || o.amount || 0));
+  if (isNaN(orderAmount) || orderAmount <= 0 || orderAmount > 500000) return false;
   if (!Array.isArray(o.items) || o.items.length === 0) return false;
+  // Normalize both total and amount for uniform cross-system compatibility
+  o.total = orderAmount;
+  o.amount = orderAmount;
   return true;
 }
 
