@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Clock, FolderOpen, ArrowRight, ShoppingBag, ShieldCheck, DownloadCloud } from 'lucide-react';
 import { initialConfig } from '../data/config';
-import { isInternationalVisitor } from '../utils/geoPricing';
+import { getUserCurrency } from '../utils/geoPricing';
+import { t } from '../utils/i18n';
 
 export default function SpecialOfferBanner({ offer, onClaimOffer }) {
   const currentOffer = offer || initialConfig.specialOffer;
   const [timeLeft, setTimeLeft] = useState(14 * 60 + 35);
+  const currency = getUserCurrency();
+  const gtaPriceFormatted = currency.format(currency.gtaPrice);
+  const gtaOriginalFormatted = currency.format(currency.gtaOriginal);
+  const gtaDiscount = Math.round(((currency.gtaOriginal - currency.gtaPrice) / currency.gtaOriginal) * 100);
 
   const isDefaultImage = !currentOffer?.thumbnail || currentOffer.thumbnail.includes('sheru-bhai-mega-reels-bundle-ad') || currentOffer.thumbnail.includes('special-offer');
   const mobileImgSrc = isDefaultImage ? '/special-offer-mobile.webp' : currentOffer.thumbnail;
@@ -70,11 +75,11 @@ export default function SpecialOfferBanner({ offer, onClaimOffer }) {
           <div className="w-full flex-1 text-center lg:text-left space-y-2 sm:space-y-3">
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-1.5 sm:gap-2">
               <span className="inline-flex items-center px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-black uppercase tracking-wider bg-rose-600 text-white shadow-sm">
-                {isInternationalVisitor() ? "🔥 SPECIAL OFFER — $19.99 USD ONLY" : (currentOffer.badge || "🔥 SPECIAL OFFER — ₹99 ONLY")}
+                {`${t('specialOfferBadge')} — ${gtaPriceFormatted} ${t('only')}`}
               </span>
               <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[11px] sm:text-xs font-mono font-bold bg-amber-400/20 text-amber-300 border border-amber-400/40">
                 <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400" />
-                Deal Ends in: {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+                {t('endsIn')}: {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
               </span>
             </div>
 
@@ -108,28 +113,16 @@ export default function SpecialOfferBanner({ offer, onClaimOffer }) {
             {/* Price & Claim CTA Button */}
             <div className="pt-1.5 sm:pt-3 flex flex-row items-center justify-between sm:justify-start gap-3 sm:gap-4 flex-wrap">
               <div className="flex items-baseline gap-1.5 sm:gap-2 flex-wrap">
-                {isInternationalVisitor() ? (
-                  <>
-                    <span className="text-2xl sm:text-4xl font-black text-amber-400">$19.99 USD</span>
-                    <span className="text-xs sm:text-base font-semibold text-slate-300 line-through">$79.99 USD</span>
-                    <span className="text-[10px] sm:text-xs font-black text-emerald-400 bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-md sm:rounded-lg border border-emerald-500/30">
-                      75% OFF
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <span className="text-2xl sm:text-4xl font-black text-amber-400">₹{currentOffer.price}</span>
-                    <span className="text-xs sm:text-base font-semibold text-slate-300 line-through">₹{currentOffer.originalPrice}</span>
-                    <span className="text-[10px] sm:text-xs font-black text-emerald-400 bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-md sm:rounded-lg border border-emerald-500/30">
-                      {discountPercent}% OFF
-                    </span>
-                  </>
-                )}
+                <span className="text-2xl sm:text-4xl font-black text-amber-400">{gtaPriceFormatted}</span>
+                <span className="text-xs sm:text-base font-semibold text-slate-300 line-through">{gtaOriginalFormatted}</span>
+                <span className="text-[10px] sm:text-xs font-black text-emerald-400 bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-md sm:rounded-lg border border-emerald-500/30">
+                  {gtaDiscount}% {t('off')}
+                </span>
               </div>
 
               <button
                 data-action="claim-special-offer"
-                data-price={currentOffer.price}
+                data-price={currency.gtaPrice}
                 data-title={currentOffer.title}
                 aria-label={`Claim special deal: ${currentOffer.title || 'Creator Bundle'}`}
                 onClick={() => onClaimOffer && onClaimOffer({
@@ -147,7 +140,7 @@ export default function SpecialOfferBanner({ offer, onClaimOffer }) {
                 className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-7 py-2.5 sm:py-3.5 bg-gradient-to-r from-amber-400 via-orange-500 to-amber-500 hover:brightness-110 active:scale-95 text-slate-950 font-black text-xs sm:text-sm rounded-xl sm:rounded-2xl shadow-xl shadow-amber-500/30 transition-all cursor-pointer shrink-0"
               >
                 <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-slate-950" />
-                <span>Claim Deal</span>
+                <span>{t('claimOfferNow')}</span>
                 <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
             </div>

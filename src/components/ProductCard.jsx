@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ShoppingCart, DownloadCloud, Play, Pause, X, Volume2, VolumeX, AlertCircle, ShoppingBag, ExternalLink } from 'lucide-react';
 import { parseVideoUrl } from '../utils/videoHelper';
 import { getItemPriceDisplay } from '../utils/geoPricing';
+import { t } from '../utils/i18n';
 
 export default function ProductCard({ 
   bundle, 
@@ -233,7 +234,7 @@ export default function ProductCard({
               <span className="text-[11px] text-slate-500 line-through">{priceInfo.formattedOriginalPrice}</span>
             </div>
             <span className="text-[9px] font-black text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-200 shrink-0">
-              {priceInfo.discountPercent}% OFF
+              {priceInfo.discountPercent}% {t('off')}
             </span>
           </div>
 
@@ -249,7 +250,7 @@ export default function ProductCard({
               className="w-full py-2 px-1 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-[11px] font-bold border border-slate-200 flex items-center justify-center gap-1 transition cursor-pointer active:scale-95"
             >
               <ShoppingCart className="w-3 h-3 text-slate-600" />
-              <span>Add</span>
+              <span>{t('addToCart')}</span>
             </button>
 
             <button
@@ -263,7 +264,7 @@ export default function ProductCard({
               className="w-full py-2 px-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-105 active:scale-95 text-slate-950 rounded-xl text-[11px] font-black shadow-xs flex items-center justify-center gap-1 transition cursor-pointer"
             >
               <ShoppingBag className="w-3 h-3 text-slate-950" />
-              <span>Buy Now</span>
+              <span>{t('buyNow')}</span>
             </button>
           </div>
         </div>

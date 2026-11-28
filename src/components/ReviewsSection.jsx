@@ -1,9 +1,12 @@
 import React from 'react';
 import { Star, MessageSquare } from 'lucide-react';
-import { isInternationalVisitor } from '../utils/geoPricing';
+import { isInternationalVisitor, getUserCurrency } from '../utils/geoPricing';
+import { t } from '../utils/i18n';
 
 export default function ReviewsSection() {
   const isIntl = isInternationalVisitor();
+  const currency = getUserCurrency();
+  const gtaFormatted = currency.format(currency.gtaPrice);
   const reviews = [
     {
       name: 'Aman Sharma',
@@ -32,7 +35,7 @@ export default function ReviewsSection() {
       city: isIntl ? 'Toronto, CA' : 'Jaipur',
       role: 'Digital Marketer',
       text: isIntl
-        ? 'Purchased the GTA 6 4K Cinematic Reels bundle for $19.99 USD, received massive crisp quality content ready to post daily all year round!'
+        ? `Purchased the GTA 6 4K Cinematic Reels bundle for ${gtaFormatted}, received massive crisp quality content ready to post daily all year round!`
         : 'GTA 6 4K Cinematic Reels bundle liya tha ₹99 me, itna massive aur crisp content mila hai ki 1 saal tak roz vertical gaming reels aaram se post kar sakta hu!',
       rating: 5,
       avatar: 'RM',

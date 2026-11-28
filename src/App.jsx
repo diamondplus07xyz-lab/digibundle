@@ -33,7 +33,8 @@ import { Flame, ChevronLeft, ChevronRight, ShoppingBag } from 'lucide-react';
 import { fetchCloudStoreData, pushCloudStoreData } from './utils/cloudSync';
 import { realtimeSync } from './utils/realtimeSync';
 import { isSecretAdminRoute } from './utils/security';
-import { isInternationalVisitor } from './utils/geoPricing';
+import { isInternationalVisitor, COUNTRY_PROFILES, setUserCountry } from './utils/geoPricing';
+import { detectUserLanguage, SUPPORTED_LANGUAGES, setLanguage } from './utils/i18n';
 import { trackPageView, trackHeartbeat, isBot } from './utils/trafficTracker';
 import { createAuditLogEntry } from './utils/auditLogger';
 import { sendTelegramOrderAlert, sendTelegramCheckoutIntentAlert } from './utils/telegramAlerts';
@@ -50,6 +51,49 @@ const isDemoOrder = (o) => {
 };
 
 export default function App() {
+  // Multi-Currency & Multi-Language Reactivity
+  const [localeTick, setLocaleTick] = useState(0);
+
+  useEffect(() => {
+    const bump = () => setLocaleTick(n => n + 1);
+    window.addEventListener('country_changed', bump);
+    window.addEventListener('language_changed', bump);
+
+    const initLang = detectUserLanguage();
+    const langObj = SUPPORTED_LANGUAGES.find(l => l.code === initLang);
+    if (langObj && document.documentElement) {
+      window.__CHEAP_REELS_LANG__ = langObj.code;
+      document.documentElement.setAttribute('lang', langObj.code);
+      document.documentElement.setAttribute('dir', langObj.rtl ? 'rtl' : 'ltr');
+    }
+
+    // Background IP Geolocation auto-detection if user has not manually chosen a country or URL override
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const hasUrlOverride = urlParams.has('country') || urlParams.has('currency') || urlParams.has('intl');
+      const hasSavedOverride = localStorage.getItem('cheap_reels_user_country');
+      if (!hasUrlOverride && !hasSavedOverride) {
+        fetch('https://api.country.is', { signal: AbortSignal.timeout(2500) })
+          .then(r => r.ok ? r.json() : null)
+          .then(geo => {
+            if (geo && geo.country) {
+              const profile = COUNTRY_PROFILES.find(p => p.code === geo.country);
+              if (profile) {
+                setUserCountry(profile.code);
+                if (profile.lang) setLanguage(profile.lang);
+              }
+            }
+          })
+          .catch(() => {});
+      }
+    } catch (e) {}
+
+    return () => {
+      window.removeEventListener('country_changed', bump);
+      window.removeEventListener('language_changed', bump);
+    };
+  }, []);
+
   // Persistent Config & Real Bundles
   const [config, setConfig] = useState(() => {
     const saved = localStorage.getItem('cheap_reels_config_v2');

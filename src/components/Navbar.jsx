@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { ShoppingBag, Search, PackageCheck, Menu, X, ArrowRight, MessageCircle, HelpCircle, Star, Sparkles, FolderOpen, Play, CheckCircle2, ChevronRight } from 'lucide-react';
+import { ShoppingBag, Search, PackageCheck, Menu, X, ArrowRight, MessageCircle, HelpCircle, Star, Sparkles, FolderOpen, Play, CheckCircle2, ChevronRight, Globe } from 'lucide-react';
 import BrandLogo from './BrandLogo';
+import CountryLanguageSelector from './CountryLanguageSelector';
+import { getUserCountry, COUNTRY_PROFILES, getItemPriceDisplay } from '../utils/geoPricing';
+import { detectUserLanguage, t } from '../utils/i18n';
 
 export default function Navbar({ 
   cartCount, 
@@ -18,8 +21,13 @@ export default function Navbar({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showMobileDropdown, setShowMobileDropdown] = useState(false);
   const [showDesktopDropdown, setShowDesktopDropdown] = useState(false);
+  const [isCountryModalOpen, setIsCountryModalOpen] = useState(false);
   const mobileSearchRef = useRef(null);
   const desktopSearchRef = useRef(null);
+
+  const currentCountryCode = getUserCountry();
+  const currentProfile = COUNTRY_PROFILES.find(c => c.code === currentCountryCode) || COUNTRY_PROFILES[0];
+  const currentLang = detectUserLanguage();
 
   // Close dropdowns on outside click or tap
   useEffect(() => {
@@ -123,21 +131,21 @@ export default function Navbar({
                 href="#bundles-section"
                 className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-700 hover:text-amber-600 hover:bg-white transition shadow-2xs"
               >
-                All Bundles
+                {t('allBundles')}
               </a>
 
               <a
                 href="#how-it-works-section"
                 className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-700 hover:text-amber-600 hover:bg-white transition shadow-2xs"
               >
-                How It Works
+                {t('howItWorksTitle')}
               </a>
 
               <a
                 href="#reviews-section"
                 className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-700 hover:text-amber-600 hover:bg-white transition shadow-2xs"
               >
-                Reviews
+                {t('reviewsTitle').split(' ')[0]}
               </a>
 
               <a
@@ -156,7 +164,7 @@ export default function Navbar({
                   type="text"
                   id="search-reels-desktop"
                   aria-label="Search viral reels bundles by title or niche"
-                  placeholder="Search viral niches, titles..."
+                  placeholder={t('searchPlaceholder')}
                   value={searchQuery}
                   onChange={(e) => {
                     setSearchQuery(e.target.value);
@@ -211,8 +219,8 @@ export default function Navbar({
                               {bundle.title}
                             </h4>
                             <div className="flex items-center gap-2 text-[10px] text-slate-500 font-semibold">
-                              <span>{bundle.clipsCount || 1000}+ Clips</span>
-                              <span className="text-amber-600 font-black">₹{bundle.price || 29}</span>
+                              <span>{bundle.clipsCount || 1000}+ {t('clips')}</span>
+                              <span className="text-amber-600 font-black">{getItemPriceDisplay(bundle).formattedPrice}</span>
                             </div>
                           </div>
                           <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-amber-600 shrink-0" />
@@ -237,16 +245,28 @@ export default function Navbar({
               )}
             </div>
 
-            {/* Actions: My Orders (With visible text on Mobile) & Cart */}
-            <div className="flex items-center gap-1.5 sm:gap-2.5">
+            {/* Actions: Region/Currency/Language, My Orders & Cart */}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <button
+                onClick={() => setIsCountryModalOpen(true)}
+                aria-label="Switch country, currency, or language"
+                className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1.5 sm:py-2 text-xs font-bold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl transition shadow-xs cursor-pointer shrink-0"
+                title={t('switchCountry')}
+              >
+                <span className="text-sm">{currentProfile?.flag || '🌐'}</span>
+                <span className="text-[10px] sm:text-[11px] font-black uppercase text-slate-900">{currentProfile?.currency || 'USD'}</span>
+                <span className="hidden sm:inline text-slate-300 text-[10px]">|</span>
+                <span className="hidden sm:inline text-[10px] font-bold text-slate-600 uppercase">{currentLang}</span>
+              </button>
+
               <button
                 onClick={onOpenMyOrders}
                 aria-label="Track and view my past orders"
                 className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-bold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl transition shadow-xs cursor-pointer shrink-0"
-                title="Track and re-download past purchases"
+                title={t('myOrders')}
               >
                 <PackageCheck className="w-4 h-4 text-amber-500 shrink-0" />
-                <span className="inline text-[11px] sm:text-xs">My Orders</span>
+                <span className="inline text-[11px] sm:text-xs">{t('myOrders')}</span>
               </button>
 
               <button
@@ -255,7 +275,7 @@ export default function Navbar({
                 className="relative inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-[#FFB701] to-[#FF800B] hover:brightness-105 text-slate-950 rounded-xl font-black text-xs sm:text-sm shadow-md shadow-amber-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer shrink-0"
               >
                 <ShoppingBag className="w-4 h-4 shrink-0" />
-                <span>Cart</span>
+                <span>{t('cart')}</span>
                 {cartCount > 0 && (
                   <span className="bg-slate-950 text-amber-300 font-black text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.2 sm:py-0.5 rounded-full shadow-xs">
                     {cartCount}
@@ -513,6 +533,11 @@ export default function Navbar({
           </div>
         </div>
       )}
+      {/* Country / Currency / Language Modal */}
+      <CountryLanguageSelector 
+        isOpen={isCountryModalOpen} 
+        onClose={() => setIsCountryModalOpen(false)} 
+      />
     </>
   );
 }

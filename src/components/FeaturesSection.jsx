@@ -1,36 +1,39 @@
 import React from 'react';
-import { Video, QrCode, BadgePercent, Zap } from 'lucide-react';
-import { isInternationalVisitor } from '../utils/geoPricing';
+import { Trophy, CreditCard, DollarSign, Gauge } from 'lucide-react';
+import { isInternationalVisitor, getUserCurrency } from '../utils/geoPricing';
+import { t } from '../utils/i18n';
 
 export default function FeaturesSection() {
   const isIntl = isInternationalVisitor();
+  const currency = getUserCurrency();
+  const minFormatted = currency.format(currency.minPrice);
+  const masterFormatted = currency.format(currency.masterPrice);
+
   const features = [
     {
-      icon: Video,
-      title: '1080p HD Quality',
-      desc: 'Crystal-clear 1080x1920 Full HD vertical video format. 100% watermark and logo free.',
+      icon: Trophy,
+      title: t('feature3Title'),
+      desc: t('feature3Desc'),
       bgColor: 'bg-indigo-50 text-indigo-600 border-indigo-100'
     },
     {
-      icon: QrCode,
-      title: isIntl ? 'Instant PayPal Checkout' : 'Easy UPI & Card Payments',
+      icon: CreditCard,
+      title: t('feature4Title'),
       desc: isIntl 
-        ? 'Worldwide secure payments powered by PayPal. Instant automated order delivery.'
+        ? t('feature4Desc')
         : 'Multiple secure options: Direct UPI QR, PhonePe, Google Pay, Paytm, Cards, and Netbanking.',
       bgColor: 'bg-blue-50 text-blue-600 border-blue-100'
     },
     {
-      icon: BadgePercent,
-      title: 'Affordable Pricing',
-      desc: isIntl
-        ? 'Individual packs start at just $10 USD. Unlock all 127+ packs with the $99 USD Master Vault deal.'
-        : 'Individual packs start at just ₹49. Unlock all 127+ packs with the ₹299 Master Vault deal.',
+      icon: DollarSign,
+      title: `${t('startingAt')} ${minFormatted}`,
+      desc: `${t('startingAt')} ${minFormatted}. ${t('getMasterPack')} (${masterFormatted}).`,
       bgColor: 'bg-amber-50 text-amber-600 border-amber-100'
     },
     {
-      icon: Zap,
-      title: 'Instant 5-Sec Delivery',
-      desc: 'Direct official Google Drive link unlocked automatically right after checkout.',
+      icon: Gauge,
+      title: t('feature2Title'),
+      desc: t('feature2Desc'),
       bgColor: 'bg-emerald-50 text-emerald-600 border-emerald-100'
     }
   ];

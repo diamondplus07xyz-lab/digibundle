@@ -1,14 +1,17 @@
 import React from 'react';
 import { X, Trash2, ShoppingBag, ArrowRight, Sparkles, Tag, CheckCircle } from 'lucide-react';
 import { calculateCartPricing } from '../utils/pricing';
-import { getItemPriceDisplay, calculateUsdTotal, isInternationalVisitor } from '../utils/geoPricing';
+import { getItemPriceDisplay, calculateLocalTotal, getUserCurrency, isInternationalVisitor } from '../utils/geoPricing';
+import { t } from '../utils/i18n';
 
 export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, onProceedToCheckout }) {
   if (!isOpen) return null;
 
   const { subtotal, discount, finalTotal, comboBadge, nextTierMessage, itemsCount } = calculateCartPricing(cartItems);
   const isIntl = isInternationalVisitor();
-  const totalUsd = calculateUsdTotal(cartItems, finalTotal);
+  const currency = getUserCurrency();
+  const localTotal = calculateLocalTotal(cartItems);
+  const formattedLocalTotal = currency.format(localTotal);
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
@@ -25,7 +28,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
           <div className="p-4 sm:p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
             <div className="flex items-center gap-2">
               <ShoppingBag className="w-5 h-5 text-amber-500" />
-              <h2 className="text-base font-black text-slate-900">Your Cart ({cartItems.length})</h2>
+              <h2 className="text-base font-black text-slate-900">{t('yourCart')} ({cartItems.length})</h2>
             </div>
             <button
               onClick={onClose}
@@ -56,13 +59,13 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
             {cartItems.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center p-6 text-slate-400">
                 <ShoppingBag className="w-12 h-12 text-slate-300 mb-2 stroke-1" />
-                <p className="text-sm font-bold text-slate-700">Your cart is empty</p>
-                <p className="text-xs text-slate-500 mt-1 mb-4">Add viral reels bundles to get started</p>
+                <p className="text-sm font-bold text-slate-700">{t('emptyCartTitle')}</p>
+                <p className="text-xs text-slate-500 mt-1 mb-4">{t('emptyCartDesc')}</p>
                 <button
                   onClick={onClose}
                   className="px-4 py-2 bg-slate-900 hover:bg-black text-white rounded-xl text-xs font-bold transition cursor-pointer"
                 >
-                  Browse Bundles
+                  {t('exploreCatalog')}
                 </button>
               </div>
             ) : (
@@ -81,7 +84,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
                     <p className="text-[11px] text-slate-500 font-medium">{item.clipCount}</p>
                     <div className="flex items-baseline gap-2 mt-0.5">
                       {isIntl ? (
-                        <span className="text-sm font-black text-sky-700">{getItemPriceDisplay(item, true).formattedPrice}</span>
+                        <span className="text-sm font-black text-sky-700">{getItemPriceDisplay(item).formattedPrice}</span>
                       ) : (
                         <>
                           <span className="text-sm font-black text-slate-950">₹{item.price}</span>
@@ -109,8 +112,8 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
             <div className="p-4 sm:p-5 border-t border-slate-200 bg-slate-50 space-y-3">
               <div className="space-y-1.5 text-xs">
                 <div className="flex justify-between items-center text-slate-600 font-bold">
-                  <span>Subtotal ({itemsCount} items)</span>
-                  <span>{isIntl ? `$${totalUsd} USD` : `₹${subtotal}`}</span>
+                  <span>{t('subtotal')} ({itemsCount})</span>
+                  <span>{isIntl ? formattedLocalTotal : `₹${subtotal}`}</span>
                 </div>
                 {discount > 0 && !isIntl && (
                   <div className="flex justify-between items-center text-emerald-600 font-bold">
@@ -122,13 +125,13 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
                   </div>
                 )}
                 <div className="flex justify-between items-baseline pt-1 border-t border-slate-200 text-sm">
-                  <span className="text-xs font-black text-slate-900 uppercase">Total Payable</span>
+                  <span className="text-xs font-black text-slate-900 uppercase">{t('totalPayable')}</span>
                   <div className="flex items-baseline gap-2">
                     {discount > 0 && !isIntl && (
                       <span className="text-xs text-slate-400 line-through">₹{subtotal}</span>
                     )}
                     {isIntl ? (
-                      <span className="text-xl font-black text-sky-700 font-mono">${totalUsd} USD</span>
+                      <span className="text-xl font-black text-sky-700 font-mono">{formattedLocalTotal}</span>
                     ) : (
                       <span className="text-xl font-black text-slate-950">₹{finalTotal}</span>
                     )}
@@ -140,7 +143,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
                 onClick={onProceedToCheckout}
                 className="w-full py-3.5 bg-gradient-to-r from-amber-400 to-orange-500 hover:brightness-105 active:scale-98 text-slate-950 font-black rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>Proceed to Checkout</span>
+                <span>{t('proceedToCheckout')}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>

@@ -9,7 +9,8 @@ import { QRCodeSVG } from 'qrcode.react';
 import { calculateCartPricing } from '../utils/pricing';
 import { validateUtr, checkOrderRateLimit, recordOrderSubmission, sanitizeInput } from '../utils/security';
 import { initialBundles } from '../data/bundles';
-import { calculateUsdTotal, isGtaItem, isInternationalVisitor, getBundleUsdPrice } from '../utils/geoPricing';
+import { calculateUsdTotal, isGtaItem, isInternationalVisitor, getBundleUsdPrice, getUserCurrency, getItemPriceDisplay, calculateLocalTotal } from '../utils/geoPricing';
+import { t } from '../utils/i18n';
 import BrandLogo from './BrandLogo';
 
 // Comprehensive Indian States & International List for mandatory customer checkout details
@@ -184,6 +185,11 @@ export default function CheckoutModal({
   const calculatedUsd = calculateUsdTotal(items, total);
   const usdDisplay = calculatedUsd.toFixed(2).replace(/\.00$/, '');
   const usdAmount = Number(calculatedUsd).toFixed(2);
+  const activeCurrency = getUserCurrency();
+  const localTotal = calculateLocalTotal(items);
+  const localTotalFormatted = activeCurrency.format(localTotal);
+  const localOrigFormatted = activeCurrency.format(Math.round(localTotal * 2.5));
+  const localDiscountFormatted = activeCurrency.format(Math.round(localTotal * 1.5));
 
   // Standard UPI URI format
   const upiUri = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${total}&cu=INR&tn=${encodeURIComponent('CheapReelsBundle')}`;
@@ -781,7 +787,7 @@ export default function CheckoutModal({
                       </div>
                       <div className="text-right shrink-0">
                         {isIntl ? (
-                          <span className="font-black text-purple-700 font-mono">${getBundleUsdPrice(it)} USD</span>
+                          <span className="font-black text-purple-700 font-mono">{getItemPriceDisplay(it).formattedPrice}</span>
                         ) : (
                           <>
                             <span className="font-black text-slate-900">₹{it.price}</span>
@@ -800,16 +806,16 @@ export default function CheckoutModal({
                 {/* Detailed Pricing Table */}
                 <div className="pt-2.5 border-t border-slate-200 space-y-1.5 text-xs">
                   <div className="flex justify-between text-slate-600">
-                    <span>Bundle(s) Original Value:</span>
+                    <span>{t('originalValue')}:</span>
                     <span className="line-through text-slate-400 font-medium">
-                      {isIntl ? `$${Math.round(calculatedUsd * 2.5)} USD` : `₹${originalTotal}`}
+                      {isIntl ? localOrigFormatted : `₹${originalTotal}`}
                     </span>
                   </div>
 
                   <div className="flex justify-between text-emerald-600 font-bold">
-                    <span>Store Promotional Discount:</span>
+                    <span>{t('promotionalDiscount')}:</span>
                     <span>
-                      {isIntl ? `-$${Math.round(calculatedUsd * 1.5)} USD` : `-₹${Math.max(0, originalTotal - subtotal)}`}
+                      {isIntl ? `-${localDiscountFormatted}` : `-₹${Math.max(0, originalTotal - subtotal)}`}
                     </span>
                   </div>
 
@@ -824,9 +830,9 @@ export default function CheckoutModal({
                   )}
 
                   <div className="flex justify-between text-slate-600">
-                    <span>Delivery (Instant Cloud Unlock):</span>
+                    <span>{t('delivery')}:</span>
                     <span className="font-bold text-emerald-600 uppercase text-[10px]">
-                      {isIntl ? 'FREE ($0)' : 'FREE (₹0)'}
+                      {isIntl ? t('freeDelivery') : 'FREE (₹0)'}
                     </span>
                   </div>
 
@@ -837,13 +843,13 @@ export default function CheckoutModal({
 
                   <div className="flex justify-between items-center pt-2 border-t border-slate-300/80 font-black text-slate-900">
                     <div>
-                      <span className="text-sm">Total Payable Amount</span>
+                      <span className="text-sm">{t('totalPayable')}</span>
                       <span className="block text-[10px] font-bold text-emerald-600">
                         {isIntl ? '🎉 Direct PayPal Checkout' : `🎉 You Save ₹${totalSavings} Total!`}
                       </span>
                     </div>
                     <span className="text-xl sm:text-2xl text-purple-700 font-mono">
-                      {isIntl ? `$${calculatedUsd} USD` : `₹${total}`}
+                      {isIntl ? localTotalFormatted : `₹${total}`}
                     </span>
                   </div>
                 </div>
@@ -987,7 +993,7 @@ export default function CheckoutModal({
                 type="submit"
                 className="w-full py-3.5 bg-gradient-to-r from-purple-600 via-pink-600 to-rose-500 hover:from-purple-700 hover:to-pink-700 text-white font-black rounded-2xl text-sm shadow-lg shadow-purple-600/25 flex items-center justify-center gap-2 transition cursor-pointer active:scale-[0.99]"
               >
-                <span>{isIntl ? `Continue to PayPal ($${calculatedUsd} USD)` : `Continue to Payment (₹${total})`}</span>
+                <span>{isIntl ? `${t('continueToPayPal')} (${localTotalFormatted})` : `${t('continueToPayment')} (₹${total})`}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </form>
@@ -1014,10 +1020,12 @@ export default function CheckoutModal({
                     <span className="text-[11px] font-bold text-slate-600 block">Total Payable:</span>
                     {selectedGateway === 'paypal' ? (
                       <div className="flex items-baseline gap-2 flex-wrap">
-                        <span className="text-2xl font-black text-sky-700 font-mono">${usdDisplay} USD</span>
-                        <span className="text-[10px] font-bold text-sky-800 bg-sky-100/90 px-2 py-0.5 rounded-full border border-sky-300/60">
-                          International Dollar Price
-                        </span>
+                        <span className="text-2xl font-black text-sky-700 font-mono">{localTotalFormatted}</span>
+                        {activeCurrency.code !== 'USD' && (
+                          <span className="text-[10px] font-bold text-sky-800 bg-sky-100/90 px-2 py-0.5 rounded-full border border-sky-300/60">
+                            ≈ ${usdDisplay} USD via PayPal
+                          </span>
+                        )}
                       </div>
                     ) : (
                       <span className="text-xl font-black text-purple-900">₹{total}</span>
@@ -1025,7 +1033,7 @@ export default function CheckoutModal({
                   </div>
                   <div className="text-right">
                     <span className="text-[11px] font-bold text-slate-500 block">WhatsApp:</span>
-                    <span className="text-xs font-black text-slate-800">+91 {whatsapp}</span>
+                    <span className="text-xs font-black text-slate-800">{isIntl ? whatsapp : `+91 ${whatsapp}`}</span>
                   </div>
                 </div>
                 <div className="pt-2 border-t border-slate-200/60 flex items-center justify-between text-[11px] text-slate-600">
