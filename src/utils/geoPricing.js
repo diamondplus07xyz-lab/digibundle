@@ -47,7 +47,14 @@ export function calculateUsdTotal(items = [], inrTotal = 0) {
     }
   });
 
-  return Number(totalUsd.toFixed(2));
+  // Apply Smart Combo Bulk Discounts for International Visitors (same tiers as INR cart)
+  if (items.length === 2) {
+    totalUsd = totalUsd * 0.85; // 15% Double-Bundle Combo
+  } else if (items.length >= 3) {
+    totalUsd = totalUsd * 0.75; // 25% Super Creator Combo
+  }
+
+  return Number(Math.max(1, totalUsd).toFixed(2));
 }
 
 export function getItemPriceDisplay(item, forceInternational = false) {

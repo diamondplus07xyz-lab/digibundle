@@ -61,6 +61,7 @@ export default function OrderSuccessModal({ order: initialOrder, onClose, config
 
   const rawPhone = (config?.whatsappNumber || currentOrder.whatsappNumber || '7017324978').replace(/\D/g, '');
   const supportPhone = rawPhone.length === 10 ? `91${rawPhone}` : rawPhone;
+  const phoneDisplay = supportPhone.startsWith('91') && supportPhone.length === 12 ? `+91 ${supportPhone.slice(2)}` : `+${supportPhone}`;
   const storeName = config?.storeName || 'Cheap Reels';
   const whatsappUrl = currentOrder.whatsappUrl || (supportPhone ? 
     `https://wa.me/${supportPhone}?text=${encodeURIComponent(`Hello ${storeName}, my order ID is #${currentOrder.id} and UTR is ${currentOrder.utr}. Please verify and send my Google Drive link.`)}` : '#');
@@ -256,7 +257,7 @@ export default function OrderSuccessModal({ order: initialOrder, onClose, config
                 className="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-xl text-xs sm:text-sm shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 transition hover:scale-[1.01] active:scale-[0.99]"
               >
                 <MessageCircle className="w-5 h-5 fill-white" />
-                <span>Chat on WhatsApp (+91 7017324978) to Speed Up Verification</span>
+                <span>Chat on WhatsApp ({phoneDisplay}) to Speed Up Verification</span>
                 <ExternalLink className="w-4 h-4" />
               </a>
 
@@ -277,19 +278,39 @@ export default function OrderSuccessModal({ order: initialOrder, onClose, config
                   Your Google Drive Folder Access is Unlocked!
                 </h4>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  Click below to open and save all 1080p watermark-free reels directly to your Google Drive.
+                  Click below to open and save your 1080p watermark-free reels directly to your Google Drive.
                 </p>
               </div>
 
-              <a
-                href={currentOrder.items[0]?.driveLink || "https://drive.google.com"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-4 bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black rounded-2xl text-sm sm:text-base shadow-xl shadow-emerald-500/25 flex items-center justify-center gap-2 transition hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
-              >
-                <span>Open Google Drive Folder</span>
-                <ExternalLink className="w-5 h-5" />
-              </a>
+              {currentOrder.items.length === 1 ? (
+                <a
+                  href={currentOrder.items[0]?.driveLink || "https://drive.google.com"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-4 bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black rounded-2xl text-sm sm:text-base shadow-xl shadow-emerald-500/25 flex items-center justify-center gap-2 transition hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+                >
+                  <span>Open Google Drive Folder</span>
+                  <ExternalLink className="w-5 h-5" />
+                </a>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-left">
+                  {currentOrder.items.map((it, idx) => (
+                    <a
+                      key={idx}
+                      href={it.driveLink || "https://drive.google.com"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 rounded-xl text-xs font-bold text-emerald-300 flex items-center justify-between gap-2 transition hover:scale-[1.01] active:scale-[0.99]"
+                    >
+                      <div className="flex items-center gap-2 truncate">
+                        <FolderOpen className="w-4 h-4 text-emerald-400 shrink-0" />
+                        <span className="truncate">{it.title?.split('–')[0]?.trim() || `Bundle ${idx + 1}`}</span>
+                      </div>
+                      <ExternalLink className="w-3.5 h-3.5 shrink-0 text-emerald-400" />
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
@@ -299,34 +320,40 @@ export default function OrderSuccessModal({ order: initialOrder, onClose, config
               Purchased Reels Bundles ({currentOrder.items.length})
             </h4>
             <div className="space-y-2">
-              {currentOrder.items.map((item, idx) => (
-                <div key={idx} className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between text-xs gap-3">
-                  <div className="min-w-0">
-                    <p className="font-bold text-white truncate">{(item.title || '').replace(/&amp;/g, '&')}</p>
-                    <p className="text-[11px] text-slate-400">
-                      {typeof item.clipCount === 'string' && item.clipCount.includes('Reel')
-                        ? item.clipCount
-                        : `${(typeof item.clipCount === 'number' ? item.clipCount : (parseInt(String(item.clipCount || '').replace(/\D/g, ''), 10) || 1000)).toLocaleString()}+ Reels`} • 1080p Full HD • Watermark-Free
-                    </p>
+              {currentOrder.items.map((item, idx) => {
+                const isGta = String(item.id || '').includes('gta') || 
+                              String(item.title || '').toLowerCase().includes('gta') || 
+                              String(item.id || '') === 'bundle-127' ||
+                              String(item.id || '') === 'special-offer-banner';
+                return (
+                  <div key={idx} className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex items-center justify-between text-xs gap-3">
+                    <div className="min-w-0">
+                      <p className="font-bold text-white truncate">{(item.title || '').replace(/&amp;/g, '&')}</p>
+                      <p className="text-[11px] text-slate-400">
+                        {typeof item.clipCount === 'string' && item.clipCount.includes('Reel')
+                          ? item.clipCount
+                          : `${(typeof item.clipCount === 'number' ? item.clipCount : (parseInt(String(item.clipCount || '').replace(/\D/g, ''), 10) || 1000)).toLocaleString()}+ Reels`} • 1080p Full HD • Watermark-Free
+                      </p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <span className="font-black text-amber-400 block">
+                        {currentOrder.gateway === 'PayPal' ? (isGta ? '$19.99 USD' : `$${item.price} USD`) : `₹${item.price}`}
+                      </span>
+                      {isVerified && item.driveLink && (
+                        <a 
+                          href={item.driveLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-400 hover:text-emerald-300 mt-0.5"
+                        >
+                          <span>Drive</span>
+                          <ExternalLink className="w-2.5 h-2.5" />
+                        </a>
+                      )}
+                    </div>
                   </div>
-                  <div className="text-right shrink-0">
-                    <span className="font-black text-amber-400 block">
-                      {currentOrder.gateway === 'PayPal' ? `$${item.price} USD` : `₹${item.price}`}
-                    </span>
-                    {isVerified && item.driveLink && (
-                      <a 
-                        href={item.driveLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-400 hover:text-emerald-300 mt-0.5"
-                      >
-                        <span>Drive</span>
-                        <ExternalLink className="w-2.5 h-2.5" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

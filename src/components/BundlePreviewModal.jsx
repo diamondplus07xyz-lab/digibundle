@@ -183,7 +183,7 @@ export default function BundlePreviewModal({ bundle, onClose, onBuyNow }) {
               </div>
 
               <div className="space-y-1.5 pt-1">
-                {bundle.links && bundle.links.map((link, idx) => (
+                {(bundle.links && bundle.links.length > 0 ? bundle.links : [{ label: 'Master Drive Cloud Folder', url: bundle.driveLink || '#' }]).map((link, idx) => (
                   <div key={idx} className="flex items-center justify-between bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800 text-xs">
                     <span className="text-slate-300 font-medium truncate max-w-[200px] sm:max-w-xs">{link.label}</span>
                     <span className="text-[11px] text-indigo-400 font-mono flex items-center gap-1">

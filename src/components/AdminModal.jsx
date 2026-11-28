@@ -2184,15 +2184,20 @@ export default function AdminModal({
                         const isRejected = ord.status === 'REJECTED';
                         const isPending = !isVerified && !isRejected;
                         const payApp = ord.paymentApp || 'UPI QR';
-                        const customerPhone = ord.whatsapp || ord.customerPhone || '';
-                        const bundleTitle = ord.items?.[0]?.title || 'Reels Bundle';
-                        const driveUrl = ord.items?.[0]?.driveLink || 'https://drive.google.com/drive/folders/1Ykmi_mcwvChCkcL1hMtEdW6AJAW3reVU';
-                        const sendLinkWaUrl = `https://wa.me/${customerPhone}?text=${encodeURIComponent(
+                        const rawPhone = (ord.whatsapp || ord.customerPhone || '').replace(/\D/g, '');
+                        const cleanWaPhone = rawPhone.length === 10 ? `91${rawPhone}` : rawPhone;
+                        const isUsd = ord.gateway === 'PayPal' || Boolean(ord.usdAmount);
+                        const paidAmountDisplay = isUsd ? `$${ord.usdAmount || ord.amount || ord.total} USD` : `₹${ord.total || ord.amount}`;
+                        const itemsList = (ord.items && ord.items.length > 0)
+                          ? ord.items.map((it, i) => `${i + 1}. *${it.title}*:\n${it.driveLink || 'https://drive.google.com'}`).join('\n\n')
+                          : `📁 *YOUR OFFICIAL GOOGLE DRIVE FOLDER ACCESS:*\n${ord.driveLink || 'https://drive.google.com'}`;
+
+                        const sendLinkWaUrl = `https://wa.me/${cleanWaPhone}?text=${encodeURIComponent(
                           `🎉 *ORDER VERIFIED & APPROVED!* 🎉\n\n` +
                           `Hello *${ord.name || 'Customer'}*,\n` +
-                          `Your payment of *₹${ord.total || ord.amount}* (UTR: ${ord.utr}) for *${bundleTitle}* has been verified by the Cheap Reels admin.\n\n` +
-                          `📁 *YOUR OFFICIAL GOOGLE DRIVE FOLDER ACCESS:*\n${driveUrl}\n\n` +
-                          `Enjoy your 1080p Full HD watermark-free reels!`
+                          `Your payment of *${paidAmountDisplay}* (UTR: ${ord.utr || ord.id}) has been verified by Cheap Reels.\n\n` +
+                          `📁 *YOUR GOOGLE DRIVE ACCESS FOLDER(S):*\n${itemsList}\n\n` +
+                          `Enjoy your 1080p Full HD watermark-free reels! Need more packs? Visit: https://www.cheapreels.in`
                         )}`;
 
                         return (
@@ -2309,17 +2314,20 @@ export default function AdminModal({
                               const isPending = !isVerified && !isRejected;
 
                               const payApp = ord.paymentApp || 'UPI QR';
-                              const customerPhone = ord.whatsapp || ord.customerPhone || '';
-                              const bundleTitle = ord.items?.[0]?.title || 'Reels Bundle';
-                              const driveUrl = ord.items?.[0]?.driveLink || 'https://drive.google.com/drive/folders/1Ykmi_mcwvChCkcL1hMtEdW6AJAW3reVU';
+                              const rawPhone = (ord.whatsapp || ord.customerPhone || '').replace(/\D/g, '');
+                              const cleanWaPhone = rawPhone.length === 10 ? `91${rawPhone}` : rawPhone;
+                              const isUsd = ord.gateway === 'PayPal' || Boolean(ord.usdAmount);
+                              const paidAmountDisplay = isUsd ? `$${ord.usdAmount || ord.amount || ord.total} USD` : `₹${ord.total || ord.amount}`;
+                              const itemsList = (ord.items && ord.items.length > 0)
+                                ? ord.items.map((it, i) => `${i + 1}. *${it.title}*:\n${it.driveLink || 'https://drive.google.com'}`).join('\n\n')
+                                : `📁 *YOUR OFFICIAL GOOGLE DRIVE FOLDER ACCESS:*\n${ord.driveLink || 'https://drive.google.com'}`;
 
-                              const sendLinkWaUrl = `https://wa.me/${customerPhone}?text=${encodeURIComponent(
+                              const sendLinkWaUrl = `https://wa.me/${cleanWaPhone}?text=${encodeURIComponent(
                                 `🎉 *ORDER VERIFIED & APPROVED!* 🎉\n\n` +
                                 `Hello *${ord.name || 'Customer'}*,\n` +
-                                `Your payment of *₹${ord.total || ord.amount}* (UTR: ${ord.utr}) for *${bundleTitle}* has been verified by the Cheap Reels admin.\n\n` +
-                                `📁 *YOUR OFFICIAL GOOGLE DRIVE FOLDER ACCESS:*\n` +
-                                `${driveUrl}\n\n` +
-                                `Enjoy your 1080p Full HD watermark-free reels! Need more packs? Visit: http://localhost:5173/`
+                                `Your payment of *${paidAmountDisplay}* (UTR: ${ord.utr || ord.id}) has been verified by Cheap Reels.\n\n` +
+                                `📁 *YOUR GOOGLE DRIVE ACCESS FOLDER(S):*\n${itemsList}\n\n` +
+                                `Enjoy your 1080p Full HD watermark-free reels! Need more packs? Visit: https://www.cheapreels.in`
                               )}`;
 
                               return (

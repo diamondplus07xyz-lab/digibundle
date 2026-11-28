@@ -6,12 +6,12 @@ export default function FAQSection() {
 
   const faqs = [
     {
-      q: 'DigiBundle — what is it?',
-      a: 'DigiBundle is India\'s #1 digital store for ready-to-post 1080p Full HD vertical reels bundles. We provide 2,50,000+ vertical videos across 130+ viral niches with direct Google Drive access at flat 95% discount.'
+      q: 'Cheap Reels — what is it?',
+      a: 'Cheap Reels is India\'s #1 digital store for ready-to-post 1080p Full HD vertical reels bundles. We provide 2,50,000+ vertical videos across 130+ viral niches with direct Google Drive access at flat 95% discount.'
     },
     {
       q: 'What kinds of Reels bundles can I buy here?',
-      a: 'We cover 50+ curated premium bundles including Fitness & Gym, Luxury Lifestyle, Devotional/Sanatan, Anime, Motivation & Mindset, Comedy & Memes, Art & Craft, and Tech videos.'
+      a: 'We cover 130+ popular categories including Fitness & Gym, Luxury Lifestyle, Devotional/Sanatan, Anime, Motivation & Mindset, Comedy & Memes, Art & Craft, and Tech videos.'
     },
     {
       q: 'Are the reels 100% watermark-free with no logos?',
@@ -19,7 +19,7 @@ export default function FAQSection() {
     },
     {
       q: 'How and when do I get my Google Drive link?',
-      a: 'Immediately after completing your payment via UPI QR, Cashfree, or Razorpay, your official Google Drive download folder is unlocked on your screen in 5 seconds and also sent to your WhatsApp number.'
+      a: 'Immediately after completing your payment via UPI QR, Cashfree, or PayPal (International), your official Google Drive download folder is unlocked on your screen in 5 seconds and also sent to your WhatsApp number.'
     },
     {
       q: 'Do I get lifetime access and future updates?',

@@ -132,9 +132,10 @@ function renderMainDashboard(storeData) {
     `<i>Select any management module below to take action:</i>`
   ].join('\n');
 
+  const bundleCount = Array.isArray(storeData?.bundles) ? storeData.bundles.length : 127;
   const keyboard = [
     [
-      { text: '📦 Bundles (126)', callback_data: 'nav:bundles:1' },
+      { text: `📦 Bundles (${bundleCount})`, callback_data: 'nav:bundles:1' },
       { text: '🛒 Orders Feed', callback_data: 'nav:orders:1' }
     ],
     [
