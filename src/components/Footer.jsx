@@ -1,8 +1,10 @@
 import React from 'react';
 import { ShieldCheck, MessageCircle, Mail } from 'lucide-react';
 import BrandLogo from './BrandLogo';
+import { isInternationalVisitor } from '../utils/geoPricing';
 
 export default function Footer({ config = {}, onOpenPolicy }) {
+  const isIntl = isInternationalVisitor();
   const footerLogo = config.footerLogo || config.logo;
   const supportEmail = config.supportEmail || "reelscheap@gmail.com";
   const rawNumber = (config.whatsappNumber || '7017324978').replace(/\D/g, '');
@@ -88,13 +90,23 @@ export default function Footer({ config = {}, onOpenPolicy }) {
               Supported Payment Modes
             </h4>
             <p className="text-xs text-slate-300 mb-2 font-medium">
-              Instant automated checkout via all Indian UPI apps:
+              {isIntl ? 'Instant global checkout via international payment gateways:' : 'Instant automated checkout via all Indian UPI apps:'}
             </p>
             <div className="flex flex-wrap gap-1.5">
-              <span className="px-2.5 py-1 bg-slate-900 text-purple-300 rounded-lg font-bold text-[11px] border border-slate-800">PhonePe</span>
-              <span className="px-2.5 py-1 bg-slate-900 text-blue-300 rounded-lg font-bold text-[11px] border border-slate-800">Google Pay</span>
-              <span className="px-2.5 py-1 bg-slate-900 text-cyan-300 rounded-lg font-bold text-[11px] border border-slate-800">Paytm</span>
-              <span className="px-2.5 py-1 bg-slate-900 text-amber-300 rounded-lg font-bold text-[11px] border border-slate-800">Direct UPI QR</span>
+              {isIntl ? (
+                <>
+                  <span className="px-2.5 py-1 bg-slate-900 text-sky-300 rounded-lg font-bold text-[11px] border border-slate-800">PayPal</span>
+                  <span className="px-2.5 py-1 bg-slate-900 text-emerald-300 rounded-lg font-bold text-[11px] border border-slate-800">Visa / Mastercard</span>
+                  <span className="px-2.5 py-1 bg-slate-900 text-indigo-300 rounded-lg font-bold text-[11px] border border-slate-800">Global Instant Unlock</span>
+                </>
+              ) : (
+                <>
+                  <span className="px-2.5 py-1 bg-slate-900 text-purple-300 rounded-lg font-bold text-[11px] border border-slate-800">PhonePe</span>
+                  <span className="px-2.5 py-1 bg-slate-900 text-blue-300 rounded-lg font-bold text-[11px] border border-slate-800">Google Pay</span>
+                  <span className="px-2.5 py-1 bg-slate-900 text-cyan-300 rounded-lg font-bold text-[11px] border border-slate-800">Paytm</span>
+                  <span className="px-2.5 py-1 bg-slate-900 text-amber-300 rounded-lg font-bold text-[11px] border border-slate-800">Direct UPI QR</span>
+                </>
+              )}
             </div>
           </div>
         </div>

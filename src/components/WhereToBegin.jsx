@@ -1,7 +1,9 @@
 import React from 'react';
 import { Compass, CreditCard, Download, Rocket } from 'lucide-react';
+import { isInternationalVisitor } from '../utils/geoPricing';
 
 export default function WhereToBegin() {
+  const isIntl = isInternationalVisitor();
   const steps = [
     {
       num: '1',
@@ -17,7 +19,9 @@ export default function WhereToBegin() {
       iconColor: 'text-blue-600',
       bgColor: 'bg-blue-50 border-blue-200',
       title: 'Easy 1-Click Payment',
-      desc: 'Pay securely using PhonePe, Google Pay, Paytm, UPI QR, or Cards with zero extra fees.'
+      desc: isIntl 
+        ? 'Pay securely via PayPal or Cards with zero extra fees.'
+        : 'Pay securely using PhonePe, Google Pay, Paytm, UPI QR, or Cards with zero extra fees.'
     },
     {
       num: '3',

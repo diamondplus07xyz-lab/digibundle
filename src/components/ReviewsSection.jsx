@@ -1,40 +1,50 @@
 import React from 'react';
 import { Star, MessageSquare } from 'lucide-react';
+import { isInternationalVisitor } from '../utils/geoPricing';
 
 export default function ReviewsSection() {
+  const isIntl = isInternationalVisitor();
   const reviews = [
     {
       name: 'Aman Sharma',
-      city: 'Delhi',
+      city: isIntl ? 'New York, US' : 'Delhi',
       role: 'Instagram Creator',
-      text: 'Bhai sach me reels ki quality ek number hai! 1080p full HD aur bina kisi watermark ke hai. 3 din me Instagram reach 5x ho gayi. Worth every rupee!',
+      text: isIntl 
+        ? 'Truly impressed by the video quality! 1080p Full HD without watermarks. My social reach jumped 5x in 3 days. Worth every dollar!' 
+        : 'Bhai sach me reels ki quality ek number hai! 1080p full HD aur bina kisi watermark ke hai. 3 din me Instagram reach 5x ho gayi. Worth every rupee!',
       rating: 5,
       avatar: 'AS',
       badgeBg: 'bg-indigo-100 text-indigo-700'
     },
     {
       name: 'Pooja Verma',
-      city: 'Mumbai',
+      city: isIntl ? 'London, UK' : 'Mumbai',
       role: 'Fashion & Lifestyle Page',
-      text: 'Sabse best baat ye hai ki payment ke baad direct Google Drive link WhatsApp pe mil gaya. Video editing ka pura jhanjhat khatam ho gaya.',
+      text: isIntl
+        ? 'Best part is that right after payment, instant Google Drive access unlocked immediately. Saves hundreds of hours of video editing.'
+        : 'Sabse best baat ye hai ki payment ke baad direct Google Drive link WhatsApp pe mil gaya. Video editing ka pura jhanjhat khatam ho gaya.',
       rating: 5,
       avatar: 'PV',
       badgeBg: 'bg-rose-100 text-rose-700'
     },
     {
       name: 'Rohan Mehta',
-      city: 'Jaipur',
+      city: isIntl ? 'Toronto, CA' : 'Jaipur',
       role: 'Digital Marketer',
-      text: 'GTA 6 4K Cinematic Reels bundle liya tha ₹99 me, itna massive aur crisp content mila hai ki 1 saal tak roz vertical gaming reels aaram se post kar sakta hu!',
+      text: isIntl
+        ? 'Purchased the GTA 6 4K Cinematic Reels bundle for $19.99 USD, received massive crisp quality content ready to post daily all year round!'
+        : 'GTA 6 4K Cinematic Reels bundle liya tha ₹99 me, itna massive aur crisp content mila hai ki 1 saal tak roz vertical gaming reels aaram se post kar sakta hu!',
       rating: 5,
       avatar: 'RM',
       badgeBg: 'bg-amber-100 text-amber-800'
     },
     {
       name: 'Sneha Patel',
-      city: 'Ahmedabad',
+      city: isIntl ? 'Sydney, AU' : 'Ahmedabad',
       role: 'YouTube Shorts Creator',
-      text: 'AI Reels aur Motivation bundle dono mast hain. YouTube Shorts pe upload karne ke baad views aur subscribers bahut fast badh rahe hain!',
+      text: isIntl
+        ? 'The AI Reels and Motivation packs are fantastic. Gaining subscribers and views much faster on YouTube Shorts and Instagram Reels!'
+        : 'AI Reels aur Motivation bundle dono mast hain. YouTube Shorts pe upload karne ke baad views aur subscribers bahut fast badh rahe hain!',
       rating: 5,
       avatar: 'SP',
       badgeBg: 'bg-emerald-100 text-emerald-700'

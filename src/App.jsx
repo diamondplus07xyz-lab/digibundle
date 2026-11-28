@@ -81,7 +81,7 @@ export default function App() {
   });
 
   const [bundles, setBundles] = useState(() => {
-    const saved = localStorage.getItem('cheap_reels_bundles_v8');
+    const saved = localStorage.getItem('cheap_reels_bundles_v9');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -92,21 +92,33 @@ export default function App() {
             .map(initB => {
               const userB = parsed.find(p => p.id === initB.id);
               if (!userB) return initB;
+              const cleanPrice = Math.max(49, Math.min(299, Number(userB.price) || initB.price));
               return {
                 ...initB,
                 ...userB,
+                price: cleanPrice,
                 thumbnail: userB.thumbnail || initB.thumbnail,
                 videoPreview: userB.videoPreview !== undefined ? userB.videoPreview : (initB.videoPreview || ''),
                 driveLink: userB.driveLink !== undefined ? userB.driveLink : (initB.driveLink || '')
               };
             });
-          const customBundles = parsed.filter(p => p && p.id && !initIds.has(p.id) && p.id !== 'bundle-mega-all-in-one' && p.category !== 'mega');
+          const customBundles = parsed
+            .filter(p => p && p.id && !initIds.has(p.id) && p.id !== 'bundle-mega-all-in-one' && p.category !== 'mega')
+            .map(cb => ({
+              ...cb,
+              price: Math.max(49, Math.min(299, Number(cb.price) || 49))
+            }));
           return [...mapped, ...customBundles];
         }
       } catch (e) {}
     }
-    const fresh = initialBundles.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega');
-    try { localStorage.setItem('cheap_reels_bundles_v8', JSON.stringify(fresh)); } catch (e) {}
+    const fresh = initialBundles
+      .filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega')
+      .map(b => ({
+        ...b,
+        price: Math.max(49, Math.min(299, Number(b.price) || 49))
+      }));
+    try { localStorage.setItem('cheap_reels_bundles_v9', JSON.stringify(fresh)); } catch (e) {}
     return fresh;
   });
 
@@ -934,8 +946,13 @@ export default function App() {
 
     // 2. Bundles Catalog Sync
     if (cloudData.bundles && Array.isArray(cloudData.bundles) && cloudData.bundles.length > 0) {
-      const cleanedBundles = cloudData.bundles.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega');
-      try { localStorage.setItem('cheap_reels_bundles_v8', JSON.stringify(cleanedBundles)); } catch (e) {}
+      const cleanedBundles = cloudData.bundles
+        .filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega')
+        .map(b => ({
+          ...b,
+          price: Math.max(49, Math.min(299, Number(b.price) || 49))
+        }));
+      try { localStorage.setItem('cheap_reels_bundles_v9', JSON.stringify(cleanedBundles)); } catch (e) {}
       setBundles(cleanedBundles);
     }
 
@@ -1033,9 +1050,14 @@ export default function App() {
         applyRemoteCloudData(payload);
       } else if (eventType === 'BUNDLES_UPDATED') {
         if (Array.isArray(payload)) {
-          const cleaned = payload.filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega');
+          const cleaned = payload
+            .filter(b => b.id !== 'bundle-mega-all-in-one' && b.category !== 'mega')
+            .map(b => ({
+              ...b,
+              price: Math.max(49, Math.min(299, Number(b.price) || 49))
+            }));
           setBundles(cleaned);
-          try { localStorage.setItem('cheap_reels_bundles_v8', JSON.stringify(cleaned)); } catch (e) {}
+          try { localStorage.setItem('cheap_reels_bundles_v9', JSON.stringify(cleaned)); } catch (e) {}
         }
       } else if (eventType === 'CONFIG_UPDATED') {
         if (payload) {
@@ -1076,8 +1098,12 @@ export default function App() {
   };
 
   const handleUpdateBundles = async (newBundles) => {
-    setBundles(newBundles);
-    try { localStorage.setItem('cheap_reels_bundles_v8', JSON.stringify(newBundles)); } catch (e) {}
+    const sanitized = newBundles.map(b => ({
+      ...b,
+      price: Math.max(49, Math.min(299, Number(b.price) || 49))
+    }));
+    setBundles(sanitized);
+    try { localStorage.setItem('cheap_reels_bundles_v9', JSON.stringify(sanitized)); } catch (e) {}
     try {
       await realtimeSync.pushUpdate({ config, bundles: newBundles, orders, visitorStats, activityLogs, updateType: 'BUNDLES_UPDATED', action: 'admin_action' });
     } catch (e) {
