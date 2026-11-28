@@ -20,7 +20,7 @@ export default function ProductCard({
   const activePlaying = Boolean(isPlaying ?? isPlayingInline ?? false);
   const togglePlayHandler = onTogglePlay || onTogglePlayInline;
 
-  const priceInfo = bundle ? getItemPriceDisplay(bundle) : { formattedPrice: '₹39', formattedOriginalPrice: '₹799', discountPercent: 80 };
+  const priceInfo = bundle ? getItemPriceDisplay(bundle) : { formattedPrice: '₹49', formattedOriginalPrice: '₹499', discountPercent: 90 };
 
   const discountPercent = Math.round(
     ((bundle.originalPrice - bundle.price) / bundle.originalPrice) * 100

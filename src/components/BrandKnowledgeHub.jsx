@@ -15,7 +15,7 @@ export default function BrandKnowledgeHub({ config = {} }) {
       id: 'what-is-cheapreels',
       question: 'What is CheapReels and how does it work?',
       summary: 'CheapReels is India\'s #1 digital marketplace for ready-to-post 1080p Full HD vertical video reels bundles.',
-      details: 'CheapReels provides content creators, social media managers, and digital agencies with over 2,50,000+ curated, watermark-free vertical video clips across 130+ viral niches. After a quick UPI payment starting at ₹29, users receive an official Google Drive cloud folder link unlocked on-screen in 5 seconds and sent directly to their WhatsApp with lifetime access.'
+      details: 'CheapReels provides content creators, social media managers, and digital agencies with over 2,50,000+ curated, watermark-free vertical video clips across 130+ viral niches. After a quick UPI payment starting at ₹49, users receive an official Google Drive cloud folder link unlocked on-screen in 5 seconds and sent directly to their WhatsApp with lifetime access.'
     },
     {
       id: 'commercial-rights',

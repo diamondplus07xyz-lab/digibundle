@@ -8,6 +8,8 @@
  * Runs asynchronously via fetch with zero main-thread blocking.
  */
 
+import { getBundleUsdPrice } from './geoPricing';
+
 const escapeHtml = (str) => {
   if (!str || typeof str !== 'string') return '';
   return str
@@ -83,7 +85,7 @@ export const sendTelegramOrderAlert = async (order, config) => {
   const customerPhone = escapeHtml(order.customerPhone || order.whatsapp || 'Not provided');
   const customerEmail = escapeHtml(order.customerEmail || order.email || 'Not provided');
   const customerLocation = escapeHtml([order.city, order.state].filter(Boolean).join(', '));
-  const totalAmount = order.amount !== undefined ? order.amount : (order.total || 29);
+  const totalAmount = order.amount !== undefined ? order.amount : (order.total || 49);
 
   let paymentMethodLabel = '📱 Direct UPI QR';
   if (order.gateway) {
@@ -104,7 +106,7 @@ export const sendTelegramOrderAlert = async (order, config) => {
   const itemsList = Array.isArray(order.items) && order.items.length > 0
     ? order.items.map((it, idx) => {
         const isGta = String(it.id || '').includes('gta') || String(it.title || '').toLowerCase().includes('gta') || it.id === 'bundle-127';
-        const priceTag = isPaypalOrder ? (isGta ? '$19.99 USD' : `$${it.price || 49} USD`) : `₹${it.price || 29}`;
+        const priceTag = isPaypalOrder ? (isGta ? '$19.99 USD' : `$${getBundleUsdPrice(it)} USD`) : `₹${it.price || 49}`;
         return `  ${idx + 1}. <b>${escapeHtml(it.title || 'Reel Bundle')}</b> (${priceTag})`;
       }).join('\n')
     : `  1. <b>${escapeHtml(order.bundleTitle || 'HD Reels Bundle')}</b> (${isPaypalOrder ? `$${order.usdAmount || 19.99} USD` : `₹${totalAmount}`})`;

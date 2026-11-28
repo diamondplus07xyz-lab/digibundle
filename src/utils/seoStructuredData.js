@@ -41,7 +41,7 @@ export function getOrganizationSchema(config = {}) {
       'https://www.instagram.com/cheapreels_in?gwpx=dHoyeXJqdGdudTVj',
       'https://www.youtube.com'
     ],
-    'priceRange': '₹29 - ₹999'
+    'priceRange': '₹49 - ₹299'
   };
 }
 
@@ -176,7 +176,7 @@ export function getHowToSchema() {
         '@type': 'HowToStep',
         'position': 2,
         'name': 'Complete Quick UPI QR Payment',
-        'text': 'Scan the dynamic UPI QR code on your phone using PhonePe, Google Pay, or Paytm and authorize the ₹29 to ₹49 transaction.'
+        'text': 'Scan the dynamic UPI QR code on your phone using PhonePe, Google Pay, or Paytm and authorize the ₹49 to ₹299 transaction.'
       },
       {
         '@type': 'HowToStep',

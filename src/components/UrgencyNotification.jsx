@@ -36,7 +36,7 @@ export default function UrgencyNotification({
       city: 'Jaipur',
       bundleTitle: '500+ God & Sanatan Dharma Reels',
       thumbnail: 'https://reelsbundles.in/wp-content/uploads/2026/09/god-reels-bundle-5-2-1-768x576.jpg',
-      price: 39,
+      price: 79,
       timeAgo: '7m ago',
       bundleId: 'bundle-6'
     },
@@ -46,7 +46,7 @@ export default function UrgencyNotification({
       city: 'Pune',
       bundleTitle: 'Sigma Male Attitude Reels Bundle',
       thumbnail: 'https://reelsbundles.in/wp-content/uploads/2026/09/sigma-male-reels-bundle-5-2-1.jpg',
-      price: 49,
+      price: 119,
       timeAgo: '11m ago',
       bundleId: 'bundle-8'
     },
@@ -66,7 +66,7 @@ export default function UrgencyNotification({
       city: 'Kolkata',
       bundleTitle: '1000+ Space Aesthetic 4K Videos',
       thumbnail: 'https://reelsbundles.in/wp-content/uploads/2026/09/space-aesthetic-reels-bundle-5-2-1.jpg',
-      price: 29,
+      price: 79,
       timeAgo: '21m ago',
       bundleId: 'bundle-1'
     },
@@ -76,7 +76,7 @@ export default function UrgencyNotification({
       city: 'Delhi NCR',
       bundleTitle: 'AI Motivational Reels Bundle',
       thumbnail: 'https://reelsbundles.in/wp-content/uploads/2026/10/ai-motivational-reels-bundle-5-2.jpg',
-      price: 39,
+      price: 79,
       timeAgo: '28m ago',
       bundleId: 'bundle-7'
     },
@@ -86,7 +86,7 @@ export default function UrgencyNotification({
       city: 'Chandigarh',
       bundleTitle: 'Emotional Quotes & Story Reels',
       thumbnail: 'https://reelsbundles.in/wp-content/uploads/2026/09/emotional-reels-bundle-6-1.jpg',
-      price: 29,
+      price: 49,
       timeAgo: '34m ago',
       bundleId: 'bundle-10'
     },
@@ -96,7 +96,7 @@ export default function UrgencyNotification({
       city: 'Indore',
       bundleTitle: 'AI Cats Cute Reels Bundle',
       thumbnail: 'https://reelsbundles.in/wp-content/uploads/2026/10/ai-cats-reels-bundle-5-2.jpg',
-      price: 29,
+      price: 49,
       timeAgo: '42m ago',
       bundleId: 'bundle-2'
     },
@@ -106,7 +106,7 @@ export default function UrgencyNotification({
       city: 'Hyderabad',
       bundleTitle: 'AI Dogs Funny Reels Bundle',
       thumbnail: 'https://reelsbundles.in/wp-content/uploads/2026/10/ai-dogs-reels-bundle-5-2.jpg',
-      price: 29,
+      price: 49,
       timeAgo: '51m ago',
       bundleId: 'bundle-3'
     }
@@ -202,7 +202,18 @@ export default function UrgencyNotification({
                   {(() => {
                     const isIntl = isInternationalVisitor();
                     const isGta = purchase.bundleId === 'bundle-127' || String(purchase.bundleTitle || '').toLowerCase().includes('gta');
-                    const displayPrice = isIntl ? (isGta ? '$19.99' : `$${purchase.price}`) : `₹${purchase.price}`;
+                    const inrVal = Math.min(299, Math.max(49, Number(purchase.price) || 49));
+                    let usdVal = 10;
+                    if (isGta) usdVal = 19.99;
+                    else if (inrVal <= 49) usdVal = 10;
+                    else if (inrVal <= 79) usdVal = 15;
+                    else if (inrVal <= 99) usdVal = 20;
+                    else if (inrVal <= 119) usdVal = 29;
+                    else if (inrVal <= 179) usdVal = 49;
+                    else if (inrVal <= 249) usdVal = 79;
+                    else usdVal = 99;
+
+                    const displayPrice = isIntl ? (isGta ? '$19.99' : `$${usdVal}`) : `₹${inrVal}`;
                     return (
                       <span className="inline-flex items-center text-emerald-800 bg-emerald-50 border border-emerald-200/90 px-1.5 py-0.5 rounded font-black">
                         <CheckCircle className="w-2.5 h-2.5 text-emerald-600 mr-0.5 shrink-0 inline" />

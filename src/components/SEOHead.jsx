@@ -21,7 +21,7 @@ export default function SEOHead({
     if (typeof document === 'undefined') return;
 
     // 1. Determine Dynamic Title & Description
-    let pageTitle = config.seoTitle || 'Cheap Reels | 2,50,000+ Ready-to-Post HD Reels Bundles starting @ ₹29';
+    let pageTitle = config.seoTitle || 'Cheap Reels | 2,50,000+ Ready-to-Post HD Reels Bundles starting @ ₹49';
     let pageDescription = config.seoDescription || 'Download 2,50,000+ ready-to-post 1080p Full HD watermark-free vertical reels bundles across 130+ viral niches. Instant Google Drive cloud link access at flat 95% OFF!';
     let canonicalPath = '/';
     let breadcrumbs = [];
@@ -38,7 +38,7 @@ export default function SEOHead({
       const catObj = categories.find(c => c.id === activeCategory);
       const catName = catObj ? catObj.label : activeCategory;
       pageTitle = `${catName} Bundles (1080p Full HD Watermark Free) | Cheap Reels`;
-      pageDescription = `Download premium viral ${catName} ready-to-post vertical video bundles. 100% watermark-free with instant Google Drive links starting at ₹29.`;
+      pageDescription = `Download premium viral ${catName} ready-to-post vertical video bundles. 100% watermark-free with instant Google Drive links starting at ₹49.`;
       canonicalPath = `/category/${activeCategory}`;
       breadcrumbs = [
         { name: catName, url: `/category/${activeCategory}` }

@@ -140,7 +140,7 @@ export default function AdminDecoyModal({ isOpen, onClose, whatsappNumber }) {
     } else if (lower === 'help') {
       newEntries.push({
         type: 'output',
-        text: `Available Commands:\n  • ls -la          : List all files on the server\n  • cat flag.txt    : Capture The Flag (CTF flag)\n  • cat passwords.txt : Check admin database passwords\n  • sudo su         : Gain root administrator privileges\n  • sqlmap          : Test for SQL injection vulnerabilities\n  • rm -rf /        : Try to destroy the server (warning!)\n  • chai            : Order a hot cup of cutting chai\n  • hire_me         : Message Vivek directly for collab/hiring\n  • buy_reels       : Give up hacking and buy 2,50,000 reels at ₹29\n  • clear           : Clear terminal screen`
+        text: `Available Commands:\n  • ls -la          : List all files on the server\n  • cat flag.txt    : Capture The Flag (CTF flag)\n  • cat passwords.txt : Check admin database passwords\n  • sudo su         : Gain root administrator privileges\n  • sqlmap          : Test for SQL injection vulnerabilities\n  • rm -rf /        : Try to destroy the server (warning!)\n  • chai            : Order a hot cup of cutting chai\n  • hire_me         : Message Vivek directly for collab/hiring\n  • buy_reels       : Give up hacking and buy 2,50,000 reels at ₹49\n  • clear           : Clear terminal screen`
       });
     } else if (lower === 'ls' || lower === 'ls -la' || lower === 'dir') {
       newEntries.push({
@@ -183,7 +183,7 @@ export default function AdminDecoyModal({ isOpen, onClose, whatsappNumber }) {
       playSound('success');
       newEntries.push({
         type: 'success',
-        text: `☕ Garam adrak-elaichi cutting chai aapke table pe hazir hai! Ek ghunt lo aur socho: 'Kyun na ₹29 me reels khareed ke ek Instagram theme page khol lu?'`
+        text: `☕ Garam adrak-elaichi cutting chai aapke table pe hazir hai! Ek ghunt lo aur socho: 'Kyun na ₹49 me reels khareed ke ek Instagram theme page khol lu?'`
       });
     } else if (lower === 'hire_me' || lower === 'hire' || lower === 'contact') {
       newEntries.push({
@@ -444,7 +444,7 @@ export default function AdminDecoyModal({ isOpen, onClose, whatsappNumber }) {
                   <div className="text-emerald-400 font-bold">💡 Ek dost hone ke naate seedhi baat:</div>
                   <div>Tumhara dimaag bohot tez hai, par yahan time waste karke kya milega? Babaji ka thullu! 🧘‍♂️</div>
                   <div className="text-slate-400">Isse 100 guna behtar plan ye hai:</div>
-                  <div className="text-amber-300">1. ₹29 kharch karke 10,000+ Viral Reels ka bundle lo.</div>
+                  <div className="text-amber-300">1. ₹49 kharch karke 10,000+ Viral Reels ka bundle lo.</div>
                   <div className="text-amber-300">2. Instagram pe ek theme page banao (Finance, AI, Motivation).</div>
                   <div className="text-amber-300">3. Roz 2-3 reels bina face dikhaye post karo.</div>
                   <div className="text-amber-300">4. 1 mahine me 50k+ followers banao aur brand promotions se kamao!</div>
@@ -493,7 +493,7 @@ export default function AdminDecoyModal({ isOpen, onClose, whatsappNumber }) {
                 </div>
                 <div>
                   <span className="text-slate-500">Crime Attempted: </span>
-                  <span className="text-rose-400 font-bold">Hacking a ₹29 website at 2 AM</span>
+                  <span className="text-rose-400 font-bold">Hacking a ₹49 website at 2 AM</span>
                 </div>
                 <div>
                   <span className="text-slate-500">Result: </span>
@@ -554,7 +554,7 @@ export default function AdminDecoyModal({ isOpen, onClose, whatsappNumber }) {
               className="flex-1 sm:flex-initial px-4 py-2 bg-gradient-to-r from-amber-400 to-orange-500 hover:brightness-110 active:scale-95 text-slate-950 font-black rounded-xl text-xs shadow-lg shadow-amber-500/20 transition flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <ShoppingBag className="w-3.5 h-3.5" />
-              <span>Chalo Reels Khareedo (₹29)</span>
+              <span>Chalo Reels Khareedo (₹49)</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>

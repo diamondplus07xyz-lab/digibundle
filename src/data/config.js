@@ -18,7 +18,7 @@ export const initialConfig = {
   googleSearchConsoleTag: '<meta name="google-site-verification" content="52iB3jq7O_eOpTnutctWvgYo0yqXIIKMWIpZDpVwyZw" />',
   bingVerificationTag: "",
   seoTitle: 'Cheap Reels | 2,50,000+ Ready-to-Post HD Reels Bundles',
-  seoDescription: 'Get 2,50,000+ ready-to-post 1080p Full HD watermark-free reels bundles with instant Google Drive cloud links at just ₹29. Instagram, Shorts & Facebook.',
+  seoDescription: 'Get 2,50,000+ ready-to-post 1080p Full HD watermark-free reels bundles with instant Google Drive cloud links at just ₹49. Instagram, Shorts & Facebook.',
   seoKeywords: 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, cheap reels download, watermark free reels 1080p',
   canonicalUrl: 'https://www.cheapreels.in',
   allowRobotsIndex: true,

@@ -18,7 +18,7 @@ export default function FeaturesSection() {
     {
       icon: BadgePercent,
       title: 'Affordable Pricing',
-      desc: 'Individual packs start at just ₹29. Unlock all 50+ curated packs with the ₹149 Master Vault deal.',
+      desc: 'Individual packs start at just ₹49. Unlock all 127+ packs with the ₹299 Master Vault deal.',
       bgColor: 'bg-amber-50 text-amber-600 border-amber-100'
     },
     {

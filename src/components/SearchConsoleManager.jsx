@@ -34,7 +34,7 @@ export default function SearchConsoleManager({
     storeConfig.seoTitle || 'DigiBundle | 2,50,000+ Ready-to-Post HD Reels Bundles'
   );
   const [seoDescription, setSeoDescription] = useState(
-    storeConfig.seoDescription || 'Get 2,50,000+ ready-to-post 1080p Full HD watermark-free reels bundles with instant Google Drive cloud links at just ₹29. Instagram, Shorts & Facebook.'
+    storeConfig.seoDescription || 'Get 2,50,000+ ready-to-post 1080p Full HD watermark-free reels bundles with instant Google Drive cloud links at just ₹49. Instagram, Shorts & Facebook.'
   );
   const [seoKeywords, setSeoKeywords] = useState(
     storeConfig.seoKeywords || 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, digibundle download, watermark free reels 1080p'
@@ -572,7 +572,7 @@ export default function SearchConsoleManager({
               JSON-LD Structured Data Schema Validation
             </span>
             <p className="text-xs text-purple-900">
-              Active Schemas injected into document &lt;head&gt;: <strong>Organization</strong>, <strong>WebSite</strong> (SearchAction), <strong>Product &amp; Offer</strong> (₹29 INR), <strong>FAQPage</strong>, <strong>BreadcrumbList</strong>, and <strong>HowTo</strong>.
+              Active Schemas injected into document &lt;head&gt;: <strong>Organization</strong>, <strong>WebSite</strong> (SearchAction), <strong>Product &amp; Offer</strong> (₹49 INR), <strong>FAQPage</strong>, <strong>BreadcrumbList</strong>, and <strong>HowTo</strong>.
             </p>
             <div className="pt-1 flex items-center gap-2">
               <a

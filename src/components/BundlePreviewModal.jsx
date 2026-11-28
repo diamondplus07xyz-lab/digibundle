@@ -8,7 +8,7 @@ export default function BundlePreviewModal({ bundle, onClose, onBuyNow }) {
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef(null);
   const isIntl = isInternationalVisitor();
-  const priceInfo = bundle ? getItemPriceDisplay(bundle) : { formattedPrice: '₹39', formattedOriginalPrice: '₹799' };
+  const priceInfo = bundle ? getItemPriceDisplay(bundle) : { formattedPrice: '₹49', formattedOriginalPrice: '₹499' };
 
   useEffect(() => {
     if (videoRef.current) {

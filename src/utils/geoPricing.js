@@ -1,7 +1,7 @@
 /**
  * Dynamic Geo-Pricing Engine for CheapReels.in
- * Indian visitors: INR (₹)
- * International / Out-of-India visitors: USD ($)
+ * Indian visitors: INR (₹49 to ₹299 range)
+ * International / Out-of-India visitors: USD ($10 to $99 range)
  * Specific Rule: GTA 6 is ₹99 for Indians, $19.99 USD for International.
  */
 
@@ -33,18 +33,32 @@ export function isGtaItem(item) {
          title.includes('grand theft auto');
 }
 
+export function getBundleUsdPrice(item) {
+  if (!item) return 10;
+  if (isGtaItem(item)) return 19.99;
+  
+  if (item.usdPrice) {
+    return Math.min(99, Math.max(10, Number(item.usdPrice)));
+  }
+
+  const inr = Number(item.price) || 49;
+  if (inr <= 49) return 10;
+  if (inr <= 79) return 15;
+  if (inr <= 99) return 20;
+  if (inr <= 119) return 29;
+  if (inr <= 179) return 49;
+  if (inr <= 249) return 79;
+  return 99; // for inr >= 299 (Master Vault)
+}
+
 export function calculateUsdTotal(items = [], inrTotal = 0) {
   if (!items || items.length === 0) {
-    return Number((inrTotal || 149).toFixed(2));
+    return 10;
   }
 
   let totalUsd = 0;
   items.forEach(it => {
-    if (isGtaItem(it)) {
-      totalUsd += 19.99;
-    } else {
-      totalUsd += Math.round(Number(it.price) || 49);
-    }
+    totalUsd += getBundleUsdPrice(it);
   });
 
   // Apply Smart Combo Bulk Discounts for International Visitors (same tiers as INR cart)
@@ -54,7 +68,7 @@ export function calculateUsdTotal(items = [], inrTotal = 0) {
     totalUsd = totalUsd * 0.75; // 25% Super Creator Combo
   }
 
-  return Number(Math.max(1, totalUsd).toFixed(2));
+  return Number(Math.max(10, totalUsd).toFixed(2));
 }
 
 export function getItemPriceDisplay(item, forceInternational = false) {
@@ -67,10 +81,10 @@ export function getItemPriceDisplay(item, forceInternational = false) {
         currency: 'USD',
         symbol: '$',
         price: '19.99',
-        originalPrice: '49.99',
+        originalPrice: '79.99',
         formattedPrice: '$19.99 USD',
-        formattedOriginalPrice: '$49.99 USD',
-        discountPercent: 60,
+        formattedOriginalPrice: '$79.99 USD',
+        discountPercent: 75,
         isGta: true
       };
     }
@@ -78,27 +92,38 @@ export function getItemPriceDisplay(item, forceInternational = false) {
       currency: 'INR',
       symbol: '₹',
       price: 99,
-      originalPrice: 799,
+      originalPrice: 999,
       formattedPrice: '₹99',
-      formattedOriginalPrice: '₹799',
+      formattedOriginalPrice: '₹999',
       intlNote: '$19.99 USD (Int\'l)',
-      discountPercent: 88,
+      discountPercent: 90,
       isGta: true
     };
   }
 
   // Standard Non-GTA items
+  const inrPrice = Math.min(299, Math.max(49, Number(item?.price) || 49));
+  const inrOriginal = item?.originalPrice && item.originalPrice > inrPrice 
+    ? item.originalPrice 
+    : Math.round(inrPrice * 10);
+  const usdPrice = getBundleUsdPrice(item);
+  let origUsd = 49;
+  if (usdPrice >= 79) origUsd = 199;
+  else if (usdPrice >= 49) origUsd = 149;
+  else if (usdPrice >= 29) origUsd = 99;
+  else if (usdPrice >= 20) origUsd = 69;
+  else if (usdPrice >= 15) origUsd = 59;
+  if (usdPrice >= 99) origUsd = 299;
+
   if (isIntl) {
-    const usdVal = Math.round(item.price || 49);
-    const origUsd = Math.round(item.originalPrice || (usdVal * 2));
     return {
       currency: 'USD',
       symbol: '$',
-      price: usdVal,
+      price: usdPrice,
       originalPrice: origUsd,
-      formattedPrice: `$${usdVal} USD`,
+      formattedPrice: `$${usdPrice} USD`,
       formattedOriginalPrice: `$${origUsd} USD`,
-      discountPercent: Math.round(((origUsd - usdVal) / origUsd) * 100),
+      discountPercent: Math.round(((origUsd - usdPrice) / origUsd) * 100),
       isGta: false
     };
   }
@@ -106,12 +131,12 @@ export function getItemPriceDisplay(item, forceInternational = false) {
   return {
     currency: 'INR',
     symbol: '₹',
-    price: item.price,
-    originalPrice: item.originalPrice,
-    formattedPrice: `₹${item.price}`,
-    formattedOriginalPrice: `₹${item.originalPrice}`,
-    intlNote: `$${Math.round(item.price)} USD (Int\'l)`,
-    discountPercent: Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100),
+    price: inrPrice,
+    originalPrice: inrOriginal,
+    formattedPrice: `₹${inrPrice}`,
+    formattedOriginalPrice: `₹${inrOriginal}`,
+    intlNote: `$${usdPrice} USD (Int\'l)`,
+    discountPercent: Math.round(((inrOriginal - inrPrice) / inrOriginal) * 100),
     isGta: false
   };
 }

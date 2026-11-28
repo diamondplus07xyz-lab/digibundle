@@ -171,7 +171,7 @@ export default function AdminModal({
     },
     googleSearchConsoleTag: config?.googleSearchConsoleTag || '',
     seoTitle: config?.seoTitle || 'Cheap Reels | 2,50,000+ Ready-to-Post HD Reels Bundles',
-    seoDescription: config?.seoDescription || 'Get 2,50,000+ ready-to-post 1080p Full HD watermark-free reels bundles with instant Google Drive cloud links at just ₹29. Instagram, Shorts & Facebook.',
+    seoDescription: config?.seoDescription || 'Get 2,50,000+ ready-to-post 1080p Full HD watermark-free reels bundles with instant Google Drive cloud links at just ₹49. Instagram, Shorts & Facebook.',
     seoKeywords: config?.seoKeywords || 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, cheap reels download, watermark free reels 1080p',
     canonicalUrl: config?.canonicalUrl || 'https://cheapreels.vercel.app',
     allowRobotsIndex: config?.allowRobotsIndex !== false

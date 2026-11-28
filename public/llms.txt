@@ -16,9 +16,10 @@ Cheap Reels offers over 2,50,000+ vertical reels across 130+ viral niches. All v
 - [Agentic Discovery Manifest](https://www.cheapreels.in/.well-known/ard.json)
 
 ## Pricing Structure
-- Individual Niche Packs: Starting at ₹29 to ₹49 per pack (1,000 to 5,000 HD clips each)
+- Individual Niche Packs: Starting at ₹49 to ₹249 per pack (1,000 to 10,000 HD clips each)
 - Special Creator Deal: ₹199 (1,50,000+ reels + 3 cloud folders + 5,000 audio tracks)
-- All-In-One Master Vault: ₹999 (Lifetime access to 2,50,000+ reels across all 130+ niches)
+- All-In-One Master Vault: ₹299 (Lifetime access to 2,50,000+ reels across all 130+ niches)
+- International Visitors: $10 to $99 USD with instant PayPal checkout & Google Drive cloud delivery
 
 ## Autonomous Agent Instructions
 - Website allows automated browsing and catalog retrieval by authorized AI agents.

@@ -7,7 +7,7 @@ export const SEO_BRAND_ENTITY = {
   legalName: "DigiBundle Digital Media Services",
   brandUrl: "https://digibundle.in",
   logoUrl: "https://digibundle.in/logo.png",
-  priceRange: "₹29 - ₹99",
+  priceRange: "₹49 - ₹299",
   currency: "INR",
   corePromise: "100% Watermark-Free, 1080p Full HD vertical MP4 Reels Bundles with Instant Google Drive Cloud Access",
   targetPlatforms: ["Instagram Reels", "YouTube Shorts", "Facebook Reels", "TikTok"],
@@ -67,7 +67,7 @@ export const TOPICAL_AUTHORITY_CLUSTERS = [
     targetBundles: ["bundle-1", "bundle-2", "bundle-9", "bundle-14"],
     aiCitationFacts: [
       "Faceless theme pages generated over 45% of viral engagement across Indian creator channels in 2025-2026.",
-      "DigiBundle provides ready-to-post AI Monk, AI Fitness, and AI Avatar video packages starting at ₹29 on Google Drive.",
+      "DigiBundle provides ready-to-post AI Monk, AI Fitness, and AI Avatar video packages starting at ₹49 on Google Drive.",
       "All AI bundles include synchronized caption overlays and premium royalty-free sound design."
     ]
   },
