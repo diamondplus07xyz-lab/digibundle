@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import BrandLogo from './BrandLogo';
+import { getBundleUsdPrice } from '../utils/geoPricing';
 
 export default function OrderSuccessModal({ order: initialOrder, onClose, config = {} }) {
   const [currentOrder, setCurrentOrder] = useState(initialOrder);
@@ -337,7 +338,7 @@ export default function OrderSuccessModal({ order: initialOrder, onClose, config
                     </div>
                     <div className="text-right shrink-0">
                       <span className="font-black text-amber-400 block">
-                        {currentOrder.gateway === 'PayPal' ? (isGta ? '$19.99 USD' : `$${item.price} USD`) : `₹${item.price}`}
+                        {currentOrder.gateway === 'PayPal' ? (isGta ? '$19.99 USD' : `$${getBundleUsdPrice(item)} USD`) : `₹${item.price}`}
                       </span>
                       {isVerified && item.driveLink && (
                         <a 

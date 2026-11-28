@@ -70,7 +70,7 @@ export default function SpecialOfferBanner({ offer, onClaimOffer }) {
           <div className="w-full flex-1 text-center lg:text-left space-y-2 sm:space-y-3">
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-1.5 sm:gap-2">
               <span className="inline-flex items-center px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-black uppercase tracking-wider bg-rose-600 text-white shadow-sm">
-                {currentOffer.badge || "EXCLUSIVE CREATOR DEAL"}
+                {isInternationalVisitor() ? "🔥 SPECIAL OFFER — $19.99 USD ONLY" : (currentOffer.badge || "🔥 SPECIAL OFFER — ₹99 ONLY")}
               </span>
               <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[11px] sm:text-xs font-mono font-bold bg-amber-400/20 text-amber-300 border border-amber-400/40">
                 <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400" />
@@ -111,18 +111,15 @@ export default function SpecialOfferBanner({ offer, onClaimOffer }) {
                 {isInternationalVisitor() ? (
                   <>
                     <span className="text-2xl sm:text-4xl font-black text-amber-400">$19.99 USD</span>
-                    <span className="text-xs sm:text-base font-semibold text-slate-300 line-through">$49.99 USD</span>
+                    <span className="text-xs sm:text-base font-semibold text-slate-300 line-through">$79.99 USD</span>
                     <span className="text-[10px] sm:text-xs font-black text-emerald-400 bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-md sm:rounded-lg border border-emerald-500/30">
-                      60% OFF
+                      75% OFF
                     </span>
                   </>
                 ) : (
                   <>
                     <span className="text-2xl sm:text-4xl font-black text-amber-400">₹{currentOffer.price}</span>
                     <span className="text-xs sm:text-base font-semibold text-slate-300 line-through">₹{currentOffer.originalPrice}</span>
-                    <span className="text-[10px] sm:text-xs font-mono font-bold text-sky-300 bg-sky-950/60 px-2 py-0.5 rounded-md border border-sky-400/30">
-                      $19.99 USD (Int'l)
-                    </span>
                     <span className="text-[10px] sm:text-xs font-black text-emerald-400 bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-md sm:rounded-lg border border-emerald-500/30">
                       {discountPercent}% OFF
                     </span>

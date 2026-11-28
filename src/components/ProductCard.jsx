@@ -231,11 +231,6 @@ export default function ProductCard({
             <div className="flex items-baseline gap-1.5 flex-wrap">
               <span className="text-base sm:text-lg font-black text-slate-950">{priceInfo.formattedPrice}</span>
               <span className="text-[11px] text-slate-500 line-through">{priceInfo.formattedOriginalPrice}</span>
-              {priceInfo.intlNote && (
-                <span className="text-[9px] font-mono text-sky-700 font-bold bg-sky-50 px-1 py-0.2 rounded border border-sky-100">
-                  {priceInfo.intlNote}
-                </span>
-              )}
             </div>
             <span className="text-[9px] font-black text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-200 shrink-0">
               {priceInfo.discountPercent}% OFF

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Check, ArrowRight, Download, MessageCircle, ShoppingBag } from 'lucide-react';
+import { isInternationalVisitor } from '../utils/geoPricing';
 
 export default function Hero({ onClaimMegaDeal, onScrollToCatalog, masterVaultThumbnail, config = {} }) {
+  const isIntl = isInternationalVisitor();
   const isDefaultVault = !masterVaultThumbnail || masterVaultThumbnail.includes('sheru-bhai-mega-reels-bundle-ad');
   const vaultImg = isDefaultVault ? "/special-offer.webp" : masterVaultThumbnail;
   const rawSupport = (config?.whatsappNumber || '7017324978').replace(/\D/g, '');
@@ -53,7 +55,7 @@ export default function Hero({ onClaimMegaDeal, onScrollToCatalog, masterVaultTh
                 <span className="w-5 h-5 rounded-full bg-amber-100 flex items-center justify-center shrink-0">
                   <ShoppingBag className="w-3.5 h-3.5 text-amber-600" />
                 </span>
-                <span>Starting At Just ₹49 • Lifetime Cloud Access & Regular Additions</span>
+                <span>{isIntl ? 'Starting At Just $10 USD • Lifetime Cloud Access & Regular Additions' : 'Starting At Just ₹49 • Lifetime Cloud Access & Regular Additions'}</span>
               </li>
               <li className="flex items-center gap-2.5 bg-white/95 px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-xs">
                 <span className="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center shrink-0">
@@ -67,13 +69,13 @@ export default function Hero({ onClaimMegaDeal, onScrollToCatalog, masterVaultTh
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <button
                 data-action="claim-master-vault"
-                data-price="299"
+                data-price={isIntl ? "99" : "299"}
                 onClick={onClaimMegaDeal}
-                aria-label="Claim All-In-One Master Pack for ₹299"
+                aria-label={isIntl ? "Claim All-In-One Master Pack for $99 USD" : "Claim All-In-One Master Pack for ₹299"}
                 className="w-full sm:w-auto px-6 py-3.5 bg-slate-950 hover:bg-black text-white font-extrabold rounded-xl text-sm shadow-md flex items-center justify-center gap-2 transition hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
               >
                 <ShoppingBag className="w-4 h-4 text-amber-400 shrink-0" />
-                <span className="whitespace-normal">Get All-In-One Master Pack (₹299)</span>
+                <span className="whitespace-normal">{isIntl ? 'Get All-In-One Master Pack ($99 USD)' : 'Get All-In-One Master Pack (₹299)'}</span>
                 <ArrowRight className="w-4 h-4 shrink-0" />
               </button>
 
@@ -139,25 +141,25 @@ export default function Hero({ onClaimMegaDeal, onScrollToCatalog, masterVaultTh
                     Special Bundle Price
                   </span>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-black text-slate-950">₹299</span>
-                    <span className="text-xs font-semibold text-slate-600 line-through">₹2,999</span>
+                    <span className="text-2xl font-black text-slate-950">{isIntl ? '$99 USD' : '₹299'}</span>
+                    <span className="text-xs font-semibold text-slate-600 line-through">{isIntl ? '$299 USD' : '₹2,999'}</span>
                   </div>
                 </div>
                 <div className="bg-emerald-700 text-white font-extrabold text-xs px-2.5 py-1 rounded-lg">
-                  90% OFF
+                  {isIntl ? '67% OFF' : '90% OFF'}
                 </div>
               </div>
 
               {/* Action Buttons */}
               <button
                 data-action="claim-master-vault"
-                data-price="299"
+                data-price={isIntl ? "99" : "299"}
                 onClick={onClaimMegaDeal}
-                aria-label="Unlock Master Reels Vault Pack for ₹299"
+                aria-label={isIntl ? "Unlock Master Reels Vault Pack for $99 USD" : "Unlock Master Reels Vault Pack for ₹299"}
                 className="w-full py-3 px-5 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-105 active:scale-95 text-slate-950 font-black rounded-xl text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
               >
                 <ShoppingBag className="w-4 h-4 fill-slate-950" />
-                <span>Instant Unlock Master Pack (₹299)</span>
+                <span>{isIntl ? 'Instant Unlock Master Pack ($99 USD)' : 'Instant Unlock Master Pack (₹299)'}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 

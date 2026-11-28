@@ -1,7 +1,9 @@
 import React from 'react';
 import { Video, QrCode, BadgePercent, Zap } from 'lucide-react';
+import { isInternationalVisitor } from '../utils/geoPricing';
 
 export default function FeaturesSection() {
+  const isIntl = isInternationalVisitor();
   const features = [
     {
       icon: Video,
@@ -11,14 +13,18 @@ export default function FeaturesSection() {
     },
     {
       icon: QrCode,
-      title: 'Easy UPI & Card Payments',
-      desc: 'Multiple secure options: Direct UPI QR, PhonePe, Google Pay, Paytm, Cards, and Netbanking.',
+      title: isIntl ? 'Instant PayPal Checkout' : 'Easy UPI & Card Payments',
+      desc: isIntl 
+        ? 'Worldwide secure payments powered by PayPal. Instant automated order delivery.'
+        : 'Multiple secure options: Direct UPI QR, PhonePe, Google Pay, Paytm, Cards, and Netbanking.',
       bgColor: 'bg-blue-50 text-blue-600 border-blue-100'
     },
     {
       icon: BadgePercent,
       title: 'Affordable Pricing',
-      desc: 'Individual packs start at just ₹49. Unlock all 127+ packs with the ₹299 Master Vault deal.',
+      desc: isIntl
+        ? 'Individual packs start at just $10 USD. Unlock all 127+ packs with the $99 USD Master Vault deal.'
+        : 'Individual packs start at just ₹49. Unlock all 127+ packs with the ₹299 Master Vault deal.',
       bgColor: 'bg-amber-50 text-amber-600 border-amber-100'
     },
     {

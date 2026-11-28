@@ -9,7 +9,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { calculateCartPricing } from '../utils/pricing';
 import { validateUtr, checkOrderRateLimit, recordOrderSubmission, sanitizeInput } from '../utils/security';
 import { initialBundles } from '../data/bundles';
-import { calculateUsdTotal, isGtaItem, isInternationalVisitor } from '../utils/geoPricing';
+import { calculateUsdTotal, isGtaItem, isInternationalVisitor, getBundleUsdPrice } from '../utils/geoPricing';
 import BrandLogo from './BrandLogo';
 
 // Comprehensive Indian States & International List for mandatory customer checkout details
@@ -780,11 +780,17 @@ export default function CheckoutModal({
                         </p>
                       </div>
                       <div className="text-right shrink-0">
-                        <span className="font-black text-slate-900">₹{it.price}</span>
-                        {it.originalPrice && (
-                          <span className="block text-[10px] text-slate-400 line-through">
-                            ₹{it.originalPrice}
-                          </span>
+                        {isIntl ? (
+                          <span className="font-black text-purple-700 font-mono">${getBundleUsdPrice(it)} USD</span>
+                        ) : (
+                          <>
+                            <span className="font-black text-slate-900">₹{it.price}</span>
+                            {it.originalPrice && (
+                              <span className="block text-[10px] text-slate-400 line-through">
+                                ₹{it.originalPrice}
+                              </span>
+                            )}
+                          </>
                         )}
                       </div>
                     </div>
@@ -795,15 +801,19 @@ export default function CheckoutModal({
                 <div className="pt-2.5 border-t border-slate-200 space-y-1.5 text-xs">
                   <div className="flex justify-between text-slate-600">
                     <span>Bundle(s) Original Value:</span>
-                    <span className="line-through text-slate-400 font-medium">₹{originalTotal}</span>
+                    <span className="line-through text-slate-400 font-medium">
+                      {isIntl ? `$${Math.round(calculatedUsd * 2.5)} USD` : `₹${originalTotal}`}
+                    </span>
                   </div>
 
                   <div className="flex justify-between text-emerald-600 font-bold">
                     <span>Store Promotional Discount:</span>
-                    <span>-₹{Math.max(0, originalTotal - subtotal)}</span>
+                    <span>
+                      {isIntl ? `-$${Math.round(calculatedUsd * 1.5)} USD` : `-₹${Math.max(0, originalTotal - subtotal)}`}
+                    </span>
                   </div>
 
-                  {discount > 0 && (
+                  {discount > 0 && !isIntl && (
                     <div className="flex justify-between items-center text-purple-700 font-bold bg-purple-50 p-1.5 rounded-lg">
                       <span className="flex items-center gap-1 text-[11px]">
                         <Sparkles className="w-3.5 h-3.5 text-purple-600" />
@@ -815,7 +825,9 @@ export default function CheckoutModal({
 
                   <div className="flex justify-between text-slate-600">
                     <span>Delivery (Instant Cloud Unlock):</span>
-                    <span className="font-bold text-emerald-600 uppercase text-[10px]">FREE (₹0)</span>
+                    <span className="font-bold text-emerald-600 uppercase text-[10px]">
+                      {isIntl ? 'FREE ($0)' : 'FREE (₹0)'}
+                    </span>
                   </div>
 
                   <div className="flex justify-between text-slate-600">
@@ -827,10 +839,12 @@ export default function CheckoutModal({
                     <div>
                       <span className="text-sm">Total Payable Amount</span>
                       <span className="block text-[10px] font-bold text-emerald-600">
-                        🎉 You Save ₹{totalSavings} Total!
+                        {isIntl ? '🎉 Direct PayPal Checkout' : `🎉 You Save ₹${totalSavings} Total!`}
                       </span>
                     </div>
-                    <span className="text-xl sm:text-2xl text-purple-700">₹{total}</span>
+                    <span className="text-xl sm:text-2xl text-purple-700 font-mono">
+                      {isIntl ? `$${calculatedUsd} USD` : `₹${total}`}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -973,7 +987,7 @@ export default function CheckoutModal({
                 type="submit"
                 className="w-full py-3.5 bg-gradient-to-r from-purple-600 via-pink-600 to-rose-500 hover:from-purple-700 hover:to-pink-700 text-white font-black rounded-2xl text-sm shadow-lg shadow-purple-600/25 flex items-center justify-center gap-2 transition cursor-pointer active:scale-[0.99]"
               >
-                <span>Continue to Payment (₹{total})</span>
+                <span>{isIntl ? `Continue to PayPal ($${calculatedUsd} USD)` : `Continue to Payment (₹${total})`}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </form>
@@ -1487,7 +1501,7 @@ export default function CheckoutModal({
                 </button>
 
                 <a
-                  href={`https://wa.me/${supportPhone}?text=${encodeURIComponent(`Hello Cheap Reels Support, I need help with checkout for amount ₹${total}. My WhatsApp is ${whatsapp}.`)}`}
+                  href={`https://wa.me/${supportPhone}?text=${encodeURIComponent(`Hello Cheap Reels Support, I need help with checkout for amount ${isIntl ? `$${calculatedUsd} USD` : `₹${total}`}. My WhatsApp is ${whatsapp}.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-3 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-bold rounded-2xl text-xs flex items-center justify-center gap-2 transition"

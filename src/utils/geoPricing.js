@@ -1,8 +1,9 @@
 /**
  * Dynamic Geo-Pricing Engine for CheapReels.in
- * Indian visitors: INR (₹49 to ₹299 range)
- * International / Out-of-India visitors: USD ($10 to $99 range)
- * Specific Rule: GTA 6 is ₹99 for Indians, $19.99 USD for International.
+ * Strict Country-Specific Currency Isolation:
+ * - Indian visitors: INR (₹49 to ₹299 range) ONLY. No USD shown.
+ * - International / Out-of-India visitors: USD ($10 to $99 range) ONLY. No INR shown.
+ * - Specific Rule: GTA 6 is ₹99 for Indians, $19.99 USD for International.
  */
 
 export function isInternationalVisitor() {
@@ -61,7 +62,7 @@ export function calculateUsdTotal(items = [], inrTotal = 0) {
     totalUsd += getBundleUsdPrice(it);
   });
 
-  // Apply Smart Combo Bulk Discounts for International Visitors (same tiers as INR cart)
+  // Apply Smart Combo Bulk Discounts for International Visitors
   if (items.length === 2) {
     totalUsd = totalUsd * 0.85; // 15% Double-Bundle Combo
   } else if (items.length >= 3) {
@@ -95,7 +96,6 @@ export function getItemPriceDisplay(item, forceInternational = false) {
       originalPrice: 999,
       formattedPrice: '₹99',
       formattedOriginalPrice: '₹999',
-      intlNote: '$19.99 USD (Int\'l)',
       discountPercent: 90,
       isGta: true
     };
@@ -135,7 +135,6 @@ export function getItemPriceDisplay(item, forceInternational = false) {
     originalPrice: inrOriginal,
     formattedPrice: `₹${inrPrice}`,
     formattedOriginalPrice: `₹${inrOriginal}`,
-    intlNote: `$${usdPrice} USD (Int\'l)`,
     discountPercent: Math.round(((inrOriginal - inrPrice) / inrOriginal) * 100),
     isGta: false
   };

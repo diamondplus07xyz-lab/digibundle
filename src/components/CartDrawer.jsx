@@ -81,10 +81,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
                     <p className="text-[11px] text-slate-500 font-medium">{item.clipCount}</p>
                     <div className="flex items-baseline gap-2 mt-0.5">
                       {isIntl ? (
-                        <>
-                          <span className="text-sm font-black text-sky-700">{getItemPriceDisplay(item, true).formattedPrice}</span>
-                          <span className="text-[11px] text-slate-400 font-mono">(₹{item.price})</span>
-                        </>
+                        <span className="text-sm font-black text-sky-700">{getItemPriceDisplay(item, true).formattedPrice}</span>
                       ) : (
                         <>
                           <span className="text-sm font-black text-slate-950">₹{item.price}</span>
@@ -113,9 +110,9 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
               <div className="space-y-1.5 text-xs">
                 <div className="flex justify-between items-center text-slate-600 font-bold">
                   <span>Subtotal ({itemsCount} items)</span>
-                  <span>₹{subtotal}</span>
+                  <span>{isIntl ? `$${totalUsd} USD` : `₹${subtotal}`}</span>
                 </div>
-                {discount > 0 && (
+                {discount > 0 && !isIntl && (
                   <div className="flex justify-between items-center text-emerald-600 font-bold">
                     <span className="flex items-center gap-1">
                       <Tag className="w-3.5 h-3.5" />
@@ -131,10 +128,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
                       <span className="text-xs text-slate-400 line-through">₹{subtotal}</span>
                     )}
                     {isIntl ? (
-                      <div className="text-right">
-                        <span className="text-xl font-black text-sky-700 font-mono">${totalUsd} USD</span>
-                        <span className="text-[11px] text-slate-400 font-mono block">(₹{finalTotal})</span>
-                      </div>
+                      <span className="text-xl font-black text-sky-700 font-mono">${totalUsd} USD</span>
                     ) : (
                       <span className="text-xl font-black text-slate-950">₹{finalTotal}</span>
                     )}
