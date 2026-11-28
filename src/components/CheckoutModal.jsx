@@ -50,10 +50,19 @@ export default function CheckoutModal({
   const [paymentApp, setPaymentApp] = useState('PhonePe');
   const [copied, setCopied] = useState(false);
   const [step, setStep] = useState(1); // 1: Details & Order Review, 2: Payment Method, 3: Failed (if error)
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [processingGateway, setProcessingGateway] = useState(null); // 'upi_qr' | 'razorpay' | 'cashfree' | 'paypal' | null
+  const isProcessing = Boolean(processingGateway);
   const [error, setError] = useState('');
   const [failedReason, setFailedReason] = useState('');
   const [showUtrHelp, setShowUtrHelp] = useState(false);
+
+  // Helper to safely cancel or reset any pending payment gateway processing
+  const cancelOrResetProcessing = (reason = '') => {
+    setProcessingGateway(null);
+    if (reason) {
+      console.log('[Checkout PG] Cleared processing spinner:', reason);
+    }
+  };
 
   // Determine available gateways based on admin setting (single vs multiple)
   const gatewayMode = config?.gatewayMode || 'single';
@@ -73,12 +82,77 @@ export default function CheckoutModal({
     return availableGateways[0] || 'upi_qr';
   });
 
+  // Switching gateways immediately clears any spinner or error
+  const handleSelectGateway = (gw) => {
+    cancelOrResetProcessing('switched gateway tab to ' + gw);
+    setError('');
+    setSelectedGateway(gw);
+  };
+
   // Keep selectedGateway valid when availableGateways changes
   useEffect(() => {
     if (!availableGateways.includes(selectedGateway)) {
       setSelectedGateway(availableGateways[0] || 'upi_qr');
     }
   }, [availableGateways, selectedGateway]);
+
+  // 1. Safety auto-reset: no gateway should spin indefinitely (>15 seconds without user feedback)
+  useEffect(() => {
+    if (!processingGateway) return;
+    const safetyTimer = setTimeout(() => {
+      cancelOrResetProcessing('Safety timeout after 15s');
+      setError('Payment window took too long to complete. You can retry or choose another payment method.');
+    }, 15000);
+
+    return () => clearTimeout(safetyTimer);
+  }, [processingGateway]);
+
+  // 2. Window focus & postMessage listener to detect modal/popup cancellation
+  useEffect(() => {
+    const handleWindowMessage = (event) => {
+      try {
+        const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+        if (
+          data &&
+          (data.name === 'CF_MODAL_CLOSED' ||
+           data.type === 'CASHFREE_MODAL_CLOSED' ||
+           data.code === 'MODAL_CLOSED' ||
+           data.event === 'close' ||
+           data.status === 'CANCELLED' ||
+           data.type === 'rzp_payment_cancel')
+        ) {
+          cancelOrResetProcessing('Gateway modal dismissed via window postMessage');
+        }
+      } catch (e) {}
+    };
+
+    const handleWindowFocus = () => {
+      // When user returns to tab after closing a payment popup/modal
+      if (processingGateway) {
+        const cfFrame = document.querySelector('iframe[src*="cashfree"], iframe[name*="cashfree"], .cf-modal, #cf-checkout-modal');
+        if (!cfFrame) {
+          setTimeout(() => {
+            cancelOrResetProcessing('Window refocused with no active modal iframe');
+          }, 1200);
+        }
+      }
+    };
+
+    const handlePageShow = () => {
+      // Restored from bfcache (e.g. user pressed back button from PayPal)
+      cancelOrResetProcessing('Page restored from bfcache');
+    };
+
+    window.addEventListener('message', handleWindowMessage);
+    window.addEventListener('focus', handleWindowFocus);
+    window.addEventListener('pageshow', handlePageShow);
+
+    return () => {
+      window.removeEventListener('message', handleWindowMessage);
+      window.removeEventListener('focus', handleWindowFocus);
+      window.removeEventListener('pageshow', handlePageShow);
+    };
+  }, [processingGateway]);
 
   if (!isOpen || !items || items.length === 0) return null;
 
@@ -173,10 +247,10 @@ export default function CheckoutModal({
 
     const cleanUtr = utrResult.cleanUtr;
     setError('');
-    setIsProcessing(true);
+    setProcessingGateway('upi_qr');
 
     setTimeout(() => {
-      setIsProcessing(false);
+      setProcessingGateway(null);
       recordOrderSubmission();
       const orderId = 'CR-' + Math.floor(100000 + Math.random() * 900000);
       const currentTime = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
@@ -239,7 +313,7 @@ export default function CheckoutModal({
 
   // 2. Razorpay Payment Handler
   const handleRazorpayPayment = () => {
-    setIsProcessing(true);
+    setProcessingGateway('razorpay');
     setError('');
 
     const keyId = config?.razorpay?.keyId;
@@ -263,7 +337,7 @@ export default function CheckoutModal({
         driveLinkUnlocked: true,
         date: new Date().toISOString()
       };
-      setIsProcessing(false);
+      setProcessingGateway(null);
       onPaymentSuccess(order);
     };
 
@@ -309,25 +383,28 @@ export default function CheckoutModal({
             },
             modal: {
               ondismiss: function () {
-                setIsProcessing(false);
+                setProcessingGateway(null);
                 setFailedReason('Payment was cancelled before authorization was complete.');
-                setStep(3); // Show dedicated Failed Screen with retry
+                setError('Payment was cancelled. You can retry or choose another payment method.');
               }
             }
           };
 
           const rzp = new window.Razorpay(options);
           rzp.on('payment.failed', function (response) {
-            setIsProcessing(false);
+            setProcessingGateway(null);
             setFailedReason(response.error?.description || 'Your bank or payment app declined the transaction.');
-            setStep(3);
+            setError(response.error?.description || 'Payment failed or was declined.');
           });
           rzp.open();
         } catch (err) {
-          setIsProcessing(false);
+          setProcessingGateway(null);
           setFailedReason('Unable to open payment gateway. Please retry or choose UPI QR.');
-          setStep(3);
+          setError('Unable to open Razorpay gateway. Please retry or choose UPI QR.');
         }
+      }).catch(() => {
+        setProcessingGateway(null);
+        setError('Failed to load Razorpay. Please retry or choose UPI QR.');
       });
     } else {
       // Simulation / Test mode
@@ -379,7 +456,7 @@ export default function CheckoutModal({
       return;
     }
 
-    setIsProcessing(true);
+    setProcessingGateway('cashfree');
     setError('');
 
     const orderId = 'CR-' + Math.floor(100000 + Math.random() * 900000);
@@ -458,9 +535,9 @@ export default function CheckoutModal({
         paymentSessionId: data.payment_session_id,
         redirectTarget: isMobile ? '_self' : '_modal'
       }).then((result) => {
+        setProcessingGateway(null);
         if (result && result.error) {
           console.warn('Cashfree payment notice:', result.error);
-          setIsProcessing(false);
           if (result.error.code !== 'MODAL_CLOSED') {
             setError(result.error.message || 'Cashfree payment was cancelled or incomplete.');
           }
@@ -477,29 +554,25 @@ export default function CheckoutModal({
           try {
             localStorage.removeItem('cheap_reels_pending_cf_order');
           } catch (e) {}
-          setIsProcessing(false);
           onPaymentSuccess(verifiedOrder);
-        } else {
-          setIsProcessing(false);
         }
       }).catch((checkoutErr) => {
-        console.warn('Cashfree modal checkout error, attempting redirect fallback:', checkoutErr);
-        // Fallback to full page redirect if modal is blocked
-        cashfree.checkout({
-          paymentSessionId: data.payment_session_id,
-          redirectTarget: '_self'
-        });
+        console.warn('Cashfree modal checkout error:', checkoutErr);
+        setProcessingGateway(null);
+        setError('Cashfree payment modal was closed or interrupted. You can retry or choose another method.');
+      }).finally(() => {
+        setProcessingGateway(null);
       });
     } catch (err) {
       console.error('Cashfree PG error:', err);
-      setIsProcessing(false);
+      setProcessingGateway(null);
       setError(err.message || 'Cashfree gateway is temporarily busy. You can also pay via Direct UPI QR.');
     }
   };
 
   // 4. PayPal Payment Handler (Enterprise Live Multi-Currency Integration)
   const handlePaypalPayment = async () => {
-    setIsProcessing(true);
+    setProcessingGateway('paypal');
     setError('');
 
     const cleanName = (name || 'Customer').trim();
@@ -573,18 +646,8 @@ export default function CheckoutModal({
       window.location.href = data.approveUrl;
     } catch (err) {
       console.warn('PayPal live API connection notice:', err);
-      // Fallback: If offline, preview, or direct fulfillment simulated, unlock Drive folder immediately
-      const paypalPaymentId = 'PAYID-' + Math.random().toString(36).substring(2, 10).toUpperCase();
-      const verifiedOrder = {
-        ...pendingOrder,
-        paymentId: paypalPaymentId,
-        utr: paypalPaymentId,
-        status: 'VERIFIED',
-        driveLinkUnlocked: true,
-        date: new Date().toISOString()
-      };
-      setIsProcessing(false);
-      onPaymentSuccess(verifiedOrder);
+      setProcessingGateway(null);
+      setError(err.message || 'PayPal connection was cancelled or unavailable. Please retry or choose UPI QR.');
     }
   };
 
@@ -950,7 +1013,7 @@ export default function CheckoutModal({
                     {availableGateways.includes('upi_qr') && (
                       <button
                         type="button"
-                        onClick={() => setSelectedGateway('upi_qr')}
+                        onClick={() => handleSelectGateway('upi_qr')}
                         className={`p-3 rounded-2xl border text-left transition flex items-center gap-2.5 cursor-pointer ${
                           selectedGateway === 'upi_qr'
                             ? 'bg-purple-50 border-purple-500 ring-2 ring-purple-500/20'
@@ -968,7 +1031,7 @@ export default function CheckoutModal({
                     {availableGateways.includes('razorpay') && (
                       <button
                         type="button"
-                        onClick={() => setSelectedGateway('razorpay')}
+                        onClick={() => handleSelectGateway('razorpay')}
                         className={`p-3 rounded-2xl border text-left transition flex items-center gap-2.5 cursor-pointer ${
                           selectedGateway === 'razorpay'
                             ? 'bg-blue-50 border-blue-500 ring-2 ring-blue-500/20'
@@ -986,7 +1049,7 @@ export default function CheckoutModal({
                     {availableGateways.includes('cashfree') && (
                       <button
                         type="button"
-                        onClick={() => setSelectedGateway('cashfree')}
+                        onClick={() => handleSelectGateway('cashfree')}
                         className={`p-3 rounded-2xl border text-left transition flex items-center gap-2.5 cursor-pointer ${
                           selectedGateway === 'cashfree'
                             ? 'bg-emerald-50 border-emerald-500 ring-2 ring-emerald-500/20'
@@ -1004,7 +1067,7 @@ export default function CheckoutModal({
                     {availableGateways.includes('paypal') && (
                       <button
                         type="button"
-                        onClick={() => setSelectedGateway('paypal')}
+                        onClick={() => handleSelectGateway('paypal')}
                         className={`p-3 rounded-2xl border text-left transition flex items-center gap-2.5 cursor-pointer ${
                           selectedGateway === 'paypal'
                             ? 'bg-sky-50 border-sky-500 ring-2 ring-sky-500/20'
@@ -1159,7 +1222,7 @@ export default function CheckoutModal({
                     disabled={isProcessing}
                     className="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black rounded-2xl text-sm shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2 transition cursor-pointer active:scale-[0.99] disabled:opacity-50"
                   >
-                    {isProcessing ? (
+                    {processingGateway === 'upi_qr' ? (
                       <>
                         <RefreshCw className="w-4 h-4 animate-spin" />
                         <span>Verifying UTR Reference...</span>
@@ -1171,6 +1234,19 @@ export default function CheckoutModal({
                       </>
                     )}
                   </button>
+
+                  {processingGateway === 'upi_qr' && (
+                    <div className="pt-1 text-center">
+                      <button
+                        type="button"
+                        onClick={() => cancelOrResetProcessing('User cancelled UPI')}
+                        className="text-xs text-rose-500 hover:text-rose-700 font-bold inline-flex items-center gap-1 py-1 px-3 rounded-xl bg-rose-50 border border-rose-200/80 hover:bg-rose-100 transition cursor-pointer"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                        <span>Cancel Verification</span>
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -1201,10 +1277,10 @@ export default function CheckoutModal({
                     disabled={isProcessing}
                     className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-2xl text-sm shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 transition cursor-pointer"
                   >
-                    {isProcessing ? (
+                    {processingGateway === 'razorpay' ? (
                       <>
                         <RefreshCw className="w-4 h-4 animate-spin" />
-                        <span>Opening Gateway...</span>
+                        <span>Opening Razorpay Gateway...</span>
                       </>
                     ) : (
                       <>
@@ -1213,6 +1289,19 @@ export default function CheckoutModal({
                       </>
                     )}
                   </button>
+
+                  {processingGateway === 'razorpay' && (
+                    <div className="pt-1 text-center">
+                      <button
+                        type="button"
+                        onClick={() => cancelOrResetProcessing('User cancelled Razorpay')}
+                        className="text-xs text-rose-500 hover:text-rose-700 font-bold inline-flex items-center gap-1 py-1 px-3 rounded-xl bg-rose-50 border border-rose-200/80 hover:bg-rose-100 transition cursor-pointer"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                        <span>Cancel & Choose Another Method</span>
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -1237,12 +1326,28 @@ export default function CheckoutModal({
                     disabled={isProcessing}
                     className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-2xl text-sm shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 transition cursor-pointer"
                   >
-                    {isProcessing ? (
-                      <RefreshCw className="w-4 h-4 animate-spin" />
+                    {processingGateway === 'cashfree' ? (
+                      <div className="flex items-center justify-center gap-2">
+                        <RefreshCw className="w-4 h-4 animate-spin" />
+                        <span>Connecting to Cashfree...</span>
+                      </div>
                     ) : (
                       <span>Proceed to Cashfree (₹{total})</span>
                     )}
                   </button>
+
+                  {processingGateway === 'cashfree' && (
+                    <div className="pt-1 text-center">
+                      <button
+                        type="button"
+                        onClick={() => cancelOrResetProcessing('User cancelled Cashfree')}
+                        className="text-xs text-rose-500 hover:text-rose-700 font-bold inline-flex items-center gap-1 py-1 px-3 rounded-xl bg-rose-50 border border-rose-200/80 hover:bg-rose-100 transition cursor-pointer"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                        <span>Cancel & Choose Another Method</span>
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -1270,8 +1375,8 @@ export default function CheckoutModal({
                     disabled={isProcessing}
                     className="w-full py-3.5 bg-[#0070BA] hover:bg-[#003087] text-white font-black rounded-2xl text-sm shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2 transition cursor-pointer"
                   >
-                    {isProcessing ? (
-                      <div className="flex items-center gap-2">
+                    {processingGateway === 'paypal' ? (
+                      <div className="flex items-center justify-center gap-2">
                         <RefreshCw className="w-4 h-4 animate-spin" />
                         <span>Connecting to PayPal...</span>
                       </div>
@@ -1279,6 +1384,19 @@ export default function CheckoutModal({
                       <span>Pay ${usdDisplay} USD via PayPal</span>
                     )}
                   </button>
+
+                  {processingGateway === 'paypal' && (
+                    <div className="pt-1 text-center">
+                      <button
+                        type="button"
+                        onClick={() => cancelOrResetProcessing('User cancelled PayPal')}
+                        className="text-xs text-rose-500 hover:text-rose-700 font-bold inline-flex items-center gap-1 py-1 px-3 rounded-xl bg-rose-50 border border-rose-200/80 hover:bg-rose-100 transition cursor-pointer"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                        <span>Cancel & Choose Another Method</span>
+                      </button>
+                    </div>
+                  )}
 
                   <p className="text-[11px] text-slate-500 leading-relaxed">
                     🔒 Official 256-bit encrypted checkout. Supports PayPal balance, Visa, Mastercard, American Express &amp; International Cards.
@@ -1335,6 +1453,7 @@ export default function CheckoutModal({
                 <button
                   type="button"
                   onClick={() => {
+                    cancelOrResetProcessing('Retry from failed screen');
                     setError('');
                     setStep(2); // Safely return to Payment selection
                   }}

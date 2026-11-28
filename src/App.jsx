@@ -674,6 +674,13 @@ export default function App() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('paypal_cancel') === 'true') {
+      setPaypalVerifying(false);
+      try {
+        window.history.replaceState({}, '', window.location.pathname);
+      } catch (e) {}
+      return;
+    }
     const isPaypalReturn = urlParams.get('paypal_return') === 'true';
     const paypalOrderId = urlParams.get('order_id') || urlParams.get('token');
     if (!isPaypalReturn || !paypalOrderId) return;

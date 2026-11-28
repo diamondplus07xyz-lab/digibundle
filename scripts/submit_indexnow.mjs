@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import { initialBundles, categories } from '../src/data/bundles.js';
 
 const DOMAIN = 'https://www.cheapreels.in';
