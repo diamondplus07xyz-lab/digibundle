@@ -75,13 +75,16 @@ export function getProductSchema(bundle, config = {}) {
   const price = bundle.price || 39;
   const originalPrice = bundle.originalPrice || 799;
 
+  const rawThumb = bundle.thumbnail || `${PRIMARY_DOMAIN}/brand-icon.png`;
+  const absoluteThumb = rawThumb.startsWith('http') ? rawThumb : `${PRIMARY_DOMAIN}${rawThumb.startsWith('/') ? '' : '/'}${rawThumb}`;
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
     '@id': `${PRIMARY_DOMAIN}/bundle/${bundle.id}#product`,
     'name': bundle.title,
     'image': [
-      bundle.thumbnail || `${PRIMARY_DOMAIN}/brand-icon.png`
+      absoluteThumb
     ],
     'description': bundle.subtitle || `${bundle.title} - 100% watermark-free ready-to-post 1080p Full HD reels bundle with instant Google Drive download link.`,
     'sku': bundle.id,

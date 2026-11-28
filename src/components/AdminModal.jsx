@@ -708,140 +708,139 @@ export default function AdminModal({
     showNotification(`Order #${orderId} marked as rejected.`);
   };
 
+  // Canvas-based client-side image compression to prevent QuotaExceededError and keep under 150KB
+  const compressImageFile = (file, maxWidth = 800, quality = 0.82) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          try {
+            const webpData = canvas.toDataURL('image/webp', quality);
+            if (webpData && webpData.startsWith('data:image/webp')) {
+              return resolve(webpData);
+            }
+          } catch (err) {}
+          resolve(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.onerror = () => resolve(e.target.result);
+        img.src = e.target.result;
+      };
+      reader.onerror = () => resolve('');
+      reader.readAsDataURL(file);
+    });
+  };
+
   // Header Logo Upload Handler
-  const handleLogoUpload = (e) => {
+  const handleLogoUpload = async (e) => {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
 
-    if (file.size > 5 * 1024 * 1024) {
-      alert('Logo file size must be less than 5MB.');
-      return;
-    }
+    const base64Url = await compressImageFile(file, 600, 0.85);
+    if (!base64Url) return;
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const base64Url = event.target.result;
-      const updated = { ...storeConfig, logo: base64Url };
-      setStoreConfig(updated);
-      handleSaveStoreConfig(updated);
-      addLog('BRANDING', 'Header Logo Uploaded', 'New website header brand logo uploaded.');
-      showNotification('New header logo uploaded & applied!');
-    };
-    reader.readAsDataURL(file);
+    const updated = { ...storeConfig, logo: base64Url };
+    setStoreConfig(updated);
+    handleSaveStoreConfig(updated);
+    addLog('BRANDING', 'Header Logo Uploaded', 'New website header brand logo uploaded.');
+    showNotification('New header logo uploaded & applied!');
   };
 
   // Footer Logo Upload Handler
-  const handleFooterLogoUpload = (e) => {
+  const handleFooterLogoUpload = async (e) => {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
 
-    if (file.size > 5 * 1024 * 1024) {
-      alert('Logo file size must be less than 5MB.');
-      return;
-    }
+    const base64Url = await compressImageFile(file, 600, 0.85);
+    if (!base64Url) return;
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const base64Url = event.target.result;
-      const updated = { ...storeConfig, footerLogo: base64Url };
-      setStoreConfig(updated);
-      handleSaveStoreConfig(updated);
-      addLog('BRANDING', 'Footer Logo Uploaded', 'New website footer logo uploaded.');
-      showNotification('New footer logo uploaded & applied!');
-    };
-    reader.readAsDataURL(file);
+    const updated = { ...storeConfig, footerLogo: base64Url };
+    setStoreConfig(updated);
+    handleSaveStoreConfig(updated);
+    addLog('BRANDING', 'Footer Logo Uploaded', 'New website footer logo uploaded.');
+    showNotification('New footer logo uploaded & applied!');
   };
 
   // Favicon Upload Handler
-  const handleFaviconUpload = (e) => {
+  const handleFaviconUpload = async (e) => {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
 
-    if (file.size > 2 * 1024 * 1024) {
-      alert('Favicon file size must be less than 2MB.');
-      return;
+    const base64Url = await compressImageFile(file, 128, 0.9);
+    if (!base64Url) return;
+
+    const updated = { ...storeConfig, favicon: base64Url };
+    setStoreConfig(updated);
+    handleSaveStoreConfig(updated);
+
+    let faviconLink = document.getElementById('site-favicon');
+    if (!faviconLink) {
+      faviconLink = document.querySelector("link[rel*='icon']");
+    }
+    if (faviconLink) {
+      faviconLink.href = base64Url;
     }
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const base64Url = event.target.result;
-      const updated = { ...storeConfig, favicon: base64Url };
-      setStoreConfig(updated);
-      handleSaveStoreConfig(updated);
-
-      let faviconLink = document.getElementById('site-favicon');
-      if (!faviconLink) {
-        faviconLink = document.querySelector("link[rel*='icon']");
-      }
-      if (faviconLink) {
-        faviconLink.href = base64Url;
-      }
-
-      addLog('BRANDING', 'Favicon Updated', 'New browser tab favicon icon uploaded.');
-      showNotification('Favicon updated successfully!');
-    };
-    reader.readAsDataURL(file);
+    addLog('BRANDING', 'Favicon Updated', 'New browser tab favicon icon uploaded.');
+    showNotification('Favicon updated successfully!');
   };
 
   // Master Vault Thumbnail Upload Handler
-  const handleMasterVaultThumbnailUpload = (e) => {
+  const handleMasterVaultThumbnailUpload = async (e) => {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
 
-    if (file.size > 5 * 1024 * 1024) {
-      alert('Image file size must be less than 5MB.');
-      return;
-    }
+    const base64Url = await compressImageFile(file, 800, 0.82);
+    if (!base64Url) return;
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const base64Url = event.target.result;
-      const updated = { ...storeConfig, masterVaultThumbnail: base64Url };
-      setStoreConfig(updated);
-      handleSaveStoreConfig(updated);
+    const updated = { ...storeConfig, masterVaultThumbnail: base64Url };
+    setStoreConfig(updated);
+    handleSaveStoreConfig(updated);
 
-      const updatedBundles = bundles.map(b => 
-        b.id === 'bundle-mega-all-in-one' ? { ...b, thumbnail: base64Url } : b
-      );
-      onUpdateBundles(updatedBundles);
+    const updatedBundles = bundles.map(b => 
+      b.id === 'bundle-mega-all-in-one' ? { ...b, thumbnail: base64Url } : b
+    );
+    onUpdateBundles(updatedBundles);
 
-      addLog('BRANDING', 'Master Vault Thumbnail Updated', 'All-In-One Master Vault thumbnail photo updated.');
-      showNotification('Master Vault thumbnail updated!');
-    };
-    reader.readAsDataURL(file);
+    addLog('BRANDING', 'Master Vault Thumbnail Updated', 'All-In-One Master Vault thumbnail photo updated.');
+    showNotification('Master Vault thumbnail updated!');
   };
 
   // Image Upload handler for Bundle or Offer
-  const handleImageFileUpload = (e, target = 'bundle') => {
+  const handleImageFileUpload = async (e, target = 'bundle') => {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
 
-    if (file.size > 5 * 1024 * 1024) {
-      alert('Image file size must be less than 5MB.');
-      return;
-    }
+    const base64Url = await compressImageFile(file, 800, 0.82);
+    if (!base64Url) return;
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const base64Url = event.target.result;
-      if (target === 'bundle' && editingBundle) {
-        setEditingBundle(prev => ({ ...prev, thumbnail: base64Url }));
-        showNotification('Photo uploaded! Click "Save Changes" below.');
-      } else if (target === 'new_bundle') {
-        setNewBundleData(prev => ({ ...prev, thumbnail: base64Url }));
-        showNotification('Photo uploaded for new bundle!');
-      } else if (target === 'offer') {
-        setStoreConfig(prev => ({
-          ...prev,
-          specialOffer: {
-            ...prev.specialOffer,
-            thumbnail: base64Url
-          }
-        }));
-        showNotification('Offer banner image uploaded!');
-      }
-    };
-    reader.readAsDataURL(file);
+    if (target === 'bundle' && editingBundle) {
+      setEditingBundle(prev => ({ ...prev, thumbnail: base64Url }));
+      showNotification('Photo uploaded! Click "Save Changes" below.');
+    } else if (target === 'new_bundle') {
+      setNewBundleData(prev => ({ ...prev, thumbnail: base64Url }));
+      showNotification('Photo uploaded for new bundle!');
+    } else if (target === 'offer') {
+      setStoreConfig(prev => ({
+        ...prev,
+        specialOffer: {
+          ...prev.specialOffer,
+          thumbnail: base64Url
+        }
+      }));
+      showNotification('Offer banner image uploaded!');
+    }
   };
 
   // Admin Passcode Update Handler with SHA-256 Hashing & Multi-Device Session Revocation

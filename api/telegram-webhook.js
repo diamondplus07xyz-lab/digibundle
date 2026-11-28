@@ -13,6 +13,16 @@ const TELEGRAM_API_BASE = `https://api.telegram.org/bot${BOT_TOKEN}`;
 const GITHUB_PRIMARY_REPO = 'diamondplus07xyz-lab/cheapreels';
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || (['ghp', '_CSAFo7DVo2QB5pU', 'yrJxWcKOgyHDcBj24KzPz'].join(''));
 
+const escapeHtml = (str) => {
+  if (!str || typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+};
+
 // Helper: Call Telegram Bot API
 async function callTelegram(method, payload) {
   try {
@@ -209,12 +219,12 @@ function renderOrdersList(storeData, page = 1) {
     currentOrders.forEach((o, idx) => {
       const isVer = o.status === 'VERIFIED';
       const statusIcon = isVer ? '🟢 VERIFIED' : '⏳ PENDING';
-      const gw = o.gateway || 'UPI';
-      const amount = o.gateway === 'PayPal' ? `$${o.total} USD` : `₹${o.total}`;
-      lines.push(`<b>${startIdx + idx + 1}. #${o.id}</b> | <b>${amount}</b> | ${gw}`);
-      lines.push(`   👤 ${o.name || 'Customer'} (${o.whatsapp || 'N/A'})`);
+      const gw = escapeHtml(o.gateway || 'UPI');
+      const amount = o.gateway === 'PayPal' ? `$${o.usdAmount || (o.total ? (o.total / 85).toFixed(2) : '19.99')} USD` : `₹${o.total}`;
+      lines.push(`<b>${startIdx + idx + 1}. #${escapeHtml(o.id)}</b> | <b>${amount}</b> | ${gw}`);
+      lines.push(`   👤 ${escapeHtml(o.name || 'Customer')} (${escapeHtml(o.whatsapp || 'N/A')})`);
       lines.push(`   Status: <b>${statusIcon}</b>`);
-      lines.push(`   Txn/UTR: <code>${o.utr || o.paymentId || 'N/A'}</code>`);
+      lines.push(`   Txn/UTR: <code>${escapeHtml(o.utr || o.paymentId || 'N/A')}</code>`);
       lines.push(``);
     });
   }

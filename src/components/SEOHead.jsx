@@ -21,13 +21,13 @@ export default function SEOHead({
     if (typeof document === 'undefined') return;
 
     // 1. Determine Dynamic Title & Description
-    let pageTitle = config.seoTitle || 'DigiBundle | 2,50,000+ Ready-to-Post HD Reels Bundles starting @ ₹29';
+    let pageTitle = config.seoTitle || 'Cheap Reels | 2,50,000+ Ready-to-Post HD Reels Bundles starting @ ₹29';
     let pageDescription = config.seoDescription || 'Download 2,50,000+ ready-to-post 1080p Full HD watermark-free vertical reels bundles across 130+ viral niches. Instant Google Drive cloud link access at flat 95% OFF!';
     let canonicalPath = '/';
     let breadcrumbs = [];
 
     if (activeBundle) {
-      pageTitle = `${activeBundle.title} | DigiBundle`;
+      pageTitle = `${activeBundle.title} | Cheap Reels`;
       pageDescription = `Get ${activeBundle.clipCount || '1000+'} 1080p Full HD ${activeBundle.title}. No watermark, instant Google Drive link at just ₹${activeBundle.price}. Full commercial rights included.`;
       canonicalPath = `/bundle/${activeBundle.id}`;
       breadcrumbs = [
@@ -37,14 +37,14 @@ export default function SEOHead({
     } else if (activeCategory && activeCategory !== 'all') {
       const catObj = categories.find(c => c.id === activeCategory);
       const catName = catObj ? catObj.label : activeCategory;
-      pageTitle = `${catName} Bundles (1080p Full HD Watermark Free) | DigiBundle`;
+      pageTitle = `${catName} Bundles (1080p Full HD Watermark Free) | Cheap Reels`;
       pageDescription = `Download premium viral ${catName} ready-to-post vertical video bundles. 100% watermark-free with instant Google Drive links starting at ₹29.`;
       canonicalPath = `/category/${activeCategory}`;
       breadcrumbs = [
         { name: catName, url: `/category/${activeCategory}` }
       ];
     } else if (searchQuery) {
-      pageTitle = `Search: "${searchQuery}" Reels Bundles | DigiBundle`;
+      pageTitle = `Search: "${searchQuery}" Reels Bundles | Cheap Reels`;
       pageDescription = `Find viral 1080p Full HD ready-to-post reels bundles matching "${searchQuery}". Instant Google Drive delivery in 5 seconds.`;
     }
 
@@ -63,7 +63,7 @@ export default function SEOHead({
     };
 
     setMetaTag('meta[name="description"]', 'name', 'description', pageDescription);
-    setMetaTag('meta[name="keywords"]', 'name', 'keywords', config.seoKeywords || 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, digibundle download, watermark free reels 1080p, shorts bundle');
+    setMetaTag('meta[name="keywords"]', 'name', 'keywords', config.seoKeywords || 'reels bundle, viral reels, instagram reels pack, motivation reels, ai fitness reels, cheap reels download, watermark free reels 1080p, shorts bundle');
     setMetaTag('meta[name="robots"]', 'name', 'robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
     setMetaTag('meta[name="google-site-verification"]', 'name', 'google-site-verification', '52iB3jq7O_eOpTnutctWvgYo0yqXIIKMWIpZDpVwyZw');
 
@@ -77,17 +77,21 @@ export default function SEOHead({
     }
     canonicalLink.setAttribute('href', fullCanonicalUrl);
 
+    // Open Graph & Social Cards Image (Guaranteed Absolute URL for WhatsApp, Facebook, X previews)
+    const rawImage = activeBundle?.thumbnail || `${PRIMARY_DOMAIN}/social-share.png`;
+    const fullOgImage = rawImage.startsWith('http') ? rawImage : `${PRIMARY_DOMAIN}${rawImage.startsWith('/') ? '' : '/'}${rawImage}`;
+
     // Open Graph
     setMetaTag('meta[property="og:title"]', 'property', 'og:title', pageTitle);
     setMetaTag('meta[property="og:description"]', 'property', 'og:description', pageDescription);
     setMetaTag('meta[property="og:url"]', 'property', 'og:url', fullCanonicalUrl);
-    setMetaTag('meta[property="og:image"]', 'property', 'og:image', activeBundle?.thumbnail || `${PRIMARY_DOMAIN}/social-share.png`);
+    setMetaTag('meta[property="og:image"]', 'property', 'og:image', fullOgImage);
     setMetaTag('meta[property="og:type"]', 'property', 'og:type', activeBundle ? 'product' : 'website');
 
     // Twitter
     setMetaTag('meta[name="twitter:title"]', 'name', 'twitter:title', pageTitle);
     setMetaTag('meta[name="twitter:description"]', 'name', 'twitter:description', pageDescription);
-    setMetaTag('meta[name="twitter:image"]', 'name', 'twitter:image', activeBundle?.thumbnail || `${PRIMARY_DOMAIN}/social-share.png`);
+    setMetaTag('meta[name="twitter:image"]', 'name', 'twitter:image', fullOgImage);
 
     // 4. Inject JSON-LD Structured Data
     const schemas = [

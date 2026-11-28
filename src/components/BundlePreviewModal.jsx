@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { X, Play, Pause, CheckCircle, FolderOpen, Zap, Volume2, VolumeX, ExternalLink, Film, VideoOff } from 'lucide-react';
+import { X, Play, Pause, CheckCircle, FolderOpen, Zap, Volume2, VolumeX, ExternalLink, Sparkles, Film, VideoOff } from 'lucide-react';
 import { parseVideoUrl } from '../utils/videoHelper';
+import { getItemPriceDisplay, isInternationalVisitor } from '../utils/geoPricing';
 
 export default function BundlePreviewModal({ bundle, onClose, onBuyNow }) {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef(null);
+  const isIntl = isInternationalVisitor();
+  const priceInfo = bundle ? getItemPriceDisplay(bundle) : { formattedPrice: '₹39', formattedOriginalPrice: '₹799' };
 
   useEffect(() => {
     if (videoRef.current) {
@@ -46,9 +49,9 @@ export default function BundlePreviewModal({ bundle, onClose, onBuyNow }) {
             <div className="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-4 bg-slate-800 rounded-full z-20" />
 
             {/* CONDITIONAL VIDEO / GDRIVE / PLACEHOLDER RENDER */}
-            {videoData.type === 'gdrive' ? (
+            {(videoData.type === 'gdrive' || videoData.fileId) ? (
               <iframe
-                src={videoData.embedUrl}
+                src={videoData.embedUrl || `https://drive.google.com/file/d/${videoData.fileId}/preview`}
                 title={bundle.title}
                 className="absolute inset-0 w-full h-full border-0 bg-black pt-5"
                 allow="autoplay; encrypted-media"
@@ -196,7 +199,7 @@ export default function BundlePreviewModal({ bundle, onClose, onBuyNow }) {
             <div className="space-y-2 mb-6">
               <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Bundle Specifications:</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {bundle.features.map((feat, idx) => (
+                {(bundle.features || []).map((feat, idx) => (
                   <div key={idx} className="flex items-start gap-2 text-xs text-slate-300">
                     <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                     <span>{feat}</span>
@@ -210,10 +213,12 @@ export default function BundlePreviewModal({ bundle, onClose, onBuyNow }) {
           <div className="pt-4 border-t border-slate-800 flex items-center justify-between gap-4">
             <div>
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-black text-white">₹{bundle.price}</span>
-                <span className="text-sm text-slate-400 line-through">₹{bundle.originalPrice}</span>
+                <span className="text-3xl font-black text-white">{priceInfo.formattedPrice}</span>
+                <span className="text-sm text-slate-400 line-through">{priceInfo.formattedOriginalPrice}</span>
               </div>
-              <p className="text-[11px] text-emerald-400 font-semibold">Instant UPI QR • Lifetime Access</p>
+              <p className="text-[11px] text-emerald-400 font-semibold">
+                {isIntl ? 'Instant PayPal Delivery • Lifetime Access' : 'Instant UPI QR • Lifetime Access'}
+              </p>
             </div>
 
             <button
@@ -221,10 +226,10 @@ export default function BundlePreviewModal({ bundle, onClose, onBuyNow }) {
                 onClose();
                 onBuyNow(bundle);
               }}
-              className="px-6 py-3.5 bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-600 hover:from-indigo-400 hover:to-pink-500 text-white rounded-xl font-black text-sm shadow-xl shadow-indigo-600/30 flex items-center gap-2 transition hover:scale-105 active:scale-95"
+              className="px-6 py-3.5 bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-600 hover:from-indigo-400 hover:to-pink-500 text-white rounded-xl font-black text-sm shadow-xl shadow-indigo-600/30 flex items-center gap-2 transition hover:scale-105 active:scale-95 cursor-pointer"
             >
               <Zap className="w-4 h-4 fill-white" />
-              <span>Buy (₹{bundle.price})</span>
+              <span>Buy ({priceInfo.formattedPrice})</span>
             </button>
           </div>
         </div>

@@ -13,101 +13,101 @@ export default function UrgencyNotification({
       id: 'init-1',
       buyerName: 'Rahul Sharma',
       city: 'Mumbai',
-      bundleTitle: '3000+ Motivation & Success Reels',
-      thumbnail: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=500&auto=format&fit=crop&q=60',
-      price: 49,
+      bundleTitle: '2000+ GTA 6 4K Cinematic & Gameplay Reels',
+      thumbnail: '/thumbnails/gta-6-reels-bundle.webp',
+      price: 99,
       timeAgo: '2m ago',
-      bundleId: 'bundle-motivation-3000'
+      bundleId: 'bundle-127'
     },
     {
       id: 'init-2',
       buyerName: 'Priya Patel',
       city: 'Ahmedabad',
-      bundleTitle: '1000+ AI Fitness & Gym Workout Reels',
-      thumbnail: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=500&auto=format&fit=crop&q=60',
-      price: 29,
+      bundleTitle: '1000+ Hindi Motivational Reels Bundle',
+      thumbnail: 'https://reelsbundles.in/wp-content/uploads/2026/10/hindi-motivational-reels-bundle-7-768x576.jpg',
+      price: 49,
       timeAgo: '4m ago',
-      bundleId: 'bundle-gym-fitness-1000'
+      bundleId: 'bundle-5'
     },
     {
       id: 'init-3',
       buyerName: 'Vikram Singh',
       city: 'Jaipur',
-      bundleTitle: '500+ Sanatan Hindu Dharma Reels',
-      thumbnail: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=500&auto=format&fit=crop&q=60',
+      bundleTitle: '500+ God & Sanatan Dharma Reels',
+      thumbnail: 'https://reelsbundles.in/wp-content/uploads/2026/09/god-reels-bundle-5-2-1-768x576.jpg',
       price: 39,
       timeAgo: '7m ago',
-      bundleId: 'bundle-sanatan-dharma-500'
+      bundleId: 'bundle-6'
     },
     {
       id: 'init-4',
       buyerName: 'Rohan Kulkarni',
       city: 'Pune',
-      bundleTitle: '2500+ Luxury Supercars & Bikes 4K',
-      thumbnail: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=500&auto=format&fit=crop&q=60',
+      bundleTitle: 'Sigma Male Attitude Reels Bundle',
+      thumbnail: 'https://reelsbundles.in/wp-content/uploads/2026/09/sigma-male-reels-bundle-5-2-1.jpg',
       price: 49,
       timeAgo: '11m ago',
-      bundleId: 'bundle-luxury-cars-2500'
+      bundleId: 'bundle-8'
     },
     {
       id: 'init-5',
       buyerName: 'Karthik Nair',
       city: 'Bengaluru',
-      bundleTitle: 'Master Vault 2,50,000+ All-in-One Pack',
-      thumbnail: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60',
-      price: 999,
+      bundleTitle: '2000+ GTA 6 Reels Master Bundle',
+      thumbnail: '/thumbnails/gta-6-reels-bundle.webp',
+      price: 99,
       timeAgo: '16m ago',
-      bundleId: 'bundle-mega-all-in-one'
+      bundleId: 'bundle-127'
     },
     {
       id: 'init-6',
       buyerName: 'Ananya Sen',
       city: 'Kolkata',
-      bundleTitle: '1500+ Aesthetic Dark & Sad Quotes Reels',
-      thumbnail: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500&auto=format&fit=crop&q=60',
+      bundleTitle: '1000+ Space Aesthetic 4K Videos',
+      thumbnail: 'https://reelsbundles.in/wp-content/uploads/2026/09/space-aesthetic-reels-bundle-5-2-1.jpg',
       price: 29,
       timeAgo: '21m ago',
-      bundleId: 'bundle-aesthetic-dark-1500'
+      bundleId: 'bundle-1'
     },
     {
       id: 'init-7',
       buyerName: 'Amit Verma',
       city: 'Delhi NCR',
-      bundleTitle: '1000+ Business Mindset & Stock Market Reels',
-      thumbnail: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=500&auto=format&fit=crop&q=60',
+      bundleTitle: 'AI Motivational Reels Bundle',
+      thumbnail: 'https://reelsbundles.in/wp-content/uploads/2026/10/ai-motivational-reels-bundle-5-2.jpg',
       price: 39,
       timeAgo: '28m ago',
-      bundleId: 'bundle-business-crypto-1000'
+      bundleId: 'bundle-7'
     },
     {
       id: 'init-8',
       buyerName: 'Simran Kaur',
       city: 'Chandigarh',
-      bundleTitle: '800+ Anime & Japanese Manga 4K Reels',
-      thumbnail: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500&auto=format&fit=crop&q=60',
+      bundleTitle: 'Emotional Quotes & Story Reels',
+      thumbnail: 'https://reelsbundles.in/wp-content/uploads/2026/09/emotional-reels-bundle-6-1.jpg',
       price: 29,
       timeAgo: '34m ago',
-      bundleId: 'bundle-anime-manga-800'
+      bundleId: 'bundle-10'
     },
     {
       id: 'init-9',
       buyerName: 'Neha Gupta',
       city: 'Indore',
-      bundleTitle: '2000+ Viral Mahadev & Bhagwan Shiva Reels',
-      thumbnail: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=500&auto=format&fit=crop&q=60',
-      price: 39,
+      bundleTitle: 'AI Cats Cute Reels Bundle',
+      thumbnail: 'https://reelsbundles.in/wp-content/uploads/2026/10/ai-cats-reels-bundle-5-2.jpg',
+      price: 29,
       timeAgo: '42m ago',
-      bundleId: 'bundle-mahadev-shiva-2000'
+      bundleId: 'bundle-2'
     },
     {
       id: 'init-10',
       buyerName: 'Kunal Roy',
       city: 'Hyderabad',
-      bundleTitle: '1200+ Artificial Intelligence Tech Avatars',
-      thumbnail: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=500&auto=format&fit=crop&q=60',
+      bundleTitle: 'AI Dogs Funny Reels Bundle',
+      thumbnail: 'https://reelsbundles.in/wp-content/uploads/2026/10/ai-dogs-reels-bundle-5-2.jpg',
       price: 29,
       timeAgo: '51m ago',
-      bundleId: 'bundle-ai-avatars-1200'
+      bundleId: 'bundle-3'
     }
   ], []);
 
