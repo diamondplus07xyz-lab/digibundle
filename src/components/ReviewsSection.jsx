@@ -25,7 +25,7 @@ export default function ReviewsSection() {
       name: 'Rohan Mehta',
       city: 'Jaipur',
       role: 'Digital Marketer',
-      text: 'Master Vault pack liya tha ₹999 me, itna massive content mila hai ki 1 saal tak roz 3 vertical reels aaram se post kar sakta hu bina rukawat!',
+      text: 'GTA 6 4K Cinematic Reels bundle liya tha ₹99 me, itna massive aur crisp content mila hai ki 1 saal tak roz vertical gaming reels aaram se post kar sakta hu!',
       rating: 5,
       avatar: 'RM',
       badgeBg: 'bg-amber-100 text-amber-800'
@@ -55,7 +55,7 @@ export default function ReviewsSection() {
             Loved By Over 15,000+ Creators
           </h2>
           <p className="text-xs sm:text-sm text-slate-700 font-semibold max-w-xl mx-auto">
-            See what Indian video creators and digital marketers say about DigiBundle.
+            See what Indian video creators and digital marketers say about Cheap Reels.
           </p>
         </div>
 

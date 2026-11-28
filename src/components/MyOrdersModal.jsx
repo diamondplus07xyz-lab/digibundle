@@ -147,10 +147,13 @@ export default function MyOrdersModal({ isOpen, onClose, orders, onUserLogout, w
 
 function OrderItemCard({ order, whatsappNumber }) {
   const isPending = order.status === 'PENDING_VERIFICATION' || order.driveLinkUnlocked === false;
-  const primaryLink = order.items[0]?.driveLink || "https://drive.google.com";
   const raw = (whatsappNumber || '7017324978').replace(/\D/g, '');
   const cleanPhone = raw.length === 10 ? `91${raw}` : (raw || '917017324978');
+  const whatsappDisplay = cleanPhone.startsWith('91') && cleanPhone.length === 12 ? `+91 ${cleanPhone.slice(2)}` : `+${cleanPhone}`;
   const whatsappUrl = order.whatsappUrl || `https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Hello, my order is ${order.id} and UTR is ${order.utr}. Please verify and send my Google Drive link.`)}`;
+
+  const isUsd = order.currency === 'USD' || Boolean(order.usdAmount);
+  const displayAmount = isUsd ? `$${order.usdAmount || order.amount || order.total} USD` : `₹${order.total || order.amount}`;
 
   return (
     <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 space-y-3">
@@ -171,7 +174,7 @@ function OrderItemCard({ order, whatsappNumber }) {
 
       <div>
         <p className="text-xs font-bold text-white mb-1">
-          {order.items.length} Bundle(s) (₹{order.total}):
+          {order.items.length} Bundle(s) ({displayAmount}):
         </p>
         <ul className="text-xs text-slate-300 list-disc pl-4 space-y-0.5">
           {order.items.map((it, idx) => (
@@ -182,9 +185,9 @@ function OrderItemCard({ order, whatsappNumber }) {
         </ul>
       </div>
 
-      <div className="pt-2 flex items-center justify-between border-t border-slate-800/60">
+      <div className="pt-2 border-t border-slate-800/60">
         {isPending ? (
-          <>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <span className="inline-flex items-center gap-1.5 text-[11px] text-amber-400 font-bold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
               <Clock className="w-3 h-3 animate-pulse" /> UTR Verification Pending
             </span>
@@ -195,23 +198,49 @@ function OrderItemCard({ order, whatsappNumber }) {
               className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-400 font-bold text-xs rounded-lg border border-emerald-500/30 transition"
             >
               <MessageCircle className="w-3.5 h-3.5" />
-              <span>Verify on WhatsApp (+91 7017324978)</span>
+              <span>Verify on WhatsApp ({whatsappDisplay})</span>
             </a>
-          </>
+          </div>
         ) : (
-          <>
-            <span className="text-[11px] text-emerald-400 font-bold">Payment Verified</span>
-            <a
-              href={primaryLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 font-bold text-xs rounded-lg border border-emerald-500/30 transition"
-            >
-              <FolderOpen className="w-3.5 h-3.5" />
-              <span>Open Drive</span>
-              <ExternalLink className="w-3 h-3" />
-            </a>
-          </>
+          <div className="space-y-2 w-full">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] text-emerald-400 font-bold flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" /> Payment Verified
+              </span>
+              {order.items.length === 1 && (
+                <a
+                  href={order.items[0]?.driveLink || "https://drive.google.com"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 font-bold text-xs rounded-lg border border-emerald-500/30 transition"
+                >
+                  <FolderOpen className="w-3.5 h-3.5" />
+                  <span>Open Drive</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              )}
+            </div>
+            {order.items.length > 1 && (
+              <div className="pt-2 border-t border-slate-800/60 flex flex-col gap-1.5">
+                <span className="text-[10px] uppercase font-bold text-slate-400">Google Drive Folders:</span>
+                <div className="flex flex-wrap gap-2">
+                  {order.items.map((it, idx) => (
+                    <a
+                      key={idx}
+                      href={it.driveLink || "https://drive.google.com"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 font-bold text-[11px] rounded-lg border border-emerald-500/25 transition truncate max-w-full"
+                    >
+                      <FolderOpen className="w-3 h-3 text-emerald-400 shrink-0" />
+                      <span className="truncate">{it.title?.split('–')[0]?.trim() || `Bundle ${idx + 1}`}</span>
+                      <ExternalLink className="w-2.5 h-2.5 shrink-0" />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>

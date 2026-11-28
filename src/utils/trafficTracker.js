@@ -1,6 +1,6 @@
 /**
  * First-Party Real-Time Website Traffic & Visitor Analytics Engine
- * DigiBundle Storefront & Admin Analytics
+ * Cheap Reels Storefront & Admin Analytics
  * 
  * Strict Zero Fake Data: All numbers strictly derived from real recorded visits.
  * Privacy-friendly, anonymous IDs (cr_analytics_vid, cr_analytics_sid).
@@ -157,19 +157,91 @@ export function getApproximateGeo() {
 
   try {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-    if (tz.includes('Kolkata') || tz.includes('Calcutta') || tz.includes('India')) {
+    if (!tz || tz.includes('Kolkata') || tz.includes('Calcutta') || tz.includes('India')) {
       return { country: 'India', countryCode: 'IN', city: 'Delhi / Mumbai' };
-    } else if (tz.includes('New_York') || tz.includes('Los_Angeles') || tz.includes('Chicago') || tz.includes('America')) {
-      return { country: 'United States', countryCode: 'US', city: tz.split('/')[1]?.replace('_', ' ') || 'USA' };
-    } else if (tz.includes('London') || tz.includes('Europe')) {
-      return { country: 'United Kingdom', countryCode: 'GB', city: 'London' };
-    } else if (tz.includes('Dubai') || tz.includes('Asia/Dubai')) {
-      return { country: 'United Arab Emirates', countryCode: 'AE', city: 'Dubai' };
-    } else if (tz.includes('Singapore') || tz.includes('Asia/Singapore')) {
-      return { country: 'Singapore', countryCode: 'SG', city: 'Singapore' };
-    } else {
-      return { country: 'India', countryCode: 'IN', city: 'India (Standard)' };
     }
+
+    // Canada
+    if (tz.includes('Toronto') || tz.includes('Vancouver') || tz.includes('Montreal') || tz.includes('Edmonton') || tz.includes('Winnipeg') || tz.includes('Halifax')) {
+      return { country: 'Canada', countryCode: 'CA', city: tz.split('/')[1]?.replace(/_/g, ' ') || 'Toronto' };
+    }
+    // United States
+    if (tz.includes('New_York') || tz.includes('Los_Angeles') || tz.includes('Chicago') || tz.includes('Denver') || tz.includes('Phoenix') || tz.includes('Detroit') || tz.includes('America')) {
+      return { country: 'United States', countryCode: 'US', city: tz.split('/')[1]?.replace(/_/g, ' ') || 'USA' };
+    }
+    // United Kingdom
+    if (tz.includes('London') || tz.includes('Belfast')) {
+      return { country: 'United Kingdom', countryCode: 'GB', city: 'London' };
+    }
+    // Germany
+    if (tz.includes('Berlin') || tz.includes('Munich') || tz.includes('Frankfurt')) {
+      return { country: 'Germany', countryCode: 'DE', city: 'Berlin' };
+    }
+    // France
+    if (tz.includes('Paris')) {
+      return { country: 'France', countryCode: 'FR', city: 'Paris' };
+    }
+    // Italy
+    if (tz.includes('Rome') || tz.includes('Milan')) {
+      return { country: 'Italy', countryCode: 'IT', city: 'Rome' };
+    }
+    // Spain
+    if (tz.includes('Madrid')) {
+      return { country: 'Spain', countryCode: 'ES', city: 'Madrid' };
+    }
+    // Netherlands
+    if (tz.includes('Amsterdam')) {
+      return { country: 'Netherlands', countryCode: 'NL', city: 'Amsterdam' };
+    }
+    // General Europe
+    if (tz.startsWith('Europe/')) {
+      return { country: 'Europe (Global)', countryCode: 'EU', city: tz.split('/')[1]?.replace(/_/g, ' ') || 'Europe' };
+    }
+    // UAE & Middle East
+    if (tz.includes('Dubai') || tz.includes('Abu_Dhabi')) {
+      return { country: 'United Arab Emirates', countryCode: 'AE', city: 'Dubai' };
+    }
+    if (tz.includes('Riyadh')) {
+      return { country: 'Saudi Arabia', countryCode: 'SA', city: 'Riyadh' };
+    }
+    if (tz.includes('Qatar') || tz.includes('Doha')) {
+      return { country: 'Qatar', countryCode: 'QA', city: 'Doha' };
+    }
+    // Singapore & East Asia
+    if (tz.includes('Singapore')) {
+      return { country: 'Singapore', countryCode: 'SG', city: 'Singapore' };
+    }
+    if (tz.includes('Tokyo')) {
+      return { country: 'Japan', countryCode: 'JP', city: 'Tokyo' };
+    }
+    if (tz.includes('Seoul')) {
+      return { country: 'South Korea', countryCode: 'KR', city: 'Seoul' };
+    }
+    // Australia & New Zealand
+    if (tz.includes('Sydney') || tz.includes('Melbourne') || tz.includes('Brisbane') || tz.includes('Perth') || tz.includes('Adelaide') || tz.includes('Australia')) {
+      return { country: 'Australia', countryCode: 'AU', city: tz.split('/')[1]?.replace(/_/g, ' ') || 'Sydney' };
+    }
+    if (tz.includes('Auckland') || tz.includes('Wellington')) {
+      return { country: 'New Zealand', countryCode: 'NZ', city: 'Auckland' };
+    }
+    // South Asia Neighbors
+    if (tz.includes('Dhaka')) {
+      return { country: 'Bangladesh', countryCode: 'BD', city: 'Dhaka' };
+    }
+    if (tz.includes('Karachi')) {
+      return { country: 'Pakistan', countryCode: 'PK', city: 'Karachi' };
+    }
+    if (tz.includes('Kathmandu')) {
+      return { country: 'Nepal', countryCode: 'NP', city: 'Kathmandu' };
+    }
+    if (tz.includes('Colombo')) {
+      return { country: 'Sri Lanka', countryCode: 'LK', city: 'Colombo' };
+    }
+
+    // Any other international location
+    const parts = tz.split('/');
+    const cleanCity = parts.length > 1 ? parts[1].replace(/_/g, ' ') : tz;
+    return { country: 'International (Global)', countryCode: 'GLOBAL', city: cleanCity || 'International' };
   } catch {
     return { country: 'India', countryCode: 'IN', city: 'India (Standard)' };
   }

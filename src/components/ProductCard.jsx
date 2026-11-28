@@ -266,7 +266,7 @@ export default function ProductCard({
               data-bundle-id={bundle.id}
               data-price={bundle.price}
               data-title={bundle.title}
-              aria-label={`Buy ${bundle.title} now for ₹${bundle.price}`}
+              aria-label={`Buy ${bundle.title} now for ${priceInfo.formattedPrice}`}
               onClick={() => onBuyNow(bundle)}
               className="w-full py-2 px-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:brightness-105 active:scale-95 text-slate-950 rounded-xl text-[11px] font-black shadow-xs flex items-center justify-center gap-1 transition cursor-pointer"
             >

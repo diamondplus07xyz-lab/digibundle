@@ -4,6 +4,7 @@ import { MessageCircle, Sparkles, CheckCircle2, ArrowRight, Smartphone, Zap, Shi
 export default function BuildStoreBanner({ whatsappNumber }) {
   const digits = (whatsappNumber || '7017324978').replace(/[^0-9]/g, '');
   const cleanNumber = digits.length === 10 ? `91${digits}` : (digits || '917017324978');
+  const phoneDisplay = cleanNumber.startsWith('91') && cleanNumber.length === 12 ? `+91 ${cleanNumber.slice(2)}` : `+${cleanNumber}`;
   const whatsappUrl = `https://wa.me/${cleanNumber}?text=Hello,%20I%20want%20to%20build%20a%20digital%20store%20website%20like%20this!%20Please%20share%20details.`;
 
   return (
@@ -75,7 +76,7 @@ export default function BuildStoreBanner({ whatsappNumber }) {
               <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center shrink-0 shadow-xs">
                 <MessageCircle className="w-4 h-4 text-emerald-600 fill-emerald-600" />
               </div>
-              <span>WhatsApp: +91 7017324978</span>
+              <span>WhatsApp: {phoneDisplay}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
 

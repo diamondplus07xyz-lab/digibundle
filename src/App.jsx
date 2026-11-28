@@ -1145,7 +1145,31 @@ export default function App() {
   };
 
   const handleClaimMegaDeal = () => {
-    const megaBundle = bundles.find(b => b.category === 'mega') || bundles[0];
+    const megaBundle = bundles.find(b => b.category === 'mega' || b.id === 'bundle-master-vault') || {
+      id: 'bundle-master-vault',
+      title: 'All-In-One Master Reels Vault (2,00,000+ Viral Vertical Videos)',
+      subtitle: 'Complete 2,00,000+ Reels across all viral niches with lifetime Google Drive cloud folder access.',
+      category: 'mega',
+      categoryLabel: 'Master Vault',
+      price: 999,
+      originalPrice: 9999,
+      clipCount: '2,00,000+ Reels',
+      badge: '👑 ALL-IN-ONE MASTER PACK',
+      thumbnail: config?.masterVaultThumbnail || '/special-offer.webp',
+      driveLink: config?.googleDriveDemoFolder || 'https://drive.google.com/drive/folders/18nLnqA1tVAEUAnDuGdtUptHZOaRM3cl3?usp=sharing',
+      links: [
+        {
+          label: 'Master Reels Cloud Access',
+          url: config?.googleDriveDemoFolder || 'https://drive.google.com/drive/folders/18nLnqA1tVAEUAnDuGdtUptHZOaRM3cl3?usp=sharing'
+        }
+      ],
+      features: [
+        'Instant unlock to 2,00,000+ vertical reels',
+        'All categories & viral niches included',
+        'Lifetime updates & direct Drive cloud access',
+        '100% Watermark-Free & Full HD 1080p'
+      ]
+    };
     trackVisitorAction('Clicked Claim Mega Deal');
     handleBuyNow(megaBundle);
   };

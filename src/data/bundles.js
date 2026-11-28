@@ -13,11 +13,11 @@ export const initialBundles = [
     "rating": 4.98,
     "reviewsCount": 380,
     "thumbnail": "/thumbnails/gta-6-reels-bundle.webp",
-    "driveLink": "https://drive.google.com/drive/folders/10GYoFNhVUcJH0-uCTjV6gbQ9GUFqn1kT",
+    "driveLink": "https://drive.google.com/drive/folders/18nLnqA1tVAEUAnDuGdtUptHZOaRM3cl3?usp=sharing",
     "links": [
       {
         "label": "GTA 6 Master Cloud Folder",
-        "url": "https://drive.google.com/drive/folders/10GYoFNhVUcJH0-uCTjV6gbQ9GUFqn1kT"
+        "url": "https://drive.google.com/drive/folders/18nLnqA1tVAEUAnDuGdtUptHZOaRM3cl3?usp=sharing"
       }
     ],
     "features": [
