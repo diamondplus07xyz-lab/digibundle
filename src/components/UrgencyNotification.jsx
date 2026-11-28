@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { CheckCircle } from 'lucide-react';
-import { isInternationalVisitor } from '../utils/geoPricing';
+import { getItemPriceDisplay } from '../utils/geoPricing';
 
 export default function UrgencyNotification({ 
   orders = [], 
@@ -200,20 +200,11 @@ export default function UrgencyNotification({
 
                 <div className="flex items-center justify-between text-[9px] sm:text-[10px] leading-none">
                   {(() => {
-                    const isIntl = isInternationalVisitor();
-                    const isGta = purchase.bundleId === 'bundle-127' || String(purchase.bundleTitle || '').toLowerCase().includes('gta');
-                    const inrVal = Math.min(299, Math.max(49, Number(purchase.price) || 49));
-                    let usdVal = 10;
-                    if (isGta) usdVal = 19.99;
-                    else if (inrVal <= 49) usdVal = 10;
-                    else if (inrVal <= 79) usdVal = 15;
-                    else if (inrVal <= 99) usdVal = 20;
-                    else if (inrVal <= 119) usdVal = 29;
-                    else if (inrVal <= 179) usdVal = 49;
-                    else if (inrVal <= 249) usdVal = 79;
-                    else usdVal = 99;
-
-                    const displayPrice = isIntl ? (isGta ? '$19.99' : `$${usdVal}`) : `₹${inrVal}`;
+                    const displayPrice = getItemPriceDisplay({
+                      id: purchase.bundleId,
+                      title: purchase.bundleTitle,
+                      price: purchase.price
+                    }).formattedPrice;
                     return (
                       <span className="inline-flex items-center text-emerald-800 bg-emerald-50 border border-emerald-200/90 px-1.5 py-0.5 rounded font-black">
                         <CheckCircle className="w-2.5 h-2.5 text-emerald-600 mr-0.5 shrink-0 inline" />

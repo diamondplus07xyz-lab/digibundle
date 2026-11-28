@@ -1024,6 +1024,14 @@ export function setLanguage(langCode) {
     if (match) {
       window.__CHEAP_REELS_LANG__ = match.code;
       localStorage.setItem('cheap_reels_user_lang', match.code);
+
+      try {
+        const url = new URL(window.location.href);
+        if (url.searchParams.has('lang')) {
+          url.searchParams.delete('lang');
+          window.history.replaceState({}, '', url.pathname + url.search + url.hash);
+        }
+      } catch (e) {}
       
       // Update HTML dir for RTL (Arabic)
       if (document.documentElement) {

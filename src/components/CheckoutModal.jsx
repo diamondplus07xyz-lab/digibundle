@@ -860,7 +860,7 @@ export default function CheckoutModal({
                 <div className="flex items-center justify-between pb-1 border-b border-slate-200/80">
                   <span className="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
                     <User className="w-4 h-4 text-purple-600" />
-                    <span>Customer Details / ग्राहक की जानकारी</span>
+                    <span>{isIntl ? t('step1Title') : 'Customer Details / ग्राहक की जानकारी'}</span>
                   </span>
                   <span className="text-[10px] text-rose-500 font-bold bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
                     * All fields required
@@ -870,7 +870,7 @@ export default function CheckoutModal({
                 {/* 1. Full Name */}
                 <div>
                   <label className="block text-xs font-bold text-slate-800 mb-1">
-                    Full Name / आपका पूरा नाम <span className="text-rose-500">*</span>
+                    {isIntl ? t('fullName') : 'Full Name / आपका पूरा नाम'} <span className="text-rose-500">*</span>
                   </label>
                   <div className="relative">
                     <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -888,7 +888,7 @@ export default function CheckoutModal({
                 {/* 2. WhatsApp Mobile Number */}
                 <div>
                   <label className="block text-xs font-bold text-slate-800 mb-1">
-                    {isInternationalVisitor() ? 'WhatsApp / Phone (With Country Code)' : 'WhatsApp Mobile Number / व्हाट्सएप नंबर'} <span className="text-rose-500">*</span>
+                    {isIntl ? t('whatsapp') : 'WhatsApp Mobile Number / व्हाट्सएप नंबर'} <span className="text-rose-500">*</span>
                   </label>
                   <div className="flex rounded-xl shadow-2xs overflow-hidden border border-slate-300 focus-within:ring-2 focus-within:ring-purple-600 focus-within:border-transparent">
                     <span className="inline-flex items-center px-3 bg-slate-100 text-slate-700 font-bold text-xs border-r border-slate-300 select-none">
@@ -913,7 +913,7 @@ export default function CheckoutModal({
                 {/* 3. Email Address */}
                 <div>
                   <label className="block text-xs font-bold text-slate-800 mb-1">
-                    Email Address / ईमेल आईडी <span className="text-rose-500">*</span>
+                    {isIntl ? t('email') : 'Email Address / ईमेल आईडी'} <span className="text-rose-500">*</span>
                   </label>
                   <div className="relative">
                     <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -936,7 +936,7 @@ export default function CheckoutModal({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-bold text-slate-800 mb-1">
-                      {isInternationalVisitor() ? 'State / Region / Country' : 'State / राज्य'} <span className="text-rose-500">*</span>
+                    {isIntl ? t('stateLabel') : 'State / राज्य'} <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                       <MapPin className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -985,7 +985,7 @@ export default function CheckoutModal({
                 <div className="p-2 bg-slate-50 rounded-xl border border-slate-100">
                   <Lock className="w-4 h-4 text-purple-600 mx-auto mb-1" />
                   <span className="font-bold block">Secure Checkout</span>
-                  <span className="text-[9px] text-slate-400">Encrypted UPI/PG</span>
+                  <span className="text-[9px] text-slate-400">{isIntl ? 'Encrypted PayPal / Card' : 'Encrypted UPI/PG'}</span>
                 </div>
               </div>
 

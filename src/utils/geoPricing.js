@@ -395,6 +395,22 @@ export function setUserCountry(countryCode) {
       localStorage.setItem('cheap_reels_user_country', profile.code);
       localStorage.setItem('cheap_reels_user_currency', profile.currency);
       localStorage.setItem('cheap_reels_user_lang', profile.lang);
+
+      // Clear any URL query overrides so manual switcher always wins immediately
+      try {
+        const url = new URL(window.location.href);
+        let changed = false;
+        ['country', 'currency', 'intl', 'lang'].forEach(param => {
+          if (url.searchParams.has(param)) {
+            url.searchParams.delete(param);
+            changed = true;
+          }
+        });
+        if (changed) {
+          window.history.replaceState({}, '', url.pathname + url.search + url.hash);
+        }
+      } catch (e) {}
+
       window.dispatchEvent(new CustomEvent('country_changed', { detail: profile }));
     }
   } catch (e) {}
@@ -499,25 +515,35 @@ export function calculateUsdTotal(items = [], inrTotal = 0) {
 export function calculateLocalTotal(items = [], currencyCode = null) {
   const currency = currencyCode ? (SUPPORTED_CURRENCIES[currencyCode] || getUserCurrency()) : getUserCurrency();
 
+  if (!items || items.length === 0) {
+    return currency.minPrice;
+  }
+
   if (currency.code === 'INR') {
     let totalInr = 0;
     items.forEach(it => {
       totalInr += isGtaItem(it) ? 99 : Math.min(299, Math.max(49, Number(it?.price) || 49));
     });
-    // Combo discounts in INR
     if (items.length === 2) totalInr = Math.round(totalInr * 0.9);
     else if (items.length >= 3) totalInr = Math.round(totalInr * 0.8);
     return Math.max(49, totalInr);
   }
 
-  const totalUsd = calculateUsdTotal(items);
-  const rawLocal = totalUsd * currency.rateFromUsd;
+  let totalLocal = 0;
+  items.forEach(it => {
+    totalLocal += Number(getBundleLocalPrice(it, currency.code)) || currency.minPrice;
+  });
 
-  if (currency.code === 'USD') return totalUsd;
-  if (currency.code === 'GBP' || currency.code === 'EUR' || currency.code === 'CAD' || currency.code === 'AUD' || currency.code === 'SGD' || currency.code === 'NZD') {
-    return Number(Math.max(currency.minPrice, rawLocal).toFixed(2));
+  if (items.length === 2) {
+    totalLocal = totalLocal * 0.85;
+  } else if (items.length >= 3) {
+    totalLocal = totalLocal * 0.75;
   }
-  return Math.round(Math.max(currency.minPrice, rawLocal));
+
+  if (['USD', 'GBP', 'EUR', 'CAD', 'AUD', 'SGD', 'NZD'].includes(currency.code)) {
+    return Number(Math.max(currency.minPrice, totalLocal).toFixed(2));
+  }
+  return Math.round(Math.max(currency.minPrice, totalLocal));
 }
 
 /**
