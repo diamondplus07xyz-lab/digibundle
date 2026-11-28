@@ -20,6 +20,8 @@ export default function ProductCard({
   const activePlaying = Boolean(isPlaying ?? isPlayingInline ?? false);
   const togglePlayHandler = onTogglePlay || onTogglePlayInline;
 
+  const priceInfo = bundle ? getItemPriceDisplay(bundle) : { formattedPrice: '₹39', formattedOriginalPrice: '₹799', discountPercent: 80 };
+
   const discountPercent = Math.round(
     ((bundle.originalPrice - bundle.price) / bundle.originalPrice) * 100
   );
@@ -225,25 +227,20 @@ export default function ProductCard({
 
         {/* Row 3 & 4: Price & Action Buttons */}
         <div className="pt-2 border-t border-slate-100 w-full">
-          {(() => {
-            const priceInfo = getItemPriceDisplay(bundle);
-            return (
-              <div className="flex items-baseline justify-between mb-2">
-                <div className="flex items-baseline gap-1.5 flex-wrap">
-                  <span className="text-base sm:text-lg font-black text-slate-950">{priceInfo.formattedPrice}</span>
-                  <span className="text-[11px] text-slate-500 line-through">{priceInfo.formattedOriginalPrice}</span>
-                  {priceInfo.intlNote && (
-                    <span className="text-[9px] font-mono text-sky-700 font-bold bg-sky-50 px-1 py-0.2 rounded border border-sky-100">
-                      {priceInfo.intlNote}
-                    </span>
-                  )}
-                </div>
-                <span className="text-[9px] font-black text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-200 shrink-0">
-                  {priceInfo.discountPercent}% OFF
+          <div className="flex items-baseline justify-between mb-2">
+            <div className="flex items-baseline gap-1.5 flex-wrap">
+              <span className="text-base sm:text-lg font-black text-slate-950">{priceInfo.formattedPrice}</span>
+              <span className="text-[11px] text-slate-500 line-through">{priceInfo.formattedOriginalPrice}</span>
+              {priceInfo.intlNote && (
+                <span className="text-[9px] font-mono text-sky-700 font-bold bg-sky-50 px-1 py-0.2 rounded border border-sky-100">
+                  {priceInfo.intlNote}
                 </span>
-              </div>
-            );
-          })()}
+              )}
+            </div>
+            <span className="text-[9px] font-black text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-200 shrink-0">
+              {priceInfo.discountPercent}% OFF
+            </span>
+          </div>
 
           <div className="grid grid-cols-2 gap-1.5 w-full">
             <button
