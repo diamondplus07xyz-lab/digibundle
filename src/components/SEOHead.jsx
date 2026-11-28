@@ -8,6 +8,7 @@ import {
   getFAQPageSchema, 
   getHowToSchema 
 } from '../utils/seoStructuredData';
+import { isInternationalVisitor, getBundleUsdPrice } from '../utils/geoPricing';
 
 export default function SEOHead({ 
   config = {}, 
@@ -20,15 +21,27 @@ export default function SEOHead({
   useEffect(() => {
     if (typeof document === 'undefined') return;
 
+    const isIntl = isInternationalVisitor();
+    const minStartingPrice = isIntl ? '$10 USD' : '₹49';
+
     // 1. Determine Dynamic Title & Description
-    let pageTitle = config.seoTitle || 'Cheap Reels | 2,50,000+ Ready-to-Post HD Reels Bundles starting @ ₹49';
+    let pageTitle = config.seoTitle || `Cheap Reels | 2,50,000+ Ready-to-Post HD Reels Bundles starting @ ${minStartingPrice}`;
+    if (isIntl && pageTitle.includes('₹')) {
+      pageTitle = pageTitle.replace(/₹\s*\d+/g, '$10 USD').replace(/₹/g, '$');
+    }
+
     let pageDescription = config.seoDescription || 'Download 2,50,000+ ready-to-post 1080p Full HD watermark-free vertical reels bundles across 130+ viral niches. Instant Google Drive cloud link access at flat 95% OFF!';
+    if (isIntl && pageDescription.includes('₹')) {
+      pageDescription = pageDescription.replace(/₹\s*\d+/g, '$10 USD').replace(/₹/g, '$');
+    }
+
     let canonicalPath = '/';
     let breadcrumbs = [];
 
     if (activeBundle) {
       pageTitle = `${activeBundle.title} | Cheap Reels`;
-      pageDescription = `Get ${activeBundle.clipCount || '1000+'} 1080p Full HD ${activeBundle.title}. No watermark, instant Google Drive link at just ₹${activeBundle.price}. Full commercial rights included.`;
+      const bundlePriceDisplay = isIntl ? `$${getBundleUsdPrice(activeBundle)} USD` : `₹${activeBundle.price}`;
+      pageDescription = `Get ${activeBundle.clipCount || '1000+'} 1080p Full HD ${activeBundle.title}. No watermark, instant Google Drive link at just ${bundlePriceDisplay}. Full commercial rights included.`;
       canonicalPath = `/bundle/${activeBundle.id}`;
       breadcrumbs = [
         { name: activeBundle.categoryLabel || 'Bundles', url: `/category/${activeBundle.category}` },
@@ -38,7 +51,7 @@ export default function SEOHead({
       const catObj = categories.find(c => c.id === activeCategory);
       const catName = catObj ? catObj.label : activeCategory;
       pageTitle = `${catName} Bundles (1080p Full HD Watermark Free) | Cheap Reels`;
-      pageDescription = `Download premium viral ${catName} ready-to-post vertical video bundles. 100% watermark-free with instant Google Drive links starting at ₹49.`;
+      pageDescription = `Download premium viral ${catName} ready-to-post vertical video bundles. 100% watermark-free with instant Google Drive links starting at ${minStartingPrice}.`;
       canonicalPath = `/category/${activeCategory}`;
       breadcrumbs = [
         { name: catName, url: `/category/${activeCategory}` }
