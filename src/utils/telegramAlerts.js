@@ -100,9 +100,14 @@ export const sendTelegramOrderAlert = async (order, config) => {
     paymentMethodLabel = escapeHtml(order.paymentMethod);
   }
 
+  const isPaypalOrder = order.gateway === 'PayPal' || Boolean(order.usdAmount);
   const itemsList = Array.isArray(order.items) && order.items.length > 0
-    ? order.items.map((it, idx) => `  ${idx + 1}. <b>${escapeHtml(it.title || 'Reel Bundle')}</b> (₹${it.price || 29})`).join('\n')
-    : `  1. <b>${escapeHtml(order.bundleTitle || 'HD Reels Bundle')}</b> (₹${totalAmount})`;
+    ? order.items.map((it, idx) => {
+        const isGta = String(it.id || '').includes('gta') || String(it.title || '').toLowerCase().includes('gta') || it.id === 'bundle-127';
+        const priceTag = isPaypalOrder ? (isGta ? '$19.99 USD' : `$${it.price || 49} USD`) : `₹${it.price || 29}`;
+        return `  ${idx + 1}. <b>${escapeHtml(it.title || 'Reel Bundle')}</b> (${priceTag})`;
+      }).join('\n')
+    : `  1. <b>${escapeHtml(order.bundleTitle || 'HD Reels Bundle')}</b> (${isPaypalOrder ? `$${order.usdAmount || 19.99} USD` : `₹${totalAmount}`})`;
 
   const utrOrTxn = escapeHtml(order.utr || order.transactionId || order.paymentId || order.referenceId || 'Auto Verified');
 

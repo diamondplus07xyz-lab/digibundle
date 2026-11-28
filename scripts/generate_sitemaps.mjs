@@ -89,8 +89,9 @@ function generateProductsSitemap() {
     xml += `    <changefreq>weekly</changefreq>\n`;
     xml += `    <priority>0.85</priority>\n`;
     if (b.thumbnail) {
+      const absoluteThumb = b.thumbnail.startsWith('/') ? `${PRIMARY_DOMAIN}${b.thumbnail}` : b.thumbnail;
       xml += `    <image:image>\n`;
-      xml += `      <image:loc>${escapeXml(b.thumbnail)}</image:loc>\n`;
+      xml += `      <image:loc>${escapeXml(absoluteThumb)}</image:loc>\n`;
       xml += `      <image:title>${escapeXml(b.title)}</image:title>\n`;
       xml += `      <image:caption>${escapeXml(b.subtitle || b.title)}</image:caption>\n`;
       xml += `    </image:image>\n`;

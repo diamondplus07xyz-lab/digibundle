@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { CheckCircle } from 'lucide-react';
+import { isInternationalVisitor } from '../utils/geoPricing';
 
 export default function UrgencyNotification({ 
   orders = [], 
@@ -198,10 +199,17 @@ export default function UrgencyNotification({
                 </p>
 
                 <div className="flex items-center justify-between text-[9px] sm:text-[10px] leading-none">
-                  <span className="inline-flex items-center text-emerald-800 bg-emerald-50 border border-emerald-200/90 px-1.5 py-0.5 rounded font-black">
-                    <CheckCircle className="w-2.5 h-2.5 text-emerald-600 mr-0.5 shrink-0 inline" />
-                    ₹{purchase.price} Paid
-                  </span>
+                  {(() => {
+                    const isIntl = isInternationalVisitor();
+                    const isGta = purchase.bundleId === 'bundle-127' || String(purchase.bundleTitle || '').toLowerCase().includes('gta');
+                    const displayPrice = isIntl ? (isGta ? '$19.99' : `$${purchase.price}`) : `₹${purchase.price}`;
+                    return (
+                      <span className="inline-flex items-center text-emerald-800 bg-emerald-50 border border-emerald-200/90 px-1.5 py-0.5 rounded font-black">
+                        <CheckCircle className="w-2.5 h-2.5 text-emerald-600 mr-0.5 shrink-0 inline" />
+                        {displayPrice} Paid
+                      </span>
+                    );
+                  })()}
                   <span className="text-slate-600 font-semibold">
                     {purchase.timeAgo}
                   </span>

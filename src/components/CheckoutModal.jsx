@@ -68,18 +68,24 @@ export default function CheckoutModal({
   // Determine available gateways based on admin setting (single vs multiple)
   const gatewayMode = config?.gatewayMode || 'single';
   const rawActive = config?.activeGateway || 'upi_qr';
+  const isIntl = isInternationalVisitor();
   
   // Available list of gateways
   const availableGateways = useMemo(() => {
+    // For international visitors, PayPal is strictly guaranteed as primary gateway
+    if (isIntl) {
+      return ['paypal'];
+    }
     if (gatewayMode === 'single') {
       return [rawActive];
     }
     const enabled = config?.enabledGateways || ['upi_qr'];
     return enabled.length > 0 ? enabled : ['upi_qr'];
-  }, [gatewayMode, rawActive, config?.enabledGateways]);
+  }, [gatewayMode, rawActive, config?.enabledGateways, isIntl]);
 
   // Selected gateway in checkout
   const [selectedGateway, setSelectedGateway] = useState(() => {
+    if (isInternationalVisitor()) return 'paypal';
     return availableGateways[0] || 'upi_qr';
   });
 
@@ -92,10 +98,14 @@ export default function CheckoutModal({
 
   // Keep selectedGateway valid when availableGateways changes
   useEffect(() => {
+    if (isIntl) {
+      if (selectedGateway !== 'paypal') setSelectedGateway('paypal');
+      return;
+    }
     if (!availableGateways.includes(selectedGateway)) {
       setSelectedGateway(availableGateways[0] || 'upi_qr');
     }
-  }, [availableGateways, selectedGateway]);
+  }, [availableGateways, selectedGateway, isIntl]);
 
   // 1. Safety auto-reset: no gateway should spin indefinitely (>15 seconds without user feedback)
   useEffect(() => {
@@ -264,8 +274,19 @@ export default function CheckoutModal({
       const orderId = 'CR-' + Math.floor(100000 + Math.random() * 900000);
       const currentTime = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
+      // Attach verified Google Drive links from master vault
+      const securedItems = items.map(it => {
+        const master = initialBundles.find(b => b.id === it.id);
+        const link = master?.driveLink || it.driveLink || 'https://drive.google.com';
+        return {
+          ...it,
+          driveLink: link,
+          links: master?.links || it.links || [{ label: 'Bundle Access Link', url: link }]
+        };
+      });
+
       // Clean WhatsApp message
-      const bundleTitles = items.map(it => `  • ${it.title} (₹${it.price})`).join('\n\n');
+      const bundleTitles = securedItems.map(it => `  • ${it.title} (₹${it.price})`).join('\n\n');
       const waText = 
         `🎉 *NEW ORDER PAYMENT VERIFICATION REQUEST* 🎉\n\n` +
         `Hello *${config?.storeName || 'Cheap Reels'}* Team,\n` +
@@ -291,13 +312,6 @@ export default function CheckoutModal({
 
       const whatsappRedirectUrl = `https://wa.me/${supportPhone}?text=${encodeURIComponent(waText)}`;
 
-      // Open WhatsApp in new tab if permitted, keeping the user securely on OrderSuccessModal
-      try {
-        window.open(whatsappRedirectUrl, '_blank');
-      } catch (e) {
-        // Handled seamlessly on OrderSuccessModal with prominent WhatsApp button
-      }
-
       const order = {
         id: orderId,
         name: (name || 'Customer').trim(),
@@ -306,7 +320,7 @@ export default function CheckoutModal({
         state: customerState || '',
         city: (city || '').trim(),
         total,
-        items,
+        items: securedItems,
         gateway: 'upi_qr',
         paymentApp: paymentApp,
         utr: cleanUtr,
